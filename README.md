@@ -5,8 +5,8 @@ Below is a step-by-step guide on how to use the vanilla xAODAnaHelpers framework
 *Installation*
 
 1. navigate to the repository https://gitlab.cern.ch/atlas-phys/exot/jdm/ana-exot-2021-19
-2. Here you will find all the files required for the next stages. Clone them onto a local machine, lxplus or similar. with 
-`git clone  https://gitlab.cern.ch/QMUL/svj.git`
+2. Here you will find all the files required for the next stages. Clone them onto a local machine, lxplus or similar. with something like
+`git clone  https://gitlab.cern.ch/atlas-phys/exot/jdm/ana-exot-2021-19.git`
 3. Install the xAH package with the install: 
 `source install.sh`
    * Notice that the install.sh file has analysis base `AnalysisBase,21.2.120` 
