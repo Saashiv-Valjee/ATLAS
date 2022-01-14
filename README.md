@@ -15,8 +15,8 @@ Below is a step-by-step guide on how to use the vanilla xAODAnaHelpers framework
 5. Navigate to: `src/xAODAnaHelpers/`
 6. Here you will find an `xAODAnaHelpers/` and a `Root/` directory. `xAODAnaHelpers/` has all the .h files in it, `Root/` has all the .cxx files. 
 7. For all the .cxx files you downloaded from the first link, copy them into `Root/`. For all the .h files, copy them into `xAODAnaHelpers/ `
-8. Recompile with `source compile.sh`
-9. Navigate back up to where your `src/` and `build/` directories are. 
+8. Navigate back up to where your `src/` and `build/` directories are.
+9. Force a full recompile by removing the build directory `rm -rf build`, remaking `mkdir build` and compiling `source compile.sh` (note, if you just recompile, it does not seem to pick up the files copied!)
 10. Move `cutflow_signal_DAODtoNTUPLE_mc.py` into `configs/`
 11. Move `LocalRun_TestStudies.sh` to your `run/` directory
 12. Keep `setup_local.sh`, `install.sh` and `compile.sh` in the main directory 
