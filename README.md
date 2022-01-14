@@ -4,7 +4,7 @@ Below is a step-by-step guide on how to use the vanilla xAODAnaHelpers framework
 
 *Installation*
 
-1. navigate to the repository
+1. navigate to the repository https://gitlab.cern.ch/atlas-phys/exot/jdm/ana-exot-2021-19
 2. Here you will find all the files required for the next stages. Clone them onto a local machine, lxplus or similar. with 
 `git clone  https://gitlab.cern.ch/QMUL/svj.git`
 3. Install the xAH package with the install: 
@@ -34,4 +34,5 @@ Below is a step-by-step guide on how to use the vanilla xAODAnaHelpers framework
 4. Done! Note: if this is not the first time you are running it, you will need to run: source setup_local.sh before trying to run again. This must be done at the start of every log in to lxplus or similar.
 
 *Customising*
+
 The algorithm is pretty customisable with the only thing you need to consider is the config file you have. Editing that allows you to replace jet collections, turn off and on reclustering etc. The rule of thumb is, if you t want something included, comment out the relevant name in the last function call of the config file (called `TreeAlgo`)
