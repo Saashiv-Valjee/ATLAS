@@ -100,7 +100,7 @@ c.algorithm("BasicEventSelection",	{
 
 DefaultJetDetailStrs = "kinematic constituent cleanLight truth" #truth_details trackPV energy
 DefaultFatJetDetailStrs = "kinematic substructure constituent"
-DefaultTruthDetailStrs = "kinematic" #type dressed origin children parents"
+DefaultTruthDetailStrs = "type dressed origin children parents"
 
 jetContainerNames = []
 jetBranchNames = []
@@ -370,6 +370,7 @@ if outTree:
 
 		"m_truthParticlesContainerName" :	"TruthBSM",
 		"m_truthParticlesBranchName"	:	"truthBSM",
+                "m_truthParticlesDetailStr"     :       DefaultTruthDetailStrs,
 
 		"m_truthMetContainerName"	:	"MET_Truth",
                 "m_truthMetDetailStr"	        :	"TruthMET", 

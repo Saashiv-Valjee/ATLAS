@@ -9,7 +9,7 @@ infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/cutflow/m
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/mc16_13TeV.312808.MadGraphPythia8EvtGen_A14N30NLO_Mphi1500_Rinv4.deriv.DAOD_EXOT27.e7844_s3509_r10201_p4078/DAOD_EXOT27.23076874._000001.pool.root.1"
 configFile=../configs/cutflow_signal_DAODtoNTUPLE_mc.py
 
-nevents=100
+nevents=10000
 submitdir=DAODtoTTREE_${nevents}_Test
 
 
