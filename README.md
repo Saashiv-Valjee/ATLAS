@@ -33,6 +33,12 @@ Below is a step-by-step guide on how to use the vanilla xAODAnaHelpers framework
   *. You are interested only in the `.root` file in: `run/DAODtoTTREE_<nevents>_Test/data-tree/` which is the full, populated output 
 4. Done! Note: if this is not the first time you are running it, you will need to run: source setup_local.sh before trying to run again. This must be done at the start of every log in to lxplus or similar.
 
+*Grid Running*
+1. source setup.sh
+2. lsetup panda
+3. cd run
+4. source grid_run.sh
+
 *Customising*
 
 The algorithm is pretty customisable with the only thing you need to consider is the config file you have. Editing that allows you to replace jet collections, turn off and on reclustering etc. The rule of thumb is, if you t want something included, comment out the relevant name in the last function call of the config file (called `TreeAlgo`)

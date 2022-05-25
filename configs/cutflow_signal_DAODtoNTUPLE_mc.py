@@ -49,12 +49,12 @@ doSmallR = True
 #JetContainerName = ["AntiKt4LCTopoJets", "AntiKt4EMPFlowJets", "AntiKt4EMTopoJets"]
 #JetBranchName = ["a4_topojets", "a4_flowjets", "a4_topojets"]
 JetContainerName = "AntiKt4EMPFlowJets"
-JetBranchName = "a4_pflowjets_raw"
+JetBranchName = "a4_pflowjets"
 doLargeR = True
-#FatJetContainerName = ["AntiKt10TruthTrimmedPtFrac5SmallR20Jets", ]#, "AntiKtVR30RmaxRmin02TrackGhostTagJets", "AntiKtVR30RmaxRmin02TrackJets"]
-#FatJetBranchName = ["a10_truthjets", ]#, "avr_ghostjets", "avr_trackjets"]
+#FatJetContainerName = ["AntiKt10LCTopoTrimmedPtFrac5SmallR20Jets", "AntiKt10UFOCSSKJets"]#, "AntiKtVR30RmaxRmin02TrackGhostTagJets", "AntiKtVR30RmaxRmin02TrackJets"]
+#FatJetBranchName = ["a10_lctopojets", "a10_ufojets"]#, "avr_ghostjets", "avr_trackjets"]
 FatJetContainerName = "AntiKt10LCTopoTrimmedPtFrac5SmallR20Jets"
-FatJetBranchName = "a10_lctopojets_raw"
+FatJetBranchName = "a10_lctopojets"
 
 #The JES uncertainty reducion scheme to be used for small-R jets. Possible values are: GR, SR1, SR2, SR3, SR4
 ReductionScheme = "GR"
@@ -233,6 +233,38 @@ if doCalibration:
 		fatJetContainerNames.append(outFatJetContainerName)
 		fatJetBranchNames.append("a10jetCalib")
 		fatJetDetailStrs.append(DefaultFatJetDetailStrs)
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%% Jet Selector %%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("JetSelector",     {
+  "m_name"                      : "JetSelect",
+  #----------------------- Container Flow ----------------------------#
+  "m_inContainerName"           : "Jets_Calibrate",
+  "m_outContainerName"          : "Jets_Selected",
+  "m_inputAlgo"                 : "JetCalibrator_Syst",
+  "m_outputAlgo"                : "JetSelector_Syst",
+  "m_decorateSelectedObjects"   : True,
+  "m_createSelectedContainer"   : True,
+  #----------------------- Selections ----------------------------#
+  "m_cleanJets"                 : False,
+  "m_pass_min"                  : 1,
+  "m_pT_min"                    : 25e3,
+  "m_eta_max"                   : 5,
+  #----------------------- JVT ----------------------------#
+  "m_doJVT"                     : False, # JVT is a pileup cut
+  "m_pt_max_JVT"                : 60e3,
+  "m_eta_max_JVT"               : 2.4,
+  "m_JVTCut"                    : 0.2,
+  #----------------------- B-tagging ----------------------------#
+  "m_doBTagCut"                 : False,
+  "m_corrFileName"              : "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13TeV/2021-22-13TeV-MC16-CDI-2021-12-02_v2.root",
+  "m_taggerName"                : "DL1r",
+  "m_jetAuthor"                 : "AntiKt4EMPFlowJets",
+  "m_b_pt_min"                  : 25e3,
+  "m_b_eta_max"                 : 2.5,
+  #----------------------- Other ----------------------------#
+  "m_msgLevel"                  : "Info",
+})
 
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
