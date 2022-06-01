@@ -42,13 +42,14 @@ void MicroNTupleMaker::Loop()
 		
 		cutflow->Fill(0);
 		
+		if (na4_pflowjets < 2) continue;
 		// apply nJets >= 2
-		if (na10_lctopojets_pt < 2) continue;
+		if (na10_lctopojets < 2) continue;
 		cutflow->Fill(1);      
 		
 		// apply jet1_pt > 150 GeV
-		if (a10_lctopojets_pt->at(0) < 200000) continue;
-		cutflow->Fill(2);    
+		//if (a10_lctopojets_pt->at(0) < 200000) continue;
+		//cutflow->Fill(2);    
 		
 		// get svj info 
 		vector<pair<int,float>> svj_info; // n_svj, n_asvj
@@ -65,10 +66,10 @@ void MicroNTupleMaker::Loop()
 
 		// create relevant 4 vectors
 		TLorentzVector v1, v2, v_svj, v_asvj;
-		v1.SetPtEtaPhiE(a10_lctopojets_pt->at(0), a10_lctopojets_eta->at(0), a10_lctopojets_phi->at(0), a10_lctopojets_e->at(0));
-		v2.SetPtEtaPhiE(a10_lctopojets_pt->at(1), a10_lctopojets_eta->at(1), a10_lctopojets_phi->at(1), a10_lctopojets_e->at(1));
-		v_svj.SetPtEtaPhiE(a10_lctopojets_pt->at(n_svj), a10_lctopojets_eta->at(n_svj), a10_lctopojets_phi->at(n_svj), a10_lctopojets_e->at(n_svj));
-		v_asvj.SetPtEtaPhiE(a10_lctopojets_pt->at(n_asvj), a10_lctopojets_eta->at(n_asvj), a10_lctopojets_phi->at(n_asvj), a10_lctopojets_e->at(n_asvj));
+		v1.SetPtEtaPhiM(a10_lctopojets_pt->at(0), a10_lctopojets_eta->at(0), a10_lctopojets_phi->at(0), a10_lctopojets_m->at(0));
+		v2.SetPtEtaPhiM(a10_lctopojets_pt->at(1), a10_lctopojets_eta->at(1), a10_lctopojets_phi->at(1), a10_lctopojets_m->at(1));
+		v_svj.SetPtEtaPhiM(a10_lctopojets_pt->at(n_svj), a10_lctopojets_eta->at(n_svj), a10_lctopojets_phi->at(n_svj), a10_lctopojets_m->at(n_svj));
+		v_asvj.SetPtEtaPhiM(a10_lctopojets_pt->at(n_asvj), a10_lctopojets_eta->at(n_asvj), a10_lctopojets_phi->at(n_asvj), a10_lctopojets_m->at(n_asvj));
 			
 		// pt balance
 		pt_balance_12 = GetPtBalance(v1,v2);
@@ -77,6 +78,12 @@ void MicroNTupleMaker::Loop()
 		//Mjj
 		mjj_12 = GetMjj(v1,v2);      
 		mjj_sa = GetMjj(v_svj,v_asvj);      
+
+		//mT
+		jet1_mT = v1.Mt();
+		jet2_mT = v2.Mt();
+		jet_svj_mT = v_svj.Mt();
+		jet_asvj_mT = v_asvj.Mt();
 			
 		// save output tree
 		FillOutputTrees("PostSel");

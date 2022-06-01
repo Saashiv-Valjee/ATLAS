@@ -44,7 +44,7 @@ void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
 	
 	cout<<"Reading in "<<fullinfilepath<<endl;
 	
-	TChain *fChain = new TChain("nominal");
+	TChain *fChain = new TChain("outTree/nominal");
 
 	if (infilepath == ""){
 		
