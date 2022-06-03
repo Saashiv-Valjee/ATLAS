@@ -37,7 +37,7 @@ void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
 	                return;
 	        }
 	} else {
-		fullinfilepath = infilepath + infiletag;
+		fullinfilepath = infilepath + infiletag + ".root";
 	}
 	
 	// ----- Read in File(s) & Tree ----- // 
@@ -61,10 +61,18 @@ void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
 		cout << "Added " << file_count << " files to the chain" << endl;
 	}
 	// Create output file
-	TString outfilename = Form( "MicroNTuples/%s.root", infiletag.c_str() );
-	TFile *fout = new TFile( outfilename, "RECREATE" );
-	
-	
+	string outfiletag="";
+	string dsid = infiletag.substr(12,6);
+	cout << "DSID: " << dsid << endl;
+	string mc = "";
+	if (infiletag.find("mc16a") != string::npos) mc = "mc16a";
+	if (infiletag.find("mc16d") != string::npos) mc = "mc16d";
+	if (infiletag.find("mc16e") != string::npos) mc = "mc16e";
+	outfiletag = "user.ebusch." + dsid + "." + mc;
+	TString outfilename = Form( "MicroNTuples/%s.root", outfiletag.c_str() );
+	TFile *fout = new TFile( outfilename, "RECREATE" );	
+	cout << "Writing out "<<outfilename<<endl;
+
 	// Class instance
 	class MicroNTupleMaker myMaker(fChain);
 	

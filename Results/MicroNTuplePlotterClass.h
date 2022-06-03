@@ -20,6 +20,7 @@ public :
 	string infile_ext = ".root";
         TString outfile_path = "/eos/user/e/ebusch/SVJ/Plots";
 	vector<PlotParams> PlotParamsList;
+	PlotParams OverlayedPlotParams;
 	TString MicroNtupleVersion = "";
 
 	string output_file_tag = ""; 
@@ -39,13 +40,14 @@ public :
 	bool plot_log  = false; 
 	bool plot_log_x = false; 
 	bool plot_log_ratio = false; // set to true if you want a log ratio or s/sqrtb panel
-	bool plot_norm = true;
+	bool plot_norm = false;
         bool plot_error = true;
         bool stamp_cuts = false;
         bool stamp_counts = true;
 	bool manual_legend = false;
 	bool use_better_legend_names = true;
-	bool use_weight = false;
+	bool use_weight = true;
+	bool plot_overlayed = false;
 	double legx1, legx2, legy1, legy2;
 	vector<string> legend_names;
 
@@ -144,7 +146,7 @@ public :
 				filetags_treenames.push_back( GetFiletagTreename( filetags[i], treenames[i]) );
 			}
 		}
-
+		cout << "len trees = " << filetags_treenames.size() << endl;
 		//if( !trees_ok ) cout<<"ERROR: Input files or trees do not exist. Check input file paths & parameters.."<<endl;
 	}
 
@@ -178,13 +180,16 @@ public :
 		if( debug) cout<<"MicroNTuplePlotter::SetPlots()"<<endl;		
 
 		PlotParamsList = myPlotParamsList;
+		plot_overlayed = false;	
 	} 
 
 	// -------------------------------------------------------------------------------------
-        void SetOverlayedPlots(vector<PlotParams> myPlotParamsList){
+        void SetOverlayedPlots(vector<PlotParams> myPlotParamsList, PlotParams myOverlayedPlotParams){
 		if( debug) cout<<"MicroNTuplePlotter::SetOverlayedPlots()"<<endl;		
 
 		PlotParamsList = myPlotParamsList;                
+		OverlayedPlotParams = myOverlayedPlotParams;
+		plot_overlayed = true;	
         }
 
 	// -------------------------------------------------------------------------------------
@@ -288,17 +293,16 @@ public :
 
 		if (false) {
                         // place holder for conditions on making hists, like variable bins
-                        cout << "Special hist" << endl;
 		} else {
-                        cout << "Basic hist" << endl;
                         h_temp = new TH1F( hist_name_full, "", NBins, xmin, xmax);
                 }
 
-		//TCut cut_weight = Form( "weight" ); 
+		TCut cut_weight = Form( "mcEventWeight" ); 
 
-		TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
-		//TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
-		//if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		cout << "cut_total = " << cut_total << endl;
 
 		trees[filetag_treename]->Draw( Form( "%s >> "+hist_name_full, hist_name.c_str() ), cut_total , "");
 		//if( use_weight ){
@@ -326,7 +330,6 @@ public :
 		int i = 0;
 		for( auto filetag_treename: filetags_treenames ){
 			for( auto cut_compare: cuts_compare ){
-
 				TH1F* h;
 				h = (TH1F*)GetHist1D( myPlotParams, filetag_treename, cut_compare);
 				string hist_tag;
@@ -334,6 +337,7 @@ public :
 					hist_tag = Form( "%s", filetag_treename.c_str() );
 				}else{
 					string filetag_only = GetFiletag(filetag_treename);
+					cout << "filetag_only: " << filetag_only << endl;
 					if (use_better_legend_names) hist_tag = GetLegendNames(filetag_only);
 					else hist_tag = Form( "%s", filetag_only.c_str());
    				}
@@ -353,13 +357,13 @@ public :
 		hist_tags.clear(); 
 
 		int i = 0;
-		for( auto filetag: filetags ){
+		for( auto filetag_treename: filetags_treenames ){
 			for (auto cut_compare : cuts_compare) {
 				for( auto myPlotParams: myPlotParamsList ){
 					TH1F* h;
-					h = (TH1F*)GetHist1D( myPlotParams, filetag, cut_compare);
+					h = (TH1F*)GetHist1D( myPlotParams, filetag_treename, cut_compare);
 
-					string hist_tag = Form( "%s %s", filetag.c_str(), myPlotParams.hist_name.c_str() );
+					string hist_tag = Form( "%s (%s)", myPlotParams.hist_name.c_str(), filetag_treename.c_str() );
 					hist_tags.push_back( hist_tag );
 					hists[hist_tag] = h;
 					i++;
@@ -381,7 +385,7 @@ public :
 		int i = -1;
 		for( auto hist_tag: hist_tags ){
 			i++;
-
+			cout << "stacking " << i << " hist.." << endl;
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
 
 			if( plot_norm )
@@ -460,6 +464,11 @@ public :
 	void Plot( string plot_type = "", string filetag_treename_divisor = "" ){
 		if( debug) cout<<"MicroNTuplePlotter::Plot()"<<endl;		
 
+		if (plot_overlayed){
+			PlotOverlay(plot_type, filetag_treename_divisor);
+			return;
+		}
+
 		TString draw_option = GetDrawOption();
 
 		for( auto PlotParams_temp: PlotParamsList ){
@@ -520,15 +529,14 @@ public :
 
 	}
 
-
 	// -------------------------------------------------------------------------------------
 	void PlotOverlay( string plot_type = "", string filetag_divisor = "" ){
-		if( debug) cout<<"MicroNTuplePlotter::Plot()"<<endl;		
+		if( debug) cout<<"MicroNTuplePlotter::PlotOverlay()"<<endl;		
 
-		GetTrees();
 		SetStyle();
 
 		TCanvas *myCanvas;
+		TString draw_option = GetDrawOption();
 
 		if( plot_type == "" ) 
 			myCanvas = new TCanvas("c", "c", 1600, 1200);
@@ -536,24 +544,20 @@ public :
 			myCanvas = new TCanvas("c", "c", 1200, 1600);	
 			myCanvas->Divide(0,2);
 		}
-		myCanvas->cd(1);
 	
-                int i = 0;
-		for( auto PlotParams_temp: PlotParamsList ){
+		map<string,TH1F*> hists = GetOverlayedHists( PlotParamsList );
 
-			map<string,TH1F*> hists = GetHists( PlotParams_temp );
+		THStack* hs = GetStackHist( hists, OverlayedPlotParams );
+		myCanvas->cd();
+                hs->Draw(draw_option); 
+		//if( plot_type == "ratio" ){
+		//	myCanvas->cd(2);
+		//	if( plot_log_ratio ) gPad->SetLogy(); 		
+		//	THStack* hs_ratio = GetStackRatio( hists, PlotParams_temp, true, filetag_divisor );	
+		//	hs_ratio->Draw("nostack");
+		//	myCanvas->cd(1);
+		//}
 
-			THStack* hs = GetStackHist( hists, PlotParams_temp );
-                        if (i == 0) hs->Draw("nostack"); 
-                        else hs->Draw("nostack same"); 
-			if( plot_type == "ratio" ){
-				myCanvas->cd(2);
-				if( plot_log_ratio ) gPad->SetLogy(); 		
-				THStack* hs_ratio = GetStackRatio( hists, PlotParams_temp, true, filetag_divisor );	
-				hs_ratio->Draw("nostack");
-				myCanvas->cd(1);
-			}
-		}
 		if( manual_legend )
 			gPad->BuildLegend(legx1,legx2,legy1,legy2,"");
 		else
@@ -563,13 +567,15 @@ public :
 		StampATLAS( "Internal", 140., 0.14, 0.84, 0.045 );
 		//StampCuts( 0.1, 0.91, 0.015 );			
 
+		myCanvas->cd(1);
 
 		if( plot_log )
 			gPad->SetLogy(); 
 	
-		TString output_file_name = "tmp";
-		myCanvas->Write();
-		myCanvas->SaveAs( "Plots/"+output_file_name+".png" );
+		TString output_file_name = OverlayedPlotParams.hist_name;
+		TString output_file_path = "/eos/home-e/ebusch/SVJ/Plots/";
+		//myCanvas->Write();
+		myCanvas->SaveAs( output_file_path+output_file_name+".png", "png" );
 	
 		delete myCanvas;
 	}

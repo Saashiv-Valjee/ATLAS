@@ -44,6 +44,7 @@ public :
    float pt_balance_12, pt_balance_sa;
    float mjj_12, mjj_sa;
    float jet1_mT, jet2_mT, jet_svj_mT, jet_asvj_mT;
+   float deltaY_12, deltaY_sa;
 
    // Cutflow histograms
    TH1F *cutflow;
@@ -348,6 +349,7 @@ public :
    virtual vector<pair<int,float>> FindSVJ();
    virtual float    GetPtBalance(TLorentzVector v1, TLorentzVector v2);
    virtual float    GetMjj(TLorentzVector v1, TLorentzVector v2);
+   virtual float    GetDeltaY(TLorentzVector v1, TLorentzVector v2);
 
    // OutputTreeHelper
    virtual void     DeclareOutputTrees();

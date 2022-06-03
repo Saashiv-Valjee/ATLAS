@@ -41,4 +41,8 @@ float MicroNTupleMaker::GetMjj(TLorentzVector v1, TLorentzVector v2){
   return v12.M();
 }
 
+/* =================================================================== */
+float MicroNTupleMaker::GetDeltaY(TLorentzVector v1, TLorentzVector v2){
+  return fabs(v1.Rapidity() - v2.Rapidity());
+}
 

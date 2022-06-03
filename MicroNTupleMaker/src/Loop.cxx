@@ -41,7 +41,8 @@ void MicroNTupleMaker::Loop()
 		if (processedEntries % 100000 == 0 && nentries > 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		
 		cutflow->Fill(0);
-		
+	
+		// apply nSmallRJets >=2 (required for code to run) 	
 		if (na4_pflowjets < 2) continue;
 		// apply nJets >= 2
 		if (na10_lctopojets < 2) continue;
@@ -52,7 +53,7 @@ void MicroNTupleMaker::Loop()
 		//cutflow->Fill(2);    
 		
 		// get svj info 
-		vector<pair<int,float>> svj_info; // n_svj, n_asvj
+		vector<pair<int,float>> svj_info; // {{n_svj,dphi_min}, {n_asvj,dphi_max}}
 		svj_info = FindSVJ();
 		
 		// apply dphi < 2.0
@@ -84,6 +85,10 @@ void MicroNTupleMaker::Loop()
 		jet2_mT = v2.Mt();
 		jet_svj_mT = v_svj.Mt();
 		jet_asvj_mT = v_asvj.Mt();
+
+		// deltaY
+		deltaY_12 = GetDeltaY(v1,v2);
+		deltaY_sa = GetDeltaY(v_svj,v_asvj);
 			
 		// save output tree
 		FillOutputTrees("PostSel");

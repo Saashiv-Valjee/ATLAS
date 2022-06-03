@@ -90,5 +90,9 @@ string GetLegendNames( string filetag  ){
   filetag_legend["364704.mc16e"] = "JZ4 mc16e";
   filetag_legend["364705.mc16e"] = "JZ5 mc16e";
 
+  if (filetag_legend.find(filetag) == filetag_legend.end()){
+	cout << "No better legend name found for filetag " << filetag << "; using filetag." << endl;
+	return filetag;
+  }
   return filetag_legend[filetag];
 }
