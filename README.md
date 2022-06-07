@@ -43,3 +43,33 @@ The algorithm is pretty customisable with the only thing you need to consider is
 3. cd run
 4. source grid\_run.sh
 
+## Making MicroNTuples
+
+The MicroNTupleMaker code provides a framework for applying essential analysis cuts and calculating analysis variables of interest, which can then be saved in a tree/nTuple format for easy access without the need to recalculate every time. 
+
+First, create a directory called MicroNTuples where your output will live, and a directory for the executable.
+```
+cd MicroNTupleMaker
+mkdir MicroNTuples
+mkdir exe
+```
+
+In the MicroNTupleMaker directory, you can compile the code with the compilation script (g++).
+
+**Note**: There appear to be conflicts with this code, and the AnalysisBase release needed for AnalysisTop. I will try to resolve this in the future, but for now you should log out, start with a clean terminal, and then setup the needed root version using the setup script.
+```
+cd MicroNTupleMaker
+source setup.sh
+source compile.sh
+```
+
+The executable takes 1 or 2 arguemnts; the file tag (`<file_tag>/some_files*.root`) and optionally a path to the input NTuples. By default the input NTuples are assumed to be in the run folder. Usage examples are shown below.
+```
+./exe/MicroNTupleMaker 508548_cutflow
+./exe/MicroNTupleMaker file_tag /my/unique/input/path/
+```
+
+## Plotting
+
+Scripts are available in the Results folder to facilitate plotting from the MicroNtuples. TODO: example scripts
+
