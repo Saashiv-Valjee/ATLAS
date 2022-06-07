@@ -20,13 +20,25 @@ PlotParams P_n_jets			= {"n_jets", "Number of Jets", "N_{jets}", 20, 0, 20};
 PlotParams P_jet1_pt			= {"jet1_pt", "Leading Jet p_{T}", "p_{T} [GeV]", 50, 0, 1000};
 PlotParams P_jet1_eta			= {"jet1_eta", "Leading Jet Eta", "#eta", 50, -2.5, 2.5};
 PlotParams P_jet1_phi			= {"jet1_phi", "Leading Jet Phi", "#phi", 50, -3.14, 3.14};
-PlotParams P_jet1_m			= {"jet1_m", "Leading Jet M", "Mass [GeV]", 50, 0, 300};
+PlotParams P_jet1_m			= {"jet1_m", "Leading Jet M", "Mass [GeV]", 50, 0, 3000};
+PlotParams P_jet1_mT			= {"jet1_mT", "Leading Jet MT", "Mass [GeV]", 50, 0, 2000};
+PlotParams P_jet1_C2			= {"jet1_C2", "Leading Jet C2", "C2", 50, 0, 1};
 PlotParams P_jet1_D2			= {"jet1_D2", "Leading Jet D2", "D2", 50, 0, 10};
 PlotParams P_jet1_Split12		= {"jet1_Split12", "Leading Jet Split 12", "Split12", 50, 0, 500};
+PlotParams P_jet1_Split23		= {"jet1_Split23", "Leading Jet Split 23", "Split23", 50, 0, 200};
+PlotParams P_jet1_tau23			= {"jet1_tau32", "Leading Jet N-subjettiness", "N-subjettiness", 50, 0, 200};
+
 PlotParams P_jet2_pt			= {"jet2_pt", "Subleading Jet p_{T}", "p_{T} [GeV]", 50, 0, 1000};
 PlotParams P_jet2_eta			= {"jet2_eta", "Subleading Jet Eta", "#eta", 50, -2.5, 2.5};
 PlotParams P_jet2_phi			= {"jet2_phi", "Subleading Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet2_m			= {"jet2_m", "Subleading Jet M", "Mass [GeV]", 50, 0, 300};
+PlotParams P_jet2_mT			= {"jet2_mT", "Subleading Jet MT", "Mass [GeV]", 50, 0, 2000};
+PlotParams P_jet2_C2			= {"jet2_C2", "Subleading Jet C2", "C2", 50, 0, 1};
+PlotParams P_jet2_D2			= {"jet2_D2", "Subleading Jet D2", "D2", 50, 0, 10};
+PlotParams P_jet2_Split12		= {"jet2_Split12", "Subleading Jet Split 12", "Split12", 50, 0, 500};
+PlotParams P_jet2_Split23		= {"jet2_Split23", "Subleading Jet Split 23", "Split23", 50, 0, 200};
+PlotParams P_jet2_tau23			= {"jet2_tau32", "Subleading Jet N-subjettiness", "N-subjettiness", 50, 0, 200};
+
 PlotParams P_jet_svj_pt			= {"jet_svj_pt", "Semi-visible Jet p_{T}", "p_{T} [GeV]", 50, 0, 1000};
 PlotParams P_jet_svj_eta		= {"jet_svj_eta", "Semi-visible Jet Eta", "#eta", 50, -2.5, 2.5};
 PlotParams P_jet_svj_phi		= {"jet_svj_phi", "Semi-visible Jet Phi", "#phi", 50, -3.14, 3.14};
