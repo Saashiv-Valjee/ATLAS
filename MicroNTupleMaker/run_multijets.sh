@@ -1,0 +1,12 @@
+./exe/MicroNTupleMaker user.hvanders.364701.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/ 
+./exe/MicroNTupleMaker user.hvanders.364702.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364703.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364704.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364705.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364706.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364707.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364708.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364709.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364710.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364711.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
+./exe/MicroNTupleMaker user.hvanders.364712.Pythia8EvtGen.DAOD_PHYS.e7142_s3126_r10724_p5001.MC16e_Mjet_v3_output_root /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/MULTIJET_DAODPHYS/
