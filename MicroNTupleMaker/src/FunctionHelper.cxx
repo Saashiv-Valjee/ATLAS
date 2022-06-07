@@ -9,7 +9,7 @@ vector<pair<int,float>> MicroNTupleMaker::FindSVJ(){
         pair<int,float> svj_info;
         pair<int,float> asvj_info; 
 	for (int i =0; i<a10_lctopojets_phi->size(); i++) {
-    		float dPhi = a10_lctopojets_phi->at(i) - MET_TruthMET_TruthPhi;
+    		float dPhi = a10_lctopojets_phi->at(i) - metFinalTrkPhi;
     		if(dPhi > 3.14)  dPhi -= 2*3.14;
     		if(dPhi < -3.14) dPhi += 2*3.14;
     		if (fabs(dPhi) > maxphi){maxphi = fabs(dPhi); n_asvj = i;}

@@ -5,7 +5,7 @@ void myPlotter(){
 
 	string path = "../MicroNTupleMaker/MicroNTuples/test/user.ebusch.";
 	
-	vector<string> filetags = {"508548.mc16d"};
+	vector<string> filetags = {"508548.mc16d", "364703.mc16d"};
 	//vector<string> filetags = {"508547","508548", "508549", "508550", "364703.mc16e", "364704.mc16e", "364705.mc16e"};
 
 	// - cuts
@@ -38,7 +38,7 @@ void myPlotter(){
         //***************** Reweight and Plot *******************//  
 	//plotter.SetOverlayedPlots( {P_jet1_pt, P_jet2_pt, P_jet_svj_pt, P_jet_asvj_pt}, OP_jet_pt );
 	//plotter.PlotOverlay("");
-		
+	//      
 	//plotter.SetOverlayedPlots( {P_jet1_eta, P_jet2_eta, P_jet_svj_eta, P_jet_asvj_eta}, OP_jet_eta );
 	//plotter.PlotOverlay("");
 
@@ -48,6 +48,6 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_m, P_jet2_m, P_jet_svj_m, P_jet_asvj_m}, OP_jet_m );
 	//plotter.PlotOverlay("");
 
-	plotter.SetPlots ( {P_dphi_min, P_deltaY_12, P_TruthMET_TruthPhi, P_TruthMET_TruthSumEt} );
+	plotter.SetPlots ( {P_dphi_min, P_deltaY_12, P_jet1_D2, P_jet1_Split12} );
 	plotter.Plot("");
 }
