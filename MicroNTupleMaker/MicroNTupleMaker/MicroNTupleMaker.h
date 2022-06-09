@@ -42,7 +42,7 @@ public :
    int n_r04_jets, n_r10_jets;
    float dphi_min, dphi_max, maxphi_minphi;
    float pt_balance_12, pt_balance_sa;
-   float mjj_12, mjj_sa;
+   float mjj_12, mjj_sa, mT_jj;
    float jet1_mT, jet2_mT, jet_svj_mT, jet_asvj_mT;
    float deltaY_12, deltaY_sa;
 
@@ -348,7 +348,9 @@ public :
    // FunctionHelpers 
    virtual vector<pair<int,float>> FindSVJ();
    virtual float    GetPtBalance(TLorentzVector v1, TLorentzVector v2);
+   virtual float    GetDPhi(float phi1, float phi2);
    virtual float    GetMjj(TLorentzVector v1, TLorentzVector v2);
+   virtual float    GetMt(TLorentzVector v1, TLorentzVector v2, float met, float met_phi);
    virtual float    GetDeltaY(TLorentzVector v1, TLorentzVector v2);
 
    // OutputTreeHelper

@@ -85,6 +85,7 @@ void MicroNTupleMaker::Loop()
 		jet2_mT = v2.Mt();
 		jet_svj_mT = v_svj.Mt();
 		jet_asvj_mT = v_asvj.Mt();
+                mT_jj = GetMt(v1,v2,metFinalTrkSumEt, metFinalTrkPhi);
 
 		// deltaY
 		deltaY_12 = GetDeltaY(v1,v2);

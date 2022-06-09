@@ -11,7 +11,7 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"n_r04_jets", "n_r10_jets",
 		"maxphi_minphi", "dphi_min", "dphi_max",
                 "pt_balance_12", "pt_balance_sa",
-                "mjj_12", "mjj_sa",
+                "mjj_12", "mjj_sa","mT_jj",
 		"deltaY_12", "deltaY_sa",
         	"jet1_pt", "jet1_eta", "jet1_phi", "jet1_m", "jet1_nConstituents",
         	"jet2_pt", "jet2_eta", "jet2_phi", "jet2_m", "jet2_nConstituents",
@@ -119,6 +119,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
         tree_output_vars["pt_balance_sa"] = pt_balance_sa;
         tree_output_vars["mjj_12"] = mjj_12;
         tree_output_vars["mjj_sa"] = mjj_sa;
+        tree_output_vars["mT_jj"] = mT_jj;
         tree_output_vars["deltaY_12"] = deltaY_12;
         tree_output_vars["deltaY_sa"] = deltaY_sa;
 	tree_output_vars["dphi_min"] = dphi_min;

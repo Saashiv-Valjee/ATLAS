@@ -1,4 +1,12 @@
 /* =================================================================== */
+float MicroNTupleMaker::GetDPhi(float phi1, float phi2){
+    float dPhi = phi1 - phi1;
+    if(dPhi > 3.14)  dPhi -= 2*3.14;
+    if(dPhi < -3.14) dPhi += 2*3.14;
+    return dPhi;
+}
+
+/* =================================================================== */
 vector<pair<int,float>> MicroNTupleMaker::FindSVJ(){
 
   	float maxphi = 0;
@@ -9,9 +17,7 @@ vector<pair<int,float>> MicroNTupleMaker::FindSVJ(){
         pair<int,float> svj_info;
         pair<int,float> asvj_info; 
 	for (int i =0; i<a10_lctopojets_phi->size(); i++) {
-    		float dPhi = a10_lctopojets_phi->at(i) - metFinalTrkPhi;
-    		if(dPhi > 3.14)  dPhi -= 2*3.14;
-    		if(dPhi < -3.14) dPhi += 2*3.14;
+    		float dPhi = GetDPhi(a10_lctopojets_phi->at(i),metFinalTrkPhi);
     		if (fabs(dPhi) > maxphi){maxphi = fabs(dPhi); n_asvj = i;}
     		if (fabs(dPhi) < minphi){minphi = fabs(dPhi); n_svj = i;}
  	}
@@ -46,3 +52,10 @@ float MicroNTupleMaker::GetDeltaY(TLorentzVector v1, TLorentzVector v2){
   return fabs(v1.Rapidity() - v2.Rapidity());
 }
 
+/* =================================================================== */
+float MicroNTupleMaker::GetMt(TLorentzVector v1, TLorentzVector v2, float met, float met_phi){
+  TLorentzVector jj = v1 + v2;
+  float dphi = GetDPhi(jj.Phi(), met_phi); 
+  float mT2 = pow(jj.M(),2) + 2*met*(sqrt( pow(jj.M(),2) + pow(jj.Pt(),2) ) - jj.Pt()*cos(dphi));
+  return sqrt(mT2);
+}
