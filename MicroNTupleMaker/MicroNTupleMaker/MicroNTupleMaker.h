@@ -36,7 +36,10 @@ public :
    vector<string> treenames;
    map<string,TTree*> tree_output;
    map<string,double> tree_output_vars;
-   map<string,double> tree_output_string;
+   map<string,string> tree_output_vars_string;
+
+   //string variables
+   string year_mc;
 
    // svj & asvj variables
    int n_svj, n_asvj;

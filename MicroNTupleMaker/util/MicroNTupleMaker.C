@@ -76,6 +76,8 @@ void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
 	// Class instance
 	class MicroNTupleMaker myMaker(fChain);
 	
+        myMaker.year_mc = mc;
+
 	myMaker.DeclareHistograms();
 	myMaker.DeclareOutputTrees();
 	myMaker.Loop();

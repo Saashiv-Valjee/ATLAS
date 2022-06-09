@@ -30,11 +30,19 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"MET_TruthMET_TruthPhi","MET_TruthMET_TruthSumEt",
         	"met_met", "met_phi"
         };
+
+	vector<string> myvars_string = {
+		"year"
+	};
 	
 	for (auto treename: treenames){
 		tree_output[treename] = new TTree( Form("%s",treename.c_str()), Form("%s",treename.c_str()) );
 		
-		for (auto var: myvars) tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars[var]);
+		for (auto var: myvars)
+			tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars[var]);
+
+                for( auto var: myvars_string ) 
+			tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars_string[var] );
 	}
 }
 
