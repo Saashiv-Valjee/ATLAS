@@ -43,6 +43,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 
 	if (debug) cout << "MicroNTupleMaker::FillOutputTrees()" << endl;
 
+	tree_output_vars_string["year"] = year_mc;
+
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
 	tree_output_vars["mcEventWeight"] = mcEventWeight;
