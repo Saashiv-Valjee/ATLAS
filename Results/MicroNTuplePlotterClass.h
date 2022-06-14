@@ -387,14 +387,15 @@ public :
 			i++;
 			cout << "stacking " << i << " hist.." << endl;
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
+		
+			string legend_name = hist_tag;
+			if( stamp_counts ){
+				legend_name = Form("%s (NE=%.f,Int=%.2f)", hist_tag.c_str(), h->GetEntries(), h->Integral(0,myPlotParams.nbins+1) );
+			}
 
 			if( plot_norm )
 				h->Scale( 1./h->Integral() );
 
-			string legend_name = hist_tag;
-			if( stamp_counts ){
-				legend_name = Form("%s (NE=%.f,Int=%.2f)", hist_tag.c_str(), h->GetEntries(), h->Integral() );
-			}
 
 			if( plot_log )	 h->SetMaximum( h->GetMaximum()*20. );
 			else  		 h->SetMaximum( h->GetMaximum()*1.25 );

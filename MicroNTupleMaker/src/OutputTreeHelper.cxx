@@ -6,12 +6,14 @@ void MicroNTupleMaker::DeclareOutputTrees(){
         	 
 		// -- EventLevel -- //
 		"runNumber", "eventNumber","mcEventWeight",
+		"hT", "rT",
 
 		// -- JetLevel -- //
 		"n_r04_jets", "n_r10_jets",
 		"maxphi_minphi", "dphi_min", "dphi_max",
                 "pt_balance_12", "pt_balance_sa",
                 "mjj_12", "mjj_sa","mT_jj",
+		"dR_12", "deta_12",
 		"deltaY_12", "deltaY_sa",
         	"jet1_pt", "jet1_eta", "jet1_phi", "jet1_m", "jet1_nConstituents",
         	"jet2_pt", "jet2_eta", "jet2_phi", "jet2_m", "jet2_nConstituents",
@@ -56,6 +58,9 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
 	tree_output_vars["mcEventWeight"] = mcEventWeight;
+
+	tree_output_vars["hT"] = hT;
+	tree_output_vars["rT"] = rT;
 
 	tree_output_vars["n_r04_jets"] = na4_pflowjets;
 	tree_output_vars["n_r10_jets"] = na10_lctopojets;
@@ -130,6 +135,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
         tree_output_vars["mjj_12"] = mjj_12;
         tree_output_vars["mjj_sa"] = mjj_sa;
         tree_output_vars["mT_jj"] = mT_jj;
+	tree_output_vars["dR_12"] = dR_12;
+	tree_output_vars["deta_12"] = deta_12;
         tree_output_vars["deltaY_12"] = deltaY_12;
         tree_output_vars["deltaY_sa"] = deltaY_sa;
 	tree_output_vars["dphi_min"] = dphi_min;

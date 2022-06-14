@@ -87,10 +87,15 @@ void MicroNTupleMaker::Loop()
 		jet_asvj_mT = v_asvj.Mt();
                 mT_jj = GetMt(v1,v2,metFinalTrkSumEt, metFinalTrkPhi);
 
-		// deltaY
+		// distance between jets
+		dR_12 = GetdR(v1,v2);
+		deta_12 = GetDEta(v1.Eta(),v2.Eta());
 		deltaY_12 = GetDeltaY(v1,v2);
 		deltaY_sa = GetDeltaY(v_svj,v_asvj);
-			
+		
+		// HT
+		hT = GetHT(a10_lctopojets_pt);
+	
 		// save output tree
 		FillOutputTrees("PostSel");
 		finalEntries++;

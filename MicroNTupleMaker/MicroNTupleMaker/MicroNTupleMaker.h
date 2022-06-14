@@ -47,6 +47,7 @@ public :
    float dphi_min, dphi_max, maxphi_minphi;
    float pt_balance_12, pt_balance_sa;
    float mjj_12, mjj_sa, mT_jj;
+   float hT, dR_12, deta_12, rT;
    float jet1_mT, jet2_mT, jet_svj_mT, jet_asvj_mT;
    float deltaY_12, deltaY_sa;
 
@@ -356,6 +357,9 @@ public :
    virtual float    GetMjj(TLorentzVector v1, TLorentzVector v2);
    virtual float    GetMt(TLorentzVector v1, TLorentzVector v2, float met, float met_phi);
    virtual float    GetDeltaY(TLorentzVector v1, TLorentzVector v2);
+   virtual float    GetHT(vector<float> *jet_pt);
+   virtual float    GetdR(TLorentzVector v1, TLorentzVector v2);
+   virtual float    GetDEta(float eta1, float eta2);
 
    // OutputTreeHelper
    virtual void     DeclareOutputTrees();
