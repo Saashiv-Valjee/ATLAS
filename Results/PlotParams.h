@@ -55,6 +55,14 @@ PlotParams P_dphi_max			= {"dphi_max", "#Delta#phi (furthest jet, MET)", "#Delta
 PlotParams P_dphi_min			= {"dphi_min", "#Delta#phi (closest jet, MET)", "#Delta#phi", 50, 0, 3.14};
 PlotParams P_deltaY_12			= {"deltaY_12", "#Delta Y (leading jet, subleading jet)", "#Delta Y", 50, 0, 10};
 PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 100, 0, 3000};
+PlotParams P_deta_12			= {"deta_12", "#Delta#eta (leading, subleading jet)", "#Delta#eta", 50, 0, 10};
+PlotParams P_dR_12			= {"dR_12", "#Delta R (leading, subleading jet)", "#Delta R", 50, 0, 10};
+PlotParams P_rT			 	= {"rT", "MET/mT", "RT", 50, 0, 1.5};
+PlotParams P_hT				= {"hT", "Jet pT Sum", "HT [GeV]", 50, 0, 2500};
+
+PlotParams P_aplanarity			= {"aplanarity", "Aplanarity", "aplanarity", 50, 0, 0.5};
+PlotParams P_sphericity			= {"sphericity", "Sphericity", "sphericity", 50, 0, 1.0};
+PlotParams P_sphericity_T		= {"sphericity_T", "Transverse Sphericity", "sphericity_T", 50, 0, 1.0};
 
 // Overlayed Plots
 PlotParams OP_jet_pt			= {"jet_pt", "Jet Pt", "p_{T} [GeV]", 50, 0, 1000};

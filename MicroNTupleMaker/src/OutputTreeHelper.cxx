@@ -7,6 +7,7 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		// -- EventLevel -- //
 		"runNumber", "eventNumber","mcEventWeight",
 		"hT", "rT",
+		"aplanarity", "sphericity", "sphericity_T",
 
 		// -- JetLevel -- //
 		"n_r04_jets", "n_r10_jets",
@@ -141,6 +142,9 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
         tree_output_vars["deltaY_sa"] = deltaY_sa;
 	tree_output_vars["dphi_min"] = dphi_min;
 	tree_output_vars["dphi_max"] = dphi_max;
+	tree_output_vars["aplanarity"] = aplanarity;
+	tree_output_vars["sphericity"] = sphericity;
+	tree_output_vars["sphericity_T"] = sphericity_T;
 
 	tree_output[treename]->Fill();
 }

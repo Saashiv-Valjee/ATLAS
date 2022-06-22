@@ -4,10 +4,10 @@
 void myPlotter(){
 
 	//string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/v1.2/user.ebusch.";
-	string path = "../MicroNTupleMaker/MicroNTuples/v1.3/user.ebusch.";
+	string path = "../MicroNTupleMaker/MicroNTuples/v1.5/user.ebusch.";
 	
 	//vector<string> filetags = {"508548.mc16d", "364703.mc16d"};
-	vector<string> filetags = {"508547","508548", "508549", "508550", "364702"};
+	vector<string> filetags = {"364702", "508547","508548","508549", "508550"};
 	vector<string> filetags_signal = {"508547","508548", "508549", "508550"};
 	vector<string> filetags_background = {"364703", "364704"};
 
@@ -17,16 +17,17 @@ void myPlotter(){
 	cuts["met"] = "met_met>200";
 	cuts["jet"] = "jet1_pt>500";
 
-	class MicroNTuplePlotter plotter( filetags, path );
+	class MicroNTuplePlotter plotter( filetags_signal, path );
 
         //***************** Plot General options *******************// 
         plotter.plot_norm = true;
         plotter.plot_log = false;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="mT_and_jz2";
+        plotter.output_file_tag ="full_multijet";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = true;
+	plotter.colors = {kOrange+10, kBlue+2, kOrange+1, kAzure+7, kGreen+2, kAzure+7, kBlue+2 };
 
         //***************** Plot Variable options *******************//
         //plotter.SetPlots( {P_jet1_pt, P_jet_svj_pt, P_jet_asvj_pt, P_pt_balance_12, P_pt_balance_sa, P_dphi_min, P_maxphi_minphi, P_met_met} );
@@ -54,7 +55,10 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_m, P_jet2_m, P_jet_svj_m, P_jet_asvj_m}, OP_jet_m );
 	//plotter.PlotOverlay("");
 
-	plotter.SetPlots ( {P_mT_jj} );
-	//plotter.SetPlots ( {P_jet1_pt, P_met_met} );
+	//plotter.SetPlots ( {P_mT_jj} );
+	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T} );
+	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_mT_jj, P_rT, P_hT, P_dR_12, P_deta_12, P_dphi_min, P_pt_balance_12, P_deltaY_12, P_jet1_C2, P_jet2_C2} );
+	plotter.SetPlots( {P_jet1_pt, P_met_met, P_hT});
+	//plotter.SetPlots ( {P_jet1_D2, P_jet2_D2, P_jet1_Split12, P_jet2_Split12, P_jet1_Split23, P_jet2_Split23} );
 	plotter.Plot("");
 }

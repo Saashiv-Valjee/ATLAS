@@ -14,6 +14,8 @@
 #include <TLorentzVector.h>
 #include <TSystem.h>
 #include <TH1F.h>
+#include "TMatrixD.h"
+#include "TDecompSVD.h"
 
 // Header file for the classes stored in the TTree if any.
 #include "vector"
@@ -50,6 +52,7 @@ public :
    float hT, dR_12, deta_12, rT;
    float jet1_mT, jet2_mT, jet_svj_mT, jet_asvj_mT;
    float deltaY_12, deltaY_sa;
+   float aplanarity, sphericity, sphericity_T;
 
    // Cutflow histograms
    TH1F *cutflow;
@@ -352,14 +355,15 @@ public :
 
    // FunctionHelpers 
    virtual vector<pair<int,float>> FindSVJ();
-   virtual float    GetPtBalance(TLorentzVector v1, TLorentzVector v2);
-   virtual float    GetDPhi(float phi1, float phi2);
-   virtual float    GetMjj(TLorentzVector v1, TLorentzVector v2);
-   virtual float    GetMt(TLorentzVector v1, TLorentzVector v2, float met, float met_phi);
-   virtual float    GetDeltaY(TLorentzVector v1, TLorentzVector v2);
-   virtual float    GetHT(vector<float> *jet_pt);
-   virtual float    GetdR(TLorentzVector v1, TLorentzVector v2);
-   virtual float    GetDEta(float eta1, float eta2);
+   virtual float    		GetPtBalance(TLorentzVector v1, TLorentzVector v2);
+   virtual float    		GetDPhi(float phi1, float phi2);
+   virtual float    		GetMjj(TLorentzVector v1, TLorentzVector v2);
+   virtual float    		GetMt(TLorentzVector v1, TLorentzVector v2, float met, float met_phi);
+   virtual float    		GetDeltaY(TLorentzVector v1, TLorentzVector v2);
+   virtual float    		GetHT(vector<float> *jet_pt);
+   virtual float    		GetdR(TLorentzVector v1, TLorentzVector v2);
+   virtual float    		GetDEta(float eta1, float eta2);
+   virtual map<string,float> 	GetShapeVariables(vector<float> *jet_pt, vector<float> *jet_eta, vector<float> *jet_phi, vector<float> *jet_m);
 
    // OutputTreeHelper
    virtual void     DeclareOutputTrees();
