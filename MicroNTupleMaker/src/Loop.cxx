@@ -95,7 +95,16 @@ void MicroNTupleMaker::Loop()
 		
 		// HT
 		hT = GetHT(a10_lctopojets_pt);
-	
+
+		// rT
+		rT = metFinalTrkSumEt / mT_jj;
+
+		// event shape variables
+		map<string,float> shape_variables = GetShapeVariables(a10_lctopojets_pt, a10_lctopojets_eta, a10_lctopojets_phi, a10_lctopojets_m);
+		aplanarity = shape_variables["Aplanarity"];
+		sphericity = shape_variables["Sphericity"];
+		sphericity_T = shape_variables["Transverse_Sphericity"];		
+		
 		// save output tree
 		FillOutputTrees("PostSel");
 		finalEntries++;

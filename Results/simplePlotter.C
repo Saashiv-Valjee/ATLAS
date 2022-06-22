@@ -25,16 +25,27 @@ vector<TH1F*> Get1DHists(vector<string> inputFiles, string branch, PlotParams my
 void Plot1DHists(vector<TH1F*> hists, vector<string> leg_names, string branch){
 
   TCanvas* canv = new TCanvas(); 
-  TLegend *leg = new TLegend(.6,.6,.98,.98);
+  TLegend *leg;
+  if (branch == "jet1_tau32") leg = new TLegend(.01,.6,.4,.98); // upper left
+  else if(branch == "pt_balance_21") leg = new TLegend(.1,.1,.3,.3); // bottom left
+  else leg = new TLegend(.6,.6,.98,.98); // upper right (default)
   gStyle->SetOptStat(0);
 
-
+  float max = 0;
+  // first loop prepares histograms for plotting
+  // NOTE; it's important to get the maximum AFTER normalizing
   for( int i=0; i<hists.size(); i++){
     if( hists[i]->Integral() == 0 ){cout << "No entries for " << leg_names[i] << " " << branch << "; skipping" << endl; continue;}
     //hists[i]->GetYaxis()->SetRangeUser(0.0001,1);
     hists[i]->SetLineColor(mycolors[i]);
     hists[i]->Scale(1.0/hists[i]->Integral() );
-    hists[i]->SetMaximum( hists[i]->GetMaximum()*1.25);
+    if (hists[i]->GetMaximum() > max){
+	max = hists[i]->GetMaximum();
+    }
+  }
+  // second loop does plotting
+  for( int i=0; i<hists.size(); i++){
+    hists[i]->SetMaximum(max*1.2); // set Y axis range to be slightly larger than found maximum
     hists[i]->Draw("SAME HIST"); 
     string full_name = Form("%s (N = %i)", leg_names[i].c_str(), int(hists[i]->GetEntries()));
     leg->AddEntry(hists[i], full_name.c_str() );
