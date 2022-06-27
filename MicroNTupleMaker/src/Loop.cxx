@@ -66,11 +66,13 @@ void MicroNTupleMaker::Loop()
 		maxphi_minphi = dphi_max - dphi_min;
 
 		// create relevant 4 vectors
-		TLorentzVector v1, v2, v_svj, v_asvj;
+		TLorentzVector v1, v2, v_svj, v_asvj, v1_r04, v2_r04;
 		v1.SetPtEtaPhiM(a10_lctopojets_pt->at(0), a10_lctopojets_eta->at(0), a10_lctopojets_phi->at(0), a10_lctopojets_m->at(0));
 		v2.SetPtEtaPhiM(a10_lctopojets_pt->at(1), a10_lctopojets_eta->at(1), a10_lctopojets_phi->at(1), a10_lctopojets_m->at(1));
 		v_svj.SetPtEtaPhiM(a10_lctopojets_pt->at(n_svj), a10_lctopojets_eta->at(n_svj), a10_lctopojets_phi->at(n_svj), a10_lctopojets_m->at(n_svj));
 		v_asvj.SetPtEtaPhiM(a10_lctopojets_pt->at(n_asvj), a10_lctopojets_eta->at(n_asvj), a10_lctopojets_phi->at(n_asvj), a10_lctopojets_m->at(n_asvj));
+		v1_r04.SetPtEtaPhiE(a4_pflowjets_pt->at(0), a4_pflowjets_eta->at(0), a4_pflowjets_phi->at(0), a4_pflowjets_E->at(0));
+		v2_r04.SetPtEtaPhiE(a4_pflowjets_pt->at(1), a4_pflowjets_eta->at(1), a4_pflowjets_phi->at(1), a4_pflowjets_E->at(1));
 			
 		// pt balance
 		pt_balance_12 = GetPtBalance(v1,v2);
@@ -79,6 +81,7 @@ void MicroNTupleMaker::Loop()
 		//Mjj
 		mjj_12 = GetMjj(v1,v2);      
 		mjj_sa = GetMjj(v_svj,v_asvj);      
+		mjj_12_r04 = GetMjj(v1_r04, v2_r04);	
 
 		//mT
 		jet1_mT = v1.Mt();
@@ -86,6 +89,7 @@ void MicroNTupleMaker::Loop()
 		jet_svj_mT = v_svj.Mt();
 		jet_asvj_mT = v_asvj.Mt();
                 mT_jj = GetMt(v1,v2,metFinalTrkSumEt, metFinalTrkPhi);
+                mT_jj_r04 = GetMt(v1_r04,v2_r04,metFinalTrkSumEt, metFinalTrkPhi);
 
 		// distance between jets
 		dR_12 = GetdR(v1,v2);
@@ -95,6 +99,7 @@ void MicroNTupleMaker::Loop()
 		
 		// HT
 		hT = GetHT(a10_lctopojets_pt);
+		hT_r04 = GetHT(a4_pflowjets_pt);
 
 		// rT
 		rT = metFinalTrkSumEt / mT_jj;

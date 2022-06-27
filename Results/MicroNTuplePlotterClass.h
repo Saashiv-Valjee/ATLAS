@@ -43,7 +43,8 @@ public :
 	bool plot_norm = false;
         bool plot_error = true;
         bool stamp_cuts = false;
-        bool stamp_counts = true;
+        bool stamp_integral = true;
+        bool stamp_counts = false;
 	bool manual_legend = false;
 	bool use_better_legend_names = true;
 	bool use_weight = true;
@@ -389,8 +390,14 @@ public :
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
 		
 			string legend_name = hist_tag;
-			if( stamp_counts ){
-				legend_name = Form("%s (NE=%.f,Int=%.2f)", hist_tag.c_str(), h->GetEntries(), h->Integral(0,myPlotParams.nbins+1) );
+			if( stamp_integral && !stamp_counts ){
+				legend_name = Form("%s (Int=%.2f)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
+			}
+			if (stamp_counts && !stamp_integral){
+				legend_name = Form("%s (NE=%i)", hist_tag.c_str(), int(h->GetEntries()));
+			}
+			if (stamp_counts && stamp_integral){
+				legend_name = Form("%s (NE=%i, Int=%.2f)", hist_tag.c_str(), int(h->GetEntries()), h->Integral(0,myPlotParams.nbins+1) );
 			}
 
 			if( plot_norm )

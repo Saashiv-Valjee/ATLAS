@@ -48,17 +48,25 @@ PlotParams P_jet_asvj_eta		= {"jet_asvj_eta", "Anti Semi-visible Jet Eta", "#eta
 PlotParams P_jet_asvj_phi		= {"jet_asvj_phi", "Anti Semi-visible Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet_asvj_m			= {"jet_asvj_m", "Anti Semi-visible Jet Mass", "M [GeV]", 50, 0, 300};
 
+PlotParams P_r04_jet1_pt		= {"r04_jet1_pt", "Leading Small-R Jet p_{T}", "p_{T} [GeV]", 50, 0, 1000};
+PlotParams P_r04_jet1_eta		= {"r04_jet1_eta", "Leading Small-R Jet Eta", "#eta", 50, -2.5, 2.5};
+PlotParams P_r04_jet1_phi		= {"r04_jet1_phi", "Leading Small-R Jet Phi", "#phi", 50, -3.14, 3.14};
+PlotParams P_r04_jet1_E			= {"r04_jet1_E", "Leading Small-R Jet Energy", "Energy [GeV]", 50, 0, 3000};
+
 PlotParams P_maxphi_minphi		= {"maxphi_minphi", "max#phi - min#phi", "max#phi - min#phi", 50, 0, 3.14};
 PlotParams P_pt_balance_12	 	= {"pt_balance_12", "p_{T} balance leading-subleading", "pt balance", 50, 0, 1};
 PlotParams P_pt_balance_sa		= {"pt_balance_sa", "p_{T} balance svj-antisvj", "pt balance", 50, 0, 1};
 PlotParams P_dphi_max			= {"dphi_max", "#Delta#phi (furthest jet, MET)", "#Delta#phi", 50, 0, 3.14};
 PlotParams P_dphi_min			= {"dphi_min", "#Delta#phi (closest jet, MET)", "#Delta#phi", 50, 0, 3.14};
 PlotParams P_deltaY_12			= {"deltaY_12", "#Delta Y (leading jet, subleading jet)", "#Delta Y", 50, 0, 10};
+PlotParams P_mjj_12			= {"mjj_12", "Invariant Mass (Leading, Subleading)", "m_{jj} [GeV]", 100, 0, 3000};
+PlotParams P_mjj_12_r04			= {"mjj_12_r04", "Invariant Mass Small-R Jets (Leading, Subleading)", "m_{jj} [GeV]", 100, 0, 3000};
 PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 100, 0, 3000};
 PlotParams P_deta_12			= {"deta_12", "#Delta#eta (leading, subleading jet)", "#Delta#eta", 50, 0, 10};
 PlotParams P_dR_12			= {"dR_12", "#Delta R (leading, subleading jet)", "#Delta R", 50, 0, 10};
 PlotParams P_rT			 	= {"rT", "MET/mT", "RT", 50, 0, 1.5};
 PlotParams P_hT				= {"hT", "Jet pT Sum", "HT [GeV]", 50, 0, 2500};
+PlotParams P_hT_r04			= {"hT_r04", "Small-R Jet pT Sum", "HT [GeV]", 100, 0, 3000};
 
 PlotParams P_aplanarity			= {"aplanarity", "Aplanarity", "aplanarity", 50, 0, 0.5};
 PlotParams P_sphericity			= {"sphericity", "Sphericity", "sphericity", 50, 0, 1.0};
