@@ -50,7 +50,7 @@ if not isMC:
 doSmallR = True
 jetContainerNames = ["AntiKt4EMPFlowJets"]
 jetBranchNames = ["a4_pflowjets"]
-jetDetailStrs = ["kinematic constituent cleanLight"]
+jetDetailStrs = ["kinematic cleanLight"]
 calibJetContainerNames = []
 DefaultJetDetailStrs = jetDetailStrs[0]
 #calibJetContainerName = "AntiKt4EMPFlowJets"
@@ -62,12 +62,13 @@ fatJetContainerNames = ["AntiKt10LCTopoTrimmedPtFrac5SmallR20Jets"]
 #fatJetBranchNames = ["a10_ufojets"]
 fatJetBranchNames = ["a10_lctopojets"]
 #fatJetBranchNames = ["a10_lctopojets", "a10_ufojets"]
-fatJetDetailStrs = ["kinematic substructure constituent"]
+fatJetDetailStrs = ["kinematic substructure"]
 calibFatJetContainerNames = []
 DefaultFatJetDetailStrs = fatJetDetailStrs[0]
 #calibFatJetContainerName = "AntiKt10LCTopoTrimmedPtFrac5SmallR20Jets"
 
-DefaultTruthDetailStrs = "type dressed origin children parents"
+#DefaultTruthDetailStrs = "type dressed origin children parents"
+DefaultTruthDetailStrs = ""
 
 #The JES uncertainty reducion scheme to be used for small-R jets. Possible values are: GR, SR1, SR2, SR3, SR4
 ReductionScheme = "GR"
@@ -107,12 +108,12 @@ c.algorithm("BasicEventSelection",	{
 	"m_applyJetCleaningEventFlag"	:	True,
 
 	#trigger decisions
-	"m_storeTrigDecisions"		:	True,
-	"m_storePassHLT"		:	True,
-	"m_applyTriggerCut"		:	False,
+	"m_storeTrigDecisions"		:	False,
+	"m_storePassHLT"		:	False,
+	"m_applyTriggerCut"		:	True,
 	#"m_triggerSelection"		:	".+", 
 	#"m_triggerSelection"		:	"(HLT|L1)_((ht|HT)|[1-9]?0?(j|J)[0-9])+.*",  # only jet and HT ones
-	"m_triggerSelection"		:	"HLT.xe*",
+	"m_triggerSelection"		:	"HLT_xe110_pufit_xe70_L1XE50",
 })
 
 
@@ -156,12 +157,10 @@ if doCalibration:
 				"m_calibConfigFullSim"		:	calibConfigFullSim,
 				"m_calibSequence"		:	calibSequence,
 				"m_uncertConfig"		:	uncertConfig,
-				#----------------------- Cleaning ----------------------------#
-				"m_doCleaning"			:	False,
-				"m_jetCleanCutLevel"		:	"LooseBad",
-				"m_jetCleanUgly"		:	False,
-				"m_saveAllCleanDecisions"	:	False,
-				"m_cleanParent"			:	False,
+  				#----------------------- Selections ----------------------------#
+  				"m_cleanJets"                 : True,
+  				"m_pass_min"                  : 1,
+  				"m_pT_min"                    : 25e3,
 			})
 
 			
@@ -224,7 +223,7 @@ metJetContainerName = "AntiKt4EMPFlowJets"
 metInputJets = "AntiKt4EMPFlowJets_cal"
 jetAlgo = metJetContainerName.replace("Jets", "")
 metContainerName = "MET"
-metDetailStr = "metTrk"
+metDetailStr = "metClus"
 c.algorithm("METConstructor", 	{
 	"m_name"	         :    "met",
 	"m_msgLevel"             :    msglevel,
@@ -306,14 +305,20 @@ if outTree:
 		"m_truthFatJetBranchName"	:	truthFatJetBranchName,
 		"m_truthFatJetDetailStr"	:	truthFatJetDetailStr,
 		"m_METContainerName"		:	metContainerName, 
-		"m_METDetailStr"		:	metDetailStr,					
+		"m_METDetailStr"		:	metDetailStr,
 
-		"m_truthParticlesContainerName" :	"TruthBSM",
-		"m_truthParticlesBranchName"	:	"truthBSM",
-                "m_truthParticlesDetailStr"     :       DefaultTruthDetailStrs,
+		"m_truthParticlesContainerName" :	"",
+		"m_truthParticlesBranchName"	:	"",
+                "m_truthParticlesDetailStr"     :       "",
+		#"m_truthParticlesContainerName" :	"TruthBSM",
+		#"m_truthParticlesBranchName"	:	"truthBSM",
+                #"m_truthParticlesDetailStr"     :       DefaultTruthDetailStrs,
 
-		"m_truthMetContainerName"	:	"MET_Truth",
-                "m_truthMetDetailStr"	        :	"TruthMET", 
+		#"m_truthMetContainerName"	:	"MET_Truth",
+                #"m_truthMetDetailStr"	        :	"TruthMET", 
 		#"m_truthMetBranchName"		:	"TruthMET"
+		"m_truthMetContainerName"	:	"",
+                "m_truthMetDetailStr"	        :	"", 
+		"m_truthMetBranchName"		:	""
 })
 

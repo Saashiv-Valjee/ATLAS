@@ -24,7 +24,7 @@ PlotParams P_jet1_m			= {"jet1_m", "Leading Jet M", "Mass [GeV]", 50, 0, 3000};
 PlotParams P_jet1_mT			= {"jet1_mT", "Leading Jet MT", "Mass [GeV]", 50, 0, 2000};
 PlotParams P_jet1_C2			= {"jet1_C2", "Leading Jet C2", "C2", 50, 0, 1};
 PlotParams P_jet1_D2			= {"jet1_D2", "Leading Jet D2", "D2", 50, 0, 10};
-PlotParams P_jet1_Split12		= {"jet1_Split12", "Leading Jet Split 12", "Split12", 50, 0, 500};
+PlotParams P_jet1_Split12		= {"jet1_Split12", "Leading Jet Split 12", "Split12", 50, 0, 150};
 PlotParams P_jet1_Split23		= {"jet1_Split23", "Leading Jet Split 23", "Split23", 50, 0, 200};
 PlotParams P_jet1_tau23			= {"jet1_tau32", "Leading Jet N-subjettiness", "N-subjettiness", 50, 0, 200};
 

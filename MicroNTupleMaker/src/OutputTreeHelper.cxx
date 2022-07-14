@@ -30,7 +30,7 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"jet_svj_mT", "jet_svj_Split12", "jet_svj_Split23", "jet_svj_tau32", "jet_svj_C2", "jet_svj_D2", "jet_svj_nTracks",
 
 		// -- MET -- //
-		"MET_TruthMET_TruthPhi","MET_TruthMET_TruthSumEt",
+		//"MET_TruthMET_TruthPhi","MET_TruthMET_TruthSumEt",
         	"met_met", "met_phi"
         };
 
@@ -128,8 +128,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 
 	tree_output_vars["met_met"] = metFinalTrkSumEt;
 	tree_output_vars["met_phi"] = metFinalTrkPhi;
-	tree_output_vars["MET_TruthMET_TruthSumEt"] = MET_TruthMET_TruthSumEt;
-	tree_output_vars["MET_TruthMET_TruthPhi"] = MET_TruthMET_TruthPhi;
+	//tree_output_vars["MET_TruthMET_TruthSumEt"] = MET_TruthMET_TruthSumEt;
+	//tree_output_vars["MET_TruthMET_TruthPhi"] = MET_TruthMET_TruthPhi;
 
 	tree_output_vars["maxphi_minphi"] = maxphi_minphi;
         tree_output_vars["pt_balance_12"] = pt_balance_12;
