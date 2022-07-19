@@ -6,28 +6,28 @@ void MicroNTupleMaker::DeclareOutputTrees(){
         	 
 		// -- EventLevel -- //
 		"runNumber", "eventNumber","mcEventWeight",
-		"hT", "rT", "hT_r04",
+		"hT", "rT", "hT_r04", "rT_r04",
 		"aplanarity", "sphericity", "sphericity_T",
 
 		// -- JetLevel -- //
 		"n_r04_jets", "n_r10_jets",
 		"maxphi_minphi", "dphi_min", "dphi_max",
-                "pt_balance_12", "pt_balance_sa",
-                "mjj_12", "mjj_sa","mT_jj", "mjj_12_r04", "mT_jj_r04",
+                "pt_balance_12", //"pt_balance_sa",
+                "mjj_12", "mT_jj", "mjj_12_r04", "mT_jj_r04",
 		"dR_12", "deta_12",
-		"deltaY_12", "deltaY_sa",
+		"deltaY_12", //"deltaY_sa",
         	"jet1_pt", "jet1_eta", "jet1_phi", "jet1_m", "jet1_nConstituents",
         	"jet2_pt", "jet2_eta", "jet2_phi", "jet2_m", "jet2_nConstituents",
         	"r04_jet1_pt", "r04_jet1_eta", "r04_jet1_phi", "r04_jet1_E", //"jet1_nConstituents",
         	"r04_jet2_pt", "r04_jet2_eta", "r04_jet2_phi", "r04_jet2_E", //"jet2_nConstituents",
-        	"jet_svj_pt", "jet_svj_eta", "jet_svj_phi", "jet_svj_m", "jet_svj_n", "jet_svj_nConstituents",
-        	"jet_asvj_pt", "jet_asvj_eta", "jet_asvj_phi", "jet_asvj_m", "jet_asvj_n", "jet_asvj_nConstituents",
+        	//"jet_svj_pt", "jet_svj_eta", "jet_svj_phi", "jet_svj_m", "jet_svj_n", "jet_svj_nConstituents",
+        	//"jet_asvj_pt", "jet_asvj_eta", "jet_asvj_phi", "jet_asvj_m", "jet_asvj_n", "jet_asvj_nConstituents",
         	//"jet_xd1_matched_pt", "jet_xd1_matched_eta", "jet_xd1_matched_phi", "jet_xd1_matched_m", "jet_xd1_matched_n", "jet_xd1_matched_nConstituents",
         	//"jet_xd2_matched_pt", "jet_xd2_matched_eta", "jet_xd2_matched_phi", "jet_xd2_matched_m", "jet_xd2_matched_n", "jet_xd2_matched_nConstituents",
-		"jet1_mT", "jet1_Split12", "jet1_Split23", "jet1_tau32", "jet1_C2", "jet1_D2", "jet1_nTracks",
-		"jet2_mT", "jet2_Split12", "jet2_Split23", "jet2_tau32", "jet2_C2", "jet2_D2", "jet2_nTracks",
-		"jet_asvj_mT", "jet_asvj_Split12", "jet_asvj_Split23", "jet_asvj_tau32", "jet_asvj_C2", "jet_asvj_D2", "jet_asvj_nTracks",
-		"jet_svj_mT", "jet_svj_Split12", "jet_svj_Split23", "jet_svj_tau32", "jet_svj_C2", "jet_svj_D2", "jet_svj_nTracks",
+		"jet1_Split12", "jet1_Split23", "jet1_tau32", "jet1_C2", "jet1_D2", "jet1_nTracks",
+		"jet2_Split12", "jet2_Split23", "jet2_tau32", "jet2_C2", "jet2_D2", "jet2_nTracks",
+		//"jet_asvj_mT", "jet_asvj_Split12", "jet_asvj_Split23", "jet_asvj_tau32", "jet_asvj_C2", "jet_asvj_D2", "jet_asvj_nTracks",
+		//"jet_svj_mT", "jet_svj_Split12", "jet_svj_Split23", "jet_svj_tau32", "jet_svj_C2", "jet_svj_D2", "jet_svj_nTracks",
 
 		// -- MET -- //
 		//"MET_TruthMET_TruthPhi","MET_TruthMET_TruthSumEt",
@@ -63,6 +63,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["hT"] = hT;
 	tree_output_vars["hT_r04"] = hT_r04;
 	tree_output_vars["rT"] = rT;
+	tree_output_vars["rT_r04"] = rT_r04;
 
 	tree_output_vars["n_r04_jets"] = na4_pflowjets;
 	tree_output_vars["n_r10_jets"] = na10_lctopojets;
@@ -91,6 +92,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["jet2_D2"] = a10_lctopojets_D2->at(1);
 	tree_output_vars["jet2_nTracks"] = a10_lctopojets_nTracks->at(1);
       
+	/*
         tree_output_vars["jet_svj_n"] = n_svj;
 	tree_output_vars["jet_svj_pt"] = a10_lctopojets_pt->at(n_svj);
 	tree_output_vars["jet_svj_eta"] = a10_lctopojets_eta->at(n_svj);
@@ -116,6 +118,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["jet_asvj_C2"] = a10_lctopojets_C2->at(n_asvj);
 	tree_output_vars["jet_asvj_D2"] = a10_lctopojets_D2->at(n_asvj);
 	tree_output_vars["jet_asvj_nTracks"] = a10_lctopojets_nTracks->at(n_asvj);
+	*/
 
 	tree_output_vars["r04_jet1_pt"] = a4_pflowjets_pt->at(0); // GeV
 	tree_output_vars["r04_jet1_eta"] = a4_pflowjets_eta->at(0);
@@ -126,23 +129,23 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["r04_jet2_phi"] = a4_pflowjets_phi->at(1);
 	tree_output_vars["r04_jet2_e"] = a4_pflowjets_E->at(1);
 
-	tree_output_vars["met_met"] = metFinalTrkSumEt;
-	tree_output_vars["met_phi"] = metFinalTrkPhi;
+	tree_output_vars["met_met"] = metFinalClusSumEt;
+	tree_output_vars["met_phi"] = metFinalClusPhi;
 	//tree_output_vars["MET_TruthMET_TruthSumEt"] = MET_TruthMET_TruthSumEt;
 	//tree_output_vars["MET_TruthMET_TruthPhi"] = MET_TruthMET_TruthPhi;
 
 	tree_output_vars["maxphi_minphi"] = maxphi_minphi;
         tree_output_vars["pt_balance_12"] = pt_balance_12;
-        tree_output_vars["pt_balance_sa"] = pt_balance_sa;
+        //tree_output_vars["pt_balance_sa"] = pt_balance_sa;
         tree_output_vars["mjj_12"] = mjj_12;
         tree_output_vars["mjj_12_r04"] = mjj_12_r04;
-        tree_output_vars["mjj_sa"] = mjj_sa;
+        //tree_output_vars["mjj_sa"] = mjj_sa;
         tree_output_vars["mT_jj"] = mT_jj;
         tree_output_vars["mT_jj_r04"] = mT_jj_r04;
 	tree_output_vars["dR_12"] = dR_12;
 	tree_output_vars["deta_12"] = deta_12;
         tree_output_vars["deltaY_12"] = deltaY_12;
-        tree_output_vars["deltaY_sa"] = deltaY_sa;
+        //tree_output_vars["deltaY_sa"] = deltaY_sa;
 	tree_output_vars["dphi_min"] = dphi_min;
 	tree_output_vars["dphi_max"] = dphi_max;
 	tree_output_vars["aplanarity"] = aplanarity;

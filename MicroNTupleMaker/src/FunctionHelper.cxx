@@ -12,7 +12,7 @@ float MicroNTupleMaker::GetDPhi(float phi1, float phi2){
 }
 
 /* =================================================================== */
-vector<pair<int,float>> MicroNTupleMaker::FindSVJ(){
+vector<pair<int,float>> MicroNTupleMaker::FindSVJ( vector<float> *jet_phi ){
 
   	float maxphi = 0;
   	float minphi = 10; 
@@ -21,8 +21,8 @@ vector<pair<int,float>> MicroNTupleMaker::FindSVJ(){
         vector<pair<int,float>> jet_info;
         pair<int,float> svj_info;
         pair<int,float> asvj_info; 
-	for (int i =0; i<a10_lctopojets_phi->size(); i++) {
-    		float dPhi = GetDPhi(a10_lctopojets_phi->at(i),metFinalTrkPhi);
+	for (int i =0; i<jet_phi->size(); i++) {
+    		float dPhi = GetDPhi(jet_phi->at(i),metFinalClusPhi);
     		if (fabs(dPhi) > maxphi){maxphi = fabs(dPhi); n_asvj = i;}
     		if (fabs(dPhi) < minphi){minphi = fabs(dPhi); n_svj = i;}
  	}
@@ -82,7 +82,7 @@ float MicroNTupleMaker::GetdR(TLorentzVector v1, TLorentzVector v2){
 }
 
 /* =================================================================== */
-map<string,float> MicroNTupleMaker::GetShapeVariables(vector<float> *jet_pt, vector<float> *jet_eta, vector<float> *jet_phi, vector<float> *jet_m){
+map<string,float> MicroNTupleMaker::GetShapeVariables(vector<float> *jet_pt, vector<float> *jet_eta, vector<float> *jet_phi, vector<float> *jet_m, bool smallR){
 
 	map<string,float> shape_variables;
 	shape_variables["Sphericity"] = -999;
@@ -95,7 +95,8 @@ map<string,float> MicroNTupleMaker::GetShapeVariables(vector<float> *jet_pt, vec
 	// TODO - need to boost to center of mass?
  	for (int i = 0; i < jet_pt->size(); i++){
 		TLorentzVector v;
-		v.SetPtEtaPhiM(jet_pt->at(i), jet_eta->at(i), jet_phi->at(i), jet_m->at(i));
+		if (smallR) v.SetPtEtaPhiE(jet_pt->at(i), jet_eta->at(i), jet_phi->at(i), jet_m->at(i));
+		else v.SetPtEtaPhiM(jet_pt->at(i), jet_eta->at(i), jet_phi->at(i), jet_m->at(i));
 		MomentumTensor(0,0) += v.Px()*v.Px();
 		MomentumTensor(0,1) += v.Px()*v.Py();
 		MomentumTensor(0,2) += v.Px()*v.Pz();

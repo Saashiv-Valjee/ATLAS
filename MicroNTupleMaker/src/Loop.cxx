@@ -48,13 +48,15 @@ void MicroNTupleMaker::Loop()
 		if (na10_lctopojets < 2) continue;
 		cutflow->Fill(1);      
 		
-		// apply jet1_pt > 150 GeV
-		//if (a10_lctopojets_pt->at(0) < 200000) continue;
-		//cutflow->Fill(2);    
+		// apply MET > 200 GeV
+		if (metFinalClusSumEt < 200) continue;
+		cutflow->Fill(2);      
 		
 		// get svj info 
 		vector<pair<int,float>> svj_info; // {{n_svj,dphi_min}, {n_asvj,dphi_max}}
-		svj_info = FindSVJ();
+		vector<pair<int,float>> svj_info_r04;
+		svj_info = FindSVJ( a10_lctopojets_phi );
+		//svj_info_r04 = FindSVJ( a4_pflowjets_phi );
 		
 		// apply dphi < 2.0
 		//if (svj_info[0].second > 2.0) continue;
@@ -64,6 +66,8 @@ void MicroNTupleMaker::Loop()
 		dphi_min = svj_info[0].second;
 		dphi_max = svj_info[1].second;
 		maxphi_minphi = dphi_max - dphi_min;
+
+		//dphi_min_r04 = svj_info_r04[0].second;
 
 		// create relevant 4 vectors
 		TLorentzVector v1, v2, v_svj, v_asvj, v1_r04, v2_r04;
@@ -76,40 +80,46 @@ void MicroNTupleMaker::Loop()
 			
 		// pt balance
 		pt_balance_12 = GetPtBalance(v1,v2);
-		pt_balance_sa = GetPtBalance(v_svj,v_asvj);
+		//pt_balance_sa = GetPtBalance(v_svj,v_asvj);
 		
 		//Mjj
 		mjj_12 = GetMjj(v1,v2);      
-		mjj_sa = GetMjj(v_svj,v_asvj);      
+		//mjj_sa = GetMjj(v_svj,v_asvj);      
 		mjj_12_r04 = GetMjj(v1_r04, v2_r04);	
 
 		//mT
-		jet1_mT = v1.Mt();
-		jet2_mT = v2.Mt();
-		jet_svj_mT = v_svj.Mt();
-		jet_asvj_mT = v_asvj.Mt();
-                mT_jj = GetMt(v1,v2,metFinalTrkSumEt, metFinalTrkPhi);
-                mT_jj_r04 = GetMt(v1_r04,v2_r04,metFinalTrkSumEt, metFinalTrkPhi);
+		//jet1_mT = v1.Mt();
+		//jet2_mT = v2.Mt();
+		//jet_svj_mT = v_svj.Mt();
+		//jet_asvj_mT = v_asvj.Mt();
+                mT_jj = GetMt(v1,v2,metFinalClusSumEt, metFinalClusPhi);
+                mT_jj_r04 = GetMt(v1_r04,v2_r04,metFinalClusSumEt, metFinalClusPhi);
 
 		// distance between jets
 		dR_12 = GetdR(v1,v2);
 		deta_12 = GetDEta(v1.Eta(),v2.Eta());
 		deltaY_12 = GetDeltaY(v1,v2);
-		deltaY_sa = GetDeltaY(v_svj,v_asvj);
+		//deltaY_sa = GetDeltaY(v_svj,v_asvj);
 		
 		// HT
 		hT = GetHT(a10_lctopojets_pt);
 		hT_r04 = GetHT(a4_pflowjets_pt);
 
 		// rT
-		rT = metFinalTrkSumEt / mT_jj;
+		rT = metFinalClusSumEt / mT_jj;
+		rT_r04 = metFinalClusSumEt / mT_jj_r04;		
 
 		// event shape variables
-		map<string,float> shape_variables = GetShapeVariables(a10_lctopojets_pt, a10_lctopojets_eta, a10_lctopojets_phi, a10_lctopojets_m);
+		map<string,float> shape_variables = GetShapeVariables(a10_lctopojets_pt, a10_lctopojets_eta, a10_lctopojets_phi, a10_lctopojets_m, false);
 		aplanarity = shape_variables["Aplanarity"];
 		sphericity = shape_variables["Sphericity"];
 		sphericity_T = shape_variables["Transverse_Sphericity"];		
 		
+		map<string,float> shape_variables_r04 = GetShapeVariables(a4_pflowjets_pt, a4_pflowjets_eta, a4_pflowjets_phi, a4_pflowjets_E, true);
+		aplanarity_r04 = shape_variables_r04["Aplanarity"];
+		sphericity_r04 = shape_variables_r04["Sphericity"];
+		sphericity_T_r04 = shape_variables_r04["Transverse_Sphericity"];		
+
 		// save output tree
 		FillOutputTrees("PostSel");
 		finalEntries++;

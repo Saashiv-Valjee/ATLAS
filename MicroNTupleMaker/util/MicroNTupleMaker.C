@@ -13,15 +13,17 @@ using namespace std;
 
 using filesystem::directory_iterator;
 
-void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
+void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepath = ""){
 	
 	// Check for infile //
 	
 	string fullinfilepath;
 	
-	if( infilepath == "" ) { // Path from base dir -- when ONLY file tag is provided
-	        string tmp_infilepath = "run/"+infiletag+".root";
-	
+	// Running remotely
+	if( !local ) { // Path from base dir -- when ONLY file tag is provided
+	        fullinfilepath = infiletag;
+		
+		/*
 	        // Local & global paths
 	        TString infilepath_local = "../" + tmp_infilepath;
 	        TString infilepath_global1  = "/afs/cern.ch/work/e/ebusch/public/SVJ/analysisTop/"+tmp_infilepath; // for files on lxplus
@@ -36,8 +38,10 @@ void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
 	                cout<<infilepath_global1<<endl;
 	                return;
 	        }
+		*/
+ 	// Running locally - must provide path to inputs and true flag
 	} else {
-		fullinfilepath = infilepath + infiletag + ".root";
+		fullinfilepath = infilepath + infiletag;
 	}
 	
 	// ----- Read in File(s) & Tree ----- // 
@@ -45,8 +49,8 @@ void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
 	cout<<"Reading in "<<fullinfilepath<<endl;
 	
 	TChain *fChain = new TChain("outTree/nominal");
-
-	if (infilepath == ""){
+	
+	if ( !local ){
 		
 		TString path_tstring = Form("%s", fullinfilepath.c_str());
 		fChain->Add(path_tstring);
@@ -60,6 +64,8 @@ void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
 		}
 		cout << "Added " << file_count << " files to the chain" << endl;
 	}
+	
+
 	// Create output file
 	string outfiletag="";
 	string dsid = infiletag.substr(12,6);
@@ -69,7 +75,11 @@ void MicroNTupleMaker(string infiletag = "", string infilepath = ""){
 	if (infiletag.find("mc16d") != string::npos) mc = "mc16d";
 	if (infiletag.find("mc16e") != string::npos) mc = "mc16e";
 	outfiletag = "user.ebusch." + dsid + "." + mc;
-	TString outfilename = Form( "MicroNTuples/%s.root", outfiletag.c_str() );
+        TString outfilename;
+     
+	if (local) outfilename = Form( "MicroNTuples/%s.root", outfiletag.c_str() );
+	else outfilename = "output.root";
+
 	TFile *fout = new TFile( outfilename, "RECREATE" );	
 	cout << "Writing out "<<outfilename<<endl;
 
@@ -90,9 +100,9 @@ int main(int argc, char** argv){
   int Nargs = argc;
 
   if( Nargs == 2 )
-        MicroNTupleMaker( argv[1], "" );
-  else if (Nargs == 3)
-        MicroNTupleMaker( argv[1], argv[2]);
+        MicroNTupleMaker( argv[1], false, "" );
+  else if (Nargs == 4)
+        MicroNTupleMaker( argv[1], argv[2], argv[3] );
   else
         cout<<"ERROR: Not enough arguments!"<<endl;
 
