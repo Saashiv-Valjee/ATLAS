@@ -9,6 +9,7 @@ if [[ $HOSTNAME = lxplus* ]]; then
     source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
     lsetup cmake
     lsetup "asetup AnalysisBase,21.2.120,here"
+    #lsetup "asetup AnalysisBase,21.2.132,here"
 else
     # aurora etc
     export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase

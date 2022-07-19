@@ -50,7 +50,7 @@ if not isMC:
 doSmallR = True
 jetContainerNames = ["AntiKt4EMPFlowJets"]
 jetBranchNames = ["a4_pflowjets"]
-jetDetailStrs = ["kinematic cleanLight"]
+jetDetailStrs = ["kinematic constituent cleanLight"]
 calibJetContainerNames = []
 DefaultJetDetailStrs = jetDetailStrs[0]
 #calibJetContainerName = "AntiKt4EMPFlowJets"
@@ -67,8 +67,7 @@ calibFatJetContainerNames = []
 DefaultFatJetDetailStrs = fatJetDetailStrs[0]
 #calibFatJetContainerName = "AntiKt10LCTopoTrimmedPtFrac5SmallR20Jets"
 
-#DefaultTruthDetailStrs = "type dressed origin children parents"
-DefaultTruthDetailStrs = ""
+DefaultTruthDetailStrs = "type dressed origin children parents"
 
 #The JES uncertainty reducion scheme to be used for small-R jets. Possible values are: GR, SR1, SR2, SR3, SR4
 ReductionScheme = "GR"
@@ -108,9 +107,9 @@ c.algorithm("BasicEventSelection",	{
 	"m_applyJetCleaningEventFlag"	:	True,
 
 	#trigger decisions
-	"m_storeTrigDecisions"		:	False,
-	"m_storePassHLT"		:	False,
-	"m_applyTriggerCut"		:	True,
+	"m_storeTrigDecisions"		:	True,
+	"m_storePassHLT"		:	True,
+	"m_applyTriggerCut"		:	False,
 	#"m_triggerSelection"		:	".+", 
 	#"m_triggerSelection"		:	"(HLT|L1)_((ht|HT)|[1-9]?0?(j|J)[0-9])+.*",  # only jet and HT ones
 	"m_triggerSelection"		:	"HLT_xe110_pufit_xe70_L1XE50",
@@ -157,10 +156,12 @@ if doCalibration:
 				"m_calibConfigFullSim"		:	calibConfigFullSim,
 				"m_calibSequence"		:	calibSequence,
 				"m_uncertConfig"		:	uncertConfig,
-  				#----------------------- Selections ----------------------------#
-  				"m_cleanJets"                 : True,
-  				"m_pass_min"                  : 1,
-  				"m_pT_min"                    : 25e3,
+				#----------------------- Cleaning ----------------------------#
+				"m_doCleaning"			:	False,
+				"m_jetCleanCutLevel"		:	"LooseBad",
+				"m_jetCleanUgly"		:	False,
+				"m_saveAllCleanDecisions"	:	False,
+				"m_cleanParent"			:	False,
 			})
 
 			
@@ -281,8 +282,8 @@ if outTree:
 		"m_msgLevel"			:	msglevel,
 		
 		# event and trigger
-		"m_evtDetailStr"		:	"eventCleaning pileup weightsSys pileupsys",
-		"m_trigDetailStr"		:	"basic passTriggers",
+		"m_evtDetailStr"		:	"",
+		"m_trigDetailStr"		:	"",
 		
 		#fat and truth jets
                 "m_jetContainerName"            :       jetContainerName,
@@ -305,11 +306,8 @@ if outTree:
 		"m_truthFatJetBranchName"	:	truthFatJetBranchName,
 		"m_truthFatJetDetailStr"	:	truthFatJetDetailStr,
 		"m_METContainerName"		:	metContainerName, 
-		"m_METDetailStr"		:	metDetailStr,
+		"m_METDetailStr"		:	metDetailStr					
 
-		"m_truthParticlesContainerName" :	"",
-		"m_truthParticlesBranchName"	:	"",
-                "m_truthParticlesDetailStr"     :       "",
 		#"m_truthParticlesContainerName" :	"TruthBSM",
 		#"m_truthParticlesBranchName"	:	"truthBSM",
                 #"m_truthParticlesDetailStr"     :       DefaultTruthDetailStrs,
@@ -317,8 +315,7 @@ if outTree:
 		#"m_truthMetContainerName"	:	"MET_Truth",
                 #"m_truthMetDetailStr"	        :	"TruthMET", 
 		#"m_truthMetBranchName"		:	"TruthMET"
-		"m_truthMetContainerName"	:	"",
-                "m_truthMetDetailStr"	        :	"", 
-		"m_truthMetBranchName"		:	""
 })
+
+
 
