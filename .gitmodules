@@ -1,0 +1,3 @@
+[submodule "xAODAnaHelpers"]
+	path = xAODAnaHelpers
+	url = https://github.com/UCATLAS/xAODAnaHelpers.git
