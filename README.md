@@ -1,14 +1,24 @@
 Build:
 ===========================================
+
 mkdir analysis
+
 cd analysis
+
 git clone --recursive https://:@gitlab.cern.ch:8443/biliu/ana-exot-2021-19.git
+
 mkdir build
+
 cd ana-exot-2021-19
+
 asetup AnalysisBase,22.2.75,here
+
 cd ../build
+
 cmake ../ana-exot-2021-19
+
 make
+
 source x86*/setup.sh\cd ..
 
 ===========================================
@@ -17,7 +27,9 @@ It should be complied by now...you might see a bunch of warnings from xAODAnaHel
 Run:
 ===========================================
 cd ..
+
 mkdir run
+
 cd run
 
 xAH_run.py --config ../ana-exot-2021-19/SVJAlgo/data/config_SVJAlgo_ZJets.py --files /eos/user/b/biliu/mc20_13TeV/DAOD_PHYS.28690183._000001.pool.root.1  --isMC --submitDir test direct
