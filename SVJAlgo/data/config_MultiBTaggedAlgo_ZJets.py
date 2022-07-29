@@ -5,7 +5,7 @@ import argparse
 import sys
 import os
 
-sys.path.insert(0, os.environ['WorkDir_DIR']+"/data/MultiBTaggedAlgo/")
+sys.path.insert(0, os.environ['WorkDir_DIR']+"/data/SVJAlgo/")
 
 parser = argparse.ArgumentParser(description='Test for extra options')
 
@@ -171,8 +171,7 @@ c.algorithm("METConstructor",     {
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% BJetEfficiencyCorrector %%%%%%%%%%%%%%%%%%%%%%%%%%#
 bJetWPs = ["FixedCutBEff_60", "FixedCutBEff_70", "FixedCutBEff_77", "FixedCutBEff_85"]
-#bJetWPs = ["FixedCutBEff_85"]
-taggers = ["DL1dv00", "DL1r"]
+taggers = ["DL1dv00"]
 
 for tagger in taggers:
   for bJetWP in bJetWPs:
@@ -203,7 +202,7 @@ if opt.doFatJet:
       inputFatAlgo = "FatJetCalibrator_Syst",
       fatJetDetailStr = "kinematic substructure constituent constituentAll scales area"
 ##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
-c.algorithm("ResonanceAlgorithm",     {
+c.algorithm("SVJAlgorithm",     {
     "m_name"                    : "ResonanceAlgo",
     #----------------------- Container Flow ----------------------------#
     "m_inJetContainerName"      : "Jets_Selected",
@@ -219,7 +218,7 @@ c.algorithm("ResonanceAlgorithm",     {
     "m_doBtag"                  : False,
     "m_reclusterJets"           : False,
     "m_eventDetailStr"          : "truth pileup", #shapeEM
-    "m_jetDetailStr"            : "kinematic rapidity jetBTag_DL1dv00_FixedCutBEff_85 jetBTag_DL1dv00_FixedCutBEff_77 jetBTag_DL1dv00_FixedCutBEff_70 jetBTag_DL1dv00_FixedCutBEff_60 jetBTag_DL1r_FixedCutBEff_85 jetBTag_DL1r_FixedCutBEff_77 jetBTag_DL1r_FixedCutBEff_70 jetBTag_DL1r_FixedCutBEff_60  truth JVT flavorTag",
+    "m_jetDetailStr"            : "kinematic rapidity jetBTag_DL1dv00_FixedCutBEff_85 jetBTag_DL1dv00_FixedCutBEff_77 jetBTag_DL1dv00_FixedCutBEff_70 jetBTag_DL1dv00_FixedCutBEff_60 truth JVT flavorTag",
     "m_fatJetDetailStr"	        : fatJetDetailStr,
     "m_metDetailStr"            : "metClus sigClus",
     "m_jetDetailStrSyst"        : "kinematic rapidity truth JVT",

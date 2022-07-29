@@ -5,7 +5,7 @@ import argparse
 import sys
 import os
 
-sys.path.insert(0, os.environ['WorkDir_DIR']+"/data/MultiBTaggedAlgo/")
+sys.path.insert(0, os.environ['WorkDir_DIR']+"/data/SVJAlgo/")
 
 parser = argparse.ArgumentParser(description='Test for extra options')
 
@@ -29,8 +29,8 @@ c.algorithm("BasicEventSelection",    {
   "m_storeTrigKeys" 	        : False,
   "m_applyTriggerCut"           : False,
   "m_doPUreweighting"           : False,
-  "m_PRWFileNames"              : "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361023.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361024.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361025.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361026.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361027.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361028.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361029.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361030.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361031.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/PRW_AUTOCONFIG/files/pileup_mc16d_dsid361032.root",
-  "m_lumiCalcFileNames"         : "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/ilumicalc_histograms_None_276262-284154.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/ilumicalc_histograms_None_297730-299243.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/ilumicalc_histograms_None_325713-338349_OflLumi-13TeV-001.root,ilumicalc_histograms_None_348885-364292_OflLumi-13TeV-001.root",
+  "m_PRWFileNames"              : "",
+  "m_lumiCalcFileNames"         : "",
   "m_autoconfigPRW"             : False,
   "m_triggerSelection"          : "",
   "m_checkDuplicatesData"       : False,
@@ -138,7 +138,7 @@ c.algorithm("JetSelector",     {
   #----------------------- B-tagging ----------------------------#
   "m_doBTagCut"                 : False,
   "m_corrFileName"              : "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13TeV/2021-22-13TeV-MC16-CDI-2021-12-02_v2.root",
-  "m_taggerName"                : "DL1r",
+  "m_taggerName"                : "DL1dv00",
   "m_jetAuthor"                 : "AntiKt4EMPFlowJets",
   "m_b_pt_min"                  : 25e3,
   "m_b_eta_max"                 : 2.5,
@@ -162,8 +162,7 @@ c.algorithm("METConstructor",     {
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% BJetEfficiencyCorrector %%%%%%%%%%%%%%%%%%%%%%%%%%#
 bJetWPs = ["FixedCutBEff_60", "FixedCutBEff_70", "FixedCutBEff_77", "FixedCutBEff_85"]
-#bJetWPs = ["FixedCutBEff_85"]
-taggers = ["DL1dv00","DL1r"]
+taggers = ["DL1dv00"]
 
 for tagger in taggers:
   for bJetWP in bJetWPs:
@@ -193,7 +192,7 @@ if opt.doFatJet:
       inputFatAlgo = "FatJetCalibrator_Syst",
       fatJetDetailStr = "kinematic substructure constituent constituentAll scales area"
 ##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
-c.algorithm("ResonanceAlgorithm",     {
+c.algorithm("SVJAlgorithm",     {
     "m_name"                    : "ResonanceAlgo",
     #----------------------- Container Flow ----------------------------#
     "m_inJetContainerName"      : "Jets_Selected",
@@ -209,7 +208,7 @@ c.algorithm("ResonanceAlgorithm",     {
     "m_doBtag"                  : False,
     "m_reclusterJets"           : False,
     "m_eventDetailStr"          : "truth pileup", #shapeEM
-    "m_jetDetailStr"            : "kinematic rapidity jetBTag_DL1dv00_FixedCutBEff_85 jetBTag_DL1dv00_FixedCutBEff_77 jetBTag_DL1dv00_FixedCutBEff_70 jetBTag_DL1dv00_FixedCutBEff_60 jetBTag_DL1r_FixedCutBEff_85 jetBTag_DL1r_FixedCutBEff_77 jetBTag_DL1r_FixedCutBEff_70 jetBTag_DL1r_FixedCutBEff_60 truth JVT flavorTag",
+    "m_jetDetailStr"            : "kinematic rapidity jetBTag_DL1dv00_FixedCutBEff_85 jetBTag_DL1dv00_FixedCutBEff_77 jetBTag_DL1dv00_FixedCutBEff_70 jetBTag_DL1dv00_FixedCutBEff_60 truth JVT flavorTag",
     "m_fatJetDetailStr"	        : fatJetDetailStr,
     "m_metDetailStr"            : "metClus sigClus",
     "m_jetDetailStrSyst"        : "kinematic rapidity truth JVT",

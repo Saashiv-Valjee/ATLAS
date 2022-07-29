@@ -5,7 +5,7 @@ import argparse
 import sys
 import os
 
-sys.path.insert(0, os.environ['WorkDir_DIR']+"/data/MultiBTaggedAlgo/")
+sys.path.insert(0, os.environ['WorkDir_DIR']+"/data/SVJAlgo/")
 
 parser = argparse.ArgumentParser(description='Test for extra options')
 
@@ -146,7 +146,7 @@ c.algorithm("JetSelector",     {
   #----------------------- B-tagging ----------------------------#
   "m_doBTagCut"                 : False,
   "m_corrFileName"              : "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13TeV/2021-22-13TeV-MC16-CDI-2021-12-02_v2.root",
-  "m_taggerName"                : "DL1r",
+  "m_taggerName"                : "DL1dv00",
   "m_jetAuthor"                 : "AntiKt4EMPFlowJets",
   "m_b_pt_min"                  : 25e3,
   "m_b_eta_max"                 : 2.5,
@@ -201,7 +201,7 @@ if opt.doFatJet:
       inputFatAlgo = "FatJetCalibrator_Syst",
       fatJetDetailStr = "kinematic substructure constituent constituentAll scales area"
 ##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
-c.algorithm("ResonanceAlgorithm",     {
+c.algorithm("SVJAlgorithm",     {
     "m_name"                    : "ResonanceAlgo",
     #----------------------- Container Flow ----------------------------#
     "m_inJetContainerName"      : "Jets_Selected",
