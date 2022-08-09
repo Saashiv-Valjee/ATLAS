@@ -86,10 +86,17 @@ string GetLegendNames( string filetag  ){
   filetag_legend["508548"] = "1500 GeV, 0.3";
   filetag_legend["508549"] = "750 GeV, 0.8";
   filetag_legend["508550"] = "750 GeV, 0.3";
-  filetag_legend["364702"] = "Partial QCD Background";
+  filetag_legend["364702"] = "JZ2";
   filetag_legend["364703"] = "JZ3";
   filetag_legend["364704"] = "JZ4";
   filetag_legend["364705"] = "JZ5";
+  filetag_legend["364706"] = "JZ6";
+  filetag_legend["364707"] = "JZ7";
+  filetag_legend["364708"] = "JZ8";
+  filetag_legend["364709"] = "JZ9";
+  filetag_legend["364710"] = "JZ10";
+  filetag_legend["364711"] = "JZ11";
+  filetag_legend["364712"] = "JZ12";
 
   if (filetag_legend.find(filetag) == filetag_legend.end()){
 	cout << "No better legend name found for filetag " << filetag << "; using filetag." << endl;

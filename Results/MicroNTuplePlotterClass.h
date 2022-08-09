@@ -391,13 +391,13 @@ public :
 		
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
-				legend_name = Form("%s (Int=%.2f)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
+				legend_name = Form("%s (Int=%.2e)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
 			}
 			if (stamp_counts && !stamp_integral){
 				legend_name = Form("%s (NE=%i)", hist_tag.c_str(), int(h->GetEntries()));
 			}
 			if (stamp_counts && stamp_integral){
-				legend_name = Form("%s (NE=%i, Int=%.2f)", hist_tag.c_str(), int(h->GetEntries()), h->Integral(0,myPlotParams.nbins+1) );
+				legend_name = Form("%s (NE=%i, Int=%.2e)", hist_tag.c_str(), int(h->GetEntries()), h->Integral(0,myPlotParams.nbins+1) );
 			}
 
 			if( plot_norm )
