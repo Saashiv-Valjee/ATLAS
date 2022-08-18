@@ -1,0 +1,12 @@
+./exe/MicroNTupleMaker user.ebusch.508547.MGPy8EG_SVJSChan_1500_8.mc16a_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/ 
+./exe/MicroNTupleMaker user.ebusch.508547.MGPy8EG_SVJSChan_1500_8.mc16d_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508547.MGPy8EG_SVJSChan_1500_8.mc16e_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508548.MGPy8EG_SVJSChan_1500_3.mc16a_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508548.MGPy8EG_SVJSChan_1500_3.mc16d_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508548.MGPy8EG_SVJSChan_1500_3.mc16e_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508549.MGPy8EG_SVJSChan_750_8.mc16a_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508549.MGPy8EG_SVJSChan_750_8.mc16d_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508549.MGPy8EG_SVJSChan_750_8.mc16e_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508550.MGPy8EG_SVJSChan_750_3.mc16a_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508550.MGPy8EG_SVJSChan_750_3.mc16d_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
+./exe/MicroNTupleMaker user.ebusch.508550.MGPy8EG_SVJSChan_750_3.mc16e_tree /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v1.0/
