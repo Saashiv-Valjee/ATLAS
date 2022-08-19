@@ -44,8 +44,6 @@ void MicroNTupleMaker::Loop()
 	
 		// apply nSmallRJets >=2 (required for code to run) 	
 		if (na4_pflowjets < 2) continue;
-		// apply nJets >= 2
-		if (na10_lctopojets < 2) continue;
 		cutflow->Fill(1);      
 		
 		// apply MET > 200 GeV
@@ -55,7 +53,7 @@ void MicroNTupleMaker::Loop()
 		// get svj info 
 		vector<pair<int,float>> svj_info; // {{n_svj,dphi_min}, {n_asvj,dphi_max}}
 		vector<pair<int,float>> svj_info_r04;
-		svj_info = FindSVJ( a10_lctopojets_phi );
+		svj_info = FindSVJ( a4_pflowjets_phi );
 		//svj_info_r04 = FindSVJ( a4_pflowjets_phi );
 		
 		// apply dphi < 2.0
@@ -71,12 +69,10 @@ void MicroNTupleMaker::Loop()
 
 		// create relevant 4 vectors
 		TLorentzVector v1, v2, v_svj, v_asvj, v1_r04, v2_r04;
-		v1.SetPtEtaPhiM(a10_lctopojets_pt->at(0), a10_lctopojets_eta->at(0), a10_lctopojets_phi->at(0), a10_lctopojets_m->at(0));
-		v2.SetPtEtaPhiM(a10_lctopojets_pt->at(1), a10_lctopojets_eta->at(1), a10_lctopojets_phi->at(1), a10_lctopojets_m->at(1));
-		v_svj.SetPtEtaPhiM(a10_lctopojets_pt->at(n_svj), a10_lctopojets_eta->at(n_svj), a10_lctopojets_phi->at(n_svj), a10_lctopojets_m->at(n_svj));
-		v_asvj.SetPtEtaPhiM(a10_lctopojets_pt->at(n_asvj), a10_lctopojets_eta->at(n_asvj), a10_lctopojets_phi->at(n_asvj), a10_lctopojets_m->at(n_asvj));
-		v1_r04.SetPtEtaPhiE(a4_pflowjets_pt->at(0), a4_pflowjets_eta->at(0), a4_pflowjets_phi->at(0), a4_pflowjets_E->at(0));
-		v2_r04.SetPtEtaPhiE(a4_pflowjets_pt->at(1), a4_pflowjets_eta->at(1), a4_pflowjets_phi->at(1), a4_pflowjets_E->at(1));
+		v1.SetPtEtaPhiE(a4_pflowjets_pt->at(0), a4_pflowjets_eta->at(0), a4_pflowjets_phi->at(0), a4_pflowjets_E->at(0));
+		v2.SetPtEtaPhiE(a4_pflowjets_pt->at(1), a4_pflowjets_eta->at(1), a4_pflowjets_phi->at(1), a4_pflowjets_E->at(1));
+		v_svj.SetPtEtaPhiE(a4_pflowjets_pt->at(n_svj), a4_pflowjets_eta->at(n_svj), a4_pflowjets_phi->at(n_svj), a4_pflowjets_E->at(n_svj));
+		v_asvj.SetPtEtaPhiE(a4_pflowjets_pt->at(n_asvj), a4_pflowjets_eta->at(n_asvj), a4_pflowjets_phi->at(n_asvj), a4_pflowjets_E->at(n_asvj));
 			
 		// pt balance
 		pt_balance_12 = GetPtBalance(v1,v2);
@@ -85,7 +81,6 @@ void MicroNTupleMaker::Loop()
 		//Mjj
 		mjj_12 = GetMjj(v1,v2);      
 		//mjj_sa = GetMjj(v_svj,v_asvj);      
-		mjj_12_r04 = GetMjj(v1_r04, v2_r04);	
 
 		//mT
 		//jet1_mT = v1.Mt();
@@ -93,7 +88,6 @@ void MicroNTupleMaker::Loop()
 		//jet_svj_mT = v_svj.Mt();
 		//jet_asvj_mT = v_asvj.Mt();
                 mT_jj = GetMt(v1,v2,metFinalClusSumEt, metFinalClusPhi);
-                mT_jj_r04 = GetMt(v1_r04,v2_r04,metFinalClusSumEt, metFinalClusPhi);
 
 		// distance between jets
 		dR_12 = GetdR(v1,v2);
@@ -102,24 +96,17 @@ void MicroNTupleMaker::Loop()
 		//deltaY_sa = GetDeltaY(v_svj,v_asvj);
 		
 		// HT
-		hT = GetHT(a10_lctopojets_pt);
-		hT_r04 = GetHT(a4_pflowjets_pt);
+		hT = GetHT(a4_pflowjets_pt);
 
 		// rT
 		rT = metFinalClusSumEt / mT_jj;
-		rT_r04 = metFinalClusSumEt / mT_jj_r04;		
 
 		// event shape variables
-		map<string,float> shape_variables = GetShapeVariables(a10_lctopojets_pt, a10_lctopojets_eta, a10_lctopojets_phi, a10_lctopojets_m, false);
+		map<string,float> shape_variables = GetShapeVariables(a4_pflowjets_pt, a4_pflowjets_eta, a4_pflowjets_phi, a4_pflowjets_E, true);
 		aplanarity = shape_variables["Aplanarity"];
 		sphericity = shape_variables["Sphericity"];
 		sphericity_T = shape_variables["Transverse_Sphericity"];		
 		
-		map<string,float> shape_variables_r04 = GetShapeVariables(a4_pflowjets_pt, a4_pflowjets_eta, a4_pflowjets_phi, a4_pflowjets_E, true);
-		aplanarity_r04 = shape_variables_r04["Aplanarity"];
-		sphericity_r04 = shape_variables_r04["Sphericity"];
-		sphericity_T_r04 = shape_variables_r04["Transverse_Sphericity"];		
-
 		// save output tree
 		FillOutputTrees("PostSel");
 		finalEntries++;
