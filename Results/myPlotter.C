@@ -9,6 +9,7 @@ void myPlotter(){
 	//vector<string> filetags = {"508548.mc16d", "364703.mc16d"};
 	vector<string> filetags = {"QCDbkg", "508547","508548","508549","508550"};
 	vector<string> filetags_signal = {"508547","508548", "508549", "508550"};
+	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
 	vector<string> filetags_background = {"364702", "364703", "364704", "364705", "364706", "364707", "364708", "364709", "364710", "364711", "364712", "QCDbkg"};
 
 	// - cuts
@@ -17,28 +18,28 @@ void myPlotter(){
 	cuts["met"] = "met_met>200";
 	cuts["jet"] = "jet1_pt>500";
 
-	class MicroNTuplePlotter plotter( filetags_background, path );
+	class MicroNTuplePlotter plotter( filetags, path );
 
         //***************** Plot General options *******************// 
-        plotter.plot_norm = false;
+        plotter.plot_norm = true;
         plotter.plot_log = true;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="QCDbkg";
+        plotter.output_file_tag ="pt_balance";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
 	plotter.stamp_integral = false;
 	//plotter.SetLegendManual( 0.5, 0.5, 0.9, 0.9 );
-	//plotter.colors = {kBlack, kOrange+10, kBlue+2, kOrange+1, kAzure+7, kGreen+2, kAzure+7, kBlue+2 };
+	plotter.colors = {kBlack, kOrange+10, kBlue+2, kOrange+1, kAzure+7, kGreen+2, kAzure+7, kBlue+2 };
         //plotter.colors = { kRed, kOrange-3, kYellow+1, kSpring-1, kAzure, kBlue+2, kViolet}; //rainbow
-        plotter.colors = { kRed, kRed+2, kOrange-3, kYellow+1, kSpring, kGreen+3, kCyan+1, kAzure, kBlue+2, kViolet, kMagenta-9, kBlack}; //10 gradient + black
+        //plotter.colors = { kRed, kRed+2, kOrange-3, kYellow+1, kSpring, kGreen+3, kCyan+1, kAzure, kBlue+2, kViolet, kMagenta-9, kBlack}; //10 gradient + black
 
         //***************** Plot Variable options *******************//
         //plotter.SetPlots( {P_jet1_pt, P_jet_svj_pt, P_jet_asvj_pt, P_pt_balance_12, P_pt_balance_sa, P_dphi_min, P_maxphi_minphi, P_met_met} );
 	//plotter.SetOverlayedPlots( {P_jet1_pt, P_jet2_pt, P_jet_svj_pt, P_jet_asvj_pt}, OP_jet_pt );
 
         //***************** Plot Cut options *******************// 
-        //plotter.SetCuts("mjj_12_r04>1100");
+        plotter.SetCuts("pt_balance_12 < 1.0");
        	//plotter.SetComparisonCuts({"dPhi_min <1.5", "dPhi_min < 2.5"});	
         //plotter.ApplySelectiveCuts("508548", "dPhi_min < 2.0");
 
@@ -60,7 +61,7 @@ void myPlotter(){
 	//plotter.PlotOverlay("");
 
 	//plotter.SetPlots ( {P_r04_jet1_pt, P_mjj_12_r04} );
-        plotter.SetPlots ( {P_jet1_pt} );
+        plotter.SetPlots ( {P_pt_balance_12} );
 	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_jet1_D2, P_jet1_C2, P_jet1_Split12, P_jet1_Split23, P_jet1_tau23} );
 	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_mT_jj, P_rT, P_hT, P_dR_12, P_deta_12, P_dphi_min, P_pt_balance_12, P_deltaY_12, P_jet1_C2, P_jet2_C2} );
 	//plotter.SetPlots( {P_jet1_pt, P_met_met, P_hT_r04, P_mjj_12, P_mjj_12_r04, P_r04_jet1_pt});
