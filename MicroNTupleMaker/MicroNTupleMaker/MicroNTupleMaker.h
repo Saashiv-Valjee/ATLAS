@@ -39,21 +39,22 @@ public :
    map<string,TTree*> tree_output;
    map<string,double> tree_output_vars;
    map<string,string> tree_output_vars_string;
+   map<string,vector<float>*> tree_output_vars_vector;
 
    //string variables
    string year_mc;
 
    // svj & asvj variables
+   float weight, SumW;
    int n_svj, n_asvj;
    int n_r04_jets, n_r10_jets;
    float dphi_min, dphi_max, maxphi_minphi;
    float pt_balance_12, pt_balance_sa;
-   float mjj_12, mjj_sa, mT_jj, mjj_12_r04, mT_jj_r04;
-   float hT, hT_r04, dR_12, deta_12, rT, rT_r04;
+   float mjj_12, mjj_sa, mT_jj;
+   float hT, dR_12, deta_12, rT;
    float jet1_mT, jet2_mT, jet_svj_mT, jet_asvj_mT;
    float deltaY_12, deltaY_sa;
    float aplanarity, sphericity, sphericity_T;
-   float aplanarity_r04, sphericity_r04, sphericity_T_r04;
 
    // Cutflow histograms
    TH1F *cutflow;
