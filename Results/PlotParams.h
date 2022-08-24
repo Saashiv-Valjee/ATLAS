@@ -54,7 +54,7 @@ PlotParams P_r04_jet1_phi		= {"r04_jet1_phi", "Leading Small-R Jet Phi", "#phi",
 PlotParams P_r04_jet1_E			= {"r04_jet1_E", "Leading Small-R Jet Energy", "Energy [GeV]", 50, 0, 3000};
 
 PlotParams P_maxphi_minphi		= {"maxphi_minphi", "max#phi - min#phi", "max#phi - min#phi", 50, 0, 3.14};
-PlotParams P_pt_balance_12	 	= {"pt_balance_12", "p_{T} balance leading-subleading", "pt balance", 50, 0, 1};
+PlotParams P_pt_balance_12	 	= {"pt_balance_12", "p_{T} balance leading-subleading", "pt balance", 60, 0.99, 1.01};
 PlotParams P_pt_balance_sa		= {"pt_balance_sa", "p_{T} balance svj-antisvj", "pt balance", 50, 0, 1};
 PlotParams P_dphi_max			= {"dphi_max", "#Delta#phi (furthest jet, MET)", "#Delta#phi", 50, 0, 3.14};
 PlotParams P_dphi_min			= {"dphi_min", "#Delta#phi (closest jet, MET)", "#Delta#phi", 50, 0, 3.14};

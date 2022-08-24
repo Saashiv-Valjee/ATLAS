@@ -6,6 +6,7 @@ using namespace std;
 #include "../src/FunctionHelper.cxx"
 #include "../src/OutputTreeHelper.cxx"
 #include "../src/HistHelper.cxx"
+#include "../src/WeightHelper.cxx"
 #include "../src/Loop.cxx"
 #include <TH2.h>
 #include <TStyle.h>
@@ -87,6 +88,7 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	class MicroNTupleMaker myMaker(fChain);
 	
         myMaker.year_mc = mc;
+	myMaker.SetWeight(dsid);
 
 	myMaker.DeclareHistograms();
 	myMaker.DeclareOutputTrees();
