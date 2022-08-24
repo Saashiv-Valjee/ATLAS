@@ -38,10 +38,10 @@ source setup.sh
 source compile.sh
 ```
 
-The executable takes 1 or 2 arguemnts; the file tag (`<file_tag>/some_files*.root`) and optionally a path to the input NTuples. By default the input NTuples are assumed to be in the run folder. Usage examples are shown below.
+The executable takes 1 or 3 arguemnts; the file tag (`<file_tag>/some_files*.root`), and optionally a flag indicating whether you are running locally and a path to the input NTuples. By default the input NTuples are assumed to be in the run folder. Usage examples are shown below.
 ```
 ./exe/MicroNTupleMaker file_tag
-./exe/MicroNTupleMaker file_tag /my/unique/input/path/
+./exe/MicroNTupleMaker file_tag true /my/unique/input/path/
 ```
 
 ## Plotting
