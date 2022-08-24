@@ -99,8 +99,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
 	tree_output_vars["mcEventWeight"] = mcEventWeight;
-	tree_output_vars["weight"] = weight;
-	tree_output_vars["SumW"] = SumW;
+	tree_output_vars["weight"] = mcEventWeight*weight_scale;
+	tree_output_vars["SumW"] = sumw;
 
 	tree_output_vars["n_r04_jets"] = na4_pflowjets;
 	tree_output_vars["n_r10_jets"] = na10_lctopojets;

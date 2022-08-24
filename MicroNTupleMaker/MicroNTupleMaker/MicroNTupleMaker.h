@@ -45,7 +45,7 @@ public :
    string year_mc;
 
    // svj & asvj variables
-   float weight, SumW;
+   float weight_scale, sumw;
    int n_svj, n_asvj;
    int n_r04_jets, n_r10_jets;
    float dphi_min, dphi_max, maxphi_minphi;
@@ -176,13 +176,19 @@ public :
    virtual map<string,float> 	GetShapeVariables(vector<float> *jet_pt, vector<float> *jet_eta, vector<float> *jet_phi, vector<float> *jet_m, bool smallR);
 
    // OutputTreeHelper
-   virtual void     DeclareOutputTrees();
-   virtual void     FillOutputTrees( string treename );
-   virtual void     WriteOutputTrees();
+   virtual void		DeclareOutputTrees();
+   virtual void		FillOutputTrees( string treename );
+   virtual void		WriteOutputTrees();
 
    // HistHelper
-   virtual void     DeclareHistograms();
-   virtual void     WriteHistograms();
+   virtual void    	DeclareHistograms();
+   virtual void     	WriteHistograms();
+
+   // WeightHelper
+   virtual void     	SetWeight(string dsid);
+   virtual double     	GetSumW(string dsid);
+   virtual double     	GetGenFilterEff(string dsid);
+   virtual double     	GetXSection(string dsid);
 };
 
 #endif
