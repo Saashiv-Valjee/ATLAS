@@ -15,10 +15,11 @@ PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 50, 0., 1000
 PlotParams P_met_phi			= {"met_phi", "Missing E_{T} #phi", "#phi [rad]", 50, -3.14, 3.14 };
 PlotParams P_TruthMET_TruthSumEt 	= {"MET_TruthMET_TruthSumEt", "TruthMET SumE_{T}", "E [GeV]", 50, 0, 700};  
 PlotParams P_TruthMET_TruthPhi	 	= {"MET_TruthMET_TruthPhi", "TruthMET #phi", "#phi [rad]", 50, -3.14, 3.14};  
-PlotParams P_n_jets			= {"n_jets", "Number of Jets", "N_{jets}", 20, 0, 20};
+PlotParams P_n_r04_jets			= {"n_r04_jets", "Number of Small-R Jets", "N_{jets}", 20, 0, 20};
+PlotParams P_n_r10_jets			= {"n_r10_jets", "Number of Large-R Jets", "N_{jets}", 6, 0, 6};
 
-PlotParams P_jet1_pt			= {"jet1_pt", "Leading Jet p_{T}", "p_{T} [GeV]", 100, 0, 6200};
-PlotParams P_jet1_eta			= {"jet1_eta", "Leading Jet Eta", "#eta", 50, -2.5, 2.5};
+PlotParams P_jet1_pt			= {"jet1_pt", "Leading Jet p_{T}", "p_{T} [GeV]", 100, 0, 200};
+PlotParams P_jet1_eta			= {"jet1_eta", "Leading Jet Eta", "#eta", 50, -5.0, 5.0};
 PlotParams P_jet1_phi			= {"jet1_phi", "Leading Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet1_m			= {"jet1_m", "Leading Jet M", "Mass [GeV]", 50, 0, 3000};
 PlotParams P_jet1_mT			= {"jet1_mT", "Leading Jet MT", "Mass [GeV]", 50, 0, 2000};
@@ -28,8 +29,8 @@ PlotParams P_jet1_Split12		= {"jet1_Split12", "Leading Jet Split 12", "Split12",
 PlotParams P_jet1_Split23		= {"jet1_Split23", "Leading Jet Split 23", "Split23", 50, 0, 200};
 PlotParams P_jet1_tau23			= {"jet1_tau32", "Leading Jet N-subjettiness", "N-subjettiness", 50, 0, 200};
 
-PlotParams P_jet2_pt			= {"jet2_pt", "Subleading Jet p_{T}", "p_{T} [GeV]", 50, 0, 1000};
-PlotParams P_jet2_eta			= {"jet2_eta", "Subleading Jet Eta", "#eta", 50, -2.5, 2.5};
+PlotParams P_jet2_pt			= {"jet2_pt", "Subleading Jet p_{T}", "p_{T} [GeV]", 100, 0, 200};
+PlotParams P_jet2_eta			= {"jet2_eta", "Subleading Jet Eta", "#eta", 50, -5.0, 5.0};
 PlotParams P_jet2_phi			= {"jet2_phi", "Subleading Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet2_m			= {"jet2_m", "Subleading Jet M", "Mass [GeV]", 50, 0, 300};
 PlotParams P_jet2_mT			= {"jet2_mT", "Subleading Jet MT", "Mass [GeV]", 50, 0, 2000};

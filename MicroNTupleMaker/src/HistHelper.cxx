@@ -6,8 +6,8 @@ void MicroNTupleMaker::DeclareHistograms(){
   cutflow->GetXaxis()->SetBinLabel(1,"All");
   cutflow->GetXaxis()->SetBinLabel(2,"njets >= 2");
   cutflow->GetXaxis()->SetBinLabel(3,"MET > 200 GeV");
-  //cutflow->GetXaxis()->SetBinLabel(4,"dPhi_min < 2.0");
-  //cutflow->GetXaxis()->SetBinLabel(5,"nBtags < 2");
+  cutflow->GetXaxis()->SetBinLabel(4,"jet1_pt > 150 GeV");
+  cutflow->GetXaxis()->SetBinLabel(5,"|jet1_eta| < 2.8");
 
 }
 

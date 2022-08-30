@@ -41,6 +41,7 @@ public :
 	bool plot_log_x = false; 
 	bool plot_log_ratio = false; // set to true if you want a log ratio or s/sqrtb panel
 	bool plot_norm = false;
+	bool plot_norm_full = false;
         bool plot_error = true;
         bool stamp_cuts = false;
         bool stamp_integral = true;
@@ -195,6 +196,7 @@ public :
 
 	// -------------------------------------------------------------------------------------
 	void AddPlot( PlotParams myPlotParams ){
+
 		if( debug) cout<<"MicroNTuplePlotter::AddPlot()"<<endl;	
 
 		PlotParamsList.push_back( myPlotParams );
@@ -402,7 +404,10 @@ public :
 
 			if( plot_norm )
 				h->Scale( 1./h->Integral() );
-
+			if( plot_norm_full && !plot_norm)
+				h->Scale( 1./h->Integral(0,h->GetNbinsX()+1) );
+			if( plot_norm_full && plot_norm)
+				cout << "ERROR: Please select only plot_norm or plot_norm_full";
 
 			if( plot_log )	 h->SetMaximum( h->GetMaximum()*20. );
 			else  		 h->SetMaximum( h->GetMaximum()*1.25 );
@@ -532,6 +537,7 @@ public :
 			TString output_file_name = GetOutputFileName(PlotParams_temp, plot_type);
 			myCanvas->SaveAs( outfile_path+"/"+output_file_name+".png", "png" );
 			delete myCanvas;
+			hists.clear();
 
 		}
 

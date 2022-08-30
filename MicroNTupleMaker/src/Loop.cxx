@@ -49,6 +49,14 @@ void MicroNTupleMaker::Loop()
 		// apply MET > 200 GeV
 		if (metFinalClusSumEt < 200) continue;
 		cutflow->Fill(2);      
+
+		// apply jet1_pt > 125 GeV
+		if (a4_pflowjets_pt->at(0) < 150) continue;
+		cutflow->Fill(3);      
+
+		// apply fabs(jet1_eta) < 2.8 GeV
+		if (fabs(a4_pflowjets_eta->at(0)) < 2.8) continue;
+		cutflow->Fill(4);      
 		
 		// get svj info 
 		vector<pair<int,float>> svj_info; // {{n_svj,dphi_min}, {n_asvj,dphi_max}}

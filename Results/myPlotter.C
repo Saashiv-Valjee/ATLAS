@@ -3,7 +3,7 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v2/v2.1/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v3/v3.1/user.ebusch.";
 	//string path = "../MicroNTupleMaker/MicroNTuples/v1.5/user.ebusch.";
 	
 	//vector<string> filetags = {"508548.mc16d", "364703.mc16d"};
@@ -21,10 +21,10 @@ void myPlotter(){
 	class MicroNTuplePlotter plotter( filetags, path );
 
         //***************** Plot General options *******************// 
-        plotter.plot_norm = true;
+        plotter.plot_norm_full = true;
         plotter.plot_log = true;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="pt_balance";
+        plotter.output_file_tag ="v3p1_skimming_norm";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
@@ -39,7 +39,7 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_pt, P_jet2_pt, P_jet_svj_pt, P_jet_asvj_pt}, OP_jet_pt );
 
         //***************** Plot Cut options *******************// 
-        plotter.SetCuts("pt_balance_12 < 1.0");
+        //plotter.SetCuts("pt_balance_12 < 1.0");
        	//plotter.SetComparisonCuts({"dPhi_min <1.5", "dPhi_min < 2.5"});	
         //plotter.ApplySelectiveCuts("508548", "dPhi_min < 2.0");
 
@@ -60,8 +60,8 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_m, P_jet2_m, P_jet_svj_m, P_jet_asvj_m}, OP_jet_m );
 	//plotter.PlotOverlay("");
 
-	//plotter.SetPlots ( {P_r04_jet1_pt, P_mjj_12_r04} );
-        plotter.SetPlots ( {P_pt_balance_12} );
+	//plotter.SetPlots ( {P_jet1_pt, P_jet2_pt, P_jet2_eta, P_n_r04_jets, P_n_r10_jets} );
+        plotter.SetPlots ( {P_jet1_pt, P_jet2_pt} );
 	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_jet1_D2, P_jet1_C2, P_jet1_Split12, P_jet1_Split23, P_jet1_tau23} );
 	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_mT_jj, P_rT, P_hT, P_dR_12, P_deta_12, P_dphi_min, P_pt_balance_12, P_deltaY_12, P_jet1_C2, P_jet2_C2} );
 	//plotter.SetPlots( {P_jet1_pt, P_met_met, P_hT_r04, P_mjj_12, P_mjj_12_r04, P_r04_jet1_pt});
