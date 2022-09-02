@@ -55,7 +55,7 @@ void MicroNTupleMaker::Loop()
 		cutflow->Fill(3);      
 
 		// apply fabs(jet1_eta) < 2.8 GeV
-		if (fabs(a4_pflowjets_eta->at(0)) < 2.8) continue;
+		if (fabs(a4_pflowjets_eta->at(0)) > 2.8) continue;
 		cutflow->Fill(4);      
 		
 		// get svj info 
