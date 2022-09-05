@@ -126,8 +126,10 @@ void project_Pv2(){
   TH1D* DPHIMATCH[nsamples][2];
   TH1D* DPHIJETS[nsamples][3]; // J1 | J2 | J1 + J2
   TH1D* DPHIMIN[nsamples][2]; // MET aligned jet | J1 or J2
+  TH1D* DPHIMAX[nsamples][2];
   TH2D* JETPTCORR[nsamples];
   TH2D* MATCHDPHICORR[nsamples];
+  TH1D* MTJJMET[nsamples][2];
 
   TH1D* vdhnmatch[nsamples];
 
@@ -201,8 +203,12 @@ void project_Pv2(){
     DPHIJETS[J][2] = new TH1D((const TString)("DPHIJETS2"+std::to_string(J)),"DPhi(Jet Sum,MET)"+jt,nbins,0,TMath::Pi());
     DPHIMIN[J][0] = new TH1D((const TString)("DPHIMIN0"+std::to_string(J)),(const TString)("Minimum DPhi(Jet,MET) For All Jets with p_{T} > "+(TString)to_str(ptc)+jt),nbins,0,TMath::Pi());
     DPHIMIN[J][1] = new TH1D((const TString)("DPHIMIN1"+std::to_string(J)),"Minimum DPhi(Jet,MET) For Leading And Subleading Jets"+jt,nbins,0,TMath::Pi());
+    DPHIMAX[J][0] = new TH1D((const TString)("DPHIMAX0"+std::to_string(J)),(const TString)("Maxiimum DPhi(Jet,MET) For All Jets with p_{T} > "+(TString)to_str(ptc)+jt),nbins,0,TMath::Pi());
+    DPHIMAX[J][1] = new TH1D((const TString)("DPHIMAX1"+std::to_string(J)),"Maximum DPhi(Jet,MET) For Leading And Subleading Jets"+jt,nbins,0,TMath::Pi());
     JETPTCORR[J] = new TH2D((const TString)("JETPTCORR"+std::to_string(J)),"Leading Jet p_{T} vs Subleading Jet p_{T}",nbins,0,1000,nbins,0,700);
     MATCHDPHICORR[J] = new TH2D((const TString)("MATCHDPHICORR"+std::to_string(J)),"DPhi With MET Of Leading Matched Jets vs Subleading Mathed Jets",nbins,0,TMath::Pi(),nbins,0,TMath::Pi());
+    MTJJMET[J][0] = new TH1D((const TString)("MTJJMET0"+std::to_string(J)),"Transvers Mass of Jets + MET (Allign + Anti-Aligned)",nbins,0,2000);
+    MTJJMET[J][1] = new TH1D((const TString)("MTJJMET1"+std::to_string(J)),"Transvers Mass of Jets + MET (Leading + Subleading)",nbins,0,2000);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -390,6 +396,10 @@ void project_Pv2(){
 
     TH1D* matchescut = new TH1D((const TString)("matchescut"+std::to_string(j)),"",4,0,4);  // BIN1 -> 0JETS | BIN2 -> JET1 | BIN3 -> JET2 | BIN4 -> BOTHJETS
 
+    TH1D* matchesaligned = new TH1D((const TString)("matchesaligned"+std::to_string(j)),"",5,0,5); // BIN1 -> 0JETS | BIN2 -> J||MET | BIN3 -> J!|MET | BIN4 -> BOTHJETS | BIN5 -> J1 == J!|MET
+
+    TH1D* matchesalignedcut = new TH1D((const TString)("matchesalignedcut"+std::to_string(j)),"",5,0,5); // BIN1 -> 0JETS | BIN2 -> J||MET | BIN3 -> J!|MET | BIN4 -> BOTHJETS | BIN5 -> J1 == J!|MET
+
     TH1D* matchesmet = new TH1D((const TString)("matchesmet"+std::to_string(j)),"",7,0,7);        // BIN1,2 -> NONE / BIN3,4 -> J1||MET / BIN5,6 -> J2||MET / BIN7 -> (J1+J2)||MET
 
     TH1D* matchesmetcut = new TH1D((const TString)("matchesmetcut"+std::to_string(j)),"",7,0,7);  // BIN1,2 -> NONE / BIN3,4 -> J1||MET / BIN5,6 -> J2||MET / BIN7 -> (J1+J2)||MET
@@ -397,8 +407,7 @@ void project_Pv2(){
     vdhnmatch[j] = new TH1D((const TString)("vdhnmatch"+std::to_string(j)),"",7,0,7); // BIN1 -> (0,0) | BIN2 -> (0,>0) | BIN3 -> (>0,0) | BIN4 -> (>0,>0) | BIN5 -> (0,>1) ... BIN7 -> (>1,>1)
 
     for(int e = 0; e < chain->GetEntries(); e++){
-      chain->GetEntry(e);
-
+      chain->GetEntry(e);  
       int Q1MATCH = 0;
       int Q2MATCH = 0;    
       
@@ -491,11 +500,11 @@ void project_Pv2(){
       dmrata.clear();
       vector<int> barcodes;
       barcodes.clear();
-
       int nDMa = 0;
       int nc = 0;
       int tracker = -1;
       int trackb = 0;
+      bool vis = false;
       for(int B = 0; B < nbsm; B++){
 	BSMID[B] = truthBSM_pdgId->at(B);
 	BSMS[B] = truthBSM_status->at(B);
@@ -506,6 +515,7 @@ void project_Pv2(){
 	BSMNP[B] = truthBSM_nParents->at(B);
 	BSMNC[B] = truthBSM_nChildren->at(B);
 	BSMB[B] = truthBSM_barcode->at(B);
+	BSMUSE[B] = -1;
 	barcodes.push_back(BSMB[B]);
 	if(!( count(IDS.begin(),IDS.end(),BSMID[B]) )){IDS.push_back(BSMID[B]);}
 	if( std::abs(BSMID[B]) == 4900101 && BSMS[B] == 23 
@@ -524,13 +534,14 @@ void project_Pv2(){
 	      VDHCIV111.push_back(truthBSM_child_pdgId->at(B).at(q)); // FILLS 111CHILD ID
 	    }
 	    tracker = -1;
+	    vis = false;
 	    for(int v = 0; v < BSMNC[B]; v++){
 	      trackb = 0;
 	      float cid = abs(truthBSM_child_pdgId->at(B)[v]);
-	      if(cid < 50 || (53 < cid && cid < 4900000)){trackb ++;} //ADDS TO TRACKB FOR EACH BSM CHILD
+	      if(cid < 50 || (53 < cid && cid < 4900000)){trackb ++; vis = true;} //ADDS TO TRACKB FOR EACH BSM CHILD
 	      if(trackb != 0){tracker = 1;} // SETS TO USEFUL HADRON  
 	    }
-	    if(tracker == 1 && BSMPT[B] > vptmin){
+	    if(vis && BSMPT[B] > vptmin){
 	      BSMUSE[B] = 1; nUDH++;
 	    }
 	    else{BSMUSE[B] = 0;}
@@ -550,13 +561,14 @@ void project_Pv2(){
 	    }
 	    tracker = -1;
 	    for(int v = 0; v < BSMNC[B]; v++){
+	      vis = false;
 	      trackb = 0;
 	      float cid = abs(truthBSM_child_pdgId->at(B)[v]);
-	      if(cid < 50 || (53 < cid && cid < 4900000)){trackb ++;}
+	      if(cid < 50 || (53 < cid && cid < 4900000)){trackb ++; vis = true;}
 		if(trackb != 0){tracker = 1;}
 	    }
-	    if(tracker == 1 && BSMPT[B] > vptmin){
-	      BSMUSE[B] = 1; nUDH++;  	      
+	    if(vis && BSMPT[B] > vptmin){
+	      BSMUSE[B] = 1; nUDH++;      
 	    }
 	    else{BSMUSE[B] = 0;}
 	    int nDM = 0;
@@ -648,22 +660,32 @@ void project_Pv2(){
       float ptbalp = (double)(std::sqrt((j1xp+j2xp)*(j1xp+j2xp)+(j1yp+j2yp)*(j1yp+j2yp)))/(double)(std::sqrt(j1xp*j1xp+j1yp*j1yp) + std::sqrt(j2xp*j2xp+j2yp*j2yp));
       float ptbalm = (double)(std::sqrt((j1xm+j2xm)*(j1xm+j2xm)+(j1ym+j2ym)*(j1ym+j2ym)))/(double)(std::sqrt(j1xm*j1xm+j1ym*j1ym) + std::sqrt(j2xm*j2xm+j2ym*j2ym));
      
-      // TVector3 j1;
-      // TVector3 j2;
-      // TVector3 j12;
-      // j1.SetPtEtaPhi(JETPT[JN[0]],JETETA[JN[0]],JETPHI[JN[0]]);
-      // j2.SetPtEtaPhi(JETPT[JN[1]],JETETA[JN[1]],JETPHI[JN[1]]);
-      // j12.SetPtEtaPhi(0,0,0);
-      // j12 += j1;
-      // j12 += j2;
-      // ptbalp = (double)((double)j12.Mag()/(double)(j1.Mag()+j2.Mag()));
+      float MTPT = 0;
+      float MTA = 0;
 
-      // j1.SetPtEtaPhi(JETPT[JNM[0]],JETETA[JNM[0]],JETPHI[JNM[0]]);
-      // j2.SetPtEtaPhi(JETPT[JNM[1]],JETETA[JNM[1]],JETPHI[JNM[1]]);
-      // j12.SetPtEtaPhi(0,0,0);
-      // j12 = j1 + j2;
-      // ptbalm = (double)(j12.Mag()/(j1.Mag()+j2.Mag()));
+      TLorentzVector vj(0,0,0,0);
+      TLorentzVector vmet(0,0,0,0);
 
+      vmet.SetPtEtaPhiM(MET,0,metFinalTrkPhi,0);
+      vmet.SetPz(0);
+      vmet.SetE(vmet.Pt());
+
+      vj.SetPtEtaPhiE(JETPT[JN[0]],JETETA[JN[0]],JETPHI[JN[0]],JETE[JN[0]]);
+      vmet+=vj;
+      vj.SetPtEtaPhiE(JETPT[JN[1]],JETETA[JN[1]],JETPHI[JN[1]],JETE[JN[1]]);
+      vmet+=vj;
+      MTPT = vmet.Mt();
+
+      vmet.SetPtEtaPhiM(MET,0,metFinalTrkPhi,0);
+      vmet.SetPz(0);
+      vmet.SetE(vmet.Pt());
+
+      vj.SetPtEtaPhiE(JETPT[JNM[0]],JETETA[JNM[0]],JETPHI[JNM[0]],JETE[JNM[0]]);
+      vmet+=vj;
+      vj.SetPtEtaPhiE(JETPT[JNM[1]],JETETA[JNM[1]],JETPHI[JNM[1]],JETE[JNM[1]]);
+      vmet+=vj;
+      MTA = vmet.Mt();
+      
 
       float MAXDRL = 0;
       float MAXDRSL = 0;
@@ -971,6 +993,12 @@ void project_Pv2(){
       if((JETMATCH[JN[1]] == 1 || JETMATCH[JN[1]] == 2) && JETMATCH[JN[0]] == 3){matches->AddBinContent(3);}
       if(JETMATCH[JN[0]] != 3 && JETMATCH[JN[1]] != 3){matches->AddBinContent(4);}
       
+      if(JETMATCH[JNM[0]] == 3 && JETMATCH[JNM[1]] == 3){matchesaligned->AddBinContent(1);}
+      if((JETMATCH[JNM[0]] == 1 || JETMATCH[JNM[0]] == 2) && JETMATCH[JNM[1]] == 3){matchesaligned->AddBinContent(2);}
+      if((JETMATCH[JNM[1]] == 1 || JETMATCH[JNM[1]] == 2) && JETMATCH[JNM[0]] == 3){matchesaligned->AddBinContent(3);}
+      if(JETMATCH[JNM[0]] != 3 && JETMATCH[JNM[1]] != 3){matchesaligned->AddBinContent(4);}
+      if(JNM[1] == JN[0]){matchesaligned->AddBinContent(5);}
+
       if(JN[0] == JNM[0]){
 	if(JETMATCH[JN[0]] != 3){matchesmet->AddBinContent(3);}
 	else{matchesmet->AddBinContent(4);}
@@ -1020,8 +1048,11 @@ void project_Pv2(){
 
       // if(!(JETMETDPHI[JN[0]] > 2.8) && TEST == -1){TEST = 1;}
 
-      // if(!(JETPT[JN[0]] > 200) && TEST == -1){TEST = 1;}
-      // if(!(JETPT[JN[1]] > 20) && TEST == -1){TEST = 1;}
+      // if(!(JETPT[JN[0]] > 30) && TEST == -1){TEST = 1;}
+      // if(!(JETPT[JN[1]] > 30) && TEST == -1){TEST = 1;}
+
+      // if(!(JETPT[JN[0]] < 70) && TEST == -1){TEST = 1;}
+      // if(!(JETPT[JN[1]] < 70) && TEST == -1){TEST = 1;}
 
       if(TEST == -1){
 
@@ -1133,6 +1164,13 @@ void project_Pv2(){
 	if(JETMETDPHI[JN[0]] < JETMETDPHI[JN[1]]){DPHIMIN[j][1]->Fill(JETMETDPHI[JN[0]]);}
 	else{DPHIMIN[j][1]->Fill(JETMETDPHI[JN[1]]);}
 
+	DPHIMAX[j][0]->Fill(JETMETDPHI[JNM[1]]);
+	if(JETMETDPHI[JN[0]] > JETMETDPHI[JN[1]]){DPHIMAX[j][1]->Fill(JETMETDPHI[JN[0]]);}
+	else{DPHIMAX[j][1]->Fill(JETMETDPHI[JN[1]]);}
+
+	MTJJMET[j][0]->Fill(MTPT);
+	MTJJMET[j][1]->Fill(MTA);
+
 	// int N1 = NJTDR[j][0]->GetXaxis()->GetNbins();
 	// double binA1[N1+1];
 	// for(int BIN = 0; BIN < N1; BIN++){binA1[BIN] = NJETDR[j][0]->GetXaxis()->GetBinLowEdge(BIN+1);}
@@ -1202,7 +1240,7 @@ void project_Pv2(){
 	    V[j][eventpicn][4].push_back(BSMS[B]);
 	    V[j][eventpicn][5].push_back(BSMID[B]);
 	    V[j][eventpicn][6].push_back(BSMUSE[B]);
-	    
+
 	  }
 	  for(int J = 0; J < njets; J++){
 	    if(JETPT[J] > ptc && std::abs(JETETA[J]) < 4.5 && std::abs(JETPHI[J]) < TMath::Pi()){
@@ -1220,9 +1258,9 @@ void project_Pv2(){
 	      LJETV[j][eventpicn][2].push_back(LJETPHI[J]);
 	      LJETV[j][eventpicn][3].push_back(0);
 	      LJETV[j][eventpicn][4].push_back(LJETMATCH[J]);
+	      cout << e << endl;
 	    }
 	  }
-	 
 	  
 	  EVENTV[j][eventpicn].push_back(e);
 	  METV[j][eventpicn].push_back(metFinalTrkPhi);
@@ -1243,19 +1281,27 @@ void project_Pv2(){
 	if((JETMATCH[JN[1]] == 1 || JETMATCH[JN[1]] == 2) && JETMATCH[JN[0]] == 3){matchescut->AddBinContent(3);}
 	if(JETMATCH[JN[0]] != 3 && JETMATCH[JN[1]] != 3){matchescut->AddBinContent(4);}
       
-      if(JN[0] == JNM[0]){
-	if(JETMATCH[JN[0]] != 3){matchesmetcut->AddBinContent(3);}
-	else{matchesmetcut->AddBinContent(4);}
-      }
-      else if(JN[1] == JNM[0]){
-	if(JETMATCH[JN[1]] != 3){matchesmetcut->AddBinContent(5);}
-	else{matchesmetcut->AddBinContent(6);}
-      }
-      else if(summetdphi < metdphimin){matchesmetcut->AddBinContent(7);}
-      else{
-	if(JETMATCH[JNM[0]] != 3){matchesmetcut->AddBinContent(1);}
-	else{matchesmetcut->AddBinContent(2);}
-      }
+
+	if(JETMATCH[JNM[0]] == 3 && JETMATCH[JNM[1]] == 3){matchesalignedcut->AddBinContent(1);}
+	if((JETMATCH[JNM[0]] == 1 || JETMATCH[JNM[0]] == 2) && JETMATCH[JNM[1]] == 3){matchesalignedcut->AddBinContent(2);}
+	if((JETMATCH[JNM[1]] == 1 || JETMATCH[JNM[1]] == 2) && JETMATCH[JNM[0]] == 3){matchesalignedcut->AddBinContent(3);}
+	if(JETMATCH[JNM[0]] != 3 && JETMATCH[JNM[1]] != 3){matchesalignedcut->AddBinContent(4);}
+	if(JNM[1] == JN[0]){matchesalignedcut->AddBinContent(5);}
+
+
+	if(JN[0] == JNM[0]){
+	  if(JETMATCH[JN[0]] != 3){matchesmetcut->AddBinContent(3);}
+	  else{matchesmetcut->AddBinContent(4);}
+	}
+	else if(JN[1] == JNM[0]){
+	  if(JETMATCH[JN[1]] != 3){matchesmetcut->AddBinContent(5);}
+	  else{matchesmetcut->AddBinContent(6);}
+	}
+	else if(summetdphi < metdphimin){matchesmetcut->AddBinContent(7);}
+	else{
+	  if(JETMATCH[JNM[0]] != 3){matchesmetcut->AddBinContent(1);}
+	  else{matchesmetcut->AddBinContent(2);}
+	}
 	if(PERMVDHN[0].size() == 0 && PERMVDHN[1].size() == 0){vdhnmatch[j]->AddBinContent(0);}
 	if(PERMVDHN[0].size() == 0 && PERMVDHN[1].size() > 0){vdhnmatch[j]->AddBinContent(1);}
 	if(PERMVDHN[0].size() > 0 && PERMVDHN[1].size() == 0){vdhnmatch[j]->AddBinContent(2);}
@@ -1363,6 +1409,47 @@ void project_Pv2(){
     cout << std::setw(20) << std::right << matchescut->GetBinContent(2)*normval;
     cout << std::setw(20) << std::right << matchescut->GetBinContent(3)*normval;
     cout << std::setw(20) << std::right << matchescut->GetBinContent(4)*normval;
+    cout << endl;
+    cout << endl;
+
+    normval = (float)100/(float)matchesaligned->GetSumOfWeights();
+    normval = 1;
+    cout << "Aligned/Anti-Aligned Jet Matching Before Applied Cuts:" << endl;
+    cout << endl;
+    cout << std::setw(20) << std::right << "Matched Jets |";
+    cout << std::setw(20) << std::right << "No Jets";
+    cout << std::setw(20) << std::right << "Aligned Jet";
+    cout << std::setw(20) << std::right << "Anti-Aligned Jet";
+    cout << std::setw(20) << std::right << "Both Jets";
+    cout << endl;
+    cout << std::setw(20) << std::right << "NO. Matches  |";
+    cout << std::setw(20) << std::right << matchesaligned->GetBinContent(1)*normval;
+    cout << std::setw(20) << std::right << matchesaligned->GetBinContent(2)*normval;
+    cout << std::setw(20) << std::right << matchesaligned->GetBinContent(3)*normval;
+    cout << std::setw(20) << std::right << matchesaligned->GetBinContent(4)*normval;
+    cout << endl;
+    cout << endl;
+    cout << "NO. Events where the Anti-Aligned Jet Is The Leading Jet (Pre Cuts):   " << matchesaligned->GetBinContent(5) << endl;
+    cout << endl;
+    cout << endl;
+    normval = (float)100/(float)matchesalignedcut->GetSumOfWeights();
+    normval = 1;
+    cout << "Aligned/Anti-Aligned Jet Matching After Applied Cuts:" << endl;
+    cout << endl;
+    cout << std::setw(20) << std::right << "Matched Jets |";
+    cout << std::setw(20) << std::right << "No Jets";
+    cout << std::setw(20) << std::right << "Aligned Jet";
+    cout << std::setw(20) << std::right << "Anti-Aligned Jet";
+    cout << std::setw(20) << std::right << "Both Jets";
+    cout << endl;
+    cout << std::setw(20) << std::right << "NO. Matches  |";
+    cout << std::setw(20) << std::right << matchesalignedcut->GetBinContent(1)*normval;
+    cout << std::setw(20) << std::right << matchesalignedcut->GetBinContent(2)*normval;
+    cout << std::setw(20) << std::right << matchesalignedcut->GetBinContent(3)*normval;
+    cout << std::setw(20) << std::right << matchesalignedcut->GetBinContent(4)*normval;
+    cout << endl;
+    cout << endl;
+    cout << "NO. Events where the Anti-Aligned Jet Is The Leading Jet:   " << matchesalignedcut->GetBinContent(5) << endl;
     cout << endl;
     cout << endl;
 
@@ -1515,6 +1602,12 @@ void project_Pv2(){
 
     DPHIMIN[j][0]->Write();
     DPHIMIN[j][1]->Write();
+
+    DPHIMAX[j][0]->Write();
+    DPHIMAX[j][1]->Write();
+
+    MTJJMET[j][0]->Write();
+    MTJJMET[j][1]->Write();
 
     for(int q  = 0; q < 2; q++){
       for(int y = 0; y < 3; y++){
