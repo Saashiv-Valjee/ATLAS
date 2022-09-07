@@ -124,64 +124,70 @@ void DRAW2D(TCanvas* cn, int CD, TH2D* Hist, int nbinsx, int nbinsy, TString X, 
 void project_Mv3(){
 
 
-  const int n1DHists = 27;
-  const int n2DHists = 0;
-  const int nPHists = 0;
+  const int n1DHists = 30;
 
   int nC1 = n1DHists/4+1;
 
-  // SetAtlasStyle();
+  bool DRAW_NORM = true;
+  bool DRAW_1D = false;
 
   TCanvas* C1D[nC1];
   TLegend* L1D = new TLegend(0.65,0.55,0.85,0.85);
   TH1D* HISTS1D[n1DHists][nsamples];
   TString HISTNAMES1D[n1DHists] = {    
     "JETPT0","JETPT1","DQPT0","DQPT1",
-    "DRJJ","DRQQ","MAXDR0","MAXDR1",
+    "DPHIJJ","DPHIQQ","DRJJ","DRQQ"
+    ,"MAXDR0","MAXDR1","VDHPT0","VDHPT1",
     "NVIS","NINV","NUNST","NSTAB",
     "VISUNSTRAT","UNSTINVRAT","STABTOTRAT","INVTOTRAT",
-    "VDHPT0","VDHPT1","MINDPHIMET","MAXDPHIMET",
-    "DPHIMATCHMET0","DPHIMATCHMET1","DPHIJETMET0","DPHIJETMET1",
-    "MTJETSMET0","MTJETSMET1","DPHIJETMET2"
+    "MINDPHIMET","MAXDPHIMET","DPHIMATCHMET0","DPHIMATCHMET1",
+    "DPHIJETMET0","DPHIJETMET1","MTJETSMET0","MTJETSMET1",
+    "MTJETSMET2","SUMOFPT"
   };
 
   TString HISTXAXIS1D[n1DHists] = {
     "p_{T} [GeV]","p_{T} [GeV]","p_{T} [GeV]","p_{T} [GeV]",
-    "\\Delta R","\\Delta R","\\Delta R","\\Delta R",
+    "\\Delta\\Phi","\\Delta\\Phi","\\Delta R","\\Delta R",
+    "\\Delta R","\\Delta R","p_{T} [GeV]","p_{T} [GeV]",
     "NO. Hadrons","NO. Hadrons","NO. Hadrons","NO. Hadrons",
     "Ratio","Ratio","Ratio","Ratio",
-    "p_{T} [GeV]","p_{T} [GeV]","\\Delta \\Phi","\\Delta \\Phi",
     "\\Delta \\Phi","\\Delta \\Phi","\\Delta \\Phi","\\Delta \\Phi",
-    "M_{T}","M_{T}","\\Delta \\Phi"
+    "\\Delta \\Phi","\\Delta \\Phi","M_{T} [GeV]","M_{T} [GeV]"
+    ,"M_{T} [GeV]","p_{T} [GeV]"
   };
 
   int HISTNBINS1D[n1DHists] = {
+    30,30,30,30,
     30,30,30,30,
     30,30,30,30,
     10,20,18,18,
     30,30,30,30,
     30,30,30,30,
     30,30,30,30,
-    30,30,30
+    30,30
   };
+
+
+  const int n2DHists = 3;
+  const int nPHists = 0;
+
+  bool DRAW_2D = true;
 
   TCanvas* C2D[n2DHists];
   TH2D* HISTS2D[n2DHists][nsamples];
   TString HISTNAMES2D[n1DHists] = { 
+    "DQPT2D","JETPT2D","DPHIMATCHMET2D"
   };
   TString HISTXAXIS2D[n2DHists] = {    
+    "\\Chi_{1} p_{T} [GeV]","Leading Jet p_{T} [GeV]","\\Delta\\Phi(J_{\\Chi 1},MET)"
   };
   TString HISTYAXIS2D[n2DHists] = {
+    "\\Chi_{2} p_{T} [GeV]","Subleading Jet p_{T} [GeV]","\\Delta\\Phi(J_{\\Chi 2},MET)"
   };
   int HISTNBINSXY2D[n2DHists][2] = {
-    //{,},{,}
+    {30,30},{30,30},{30,30}
   };
   
-
-
-  bool DRAW_NORM = true;
-  bool DRAW_1D = true;
-  bool DRAW_2D = false;
 
   for(int j = 0; j < nsamples; j++){
 

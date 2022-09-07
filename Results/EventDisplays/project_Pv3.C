@@ -1,8 +1,6 @@
 #include <cmath>
 #include <algorithm>
 
-#include "project_Hv2.h"
-
 
 #include <sstream>
 #include <string>
@@ -46,13 +44,13 @@ TString tree_entry = "outTree/nominal";
 
 int nsamples = 4;
 
-double matchcut = DRCUT; // The matching criteria for jets with dark quarks
+double matchcut = 0.4; // The matching criteria for jets with dark quarks
 
-int ptc = PTMIN;     // The small R jet minimum pt
-int ptlc = PTLMIN;   // The large R jet minimum pt
+int ptc = 20;     // The small R jet minimum pt
+int ptlc = 200;   // The large R jet minimum pt
 
 int nintcuts[2] = {20, 40};      // The region edges for the interactions per bunch crossing plots
-int ptcuts[3] = {PTMIN,70,100};  // The region edges for the average jets close to dark quark at diff pt
+int ptcuts[3] = {ptc,70,100};  // The region edges for the average jets close to dark quark at diff pt
 
 int nbins = 5040; // number of bins for each histogram
 
@@ -72,6 +70,7 @@ void project_Pv3(){
     ////                    Defines Histograms                   ////
     ////                                                         ////
     /////////////////////////////////////////////////////////////////
+
 
     TH1D* JETPT[nsamples][2]; // 0 -> Leading | 1 -> Subleading
     TH2D* JETPT2D[nsamples];
@@ -100,7 +99,11 @@ void project_Pv3(){
     TH1D* MINDPHIMET[nsamples];
     TH1D* MAXDPHIMET[nsamples];
 
-    TH1D* MTJETSMET[nsamples][2]; // 0 -> Aligned Jet + Anti-Aligned Jet + MET | 1 -> All Matched Jets + MET
+    TH1D* MTJETSMET[nsamples][3]; // 0 -> Aligned Jet + Anti-Aligned Jet + MET | 1 -> Leading Jet + Subleading Jet| 2 -> All Matched Jets + MET
+    TH1D* SUMOFPT[nsamples];
+
+    TH1D* DPHIJJ[nsamples];
+    TH1D* DPHIQQ[nsamples];
 
     /////////////////////////////////////////////////////////////////
     ////                                                         ////
@@ -250,7 +253,7 @@ void project_Pv3(){
     DQPT[j][1] = new TH1D((const TString)("DQPT1"+to_str(j)),"Subleading Dark Quark p_{T} [GeV]",nbins,0,1000);
     DQPT2D[j] = new TH2D((const TString)("DQPT2D"+to_str(j)),"Leading Dark Quark p_{T} VS SUbleading Dark Quaark p_{T}",nbins,0,1200,nbins,0,1000);
     DRJJ[j] = new TH1D((const TString)("DRJJ"+to_str(j)),"DR(Leading Jet, Subleading Jet)",nbins,0,6);   
-    DRQQ[j] = new TH1D((const TString)("DRQQ"+to_str(j)),"DR9Leading Dark Quark, Subleading Dark Quark)",nbins,0,6);
+    DRQQ[j] = new TH1D((const TString)("DRQQ"+to_str(j)),"DR(Leading Dark Quark, Subleading Dark Quark)",nbins,0,6);
     JETMATCHDR[j] = new TH2D((const TString)("JETMATCHDR"+to_str(j)),"Average NO. Jets With DR(J,\\chi) < X",nbins,0,6,nbins,0,6);
     // JETMATCHINT[j] = new TH2D((const TString)("JETMATCHINT"+to_str(j)),"",nbins,,,nbins,,);
     // JETMATCHPT[j] = new TH2D((const TString)("JETMATCHPT"+to_str(j)),"",nbins,,,nbins,,);
@@ -273,15 +276,17 @@ void project_Pv3(){
     DPHIMATCHMET2D[j] = new TH2D((const TString)("DPHIMATCHMET2D"+to_str(j)),"DPhi(Matched Jet, MET), Leading Dark Quark VS Subleading Dark Quark",nbins,0,TMath::Pi(),nbins,0,TMath::Pi());
     DPHIJETMET[j][0] = new TH1D((const TString)("DPHIJETMET0"+to_str(j)),"DPhi(Leading Jet, MET)",nbins,0,TMath::Pi());
     DPHIJETMET[j][1] = new TH1D((const TString)("DPHIJETMET1"+to_str(j)),"DPhi(Subleading Jet, MET)",nbins,0,TMath::Pi());
-    DPHIJETMET[j][2] = new TH1D((const TString)("DPHIJETMET2"+to_str(j)),"DPhi(Sum Jet, MET)",nbins,0,TMath::Pi());
     MINDPHIMET[j] = new TH1D((const TString)("MINDPHIMET"+to_str(j)),"Minimum DPhi(Jet, MET) For All Jets",nbins,0,TMath::Pi());
     MAXDPHIMET[j] = new TH1D((const TString)("MAXDPHIMET"+to_str(j)),"Maximum Dphi(Jet, MET) For All Jets",nbins,0,TMath::Pi());
     
     MTJETSMET[j][0] = new TH1D((const TString)("MTJETSMET0"+to_str(j)),"Transverse Mass Of Aligned Jet + Anti-Aligned Jet + MET",nbins,0,2000);
-    MTJETSMET[j][1] = new TH1D((const TString)("MTJETSMET1"+to_str(j)),"Transverse Mass Of All Matched Jets + MET",nbins,0,2000);
+    MTJETSMET[j][1] = new TH1D((const TString)("MTJETSMET1"+to_str(j)),"Transverse Mass Of Leading Jet + Subleading Jet + MET",nbins,0,2000);
+    MTJETSMET[j][2] = new TH1D((const TString)("MTJETSMET2"+to_str(j)),"Transverse Mass Of All Matched Jets + MET",nbins,0,2000);
+    SUMOFPT[j] = new TH1D((const TString)("SUMOFPT"+to_str(j)),"h_{T} (Scalar Sum Of Jet p_{T}) [GeV]",nbins,0,2000);
+
+    DPHIJJ[j] = new TH1D((const TString)("DPHIJJ"+to_str(j)),"DPhi(Leading Jet, Subleading Jet)",nbins,0,TMath::Pi());
+    DPHIQQ[j] = new TH1D((const TString)("DPHIQQ"+to_str(j)),"DPhi(Leading Dark Quark, Subleading Dark Quark)",nbins,0,TMath::Pi());
     
-
-
     /////////////////////////////////////////////////////////////////
     ////                                                         ////
     ////                        Event Loop                       ////
@@ -291,6 +296,16 @@ void project_Pv3(){
 
     int passes = 0;
     int nout = 0;
+
+
+
+    TH1D* matchescut = new TH1D((const TString)("matchescut"+std::to_string(j)),"",4,0,4);  // BIN1 -> 0JETS | BIN2 -> JET1 | BIN3 -> JET2 | BIN4 -> BOTHJETS
+
+    TH1D* matchesalignedcut = new TH1D((const TString)("matchesalignedcut"+std::to_string(j)),"",5,0,5); // BIN1 -> 0JETS | BIN2 -> J||MET | BIN3 -> J!|MET | BIN4 -> BOTHJETS | BIN5 -> J1 == J!|MET
+
+    TH1D* matchesmetcut = new TH1D((const TString)("matchesmetcut"+std::to_string(j)),"",6,0,6);  // BIN1,2 -> NONE / BIN3,4 -> J1||MET / BIN5,6 -> J2||MET
+
+    TH1D* matchesmetaacut = new TH1D((const TString)("matchesmetaacut"+std::to_string(j)),"",6,0,6);  // BIN1,2 -> NONE / BIN3,4 -> J1!|MET / BIN5,6 -> J2!|MET 
 
     for(int e = 0; e < chain->GetEntries(); e++){
 
@@ -315,7 +330,7 @@ void project_Pv3(){
       ///////////////////////////////////////////////////////////                  BSM Loop                   ///////////////////////////////////////////////////////////
                                                              /////////////////////////////////////////////////////
  
-     vector <TLorentzVector> Quarks;
+      vector <TLorentzVector> Quarks;
       vector <TLorentzVector> VisHadrons;
       vector <TLorentzVector> InvHadrons;
       vector <TLorentzVector> StabHadrons;
@@ -393,42 +408,58 @@ void project_Pv3(){
       TLorentzVector MinPhiV(0,0,0,0);
       TLorentzVector MaxPhiV(0,0,0,0);
 	
+      int matchjetpt[2] = {-1,-1};
+      int matchjetaa[2] = {-1,-1};
+
       double mindphi = TMath::Pi();
       double maxdphi = 0;
+      double hT = 0;
       for(int J = 0; J < njets; J++){
         
 	TEMP.SetPtEtaPhiE(a4_pflowjets_pt->at(J),a4_pflowjets_eta->at(J),a4_pflowjets_phi->at(J),a4_pflowjets_E->at(J));
 	
-	if(TEMP.Pt() > ptc){
-	  if(TEMP.DeltaPhi(MET) < mindphi){mindphi = TEMP.DeltaPhi(MET); MinPhiV = TEMP;}
-	  if(TEMP.DeltaPhi(MET) > maxdphi){maxdphi = TEMP.DeltaPhi(MET); MaxPhiV = TEMP;}
+	if(TEMP.Pt() > ptc && std::abs(TEMP.Phi()) < TMath::Pi() && std::abs(TEMP.Eta()) < 4.5){
+	  if(std::abs(TEMP.DeltaPhi(MET)) < mindphi){mindphi = std::abs(TEMP.DeltaPhi(MET)); MinPhiV = TEMP; matchjetaa[0] = -1;}
+	  if(std::abs(TEMP.DeltaPhi(MET)) > maxdphi){maxdphi = std::abs(TEMP.DeltaPhi(MET)); MaxPhiV = TEMP; matchjetaa[1] = -1;}
+	  
 	  if(Quarks.size() == 2){
-	    if(Quarks.at(0).DeltaR(TEMP) < matchcut && Quarks.at(0).DeltaR(TEMP) < Quarks.at(1).DeltaR(TEMP)){LeadQuarkMatches.push_back(TEMP);}
-	    else if(Quarks.at(1).DeltaR(TEMP) < matchcut){SubQuarkMatches.push_back(TEMP);}
+	    if(Quarks.at(0).DeltaR(TEMP) < matchcut && Quarks.at(0).DeltaR(TEMP) < Quarks.at(1).DeltaR(TEMP)){ // Checks if jet is matching 
+	      LeadQuarkMatches.push_back(TEMP);
+	      if(J == 0){matchjetpt[0] = 1;}
+	      else if(J == 1){matchjetpt[1] = 1;}
+	      if(TEMP == MinPhiV){matchjetaa[0] = 1;}
+	      if(TEMP == MaxPhiV){matchjetaa[1] = 1;}
+	    }
+	    else if(Quarks.at(1).DeltaR(TEMP) < matchcut){
+	      SubQuarkMatches.push_back(TEMP);
+	      if(J == 0){matchjetpt[0] = 2;}
+	      else if(J == 1){matchjetpt[1] = 2;}
+	      if(TEMP == MinPhiV){matchjetaa[0] = 2;}
+	      if(TEMP == MaxPhiV){matchjetaa[1] = 2;}
+	    }
+	    
 	  }
+	  hT += TEMP.Pt();
 	  Jets.push_back(TEMP);
 	}
 
       }
 
-      double jetsumphi = 0;
-      double jetsummetdphi = 0;
-      double mt[2] = {0,0};
+      double mt[3] = {0,0,0};
 
-      if(Jets.size() >= 2){
-	jetsumphi += Jets.at(0).Phi();
-	jetsumphi += Jets.at(1).Phi();
-	if(jetsumphi > TMath::Pi()){jetsumphi -= 2*TMath::Pi();}
-	else if(jetsumphi < -TMath::Pi()){jetsumphi += 2*TMath::Pi();}
-	jetsummetdphi = std::abs(jetsumphi - MET.Phi());
-	if(jetsummetdphi > TMath::Pi()){jetsummetdphi -= 2*TMath::Pi();}
-	
-      
-	TEMP.SetPtEtaPhiE(0,0,0,0); // Calculates MT JJ+MET (A + AA)
+      if(Jets.size() >= 2 && Quarks.size() == 2){
+
+        TEMP.SetPtEtaPhiE(0,0,0,0); // Calculates MT JJ+MET (A + AA)
 	TEMP += MaxPhiV;
 	TEMP += MinPhiV;
 	TEMP += MET;
 	mt[0] = TEMP.Mt();
+
+        TEMP.SetPtEtaPhiE(0,0,0,0); // Calculates MT JJ+MET (A + AA)
+	TEMP += Jets.at(0);
+	TEMP += Jets.at(1);
+	TEMP += MET;
+	mt[1] = TEMP.Mt();
 
 	TEMP.SetPtEtaPhiE(0,0,0,0); // Calculates MT JJ+MET (All Matched Jets)
 	TEMP += MET;
@@ -438,7 +469,7 @@ void project_Pv3(){
 	for(TLorentzVector v : SubQuarkMatches){
 	  TEMP += v;
 	}
-	mt[1] = TEMP.Mt();
+	mt[2] = TEMP.Mt();
       }
     
     /////////////////////////////////////////////////////////////////
@@ -456,13 +487,23 @@ void project_Pv3(){
       if(!(Jets.size() >= 2) && TEST == -1){TEST = 1;}
       if(!(metFinalTrk > 200) && TEST == -1){TEST = 1;}
 
-      // if(TEST == -1){
-      // 	if(!(Jets.at(0).Pt() > 33) && TEST == -1){TEST = 1;}
-      // 	if(!(Jets.at(1).Pt() > 33) && TEST == -1){TEST = 1;}
+      //if(!(Jets.size() <= 4) && TEST == -1){TEST = 1;}
 
-      // 	if(!(Jets.at(0).Pt() < 66) && TEST == -1){TEST = 1;}
-      // 	if(!(Jets.at(1).Pt() < 66) && TEST == -1){TEST = 1;}
-      // }
+      if(TEST == -1){
+	//if(!(Jets.at(0).Pt() > 33) && TEST == -1){TEST = 1;}
+	//if(!(Jets.at(1).Pt() > 33) && TEST == -1){TEST = 1;}
+
+	//if(!(Jets.at(0).Pt() < 66) && TEST == -1){TEST = 1;}
+	//if(!(Jets.at(1).Pt() < 66) && TEST == -1){TEST = 1;}
+
+	//if(!(MinPhiV != Jets.at(0)) && TEST == -1){TEST = 1;}
+	//if(!(MinPhiV == Jets.at(1)) && TEST == -1){TEST = 1;}
+
+	//if(!(MaxPhiV == Jets.at(0)) && TEST == -1){TEST = 1;}
+	//if(!(MaxPhiV != Jets.at(1)) && TEST == -1){TEST = 1;}
+
+	//if(!(hT > 200) && TEST == -1){TEST = 1;}
+      }
 
       if(TEST == -1){    //Succesfully passed cuts
 	passes++;
@@ -470,6 +511,50 @@ void project_Pv3(){
 	  nout++;
 	  cout << "----->> Event " << e << " Passed" << endl;
 	}
+
+    /////////////////////////////////////////////////////////////////
+    ////                                                         ////
+    ////                        Fill Numbers                     ////
+    ////                                                         ////
+    /////////////////////////////////////////////////////////////////
+
+	if(matchjetpt[0] != -1 && matchjetpt[1] == -1){matchescut->AddBinContent(2);}
+	else if(matchjetpt[0] == -1 && matchjetpt[1] != -1){matchescut->AddBinContent(3);}
+	else if(matchjetpt[0] != -1 && matchjetpt[1] != -1){matchescut->AddBinContent(4);}
+	else{matchescut->AddBinContent(1);}
+
+	if(matchjetaa[0] != -1 && matchjetaa[1] == -1){matchesalignedcut->AddBinContent(2);}
+	else if(matchjetaa[0] == -1 && matchjetaa[1] != -1){matchesalignedcut->AddBinContent(3);}
+	else if(matchjetaa[0] != -1 && matchjetaa[1] != -1){matchesalignedcut->AddBinContent(4);}
+	else{matchesalignedcut->AddBinContent(1);}
+	if(MaxPhiV == Jets.at(0)){matchesalignedcut->AddBinContent(5);}
+
+	if(Jets.at(0) == MinPhiV){
+	  if(matchjetpt[0] == -1){matchesmetcut->AddBinContent(3);}
+	  else{matchesmetcut->AddBinContent(4);}
+	}
+	else if(Jets.at(1) == MinPhiV){
+	  if(matchjetpt[1] == -1){matchesmetcut->AddBinContent(5);}
+	  else{matchesmetcut->AddBinContent(6);}
+	}
+	else{
+	  if(Quarks.at(0).DeltaR(MinPhiV) < 0.4 || Quarks.at(1).DeltaR(MinPhiV) < 0.4){matchesmetcut->AddBinContent(1);}
+	  else{matchesmetcut->AddBinContent(2);}
+	}
+	
+	if(Jets.at(0) == MaxPhiV){
+	  if(matchjetpt[0] == -1){matchesmetaacut->AddBinContent(3);}
+	  else{matchesmetaacut->AddBinContent(4);}
+	}
+	else if(Jets.at(1) == MaxPhiV){
+	  if(matchjetpt[1] == -1){matchesmetaacut->AddBinContent(5);}
+	  else{matchesmetaacut->AddBinContent(6);}
+	}
+	else{
+	  if(Quarks.at(0).DeltaR(MaxPhiV) < 0.4 || Quarks.at(1).DeltaR(MaxPhiV) < 0.4){matchesmetaacut->AddBinContent(1);}
+	  else{matchesmetaacut->AddBinContent(2);}
+	}
+      
     /////////////////////////////////////////////////////////////////
     ////                                                         ////
     ////                      Fill Histograms                    ////
@@ -501,22 +586,26 @@ void project_Pv3(){
 	  else{VDHPT[j][1]->Fill(v.Pt());}
 	}
 	for(TLorentzVector m : LeadQuarkMatches){
-	  DPHIMATCHMET[j][0]->Fill(m.DeltaPhi(MET));
+	  DPHIMATCHMET[j][0]->Fill(std::abs(m.DeltaPhi(MET)));
 	}
 	for(TLorentzVector m : SubQuarkMatches){
-	  DPHIMATCHMET[j][1]->Fill(m.DeltaPhi(MET));
+	  DPHIMATCHMET[j][1]->Fill(std::abs(m.DeltaPhi(MET)));
 	}
 	if(LeadQuarkMatches.size() == 1 && SubQuarkMatches.size() == 1){
-	  DPHIMATCHMET2D[j]->Fill(LeadQuarkMatches.at(0).DeltaPhi(MET), SubQuarkMatches.at(0).DeltaPhi(MET));
+	  DPHIMATCHMET2D[j]->Fill(std::abs(LeadQuarkMatches.at(0).DeltaPhi(MET)), std::abs(SubQuarkMatches.at(0).DeltaPhi(MET)));
 	}
-	DPHIJETMET[j][0]->Fill(Jets.at(0).DeltaPhi(MET));
-	DPHIJETMET[j][1]->Fill(Jets.at(1).DeltaPhi(MET));
-	DPHIJETMET[j][2]->Fill(jetsummetdphi);
+	DPHIJETMET[j][0]->Fill(std::abs(Jets.at(0).DeltaPhi(MET)));
+	DPHIJETMET[j][1]->Fill(std::abs(Jets.at(1).DeltaPhi(MET)));
 	MINDPHIMET[j]->Fill(mindphi);
 	MAXDPHIMET[j]->Fill(maxdphi);
 
 	MTJETSMET[j][0]->Fill(mt[0]);
 	MTJETSMET[j][1]->Fill(mt[1]);
+	MTJETSMET[j][2]->Fill(mt[2]);
+	SUMOFPT[j]->Fill(hT);
+
+	DPHIJJ[j]->Fill(std::abs(Jets.at(0).DeltaPhi(Jets.at(1))));
+	DPHIQQ[j]->Fill(std::abs(Quarks.at(0).DeltaPhi(Quarks.at(1))));
 
       }
     }
@@ -562,12 +651,16 @@ void project_Pv3(){
     DPHIMATCHMET2D[j]->Write();
     DPHIJETMET[j][0]->Write();
     DPHIJETMET[j][1]->Write();
-    DPHIJETMET[j][2]->Write();
     MINDPHIMET[j]->Write();
     MAXDPHIMET[j]->Write();
 
     MTJETSMET[j][0]->Write();
     MTJETSMET[j][1]->Write();
+    MTJETSMET[j][2]->Write();
+    SUMOFPT[j]->Write();
+
+    DPHIJJ[j]->Write();
+    DPHIQQ[j]->Write();
 
     /////////////////////////////////////////////////////////////////
     ////                                                         ////
@@ -575,6 +668,104 @@ void project_Pv3(){
     ////                                                         ////
     /////////////////////////////////////////////////////////////////
 
+
+    cout << endl;
+    cout << endl;
+    cout << "NO. Events: " << chain->GetEntries() << endl;
+    cout << "NO. Passes: " << passes << endl;
+    cout << endl;
+    cout << endl;
+
+    float normval = (float)100/(float)matchescut->GetSumOfWeights();
+    normval = 1;
+    cout << "Overall Jet Matching After Applied Cuts:" << endl;
+    cout << endl;
+    cout << std::setw(20) << std::right << "Matched Jets |";
+    cout << std::setw(20) << std::right << "No Jets";
+    cout << std::setw(20) << std::right << "Leading Jet";
+    cout << std::setw(20) << std::right << "Subleading Jet";
+    cout << std::setw(20) << std::right << "Both Jets";
+    cout << endl;
+    cout << std::setw(20) << std::right << "NO. Matches  |";
+    cout << std::setw(20) << std::right << matchescut->GetBinContent(1)*normval;
+    cout << std::setw(20) << std::right << matchescut->GetBinContent(2)*normval;
+    cout << std::setw(20) << std::right << matchescut->GetBinContent(3)*normval;
+    cout << std::setw(20) << std::right << matchescut->GetBinContent(4)*normval;
+    cout << endl;
+    cout << endl;
+
+    normval = (float)100/(float)matchesalignedcut->GetSumOfWeights();
+    normval = 1;
+    cout << "Aligned/Anti-Aligned Jet Matching After Applied Cuts:" << endl;
+    cout << endl;
+    cout << std::setw(20) << std::right << "Matched Jets |";
+    cout << std::setw(20) << std::right << "No Jets";
+    cout << std::setw(20) << std::right << "Aligned Jet";
+    cout << std::setw(20) << std::right << "Anti-Aligned Jet";
+    cout << std::setw(20) << std::right << "Both Jets";
+    cout << endl;
+    cout << std::setw(20) << std::right << "NO. Matches  |";
+    cout << std::setw(20) << std::right << matchesalignedcut->GetBinContent(1)*normval;
+    cout << std::setw(20) << std::right << matchesalignedcut->GetBinContent(2)*normval;
+    cout << std::setw(20) << std::right << matchesalignedcut->GetBinContent(3)*normval;
+    cout << std::setw(20) << std::right << matchesalignedcut->GetBinContent(4)*normval;
+    cout << endl;
+    cout << endl;
+    cout << "NO. Events where the Anti-Aligned Jet Is The Leading Jet:   " << matchesalignedcut->GetBinContent(5) << endl;
+    cout << endl;
+    cout << endl;
+
+    normval = (float)100/(float)matchesmetcut->GetSumOfWeights();
+    cout << "Overall Jet||MET After Applied Cuts:" << endl;
+    cout << endl;
+    cout << std::setw(20) << std::right << "Jet||MET |";
+    cout << std::setw(30) << std::right << "Other Jet";
+    cout << std::setw(30) << std::right << "Leading Jet";
+    cout << std::setw(30) << std::right << "Subleading Jet";
+    cout << endl;
+    cout << std::setw(20) << std::right << "";
+    cout << std::setw(15) << std::right << "No Match";
+    cout << std::setw(15) << std::right << "Match";
+    cout << std::setw(15) << std::right << "No Match";
+    cout << std::setw(15) << std::right << "Match";
+    cout << std::setw(15) << std::right << "No Match";
+    cout << std::setw(15) << std::right << "Match";
+    cout << endl;
+    cout << std::setw(20) << std::right << "NO. ||MET  |";
+    cout << std::setw(15) << std::right << matchesmetcut->GetBinContent(1)*normval;
+    cout << std::setw(15) << std::right << matchesmetcut->GetBinContent(2)*normval;
+    cout << std::setw(15) << std::right << matchesmetcut->GetBinContent(3)*normval;
+    cout << std::setw(15) << std::right << matchesmetcut->GetBinContent(4)*normval;
+    cout << std::setw(15) << std::right << matchesmetcut->GetBinContent(5)*normval;
+    cout << std::setw(15) << std::right << matchesmetcut->GetBinContent(6)*normval;
+    cout << endl;
+    cout << endl;
+
+    normval = (float)100/(float)matchesmetaacut->GetSumOfWeights();
+    cout << "Overall Jet!|MET After Applied Cuts:" << endl;
+    cout << endl;
+    cout << std::setw(20) << std::right << "Jet||MET |";
+    cout << std::setw(30) << std::right << "Other Jet";
+    cout << std::setw(30) << std::right << "Leading Jet";
+    cout << std::setw(30) << std::right << "Subleading Jet";
+    cout << endl;
+    cout << std::setw(20) << std::right << "";
+    cout << std::setw(15) << std::right << "No Match";
+    cout << std::setw(15) << std::right << "Match";
+    cout << std::setw(15) << std::right << "No Match";
+    cout << std::setw(15) << std::right << "Match";
+    cout << std::setw(15) << std::right << "No Match";
+    cout << std::setw(15) << std::right << "Match";
+    cout << endl;
+    cout << std::setw(20) << std::right << "NO. ||MET  |";
+    cout << std::setw(15) << std::right << matchesmetaacut->GetBinContent(1)*normval;
+    cout << std::setw(15) << std::right << matchesmetaacut->GetBinContent(2)*normval;
+    cout << std::setw(15) << std::right << matchesmetaacut->GetBinContent(3)*normval;
+    cout << std::setw(15) << std::right << matchesmetaacut->GetBinContent(4)*normval;
+    cout << std::setw(15) << std::right << matchesmetaacut->GetBinContent(5)*normval;
+    cout << std::setw(15) << std::right << matchesmetaacut->GetBinContent(6)*normval;
+    cout << endl;
+    cout << endl;
 
   }
 }

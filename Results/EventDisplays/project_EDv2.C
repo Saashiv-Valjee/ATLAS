@@ -1,5 +1,4 @@
 
-
 #include "ATLASSTYLE/AtlasStyle.C"
 
 #include "ATLASSTYLE/AtlasUtils.C"
@@ -40,12 +39,12 @@ const int lptc = 200; // Pt Minimum for large R jets [GeV]
 
 // Only need to change these four constants for running the code!!!
 
-const int nevents = 1; // The Number of events per signal point you want displayed & saved
+const int nevents = 3; // The Number of events per signal point you want displayed & saved
 const int nsignals = 1; // The Number of signal points you want 
 
 const TString filevar[nsignals][2] = {{"1500","8"}}; // The Signal points you want to look at {MZ',r_inv}
 
-const int events[nevents][nsignals] = {{114}}; // The Event number(s) you want displayed and saved for each signal point {event# for signal point 1, ... , event# for signal point nsignals}
+const int events[nevents][nsignals] = {{108},{185},{295}}; // The Event number(s) you want displayed and saved for each signal point {event# for signal point 1, ... , event# for signal point nsignals}
 
 
 
@@ -156,6 +155,8 @@ void project_EDv2(){ // start program
     float metFinalTrkPhi;
     chain->SetBranchAddress("metFinalTrkPhi",&metFinalTrkPhi);
 
+    int eventNumber[22];
+    chain->SetBranchAddress("eventNumber",&eventNumber);
 
     /////////////////////////////////////////////////////////////////
     ////                                                         ////
@@ -207,7 +208,7 @@ void project_EDv2(){ // start program
 	
 	if(TEMP.Pt() > LLeadPt){LSubPos = LLeadPos; LSubPt = TEMP.Pt(); LLeadPos = J; LLeadPt = TEMP.Pt();}
 	else if(TEMP.Pt() > LSubPt){LSubPos = J; LSubPt = TEMP.Pt();}
-	if(TEMP.Pt() > lptc){LJets.push_back(TEMP);}
+	if(TEMP.Pt() > lptc && std::abs(TEMP.Phi()) < TMath::Pi() && std::abs(TEMP.Eta()) < 4.5){LJets.push_back(TEMP);}
       }
 
 
@@ -403,7 +404,7 @@ void project_EDv2(){ // start program
 	
 	if(TEMP.Pt() > LeadPt){SubPos = LeadPos; SubPt = TEMP.Pt(); LeadPos = J; LeadPt = TEMP.Pt();}
 	else if(TEMP.Pt() > SubPt){SubPos = J; SubPt = TEMP.Pt();}
-	if(TEMP.Pt() > ptc){Jets.push_back(TEMP);}
+	if(TEMP.Pt() > ptc && std::abs(TEMP.Phi()) < TMath::Pi() && std::abs(TEMP.Eta()) < 4.5){Jets.push_back(TEMP);}
       }
 
 
@@ -636,7 +637,7 @@ void project_EDv2(){ // start program
 
 
 	/////////////////////////////////////////////////////
-	////    Ordering BSM Objetcs In Decending Pt     ////
+	////    Ordering BSM Objetcs In Descending Pt    ////
 	/////////////////////////////////////////////////////
 
 
@@ -747,7 +748,7 @@ void project_EDv2(){ // start program
       L[j][e]->SetTextFont(42);
       L[j][e]->SetTextSize(0.05);
       L[j][e]->SetFillStyle(0);
-      L[j][e]->SetHeader((const TString)("Z"+filevar[j][0]+"r"+filevar[j][1]+"   Event:"+std::to_string(events[j][e])));
+      L[j][e]->SetHeader((const TString)("Z"+filevar[j][0]+"r"+filevar[j][1]+"   Event:"+to_str(eventNumber[0])));
      
       L[j][e]->Draw();
 
@@ -781,6 +782,7 @@ void project_EDv2(){ // start program
 	/////////////////////////////////////////////////////
 	////             Saves The Display               ////
 	/////////////////////////////////////////////////////
+
 
 
       TString filenames = "EVENTDISPLAYS/EVENT"+std::to_string(e)+"Z"+filevar[j][0]+"r"+filevar[j][1]; // Saves to the EVENTDISPLAYS directory
