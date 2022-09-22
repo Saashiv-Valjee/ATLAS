@@ -1,0 +1,4 @@
+[submodule "xAHAnalysis/src/xAODAnaHelpers"]
+	path = xAHAnalysis/src/xAODAnaHelpers
+	url = https://github.com/UCATLAS/xAODAnaHelpers.git
+	branch = r22/master
