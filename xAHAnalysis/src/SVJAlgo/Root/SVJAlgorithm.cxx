@@ -50,19 +50,18 @@ SVJAlgorithm :: SVJAlgorithm () :
   m_useCutFlow               = true;
   m_writeTree                = true;
   m_MCPileupCheckContainer   = "AntiKt4TruthJets";
-  m_leadingJetPtCut          = 225;
-  m_subleadingJetPtCut       = 225;
-  m_jetMultiplicity          = 3;
+  m_leadingJetPtCut          = 100;
+  m_subleadingJetPtCut       = 25;
+  m_metCut                   = 100;
+  m_jetMultiplicity          = 2;
   m_yStarCut                 = -1; 
   m_reclusterJets            = false;
   m_truthLevelOnly           = false;
   m_eventDetailStr           = "truth pileup";
   m_trigDetailStr            = "";
-  m_jetDetailStr             = "kinematic clean energy truth flavorTag";
-  m_jetDetailStrSyst         = "kinematic clean energy";
+  m_jetDetailStr             = "kinematic energy truth";
+  m_jetDetailStrSyst         = "kinematic energy";
   m_metDetailStr             = "metClus sigClus";
-  m_doBtag                   = false;
-  m_bTagWPNames              = "FixedCutBEff_85";
 }
 
 EL::StatusCode  SVJAlgorithm :: configure ()
@@ -72,8 +71,6 @@ EL::StatusCode  SVJAlgorithm :: configure ()
   if( m_MCPileupCheckContainer == "None" ) {
     m_useMCPileupCheck = false;
   }
-
-  m_comEnergy = "13TeV";
 
   ANA_MSG_INFO("configure() : SVJAlgorithm Interface succesfully configured! \n");
 
@@ -176,7 +173,6 @@ EL::StatusCode SVJAlgorithm :: initialize ()
     m_isMC = ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) ) ? true : false;
   }
 
-  getLumiWeights(eventInfo);
 
   if(m_useCutFlow) {
 
@@ -200,18 +196,6 @@ EL::StatusCode SVJAlgorithm :: initialize ()
     m_cutflowHist->GetXaxis()->FindBin("y*");
     m_cutflowHistW->GetXaxis()->FindBin("y*");
   
-  }
-  
-  ///////////////////////////////////////////////
-  //           Append the btaging WPs          //
-  ///////////////////////////////////////////////
-  
-  if (m_doBtag) {
-    std::stringstream ss(m_bTagWPNames);
-    std::string thisWPString;
-    while (std::getline(ss, thisWPString, ',')) {
-      m_bTagWPs.push_back( thisWPString );
-    }
   }
 
   ANA_MSG_INFO("initialize() : Succesfully initialized! \n");
@@ -250,9 +234,6 @@ void SVJAlgorithm::AddTree( std::string name ) {
       miniTree->AddMET( m_metDetailStr);
       if (m_inFatJetContainerName != "" ) miniTree->AddFatJets(m_fatJetDetailStr);
     }
-    if (m_doBtag){
-      miniTree->AddBtag( m_bTagWPNames );
-    }
   }
   m_myTrees[name] = miniTree;
 }
@@ -286,12 +267,6 @@ EL::StatusCode SVJAlgorithm :: execute ()
   ANA_MSG_DEBUG("execute() : Get Containers");
   const xAOD::EventInfo* eventInfo(nullptr);
   ANA_CHECK (HelperFunctions::retrieve(eventInfo, "EventInfo", m_event, m_store));
-
-  if (m_eventCounter == 0 && m_isMC) {
-    getLumiWeights(eventInfo);
-  } else if (!m_isMC) {
-    m_filtEff = m_xs = 1.0;
-  }
 
   SG::AuxElement::ConstAccessor<float> NPVAccessor("NPV");
   const xAOD::VertexContainer* vertices = 0;
@@ -458,74 +433,14 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   else if ( m_yStarCut <= 0){
     if(doCutflow) passCut();
   }
+  
+  // MET Selection
+  const xAOD::MissingET* final_clus = *met->find("FinalClus");
+  if(final_clus->sumet() < m_metCut) {
+    wk()->skipEvent();  return EL::StatusCode::SUCCESS; 
+  }
+  if(doCutflow) passCut();
 
-
-  //End of selection
-
-  /////////////////////////////////////////////////////////////////////
-  // Add final variables                                             //
-  // if are not set here, miniTree puts -999 since not available     //
-  /////////////////////////////////////////////////////////////////////
-
-  if( signalJets->size() > 1 ) {
-    bool hasThirdJet  = false;
-    bool hasFourthJet = false;
-    const xAOD::Jet* leadJet     = signalJets->at(0);
-    const xAOD::Jet* subLeadJet  = signalJets->at(1);
-    const xAOD::Jet* thirdJet    = signalJets->at(signalJets->size() - 1);
-    const xAOD::Jet* fourthJet   = signalJets->at(signalJets->size() - 1);
-    if ( signalJets->size() == 3) {
-      thirdJet  = signalJets->at(2);
-      hasThirdJet  = true;
-    }
-    if ( signalJets->size() > 3 ) {
-      thirdJet  = signalJets->at(2);
-      fourthJet = signalJets->at(3);
-      hasThirdJet  = true;
-      hasFourthJet = true;
-    }
-
-    ////////////////////////////////////////////////////
-    // Add b-tagging SFs for all WPs and taggers      //
-    ////////////////////////////////////////////////////
-    
-    if (m_doBtag) {
-
-      //get list of systematics values
-      if( m_bTagSystematics.size() == 0 ){
-        static SG::AuxElement::ConstAccessor< std::vector< std::string > > ac_systSF_btag_names("SystSF_btag_Names");
-        if( ac_systSF_btag_names.isAvailable( *eventInfo ) ) { m_bTagSystematics = ac_systSF_btag_names( *eventInfo ); }
-      }
-
-      if (systName.empty()) {
-        for (unsigned int iT=0; iT<m_bTagWPs.size(); iT++) {
-
-          eventInfo->auxdecor< std::vector<float> >( "weight_BTag_"+m_bTagWPs.at(iT) ) = std::vector<float>();
-          int numBTagSystematics = leadJet->auxdecor< std::vector<float> >("BTag_SF_"+m_bTagWPs.at(iT)).size();
-
-          for(int iSys=0; iSys < numBTagSystematics; ++iSys){
-
-            float leadJet_w = 1;
-            float subLeadJet_w = 1;
-            float thirdJet_w = 1;
-            float fourthLeadJet_w = 1;
-            if( leadJet->isAvailable< std::vector<float> >( "BTag_SF_"+m_bTagWPs.at(iT) )) 
-              leadJet_w = leadJet->auxdecor< std::vector<float> >("BTag_SF_"+m_bTagWPs.at(iT)).at(iSys);
-            if( subLeadJet->isAvailable< std::vector<float> >( "BTag_SF_"+m_bTagWPs.at(iT) ))
-              subLeadJet_w = subLeadJet->auxdecor< std::vector<float> >("BTag_SF_"+m_bTagWPs.at(iT)).at(iSys);
-            if( thirdJet->isAvailable< std::vector<float> >( "BTag_SF_"+m_bTagWPs.at(iT) ) && hasThirdJet) 
-              thirdJet_w = leadJet->auxdecor< std::vector<float> >("BTag_SF_"+m_bTagWPs.at(iT)).at(iSys);
-            if( fourthJet->isAvailable< std::vector<float> >( "BTag_SF_"+m_bTagWPs.at(iT) ) && hasFourthJet)
-              fourthLeadJet_w = subLeadJet->auxdecor< std::vector<float> >("BTag_SF_"+m_bTagWPs.at(iT)).at(iSys);
-            eventInfo->auxdecor< std::vector<float> >( "weight_BTag_" + m_bTagWPs.at(iT) ).push_back( leadJet_w*subLeadJet_w*thirdJet_w*fourthLeadJet_w );
-          }
-        }
-      }//systName
-
-      //End of b-tagging
-    }
-
-  } //End of 2 or more jets
   ANA_MSG_DEBUG("Event # "<< m_eventCounter);
 
   //////////////////////
@@ -540,7 +455,6 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     } else {
       m_myTrees[systName]->FillTrigger( eventInfo );
       if(signalJets)  m_myTrees[systName]->FillJets( signalJets, HelperFunctions::getPrimaryVertexLocation( vertices )  );
-      if(m_doBtag) m_myTrees[systName]->FillBtag( eventInfo );
       if(met) m_myTrees[systName]->FillMET(met);
       if(fatJets) m_myTrees[systName]->FillFatJets( fatJets, HelperFunctions::getPrimaryVertexLocation( vertices ));
     }
@@ -560,52 +474,6 @@ void SVJAlgorithm::passCut() {
   m_iCutflow++;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//This grabs cross section, acceptance, and eventNumber information from the respective text file //
-//text format:     147915 2.3793E-01 5.0449E-03 499000                                            //
-// DO NOT HAVE to do this at tuple production level as we can easily reweight the histograms after// 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-EL::StatusCode SVJAlgorithm::getLumiWeights(const xAOD::EventInfo* eventInfo) {
-
-  if(!m_isMC){
-    m_mcChannelNumber = eventInfo->runNumber();
-    m_xs = 1;
-    m_filtEff = 1;
-    m_numAMIEvents = 0;
-    return EL::StatusCode::SUCCESS;
-  }
-
-  m_mcChannelNumber = eventInfo->mcChannelNumber();
-  //if mcChannelNumber = 0 need to retrieve from runNumber
-  if(eventInfo->mcChannelNumber()==0) m_mcChannelNumber = eventInfo->runNumber();
-  ifstream fileIn(  gSystem->ExpandPathName( ("$ROOTCOREBIN/data/DijetResonanceAlgo/XsAcc_"+m_comEnergy+".txt").c_str() ) );
-  std::string runNumStr = std::to_string( m_mcChannelNumber );
-  std::string line;
-  std::string subStr;
-  while (getline(fileIn, line)){
-    istringstream iss(line);
-    iss >> subStr;
-    if (subStr.find(runNumStr) != string::npos){
-      iss >> subStr;
-      sscanf(subStr.c_str(), "%e", &m_xs);
-      iss >> subStr;
-      sscanf(subStr.c_str(), "%e", &m_filtEff);
-      iss >> subStr;
-      sscanf(subStr.c_str(), "%i", &m_numAMIEvents);
-      cout << "Setting xs / acceptance / numAMIEvents to " << m_xs << ":" << m_filtEff << ":" << m_numAMIEvents << endl;
-      continue;
-    }
-  }
-  if( m_numAMIEvents == 0){
-    cerr << "ERROR: Could not find proper file information for file number " << runNumStr << endl;
-    return EL::StatusCode::FAILURE;
-  }
-  return EL::StatusCode::SUCCESS;
-}
-
-
-
 EL::StatusCode SVJAlgorithm :: postExecute ()
 {
   ///////////////////////////////////////////////////////////////////////
@@ -615,8 +483,6 @@ EL::StatusCode SVJAlgorithm :: postExecute ()
   ///////////////////////////////////////////////////////////////////////
   return EL::StatusCode::SUCCESS;
 }
-
-
 
 EL::StatusCode SVJAlgorithm :: finalize ()
 {

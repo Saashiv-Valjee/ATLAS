@@ -168,31 +168,6 @@ c.algorithm("METConstructor",     {
   "m_outputContainer": "METOutput_NewRefFinal",
 })
 
-#%%%%%%%%%%%%%%%%%%%%%%%%%% BJetEfficiencyCorrector %%%%%%%%%%%%%%%%%%%%%%%%%%#
-bJetWPs = ["FixedCutBEff_60", "FixedCutBEff_70", "FixedCutBEff_77", "FixedCutBEff_85"]
-#bJetWPs = ["FixedCutBEff_85"]
-taggers = ["DL1dv00","DL1r"]
-
-for tagger in taggers:
-  for bJetWP in bJetWPs:
-    name = tagger + "_" + bJetWP
-    c.algorithm("BJetEfficiencyCorrector",     {
-      "m_name"                    : name,
-      #----------------------- Container Flow ----------------------------#
-      "m_inContainerName"         : "Jets_Selected",
-      "m_jetAuthor"               : "AntiKt4EMPFlowJets",
-      "m_decor"                   : "BTag",
-      "m_outputSystName"          : "BJetEfficiency_Algo",
-      #----------------------- B-tag Options ----------------------------#
-      "m_corrFileName"            : "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13TeV/2021-22-13TeV-MC16-CDI-2021-12-02_v2.root",
-      "m_taggerName"              : tagger,
-      "m_operatingPt"             : bJetWP,
-      "m_coneFlavourLabel"        : True,
-      "m_useDevelopmentFile"      : False,
-      #----------------------- Other ----------------------------#
-      "m_msgLevel"                : "Info"
-  })
-
 inFatJetContainerName = ""
 inputFatAlgo = ""
 fatJetDetailStr = ""
@@ -210,17 +185,17 @@ c.algorithm("SVJAlgorithm",     {
     "m_inFatJetContainerName"   : inFatJetContainerName,
     "m_inputFatAlgo"            : inputFatAlgo,
     #----------------------- Selections ----------------------------#
-    "m_leadingJetPtCut"         : 250e3,
-    "m_subleadingJetPtCut"      : 60e3,
+    "m_leadingJetPtCut"         : 100e3,
+    "m_subleadingJetPtCut"      : 50e3,
+    "m_metCut"                  : 500e3,
     "m_jetMultiplicity"         : 2,
     #----------------------- Output ----------------------------#
-    "m_doBtag"                  : False,
     "m_reclusterJets"           : False,
     "m_eventDetailStr"          : "truth pileup", #shapeEM
-    "m_jetDetailStr"            : "kinematic rapidity jetBTag_DL1dv00_FixedCutBEff_85 jetBTag_DL1dv00_FixedCutBEff_77 jetBTag_DL1dv00_FixedCutBEff_70 jetBTag_DL1dv00_FixedCutBEff_60 jetBTag_DL1r_FixedCutBEff_85 jetBTag_DL1r_FixedCutBEff_77 jetBTag_DL1r_FixedCutBEff_70 jetBTag_DL1r_FixedCutBEff_60 truth JVT flavorTag",
+    "m_jetDetailStr"            : "kinematic rapidity truth",
     "m_fatJetDetailStr"	        : fatJetDetailStr,
     "m_metDetailStr"            : "metClus sigClus",
-    "m_jetDetailStrSyst"        : "kinematic rapidity truth JVT",
+    "m_jetDetailStrSyst"        : "kinematic rapidity truth",
     "m_trigDetailStr"           : "basic menuKeys passTriggers",
     #----------------------- Other ----------------------------#
     "m_writeTree"               : True,

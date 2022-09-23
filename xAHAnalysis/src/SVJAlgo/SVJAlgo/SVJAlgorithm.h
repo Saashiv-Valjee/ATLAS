@@ -50,17 +50,13 @@ class SVJAlgorithm : public xAH::Algorithm
     float m_yStarCut;                 // yStar Cut
     bool m_truthLevelOnly;            // truthLevelOnly info
     bool m_reclusterJets;            // recluster jet
+    float m_metCut;                  // MET cut
     std::string m_eventDetailStr;     // event info add to tree
     std::string m_trigDetailStr;      // trigger info add to tree
     std::string m_jetDetailStr;       // jet info add to tree
     std::string m_jetDetailStrSyst;   // jetsyst info add to tree
     std::string m_metDetailStr;       // met info add to tree
     std::string m_fatJetDetailStr;    // dat jet info add to tree
-
-
-
-    bool m_doBtag;
-    std::string m_bTagWPNames;
 
   private:
     int m_eventCounter;     //!
@@ -70,22 +66,13 @@ class SVJAlgorithm : public xAH::Algorithm
     int m_cutflowFirst;     //!
     int m_iCutflow;         //!
     float m_mcEventWeight;  //!
-    std::string m_comEnergy; //!
 
-    float m_xs; //!
-    float m_filtEff; //!
-    int m_numAMIEvents; //!
-    int m_mcChannelNumber; //!
     std::stringstream m_ss; //!
-
-    std::vector<std::string> m_bTagWPs; //!
-    std::vector<std::string> m_bTagSystematics; //!
 
     std::string m_treeStream;
 
     void passCut();
 #ifndef __CINT__
-    EL::StatusCode getLumiWeights(const xAOD::EventInfo* eventInfo);
     std::map< std::string, JetHists*> m_jetHists; //!
     std::map< std::string, MiniTree* > m_myTrees; //!
 #endif // not __CINT__
