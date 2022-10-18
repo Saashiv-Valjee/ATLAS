@@ -58,6 +58,9 @@ void MicroNTupleMaker::Loop()
 		if (fabs(a4_pflowjets_eta->at(0)) > 2.8) continue;
 		cutflow->Fill(4);      
 		
+                // check DSID
+                if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
+ 
 		// get svj info 
 		vector<pair<int,float>> svj_info; // {{n_svj,dphi_min}, {n_asvj,dphi_max}}
 		vector<pair<int,float>> svj_info_r04;

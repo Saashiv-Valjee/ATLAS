@@ -41,8 +41,9 @@ public :
    map<string,string> tree_output_vars_string;
    map<string,vector<float>*> tree_output_vars_vector;
 
-   //string variables
+   //file variable
    string year_mc;
+   Int_t dsid_int;
 
    // svj & asvj variables
    float weight_scale, sumw;
@@ -185,7 +186,7 @@ public :
    virtual void     	WriteHistograms();
 
    // WeightHelper
-   virtual void     	SetWeight(string dsid);
+   virtual void     	SetWeight();
    virtual double     	GetSumW(string dsid);
    virtual double     	GetGenFilterEff(string dsid);
    virtual double     	GetXSection(string dsid);

@@ -97,6 +97,14 @@ string GetLegendNames( string filetag  ){
   filetag_legend["364710"] = "JZ10";
   filetag_legend["364711"] = "JZ11";
   filetag_legend["364712"] = "JZ12";
+  filetag_legend["QCDbkg"] = "QCD";
+  filetag_legend["singlt"] = "Single top";
+  filetag_legend["dibson"] = "Diboson";
+  filetag_legend["ttbarr"] = "ttbar";
+  filetag_legend["inclut"] = "Inclusive top";
+  filetag_legend["lepttp"] = "Lepton top";
+  filetag_legend["WpJets"] = "W+jets";
+  filetag_legend["ZpJets"] = "Z+jets";
 
   if (filetag_legend.find(filetag) == filetag_legend.end()){
 	cout << "No better legend name found for filetag " << filetag << "; using filetag." << endl;

@@ -68,9 +68,11 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	
 
 	// Create output file
-	string outfiletag="";
-	string dsid = infiletag.substr(12,6);
+	string dsid = "";
+        if (local) dsid = infiletag.substr(12,6);
 	cout << "DSID: " << dsid << endl;
+
+	string outfiletag="";
 	string mc = "";
 	if (infiletag.find("mc16a") != string::npos) mc = "mc16a";
 	if (infiletag.find("mc16d") != string::npos) mc = "mc16d";
@@ -88,7 +90,7 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	class MicroNTupleMaker myMaker(fChain);
 	
         myMaker.year_mc = mc;
-	myMaker.SetWeight(dsid);
+	myMaker.SetWeight();
 
 	myMaker.DeclareHistograms();
 	myMaker.DeclareOutputTrees();

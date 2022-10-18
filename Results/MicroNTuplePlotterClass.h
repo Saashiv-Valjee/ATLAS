@@ -50,6 +50,7 @@ public :
 	bool use_better_legend_names = true;
 	bool use_weight = true;
 	bool plot_overlayed = false;
+        bool solid_bkg = false;
 	double legx1, legx2, legy1, legy2;
 	vector<string> legend_names;
 
@@ -239,11 +240,12 @@ public :
 	}
 
 	// -------------------------------------------------------------------------------------
-	void SetHistDrawStyle( TH1F* h, int i ){
+	void SetHistDrawStyle( TH1F* h, string hist_tag, int i ){
 		if( debug) cout<<"MicroNTuplePlotter::SetHistDrawStyle()"<<endl;		
 
 		// All
-		h->SetFillColor(0);
+		if (hist_tag.find("50") == string::npos && solid_bkg)  h->SetFillColor(colors[i]);
+		else h->SetFillColor(0);
 		// Line Color
 		h->SetLineColor( colors[i] );
 		h->SetLineStyle( linestyle[i] );
@@ -300,7 +302,7 @@ public :
                         h_temp = new TH1F( hist_name_full, "", NBins, xmin, xmax);
                 }
 
-		TCut cut_weight = Form( "mcEventWeight" ); 
+		TCut cut_weight = Form( "weight" ); 
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
@@ -412,7 +414,7 @@ public :
 			if( plot_log )	 h->SetMaximum( h->GetMaximum()*20. );
 			else  		 h->SetMaximum( h->GetMaximum()*1.25 );
 
-			SetHistDrawStyle( h, i );
+			SetHistDrawStyle( h, hist_tag, i);
 
 			if( manual_legend && legend_names.size() > 0 )
 				h->SetName( Form("%s", legend_names.at(i).c_str() ) );
@@ -466,7 +468,7 @@ public :
 			//for( int ib = 0; ib < h->GetNbinsX()+1; ib++ ) h->SetBinError(ib, 0.0);
 			//}
 
-			SetHistDrawStyle( h, j );
+			SetHistDrawStyle( h, hist_tag, j );
 			hs->Add( h );
 		}
 

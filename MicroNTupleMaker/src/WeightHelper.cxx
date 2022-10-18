@@ -1,5 +1,10 @@
 /* ====================================================================================================================== */
-void MicroNTupleMaker::SetWeight(string dsid){
+void MicroNTupleMaker::SetWeight(){
+
+        //Int_t dsid_int;
+        fChain->GetEntry(0);
+	dsid_int = mcChannelNumber;
+        string dsid = to_string(dsid_int); 
 
 	sumw = GetSumW(dsid);
 	double gfe = GetGenFilterEff(dsid);
