@@ -6,11 +6,26 @@ Codes for nTuple creation and evaluation using xAODAnaHelpers, with specialized 
 
 Below is a step-by-step guide for install the SVJAlgo xAODAnaHelpers framework. If there are any questions about this guide, please contact Bing or Elena at: bingxuan.liu@cern.ch and ebusch@cern.ch 
 
-TODO: test and finish
+1. git clone https://gitlab.cern.ch/atlas-phys/exot/jdm/ana-exot-2021-19.git
+2. cd ana-exot-2021-19
+3. git submodule status - see that xAHAnalysis/src/xAODAnaHelpers is listed as a submodule
+4. git submodule update --init
+5. cd xAHAnalysis
+6. setupATLAS (if not yet done in bashrc)
+7. source install.sh
+8. mkdir run
+
+xAODAnaHelpers and the SVJAlgorithm are now ready to use
 
 ## Running xAODAnaHelpers Locally
 
-TODO: test and finish
+1. cd xAHAnalysis
+2. source setup.sh - take note of AnalysisBase release
+3. cd run
+4. Run the xAH\_run.py command with the following form:
+```
+xAH_run.py --config ../src/SVJAlgo/data/config_SVJAlgo_QCD.py --files  /eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v4/test_multijet/DAOD_PHYS.30165462._000062.pool.root.1  --isMC --submitDir test direct
+``` 
 
 ## Grid Running with xAODAnaHelpers
 1. source setup.sh

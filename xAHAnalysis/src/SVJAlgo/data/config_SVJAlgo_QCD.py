@@ -47,7 +47,7 @@ c.algorithm("BasicEventSelection",    {
   "m_PVNTrack"                  : 2,
   #---------------------------- Other ---------------------------------#
   "m_useMetaData"               : False,
-  "m_msgLevel"                  : "Info",
+  "m_msgLevel"                  : "Error",
 })
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% JetCalibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
