@@ -8,9 +8,9 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"runNumber", "eventNumber","mcEventWeight","weight","SumW",
 
 		// -- JetLevel -- //
-		"n_r04_jets", "n_r10_jets",
-        	"jet1_pt", "jet1_eta", "jet1_phi", "jet1_E", "jet1_nConstituents",
-        	"jet2_pt", "jet2_eta", "jet2_phi", "jet2_E", "jet2_nConstituents",
+		"n_jets",
+        	"jet1_pt", "jet1_eta", "jet1_phi", "jet1_E", 
+        	"jet2_pt", "jet2_eta", "jet2_phi", "jet2_E", 
         	//"jet_svj_pt", "jet_svj_eta", "jet_svj_phi", "jet_svj_m", "jet_svj_n", "jet_svj_nConstituents",
         	//"jet_asvj_pt", "jet_asvj_eta", "jet_asvj_phi", "jet_asvj_m", "jet_asvj_n", "jet_asvj_nConstituents",
         	//"jet_xd1_matched_pt", "jet_xd1_matched_eta", "jet_xd1_matched_phi", "jet_xd1_matched_m", "jet_xd1_matched_n", "jet_xd1_matched_nConstituents",
@@ -30,7 +30,6 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"aplanarity", "sphericity", "sphericity_T",	
 
 		// -- MET -- //
-		//"MET_TruthMET_TruthPhi","MET_TruthMET_TruthSumEt",
         	"met_met", "met_phi"
         };
 
@@ -43,17 +42,6 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"all_jets_eta",
 		"all_jets_phi",
 		"all_jets_E",
-		//"all_jets_numConstituents",
-		"all_LRjets_pt",
-		"all_LRjets_eta",
-		"all_LRjets_phi",
-		"all_LRjets_m",		
-		"all_LRjets_Split12",
-		"all_LRjets_Split23",
-		"all_LRjets_tau32",
-		"all_LRjets_C2",
-		"all_LRjets_D2",
-		//"all_LRjets_nTracks"	
 	};
 
 	for (auto treename: treenames){
@@ -78,23 +66,10 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 
 	tree_output_vars_string["year"] = year_mc;
 
-	tree_output_vars_vector["all_jets_pt"] = a4_pflowjets_pt;
-	tree_output_vars_vector["all_jets_eta"] = a4_pflowjets_eta;
-	tree_output_vars_vector["all_jets_phi"] = a4_pflowjets_phi;
-	tree_output_vars_vector["all_jets_E"]= a4_pflowjets_E;
-	//tree_output_vars_vector["all_jets_numConstituents"] = a4_pflowjets_numConstituents;
-
-	tree_output_vars_vector["all_LRjets_pt"] = a10_lctopojets_pt;
-	tree_output_vars_vector["all_LRjets_eta"]= a10_lctopojets_eta;
-	tree_output_vars_vector["all_LRjets_phi"]= a10_lctopojets_phi;
-	tree_output_vars_vector["all_LRjets_m"] =  a10_lctopojets_m;
-	tree_output_vars_vector["all_LRjets_Split12"] = a10_lctopojets_Split12;
-	tree_output_vars_vector["all_LRjets_Split23"] = a10_lctopojets_Split23;
-	tree_output_vars_vector["all_LRjets_tau32"] = a10_lctopojets_tau32_wta;
-	tree_output_vars_vector["all_LRjets_C2"] = a10_lctopojets_C2;
-	tree_output_vars_vector["all_LRjets_D2"] = a10_lctopojets_D2;
-	//tree_output_vars_vector["all_LRjets_nTracks"] = a10_lctopojets_nTracks;
-	
+	tree_output_vars_vector["all_jets_pt"] = jet_pt;
+	tree_output_vars_vector["all_jets_eta"] = jet_eta;
+	tree_output_vars_vector["all_jets_phi"] = jet_phi;
+	tree_output_vars_vector["all_jets_E"]= jet_E;	
 
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
@@ -102,74 +77,17 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["weight"] = mcEventWeight*weight_scale;
 	tree_output_vars["SumW"] = sumw;
 
-	tree_output_vars["n_r04_jets"] = na4_pflowjets;
-	tree_output_vars["n_r10_jets"] = na10_lctopojets;
+	tree_output_vars["n_jets"] = njet;
 
-	/*
-	tree_output_vars["lr_jet1_pt"] = a10_lctopojets_pt->at(0); // GeV
-	tree_output_vars["lr_jet1_eta"] = a10_lctopojets_eta->at(0);
-	tree_output_vars["lr_jet1_phi"] = a10_lctopojets_phi->at(0);
-	tree_output_vars["lr_jet1_m"] = a10_lctopojets_m->at(0);
-	tree_output_vars["lr_jet1_mT"] = jet1_mT;
-	tree_output_vars["lr_jet1_Split12"] = a10_lctopojets_Split12->at(0);
-	tree_output_vars["lr_jet1_Split23"] = a10_lctopojets_Split23->at(0);
-	tree_output_vars["lr_jet1_tau32"] = a10_lctopojets_tau32_wta->at(0);
-	tree_output_vars["lr_jet1_C2"] = a10_lctopojets_C2->at(0);
-	tree_output_vars["lr_jet1_D2"] = a10_lctopojets_D2->at(0);
-	tree_output_vars["lr_jet1_nTracks"] = a10_lctopojets_nTracks->at(0);
+	tree_output_vars["jet1_pt"] = jet_pt->at(0); // GeV
+	tree_output_vars["jet1_eta"] = jet_eta->at(0);
+	tree_output_vars["jet1_phi"] = jet_phi->at(0);
+	tree_output_vars["jet1_E"] = jet_E->at(0);
+	tree_output_vars["jet2_pt"] = jet_pt->at(1);
+	tree_output_vars["jet2_eta"] = jet_eta->at(1);
+	tree_output_vars["jet2_phi"] = jet_phi->at(1);
 
-	tree_output_vars["lr_jet2_pt"] = a10_lctopojets_pt->at(1);
-	tree_output_vars["lr_jet2_eta"] = a10_lctopojets_eta->at(1);
-	tree_output_vars["lr_jet2_phi"] = a10_lctopojets_phi->at(1);
-	tree_output_vars["lr_jet2_m"] = a10_lctopojets_m->at(1);
-	tree_output_vars["lr_jet2_mT"] = jet2_mT;
-	tree_output_vars["lr_jet2_Split12"] = a10_lctopojets_Split12->at(1);
-	tree_output_vars["lr_jet2_Split23"] = a10_lctopojets_Split23->at(1);
-	tree_output_vars["lr_jet2_tau32"] = a10_lctopojets_tau32_wta->at(1);
-	tree_output_vars["lr_jet2_C2"] = a10_lctopojets_C2->at(1);
-	tree_output_vars["lr_jet2_D2"] = a10_lctopojets_D2->at(1);
-	tree_output_vars["lr_jet2_nTracks"] = a10_lctopojets_nTracks->at(1);
-	*/      
-
-	/*
-        tree_output_vars["jet_svj_n"] = n_svj;
-	tree_output_vars["jet_svj_pt"] = a10_lctopojets_pt->at(n_svj);
-	tree_output_vars["jet_svj_eta"] = a10_lctopojets_eta->at(n_svj);
-	tree_output_vars["jet_svj_phi"] = a10_lctopojets_phi->at(n_svj);
-	tree_output_vars["jet_svj_m"] = a10_lctopojets_m->at(n_svj);
-	tree_output_vars["jet_svj_mT"] = jet_svj_mT;
-	tree_output_vars["jet_svj_Split12"] = a10_lctopojets_Split12->at(n_svj);
-	tree_output_vars["jet_svj_Split23"] = a10_lctopojets_Split23->at(n_svj);
-	tree_output_vars["jet_svj_tau32"] = a10_lctopojets_tau32_wta->at(n_svj);
-	tree_output_vars["jet_svj_C2"] = a10_lctopojets_C2->at(n_svj);
-	tree_output_vars["jet_svj_D2"] = a10_lctopojets_D2->at(n_svj);
-	tree_output_vars["jet_svj_nTracks"] = a10_lctopojets_nTracks->at(n_svj);
-
-        tree_output_vars["jet_asvj_n"] = n_asvj;
-	tree_output_vars["jet_asvj_pt"] = a10_lctopojets_pt->at(n_asvj);
-	tree_output_vars["jet_asvj_eta"] = a10_lctopojets_eta->at(n_asvj);
-	tree_output_vars["jet_asvj_phi"] = a10_lctopojets_phi->at(n_asvj);
-	tree_output_vars["jet_asvj_m"] = a10_lctopojets_m->at(n_asvj);
-	tree_output_vars["jet_asvj_mT"] = jet_asvj_mT;
-	tree_output_vars["jet_asvj_Split12"] = a10_lctopojets_Split12->at(n_asvj);
-	tree_output_vars["jet_asvj_Split23"] = a10_lctopojets_Split23->at(n_asvj);
-	tree_output_vars["jet_asvj_tau32"] = a10_lctopojets_tau32_wta->at(n_asvj);
-	tree_output_vars["jet_asvj_C2"] = a10_lctopojets_C2->at(n_asvj);
-	tree_output_vars["jet_asvj_D2"] = a10_lctopojets_D2->at(n_asvj);
-	tree_output_vars["jet_asvj_nTracks"] = a10_lctopojets_nTracks->at(n_asvj);
-	*/
-
-	tree_output_vars["jet1_pt"] = a4_pflowjets_pt->at(0); // GeV
-	tree_output_vars["jet1_eta"] = a4_pflowjets_eta->at(0);
-	tree_output_vars["jet1_phi"] = a4_pflowjets_phi->at(0);
-	tree_output_vars["jet1_E"] = a4_pflowjets_E->at(0);
-	tree_output_vars["jet1_numConstituents"] = a4_pflowjets_numConstituents->at(0);
-	tree_output_vars["jet2_pt"] = a4_pflowjets_pt->at(1);
-	tree_output_vars["jet2_eta"] = a4_pflowjets_eta->at(1);
-	tree_output_vars["jet2_phi"] = a4_pflowjets_phi->at(1);
-	tree_output_vars["jet2_numConstituents"] = a4_pflowjets_numConstituents->at(1);
-
-	tree_output_vars["met_met"] = metFinalClusSumEt;
+	tree_output_vars["met_met"] = metFinalClus;
 	tree_output_vars["met_phi"] = metFinalClusPhi;
 	tree_output_vars["hT"] = hT;
 	tree_output_vars["rT"] = rT;

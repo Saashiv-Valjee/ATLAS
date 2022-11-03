@@ -295,6 +295,11 @@ public :
 		TH1F *h_temp;
 
 		TString hist_name_full = Form("%s__%s", hist_name.c_str(), filetag_treename.c_str());
+		while (gDirectory->FindObject(hist_name_full)) {
+			cout << hist_name_full << " exists" << endl; 
+			hist_name_full.Append("x");
+			cout << "changed name to " << hist_name_full << endl;
+  		}
 
 		if (false) {
                         // place holder for conditions on making hists, like variable bins
@@ -342,8 +347,8 @@ public :
 					hist_tag = Form( "%s", filetag_treename.c_str() );
 				}else{
 					string filetag_only = GetFiletag(filetag_treename);
-					cout << "filetag_only: " << filetag_only << endl;
-					if (use_better_legend_names) hist_tag = GetLegendNames(filetag_only);
+ 					if (cuts_compare.size() > 0) hist_tag = cut_compare;
+					else if (use_better_legend_names) hist_tag = GetLegendNames(filetag_only);
 					else hist_tag = Form( "%s", filetag_only.c_str());
    				}
 				hist_tags.push_back( hist_tag );
@@ -395,7 +400,7 @@ public :
 		
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
-				legend_name = Form("%s (Int=%.2e)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
+				legend_name = Form("%s (Int=%.0f)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
 			}
 			if (stamp_counts && !stamp_integral){
 				legend_name = Form("%s (NE=%i)", hist_tag.c_str(), int(h->GetEntries()));

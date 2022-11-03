@@ -49,7 +49,8 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	
 	cout<<"Reading in "<<fullinfilepath<<endl;
 	
-	TChain *fChain = new TChain("outTree/nominal");
+	TChain *fChain = new TChain("outTree");
+	TH1F *metadata;
 	
 	if ( !local ){
 		
@@ -60,12 +61,17 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 		for (const auto & entry : directory_iterator(fullinfilepath)){
 			file_count++;
  			TString path_string = Form("%s",entry.path().string().c_str());
-			cout << path_string << endl;
 			fChain->Add(path_string);
+			TFile *f = new TFile( path_string, "READ");
+			TH1F* h = (TH1F*) f->Get("MetaData_EventCount");
+			if (file_count ==1){metadata = (TH1F*) h->Clone(); metadata->SetDirectory(0);} 
+			else metadata->Add(h);
+			cout << "h sumW: " << h->GetBinContent(3) << endl;
+			f->Close();
+			cout << "metadata sumW: " << metadata->GetBinContent(3) << endl;
 		}
 		cout << "Added " << file_count << " files to the chain" << endl;
 	}
-	
 
 	// Create output file
 	string dsid = "";
@@ -84,13 +90,18 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	else outfilename = "output.root";
 
 	TFile *fout = new TFile( outfilename, "RECREATE" );	
-	cout << "Writing out "<<outfilename<<endl;
+	cout << "Will write to "<<outfilename<<endl;
 
+        // Weight from Metadata histogram
+        //cout << "Nbins: " << metadata->GetNbinsX() << endl;
+        double sumWInput = metadata->GetBinContent(3);
+
+        cout << "Declaring class" <<endl;
 	// Class instance
 	class MicroNTupleMaker myMaker(fChain);
 	
         myMaker.year_mc = mc;
-	myMaker.SetWeight();
+	myMaker.SetWeight(sumWInput);
 
 	myMaker.DeclareHistograms();
 	myMaker.DeclareOutputTrees();

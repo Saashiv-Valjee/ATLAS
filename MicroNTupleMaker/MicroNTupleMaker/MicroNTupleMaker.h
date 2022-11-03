@@ -29,7 +29,7 @@ public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
 
-// Fixed size dimensions of array or collections stored in the TTree if any.
+   // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // Settings
    bool debug = false;
@@ -57,6 +57,8 @@ public :
    float deltaY_12, deltaY_sa;
    float aplanarity, sphericity, sphericity_T;
 
+   //Weight histogram
+   TH1F *MetaData_EventCount;
    // Cutflow histograms
    TH1F *cutflow;
 
@@ -69,38 +71,11 @@ public :
    Int_t           mcEventNumber;
    Int_t           mcChannelNumber;
    Float_t         mcEventWeight;
-   Int_t           na4_pflowjets;
-   vector<float>   *a4_pflowjets_E;
-   vector<float>   *a4_pflowjets_pt;
-   vector<float>   *a4_pflowjets_phi;
-   vector<float>   *a4_pflowjets_eta;
-   vector<int>     *a4_pflowjets_clean_passLooseBad;
-   vector<int>     *a4_pflowjets_clean_passTightBad;
-   vector<int>     *a4_pflowjets_numConstituents;
-   Int_t           na10_lctopojets;
-   vector<float>   *a10_lctopojets_m;
-   vector<float>   *a10_lctopojets_pt;
-   vector<float>   *a10_lctopojets_phi;
-   vector<float>   *a10_lctopojets_eta;
-   vector<float>   *a10_lctopojets_Split12;
-   vector<float>   *a10_lctopojets_Split23;
-   vector<float>   *a10_lctopojets_Split34;
-   vector<float>   *a10_lctopojets_tau1_wta;
-   vector<float>   *a10_lctopojets_tau2_wta;
-   vector<float>   *a10_lctopojets_tau3_wta;
-   vector<float>   *a10_lctopojets_tau21_wta;
-   vector<float>   *a10_lctopojets_tau32_wta;
-   vector<float>   *a10_lctopojets_ECF1;
-   vector<float>   *a10_lctopojets_ECF2;
-   vector<float>   *a10_lctopojets_ECF3;
-   vector<float>   *a10_lctopojets_C2;
-   vector<float>   *a10_lctopojets_D2;
-   vector<float>   *a10_lctopojets_NTrimSubjets;
-   vector<int>     *a10_lctopojets_Nclusters;
-   vector<int>     *a10_lctopojets_nTracks;
-   vector<int>     *a10_lctopojets_ungrtrk500;
-   vector<float>   *a10_lctopojets_EMFrac;
-   vector<int>     *a10_lctopojets_nChargedParticles;
+   Int_t           njet;
+   vector<float>   *jet_E;
+   vector<float>   *jet_pt;
+   vector<float>   *jet_phi;
+   vector<float>   *jet_eta;
    Float_t         metFinalClus;
    Float_t         metFinalClusPx;
    Float_t         metFinalClusPy;
@@ -116,38 +91,11 @@ public :
    TBranch        *b_mcEventNumber;   //!
    TBranch        *b_mcChannelNumber;   //!
    TBranch        *b_mcEventWeight;   //!
-   TBranch        *b_na4_pflowjets;   //!
-   TBranch        *b_a4_pflowjets_E;   //!
-   TBranch        *b_a4_pflowjets_pt;   //!
-   TBranch        *b_a4_pflowjets_phi;   //!
-   TBranch        *b_a4_pflowjets_eta;   //!
-   TBranch        *b_a4_pflowjets_clean_passLooseBad;   //!
-   TBranch        *b_a4_pflowjets_clean_passTightBad;   //!
-   TBranch        *b_a4_pflowjets_numConstituents;   //!
-   TBranch        *b_na10_lctopojets;   //!
-   TBranch        *b_a10_lctopojets_m;   //!
-   TBranch        *b_a10_lctopojets_pt;   //!
-   TBranch        *b_a10_lctopojets_phi;   //!
-   TBranch        *b_a10_lctopojets_eta;   //!
-   TBranch        *b_a10_lctopojets_Split12;   //!
-   TBranch        *b_a10_lctopojets_Split23;   //!
-   TBranch        *b_a10_lctopojets_Split34;   //!
-   TBranch        *b_a10_lctopojets_tau1_wta;   //!
-   TBranch        *b_a10_lctopojets_tau2_wta;   //!
-   TBranch        *b_a10_lctopojets_tau3_wta;   //!
-   TBranch        *b_a10_lctopojets_tau21_wta;   //!
-   TBranch        *b_a10_lctopojets_tau32_wta;   //!
-   TBranch        *b_a10_lctopojets_ECF1;   //!
-   TBranch        *b_a10_lctopojets_ECF2;   //!
-   TBranch        *b_a10_lctopojets_ECF3;   //!
-   TBranch        *b_a10_lctopojets_C2;   //!
-   TBranch        *b_a10_lctopojets_D2;   //!
-   TBranch        *b_a10_lctopojets_NTrimSubjets;   //!
-   TBranch        *b_a10_lctopojets_Nclusters;   //!
-   TBranch        *b_a10_lctopojets_nTracks;   //!
-   TBranch        *b_a10_lctopojets_ungrtrk500;   //!
-   TBranch        *b_a10_lctopojets_EMFrac;   //!
-   TBranch        *b_a10_lctopojets_nChargedParticles;   //!
+   TBranch        *b_njet;   //!
+   TBranch        *b_jet_E;   //!
+   TBranch        *b_jet_pt;   //!
+   TBranch        *b_jet_phi;   //!
+   TBranch        *b_jet_eta;   //!
    TBranch        *b_metFinalClus;   //!
    TBranch        *b_metFinalClusPx;   //!
    TBranch        *b_metFinalClusPy;   //!
@@ -186,7 +134,7 @@ public :
    virtual void     	WriteHistograms();
 
    // WeightHelper
-   virtual void     	SetWeight();
+   virtual void     	SetWeight(double sumWInput);
    virtual double     	GetSumW(string dsid);
    virtual double     	GetGenFilterEff(string dsid);
    virtual double     	GetXSection(string dsid);
@@ -242,36 +190,10 @@ void MicroNTupleMaker::Init(TTree *tree)
    // (once per file to be processed).
 
    // Set object pointer
-   a4_pflowjets_E = 0;
-   a4_pflowjets_pt = 0;
-   a4_pflowjets_phi = 0;
-   a4_pflowjets_eta = 0;
-   a4_pflowjets_clean_passLooseBad = 0;
-   a4_pflowjets_clean_passTightBad = 0;
-   a4_pflowjets_numConstituents = 0;
-   a10_lctopojets_m = 0;
-   a10_lctopojets_pt = 0;
-   a10_lctopojets_phi = 0;
-   a10_lctopojets_eta = 0;
-   a10_lctopojets_Split12 = 0;
-   a10_lctopojets_Split23 = 0;
-   a10_lctopojets_Split34 = 0;
-   a10_lctopojets_tau1_wta = 0;
-   a10_lctopojets_tau2_wta = 0;
-   a10_lctopojets_tau3_wta = 0;
-   a10_lctopojets_tau21_wta = 0;
-   a10_lctopojets_tau32_wta = 0;
-   a10_lctopojets_ECF1 = 0;
-   a10_lctopojets_ECF2 = 0;
-   a10_lctopojets_ECF3 = 0;
-   a10_lctopojets_C2 = 0;
-   a10_lctopojets_D2 = 0;
-   a10_lctopojets_NTrimSubjets = 0;
-   a10_lctopojets_Nclusters = 0;
-   a10_lctopojets_nTracks = 0;
-   a10_lctopojets_ungrtrk500 = 0;
-   a10_lctopojets_EMFrac = 0;
-   a10_lctopojets_nChargedParticles = 0;
+   jet_E = 0;
+   jet_pt = 0;
+   jet_phi = 0;
+   jet_eta = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -286,38 +208,11 @@ void MicroNTupleMaker::Init(TTree *tree)
    fChain->SetBranchAddress("mcEventNumber", &mcEventNumber, &b_mcEventNumber);
    fChain->SetBranchAddress("mcChannelNumber", &mcChannelNumber, &b_mcChannelNumber);
    fChain->SetBranchAddress("mcEventWeight", &mcEventWeight, &b_mcEventWeight);
-   fChain->SetBranchAddress("na4_pflowjets", &na4_pflowjets, &b_na4_pflowjets);
-   fChain->SetBranchAddress("a4_pflowjets_E", &a4_pflowjets_E, &b_a4_pflowjets_E);
-   fChain->SetBranchAddress("a4_pflowjets_pt", &a4_pflowjets_pt, &b_a4_pflowjets_pt);
-   fChain->SetBranchAddress("a4_pflowjets_phi", &a4_pflowjets_phi, &b_a4_pflowjets_phi);
-   fChain->SetBranchAddress("a4_pflowjets_eta", &a4_pflowjets_eta, &b_a4_pflowjets_eta);
-   fChain->SetBranchAddress("a4_pflowjets_clean_passLooseBad", &a4_pflowjets_clean_passLooseBad, &b_a4_pflowjets_clean_passLooseBad);
-   fChain->SetBranchAddress("a4_pflowjets_clean_passTightBad", &a4_pflowjets_clean_passTightBad, &b_a4_pflowjets_clean_passTightBad);
-   fChain->SetBranchAddress("a4_pflowjets_numConstituents", &a4_pflowjets_numConstituents, &b_a4_pflowjets_numConstituents);
-   fChain->SetBranchAddress("na10_lctopojets", &na10_lctopojets, &b_na10_lctopojets);
-   fChain->SetBranchAddress("a10_lctopojets_m", &a10_lctopojets_m, &b_a10_lctopojets_m);
-   fChain->SetBranchAddress("a10_lctopojets_pt", &a10_lctopojets_pt, &b_a10_lctopojets_pt);
-   fChain->SetBranchAddress("a10_lctopojets_phi", &a10_lctopojets_phi, &b_a10_lctopojets_phi);
-   fChain->SetBranchAddress("a10_lctopojets_eta", &a10_lctopojets_eta, &b_a10_lctopojets_eta);
-   fChain->SetBranchAddress("a10_lctopojets_Split12", &a10_lctopojets_Split12, &b_a10_lctopojets_Split12);
-   fChain->SetBranchAddress("a10_lctopojets_Split23", &a10_lctopojets_Split23, &b_a10_lctopojets_Split23);
-   fChain->SetBranchAddress("a10_lctopojets_Split34", &a10_lctopojets_Split34, &b_a10_lctopojets_Split34);
-   fChain->SetBranchAddress("a10_lctopojets_tau1_wta", &a10_lctopojets_tau1_wta, &b_a10_lctopojets_tau1_wta);
-   fChain->SetBranchAddress("a10_lctopojets_tau2_wta", &a10_lctopojets_tau2_wta, &b_a10_lctopojets_tau2_wta);
-   fChain->SetBranchAddress("a10_lctopojets_tau3_wta", &a10_lctopojets_tau3_wta, &b_a10_lctopojets_tau3_wta);
-   fChain->SetBranchAddress("a10_lctopojets_tau21_wta", &a10_lctopojets_tau21_wta, &b_a10_lctopojets_tau21_wta);
-   fChain->SetBranchAddress("a10_lctopojets_tau32_wta", &a10_lctopojets_tau32_wta, &b_a10_lctopojets_tau32_wta);
-   fChain->SetBranchAddress("a10_lctopojets_ECF1", &a10_lctopojets_ECF1, &b_a10_lctopojets_ECF1);
-   fChain->SetBranchAddress("a10_lctopojets_ECF2", &a10_lctopojets_ECF2, &b_a10_lctopojets_ECF2);
-   fChain->SetBranchAddress("a10_lctopojets_ECF3", &a10_lctopojets_ECF3, &b_a10_lctopojets_ECF3);
-   fChain->SetBranchAddress("a10_lctopojets_C2", &a10_lctopojets_C2, &b_a10_lctopojets_C2);
-   fChain->SetBranchAddress("a10_lctopojets_D2", &a10_lctopojets_D2, &b_a10_lctopojets_D2);
-   fChain->SetBranchAddress("a10_lctopojets_NTrimSubjets", &a10_lctopojets_NTrimSubjets, &b_a10_lctopojets_NTrimSubjets);
-   fChain->SetBranchAddress("a10_lctopojets_Nclusters", &a10_lctopojets_Nclusters, &b_a10_lctopojets_Nclusters);
-   fChain->SetBranchAddress("a10_lctopojets_nTracks", &a10_lctopojets_nTracks, &b_a10_lctopojets_nTracks);
-   fChain->SetBranchAddress("a10_lctopojets_ungrtrk500", &a10_lctopojets_ungrtrk500, &b_a10_lctopojets_ungrtrk500);
-   fChain->SetBranchAddress("a10_lctopojets_EMFrac", &a10_lctopojets_EMFrac, &b_a10_lctopojets_EMFrac);
-   fChain->SetBranchAddress("a10_lctopojets_nChargedParticles", &a10_lctopojets_nChargedParticles, &b_a10_lctopojets_nChargedParticles);
+   fChain->SetBranchAddress("njet", &njet, &b_njet);
+   fChain->SetBranchAddress("jet_E", &jet_E, &b_jet_E);
+   fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
+   fChain->SetBranchAddress("jet_phi", &jet_phi, &b_jet_phi);
+   fChain->SetBranchAddress("jet_eta", &jet_eta, &b_jet_eta);
    fChain->SetBranchAddress("metFinalClus", &metFinalClus, &b_metFinalClus);
    fChain->SetBranchAddress("metFinalClusPx", &metFinalClusPx, &b_metFinalClusPx);
    fChain->SetBranchAddress("metFinalClusPy", &metFinalClusPy, &b_metFinalClusPy);

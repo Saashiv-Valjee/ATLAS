@@ -1,12 +1,12 @@
 /* ====================================================================================================================== */
-void MicroNTupleMaker::SetWeight(){
+void MicroNTupleMaker::SetWeight(double sumWInput){
 
         //Int_t dsid_int;
         fChain->GetEntry(0);
 	dsid_int = mcChannelNumber;
         string dsid = to_string(dsid_int); 
 
-	sumw = GetSumW(dsid);
+	sumw = sumWInput;
 	double gfe = GetGenFilterEff(dsid);
 	double xs = GetXSection(dsid);
 
@@ -21,8 +21,11 @@ double MicroNTupleMaker::GetSumW(string dsid){
 	
         double my_sumw = 0.0;
 
+        //my_sumw = MetaData_EventCount->GetBinContent(3)
+
+        /*
 	// Cross section in nb
-	map<string, double> sumw;
+	ma
 	// Multijet
 	sumw["364702"] = 121027;       
 	sumw["364703"] = 4772.79;
@@ -92,7 +95,7 @@ double MicroNTupleMaker::GetSumW(string dsid){
         map<string, double>::iterator iter = sumw.find(dsid);
 	if (iter != sumw.end()) my_sumw = sumw[dsid];
 	else cout << "ERROR: No SumW info found for DSID " << dsid << endl;
-
+        */
 	return my_sumw;
 
 }

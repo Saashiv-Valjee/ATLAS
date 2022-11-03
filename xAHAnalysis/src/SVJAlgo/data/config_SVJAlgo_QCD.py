@@ -90,6 +90,7 @@ c.algorithm("JetCalibrator",     {
 
 # large-r jet
 if opt.doFatJet:
+  
   c.algorithm("JetCalibrator",     {
     "m_name"                      : "FatJetCalibrate",
     #----------------------- Container Flow ----------------------------#
@@ -135,9 +136,9 @@ c.algorithm("JetSelector",     {
   "m_createSelectedContainer"   : True,
   #----------------------- Selections ----------------------------#
   "m_cleanJets"                 : False,
-  "m_pass_min"                  : 1,
+  "m_pass_min"                  : 2,
   "m_pT_min"                    : 25e3,
-  "m_eta_max"                   : 5,
+  "m_eta_max"                   : 4.5,
   #----------------------- JVT ----------------------------#
   "m_doJVT"                     : False, # JVT is a pileup cut
   "m_pt_max_JVT"                : 60e3,
@@ -187,7 +188,7 @@ c.algorithm("SVJAlgorithm",     {
     #----------------------- Selections ----------------------------#
     "m_leadingJetPtCut"         : 100e3,
     "m_subleadingJetPtCut"      : 50e3,
-    "m_metCut"                  : 500e3,
+    "m_metCut"                  : 0e3,
     "m_jetMultiplicity"         : 2,
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           : False,
