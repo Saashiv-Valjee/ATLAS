@@ -72,5 +72,16 @@ Note that `grid_run.sh` executes a prun command, which depends on the maps `file
 
 ## Plotting
 
-Scripts are available in the Results folder to facilitate plotting from the MicroNtuples. TODO: example scripts
+Scripts are available in the Results folder to facilitate plotting from the MicroNtuples.
+
+`MicroNTuplePlotterClass.h`: a class with many tool for creating stacks of histograms, applying weights and cuts, and plotting in ATLAS format  
+`myPlotter.C`: set options and call plotter class instance to create plots  
+`PlotFunctions.h`: some functions called by the plotter class  
+`PlotParams.h`: Set plotting parameters (title, nBins, xmin, xmax) for each MicroNtuple branch  
+`plotterExamples.C`: along with `myPlotter.C`, look here for examples of plotter class functionality  
+`simplePlotter.C`: a separate standalone script ideal for making quick, specific modifications to 1D histogram plots
+
+### EventDisplays
+
+Joel's event display code. See internal README.
 

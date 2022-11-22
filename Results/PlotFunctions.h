@@ -86,6 +86,12 @@ string GetLegendNames( string filetag  ){
   filetag_legend["508548"] = "1500 GeV, 0.3";
   filetag_legend["508549"] = "750 GeV, 0.8";
   filetag_legend["508550"] = "750 GeV, 0.3";
+  filetag_legend["515479.mc20e"] = "500 GeV, 0.2";
+  filetag_legend["515482.mc20e"] = "500 GeV, 0.8";
+  filetag_legend["515499.mc20e"] = "2000 GeV, 0.2";
+  filetag_legend["515502.mc20e"] = "2000 GeV, 0.8";
+  filetag_legend["515523.mc20e"] = "6000 GeV, 0.2";
+  filetag_legend["515526.mc20e"] = "6000 GeV, 0.8";
   filetag_legend["364702"] = "JZ2";
   filetag_legend["364703"] = "JZ3";
   filetag_legend["364704"] = "JZ4";
@@ -98,6 +104,7 @@ string GetLegendNames( string filetag  ){
   filetag_legend["364711"] = "JZ11";
   filetag_legend["364712"] = "JZ12";
   filetag_legend["QCDbkg"] = "QCD";
+  filetag_legend["QCDtest.mc20e"] = "QCD";
   filetag_legend["singlt"] = "Single top";
   filetag_legend["dibson"] = "Diboson";
   filetag_legend["ttbarr"] = "ttbar";
