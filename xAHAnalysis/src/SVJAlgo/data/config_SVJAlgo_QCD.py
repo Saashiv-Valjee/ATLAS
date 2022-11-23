@@ -16,7 +16,7 @@ opt = parser.parse_args(shlex.split(args.extra_options))
 
 c = Config()
 
-localDoFatJet = True
+#localDoFatJet = True
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% BasicEventSelection %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("BasicEventSelection",    { 
@@ -33,7 +33,7 @@ c.algorithm("BasicEventSelection",    {
   #-------------------------- Derivation -------------------------------#
   "m_derivationName"            : "PHYS",
   # -------------------------- Trigger ----------------------------------#
-   "m_triggerSelection"          : "HLT_j380*", 
+   "m_triggerSelection"          : "HLT_j380*", #"HLT_j380*, HLT_xe*", 
    "m_storePassHLT"              : True,
    "m_storeTrigDecisions"        : True,
    "m_storePassL1"               : True,
@@ -91,8 +91,7 @@ c.algorithm("JetCalibrator",     {
 })
 
 # large-r jet
-#if opt.doFatJet: 
-if localDoFatJet:
+if opt.doFatJet: 
   c.algorithm("JetCalibrator",     {
     "m_name"                      : "FatJetCalibrate",
     #----------------------- Container Flow ----------------------------#
@@ -174,10 +173,9 @@ c.algorithm("METConstructor",     {
 inFatJetContainerName = ""
 inputFatAlgo = ""
 fatJetDetailStr = ""
-#if opt.doFatJet:
-if localDoFatJet:
-      inFatJetContainerName = "FatJets_Calibrate",
-      inputFatAlgo = "FatJetCalibrator_Syst",
+if opt.doFatJet:
+      inFatJetContainerName = "FatJets_Calibrate"
+      inputFatAlgo = "FatJetCalibrator_Syst"
       fatJetDetailStr = "kinematic"
 ##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("SVJAlgorithm",     {

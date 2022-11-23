@@ -62,6 +62,7 @@ SVJAlgorithm :: SVJAlgorithm () :
   m_jetDetailStr             = "kinematic energy truth";
   m_jetDetailStrSyst         = "kinematic energy";
   m_metDetailStr             = "metClus sigClus";
+  m_fatJetDetailStr          = "kinematic substructure";
 }
 
 EL::StatusCode  SVJAlgorithm :: configure ()

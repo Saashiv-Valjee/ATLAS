@@ -16,32 +16,40 @@ opt = parser.parse_args(shlex.split(args.extra_options))
 
 c = Config()
 
+#localDoFatJet = True
+
 #%%%%%%%%%%%%%%%%%%%%%%%%%% BasicEventSelection %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("BasicEventSelection",    { 
   "m_name"                      : "BasicEventSelect",
   "m_applyGRLCut"               : False, 
-  "m_GRLxml"                    : "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/GoodRunsLists/data17_13TeV/20180619/data17_13TeV.periodAllYear_DetStatus-v99-pro22-01_Unknown_PHYS_StandardGRL_All_Good_25ns_JetHLT_Normal2017.xml",
-  "m_derivationName"            : "PHYS",
-  "m_useMetaData"               : False,
-  "m_storePassHLT"              : True,
-  "m_storeTrigDecisions"        : True,
-  "m_storePassL1"	        : True,
-  "m_storeTrigKeys" 	        : False,
-  "m_applyTriggerCut"           : False,
+  #-------------------------- GRL --------------------------------------#
+  "m_GRLxml"                    : 'GoodRunsLists/data18_13TeV/20190708/data18_13TeV.periodAllYear_DetStatus-v105-pro22-13_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml',
+  #-------------------------- PRW --------------------------------------#
   "m_doPUreweighting"           : False,
+  "m_lumiCalcFileNames"         : 'GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_348885-364292_OflLumi-13TeV-010.root,GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_354396-355468_OflLumi-13TeV-001.root',
+  "m_prwActualMu2018File"       : "GoodRunsLists/data18_13TeV/20190708/purw.actualMu.2018.root",
   "m_autoconfigPRW"             : False,
   "m_PRWFileNames"              : "",
-  "m_lumiCalcFileNames"         : "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/ilumicalc_histograms_None_276262-284154.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/ilumicalc_histograms_None_297730-299243.root,/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/SUSYTools/ilumicalc_histograms_None_325713-338349_OflLumi-13TeV-001.root",
-  "m_autoconfigPRW"             : False,
-  "m_triggerSelection"          : ".*",
+  #-------------------------- Derivation -------------------------------#
+  "m_derivationName"            : "PHYS",
+  # -------------------------- Trigger ----------------------------------#
+   "m_triggerSelection"          : "HLT_j380*", #"HLT_j380*, HLT_xe*", 
+   "m_storePassHLT"              : True,
+   "m_storeTrigDecisions"        : True,
+   "m_storePassL1"               : True,
+   "m_storeTrigKeys"             : False,
+   "m_applyTriggerCut"           : False,
+  # ---------------------------- Cuts ----------------------------------#
   "m_checkDuplicatesData"       : False,
-  "m_applyEventCleaningCut"     : True,
-  "m_applyCoreFlagsCut"	        : True,
+  "m_applyGRLCut"               : False,
+  "m_applyEventCleaningCut"     : False,
+  "m_applyCoreFlagsCut"	        : False,
   "m_vertexContainerName"       : "PrimaryVertices",
-  "m_applyPrimaryVertexCut"     : True, 
-  "m_PVNTrack"		        : 2,
-  "m_msgLevel"                  : "Info",
-  "m_applyJetCleaningEventFlag" : True,
+  "m_applyPrimaryVertexCut"     : False,
+  "m_PVNTrack"                  : 2,
+  #---------------------------- Other ---------------------------------#
+  "m_useMetaData"               : False,
+  "m_msgLevel"                  : "Error",
 })
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% JetCalibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
@@ -83,7 +91,7 @@ c.algorithm("JetCalibrator",     {
 })
 
 # large-r jet
-if opt.doFatJet:
+if opt.doFatJet: 
   c.algorithm("JetCalibrator",     {
     "m_name"                      : "FatJetCalibrate",
     #----------------------- Container Flow ----------------------------#
@@ -94,7 +102,7 @@ if opt.doFatJet:
     "m_sort"                      : True,
     "m_redoJVT"                   : False,
     #----------------------- Systematics ----------------------------#
-    "m_systName"                  : 'Nominal',
+    "m_systName"                  : "Nominal",
     "m_systVal"                   : 0,
     #----------------------- Calibration ----------------------------#
     "m_calibConfigFullSim"        : "JES_MC16recommendation_FatJet_Trimmed_JMS_comb_17Oct2018.config",
@@ -131,7 +139,7 @@ c.algorithm("JetSelector",     {
   "m_cleanJets"                 : False,
   "m_pass_min"                  : 1,
   "m_pT_min"                    : 25e3,
-  "m_eta_max"                   : 5,
+  "m_eta_max"                   : 4.5,
   #----------------------- JVT ----------------------------#
   "m_doJVT"                     : False, # JVT is a pileup cut
   "m_pt_max_JVT"                : 60e3,
@@ -166,9 +174,9 @@ inFatJetContainerName = ""
 inputFatAlgo = ""
 fatJetDetailStr = ""
 if opt.doFatJet:
-      inFatJetContainerName = "FatJets_Calibrate",
-      inputFatAlgo = "FatJetCalibrator_Syst",
-      fatJetDetailStr = "kinematic substructure constituent constituentAll scales area"
+      inFatJetContainerName = "FatJets_Calibrate"
+      inputFatAlgo = "FatJetCalibrator_Syst"
+      fatJetDetailStr = "kinematic substructure truth"
 ##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("SVJAlgorithm",     {
     "m_name"                    : "ResonanceAlgo",
@@ -181,17 +189,16 @@ c.algorithm("SVJAlgorithm",     {
     #----------------------- Selections ----------------------------#
     "m_leadingJetPtCut"         : 100e3,
     "m_subleadingJetPtCut"      : 50e3,
-    "m_jetMultiplicity"         : 2,
-    "m_metCut"      : 500e3,
+    "m_metCut"                  : 0e3,
+    "m_jetMultiplicity"         : 1,
     #----------------------- Output ----------------------------#
-    "m_doBtag"                  : False,
     "m_reclusterJets"           : False,
-    "m_eventDetailStr"          : "truth pileup", #shapeEM
-    "m_jetDetailStr"            : "kinematic rapidity truth",
+    "m_eventDetailStr"          : "truth", #shapeEM
+    "m_jetDetailStr"            : "kinematic",
     "m_fatJetDetailStr"	        : fatJetDetailStr,
-    "m_metDetailStr"            : "metClus sigClus",
-    "m_jetDetailStrSyst"        : "kinematic rapidity truth",
-    "m_trigDetailStr"           : "basic menuKeys passTriggers",
+    "m_metDetailStr"            : "metClus",
+    "m_jetDetailStrSyst"        : "kinematic truth",
+    "m_trigDetailStr"           : "basic passTriggers",
     #----------------------- Other ----------------------------#
     "m_writeTree"               : True,
     #"m_MCPileupCheckContainer"  : "AntiKt4TruthJets",
@@ -199,4 +206,5 @@ c.algorithm("SVJAlgorithm",     {
 #    "m_truthLevelOnly"          : False , #Protection when running on truth xAOD.
     "m_msgLevel"                : "Info",
 })
+
 
