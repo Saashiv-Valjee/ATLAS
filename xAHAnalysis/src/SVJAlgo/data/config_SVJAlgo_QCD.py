@@ -16,6 +16,8 @@ opt = parser.parse_args(shlex.split(args.extra_options))
 
 c = Config()
 
+localDoFatJet = True
+
 #%%%%%%%%%%%%%%%%%%%%%%%%%% BasicEventSelection %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("BasicEventSelection",    { 
   "m_name"                      : "BasicEventSelect",
@@ -35,7 +37,7 @@ c.algorithm("BasicEventSelection",    {
    "m_storePassHLT"              : True,
    "m_storeTrigDecisions"        : True,
    "m_storePassL1"               : True,
-   "m_storeTrigKeys"             : True,
+   "m_storeTrigKeys"             : False,
    "m_applyTriggerCut"           : False,
   # ---------------------------- Cuts ----------------------------------#
   "m_checkDuplicatesData"       : False,
@@ -89,8 +91,8 @@ c.algorithm("JetCalibrator",     {
 })
 
 # large-r jet
-if opt.doFatJet:
-  
+#if opt.doFatJet: 
+if localDoFatJet:
   c.algorithm("JetCalibrator",     {
     "m_name"                      : "FatJetCalibrate",
     #----------------------- Container Flow ----------------------------#
@@ -101,7 +103,7 @@ if opt.doFatJet:
     "m_sort"                      : True,
     "m_redoJVT"                   : False,
     #----------------------- Systematics ----------------------------#
-    "m_systName"                  : 'Nominal',
+    "m_systName"                  : "Nominal",
     "m_systVal"                   : 0,
     #----------------------- Calibration ----------------------------#
     "m_calibConfigFullSim"        : "JES_MC16recommendation_FatJet_Trimmed_JMS_comb_17Oct2018.config",
@@ -136,7 +138,7 @@ c.algorithm("JetSelector",     {
   "m_createSelectedContainer"   : True,
   #----------------------- Selections ----------------------------#
   "m_cleanJets"                 : False,
-  "m_pass_min"                  : 2,
+  "m_pass_min"                  : 1,
   "m_pT_min"                    : 25e3,
   "m_eta_max"                   : 4.5,
   #----------------------- JVT ----------------------------#
@@ -172,10 +174,11 @@ c.algorithm("METConstructor",     {
 inFatJetContainerName = ""
 inputFatAlgo = ""
 fatJetDetailStr = ""
-if opt.doFatJet:
+#if opt.doFatJet:
+if localDoFatJet:
       inFatJetContainerName = "FatJets_Calibrate",
       inputFatAlgo = "FatJetCalibrator_Syst",
-      fatJetDetailStr = "kinematic substructure constituent constituentAll scales area"
+      fatJetDetailStr = "kinematic"
 ##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("SVJAlgorithm",     {
     "m_name"                    : "ResonanceAlgo",
@@ -189,15 +192,15 @@ c.algorithm("SVJAlgorithm",     {
     "m_leadingJetPtCut"         : 100e3,
     "m_subleadingJetPtCut"      : 50e3,
     "m_metCut"                  : 0e3,
-    "m_jetMultiplicity"         : 2,
+    "m_jetMultiplicity"         : 1,
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           : False,
-    "m_eventDetailStr"          : "truth pileup", #shapeEM
-    "m_jetDetailStr"            : "kinematic rapidity truth",
+    "m_eventDetailStr"          : "", #shapeEM
+    "m_jetDetailStr"            : "kinematic",
     "m_fatJetDetailStr"	        : fatJetDetailStr,
-    "m_metDetailStr"            : "metClus sigClus",
-    "m_jetDetailStrSyst"        : "kinematic rapidity truth",
-    "m_trigDetailStr"           : "basic menuKeys passTriggers",
+    "m_metDetailStr"            : "metClus",
+    "m_jetDetailStrSyst"        : "kinematic",
+    "m_trigDetailStr"           : "basic passTriggers",
     #----------------------- Other ----------------------------#
     "m_writeTree"               : True,
     #"m_MCPileupCheckContainer"  : "AntiKt4TruthJets",
