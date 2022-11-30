@@ -48,13 +48,12 @@ public :
    // svj & asvj variables
    float weight_scale, sumw;
    int n_svj, n_asvj;
-   int n_r04_jets, n_r10_jets;
    float dphi_min, dphi_max, maxphi_minphi;
-   float pt_balance_12, pt_balance_sa;
-   float mjj_12, mjj_sa, mT_jj;
+   float pt_balance_12;
+   float mjj_12, mT_jj;
+   float mJJ_12, mT_JJ;
    float hT, dR_12, deta_12, rT;
-   float jet1_mT, jet2_mT, jet_svj_mT, jet_asvj_mT;
-   float deltaY_12, deltaY_sa;
+   float deltaY_12;
    float aplanarity, sphericity, sphericity_T;
 
    //Weight histogram
@@ -72,10 +71,15 @@ public :
    Int_t           mcChannelNumber;
    Float_t         mcEventWeight;
    Int_t           njet;
+   Int_t           nfatjet;
    vector<float>   *jet_E;
    vector<float>   *jet_pt;
    vector<float>   *jet_phi;
    vector<float>   *jet_eta;
+   vector<float>   *fatjet_m;
+   vector<float>   *fatjet_pt;
+   vector<float>   *fatjet_phi;
+   vector<float>   *fatjet_eta;
    Float_t         metFinalClus;
    Float_t         metFinalClusPx;
    Float_t         metFinalClusPy;
@@ -96,6 +100,11 @@ public :
    TBranch        *b_jet_pt;   //!
    TBranch        *b_jet_phi;   //!
    TBranch        *b_jet_eta;   //!
+   TBranch        *b_nfatjet;   //!
+   TBranch        *b_fatjet_m;   //!
+   TBranch        *b_fatjet_pt;   //!
+   TBranch        *b_fatjet_phi;   //!
+   TBranch        *b_fatjet_eta;   //!
    TBranch        *b_metFinalClus;   //!
    TBranch        *b_metFinalClusPx;   //!
    TBranch        *b_metFinalClusPy;   //!
@@ -194,6 +203,10 @@ void MicroNTupleMaker::Init(TTree *tree)
    jet_pt = 0;
    jet_phi = 0;
    jet_eta = 0;
+   fatjet_m = 0;
+   fatjet_pt = 0;
+   fatjet_phi = 0;
+   fatjet_eta = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -213,6 +226,11 @@ void MicroNTupleMaker::Init(TTree *tree)
    fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
    fChain->SetBranchAddress("jet_phi", &jet_phi, &b_jet_phi);
    fChain->SetBranchAddress("jet_eta", &jet_eta, &b_jet_eta);
+   fChain->SetBranchAddress("nfatjet", &nfatjet, &b_nfatjet);
+   fChain->SetBranchAddress("fatjet_m", &fatjet_m, &b_fatjet_m);
+   fChain->SetBranchAddress("fatjet_pt", &fatjet_pt, &b_fatjet_pt);
+   fChain->SetBranchAddress("fatjet_phi", &fatjet_phi, &b_fatjet_phi);
+   fChain->SetBranchAddress("fatjet_eta", &fatjet_eta, &b_fatjet_eta);
    fChain->SetBranchAddress("metFinalClus", &metFinalClus, &b_metFinalClus);
    fChain->SetBranchAddress("metFinalClusPx", &metFinalClusPx, &b_metFinalClusPx);
    fChain->SetBranchAddress("metFinalClusPy", &metFinalClusPy, &b_metFinalClusPy);
