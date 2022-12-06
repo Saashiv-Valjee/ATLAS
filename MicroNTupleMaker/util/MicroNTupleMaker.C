@@ -53,16 +53,33 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	TH1F *metadata;
 	
 	if ( !local ){
-		
+		// Add tree to chain
 		TString path_tstring = Form("%s", fullinfilepath.c_str());
 		fChain->Add(path_tstring);
+		// Get metadata
+		
+		cout << "Creating file" << endl;
+		std::unique_ptr<TFile> f1( TFile::Open(path_tstring, "READ") );
+		cout << "ls file contents" << endl;
+		f1->ls();
+		cout << "Getting metadata" <<endl;
+		TH1F* h1 = (TH1F*) f1->Get("MetaData_EventCount");
+		cout << "Cloning metadata" <<endl;
+		metadata = (TH1F*) h1->Clone();
+		cout << "Setting directory to 0" <<endl;
+		metadata->SetDirectory(0);
+		cout << "Closing file" <<endl;
+		f1->Close();
+		cout << "metadata sumW: " << metadata->GetBinContent(3) << endl;
+		
 	} else {
 		int file_count = 0;
 		for (const auto & entry : directory_iterator(fullinfilepath)){
 			file_count++;
  			TString path_string = Form("%s",entry.path().string().c_str());
 			fChain->Add(path_string);
-			TFile *f = new TFile( path_string, "READ");
+			//TFile *f = new TFile( path_string, "READ");
+			std::unique_ptr<TFile> f( TFile::Open(path_string, "READ") );
 			TH1F* h = (TH1F*) f->Get("MetaData_EventCount");
 			if (file_count ==1){metadata = (TH1F*) h->Clone(); metadata->SetDirectory(0);} 
 			else metadata->Add(h);
@@ -76,7 +93,7 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	// Create output file
 	string dsid = "";
         if (local) dsid = infiletag.substr(12,6);
-	cout << "DSID: " << dsid << endl;
+	if (local) cout << "DSID: " << dsid << endl;
 
 	string outfiletag="";
 	string mc = "";
@@ -93,8 +110,8 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	cout << "Will write to "<<outfilename<<endl;
 
         // Weight from Metadata histogram
-        //cout << "Nbins: " << metadata->GetNbinsX() << endl;
         double sumWInput = metadata->GetBinContent(3);
+        //double sumWInput = 1.0;
 
         cout << "Declaring class" <<endl;
 	// Class instance
