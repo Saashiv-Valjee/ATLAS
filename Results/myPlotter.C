@@ -3,12 +3,12 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	//string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v3/v3.6/user.ebusch.";
-	string path = "../MicroNTupleMaker/MicroNTuples/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v5/v5.2/user.ebusch.";
+	//string path = "../MicroNTupleMaker/MicroNTuples/user.ebusch.";
 	
 	//vector<string> filetags = {"QCDbkg", "WpJets", "ZpJets", "ttbarr", "singlt", "dibson", "508547","508548","508549","508550" };
-	vector<string> filetags_qcd = {"QCDbkg", "508547","508548","508549","508550"};
-	vector<string> filetags = {"QCDtest.mc20e", "515479.mc20e", "515482.mc20e", "515499.mc20e", "515502.mc20e", "515523.mc20e", "515526.mc20e"};
+	vector<string> filetags = {"QCDbkg", "515480", "515482", "515499", "515502", "515524", "515526"};
+	//vector<string> filetags = {"QCDtest.mc20e", "515479.mc20e", "515482.mc20e", "515499.mc20e", "515502.mc20e", "515523.mc20e", "515526.mc20e"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
 	vector<string> filetags_background = {"364702", "364703", "364704", "364705", "364706", "364707", "364708", "364709", "364710", "364711", "364712", "QCDbkg"};
 
@@ -21,10 +21,10 @@ void myPlotter(){
 	class MicroNTuplePlotter plotter( filetags, path );
 
         //***************** Plot General options *******************// 
-        plotter.plot_norm_full =true;
+        plotter.plot_norm_full =false;
         plotter.plot_log = true;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="newSig_firstLook";
+        plotter.output_file_tag ="v5p2";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = true;
@@ -67,7 +67,7 @@ void myPlotter(){
         //plotter.SetPlots ( { P_mT_jj} );
 	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_jet1_D2, P_jet1_C2, P_jet1_Split12, P_jet1_Split23, P_jet1_tau23} );
 	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_mT_jj, P_rT, P_hT, P_dR_12, P_deta_12, P_dphi_min, P_pt_balance_12, P_deltaY_12, P_jet1_C2, P_jet2_C2} );
-	plotter.SetPlots( {P_jet1_pt, P_met_met, P_hT, P_dphi_min, P_pt_balance_12, P_mT_jj});
+	plotter.SetPlots( {P_jet1_pt, P_met_met});
 	//plotter.SetPlots ( {P_jet1_D2, P_jet2_D2, P_jet1_Split12, P_jet2_Split12, P_jet1_Split23, P_jet2_Split23} );
 	plotter.Plot("");
 }
