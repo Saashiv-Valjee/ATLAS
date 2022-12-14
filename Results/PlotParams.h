@@ -15,8 +15,8 @@ PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 75, 0, 2000}
 PlotParams P_met_phi			= {"met_phi", "Missing E_{T} #phi", "#phi [rad]", 50, -3.14, 3.14 };
 PlotParams P_TruthMET_TruthSumEt 	= {"MET_TruthMET_TruthSumEt", "TruthMET SumE_{T}", "E [GeV]", 50, 0, 700};  
 PlotParams P_TruthMET_TruthPhi	 	= {"MET_TruthMET_TruthPhi", "TruthMET #phi", "#phi [rad]", 50, -3.14, 3.14};  
-PlotParams P_n_r04_jets			= {"n_r04_jets", "Number of Small-R Jets", "N_{jets}", 20, 0, 20};
-PlotParams P_n_r10_jets			= {"n_r10_jets", "Number of Large-R Jets", "N_{jets}", 6, 0, 6};
+PlotParams P_n_jets			= {"n_jets", "Number of Small-R Jets", "N_{jets}", 20, 0, 20};
+PlotParams P_n_fatjets			= {"n_fatjets", "Number of Large-R Jets", "N_{fatjets}", 6, 0, 6};
 
 PlotParams P_jet1_pt			= {"jet1_pt", "Leading Jet p_{T}", "p_{T} [GeV]", 75, 0, 2000};
 PlotParams P_jet1_eta			= {"jet1_eta", "Leading Jet Eta", "#eta", 50, -5.0, 5.0};

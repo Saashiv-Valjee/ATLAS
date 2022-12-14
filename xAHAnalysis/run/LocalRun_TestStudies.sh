@@ -7,7 +7,7 @@ parentsubmitdir="/afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/xAHAnaly
 infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v5/mc20_13TeV.515499.MGPy8EG_SVJSChan2j_2000_2.deriv.DAOD_PHYS.e8461_s3995_r13145_p5440/DAOD_PHYS.31296012._000001.pool.root.1"
 configFile=../src/SVJAlgo/data/config_SVJAlgo_signal.py
 
-nevents=1000
+nevents=10
 submitdir=DAODtoTTREE_${nevents}
 
 

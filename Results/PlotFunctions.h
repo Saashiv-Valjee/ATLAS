@@ -80,18 +80,18 @@ void StampATLAS( const std::string & text = "Internal", float lumi=140., float x
 
 // -------------------------------------------------------------------------------------
 string GetLegendNames( string filetag  ){
-
+  cout <<"PlotFunctions::GetLegendNames()"<<endl;
   map<string, string> filetag_legend;
   filetag_legend["508547"] = "1500 GeV, 0.8";
   filetag_legend["508548"] = "1500 GeV, 0.3";
   filetag_legend["508549"] = "750 GeV, 0.8";
   filetag_legend["508550"] = "750 GeV, 0.3";
-  filetag_legend["515479.mc20e"] = "500 GeV, 0.2";
-  filetag_legend["515482.mc20e"] = "500 GeV, 0.8";
-  filetag_legend["515499.mc20e"] = "2000 GeV, 0.2";
-  filetag_legend["515502.mc20e"] = "2000 GeV, 0.8";
-  filetag_legend["515523.mc20e"] = "6000 GeV, 0.2";
-  filetag_legend["515526.mc20e"] = "6000 GeV, 0.8";
+  filetag_legend["515479"] = "500 GeV, 0.2";
+  filetag_legend["515482"] = "500 GeV, 0.8";
+  filetag_legend["515499"] = "2000 GeV, 0.2";
+  filetag_legend["515502"] = "2000 GeV, 0.8";
+  filetag_legend["515523"] = "6000 GeV, 0.2";
+  filetag_legend["515526"] = "6000 GeV, 0.8";
   filetag_legend["364702"] = "JZ2";
   filetag_legend["364703"] = "JZ3";
   filetag_legend["364704"] = "JZ4";

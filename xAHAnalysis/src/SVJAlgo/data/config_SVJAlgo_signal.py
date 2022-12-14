@@ -25,11 +25,11 @@ c.algorithm("BasicEventSelection",    {
   #-------------------------- GRL --------------------------------------#
   "m_GRLxml"                    : 'GoodRunsLists/data18_13TeV/20190708/data18_13TeV.periodAllYear_DetStatus-v105-pro22-13_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml',
   #-------------------------- PRW --------------------------------------#
-  "m_doPUreweighting"           : False,
+  "m_doPUreweighting"           : True,
   "m_lumiCalcFileNames"         : 'GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_348885-364292_OflLumi-13TeV-010.root,GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_354396-355468_OflLumi-13TeV-001.root',
   "m_prwActualMu2018File"       : "GoodRunsLists/data18_13TeV/20190708/purw.actualMu.2018.root",
   "m_autoconfigPRW"             : False,
-  "m_PRWFileNames"              : "",
+  "m_PRWFileNames"              : "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/PUfiles/NTUP_PILEUP.signal.mc20e.root",
   #-------------------------- Derivation -------------------------------#
   "m_derivationName"            : "PHYS",
   # -------------------------- Trigger ----------------------------------#
@@ -138,7 +138,7 @@ c.algorithm("JetSelector",     {
   #----------------------- Selections ----------------------------#
   "m_cleanJets"                 : False,
   "m_pass_min"                  : 1,
-  "m_pT_min"                    : 25e3,
+  "m_pT_min"                    : 20e3,
   "m_eta_max"                   : 4.5,
   #----------------------- JVT ----------------------------#
   "m_doJVT"                     : False, # JVT is a pileup cut
@@ -156,18 +156,100 @@ c.algorithm("JetSelector",     {
   "m_msgLevel"                  : "Info",
 })
 
+#%%%%%%%%%%%%%%%%%%%%%%%%% Muon Calibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("MuonCalibrator",	 {
+  "m_name"                      : "MuonCalibrate",
+  #----------------------- Container Flow ----------------------------#
+  "m_inContainerName"           : "Muons",
+  "m_outContainerName"          : "Muons_Calibrate",
+  #----------------------- Systematics ----------------------------#
+  "m_systName"                  : "Nominal",
+  "m_systVal"                   : 0,
+  "m_outputAlgoSystNames"       : "MuonCalibrator_Syst",
+  #----------------------- Other ----------------------------#
+  "m_sort"                      : True,
+  "m_forceDataCalib"		: True,
+  "m_calibrationMode"           : "correctData_IDMS",
+  "m_msgLevel"                  : "Info"
+})
+
+#%%%%%%%%%%%%%%%%%%%%%%%%% Muon Selector %%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("MuonSelector", {
+    "m_name"                    : "MuonSelector",
+    "m_inContainerName"         : "Muons_Calibrate",
+    "m_outContainerName"        : "Muons_Selected",
+    "m_createSelectedContainer" : True,
+    "m_pT_min"                  : 20000.,
+    "m_eta_max"                 : 2.5,
+    "m_d0sig_max"               : 3,
+    "m_z0sintheta_max"          : 0.5,
+    "m_muonQualityStr"          : "Medium",
+    "m_doIsolation"             : True,
+    "m_MinIsoWPCut"             : "PflowTight_VarRad",
+    "m_IsoWPList"               : "PflowTight_VarRad",
+    "m_inputAlgoSystNames"      : "MuonCalibrator_Syst",
+    "m_outputAlgoSystNames"     : "MuonSelector_Syst",
+    "m_systName"                : "Nominal",
+    "m_systVal"                 : 0,
+    "m_removeEventBadMuon"      : False
+})
+
+
+#%%%%%%%%%%%%%%%%%%%%%%%%% Electron Calibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("ElectronCalibrator",	 {
+  "m_name"                      : "ElectronCalibrate",
+  #----------------------- Container Flow ----------------------------#
+  "m_inContainerName"           : "Electrons",
+  "m_outContainerName"          : "Electrons_Calibrate",
+  #----------------------- Systematics ----------------------------#
+  "m_systName"                  : "Nominal",
+  "m_systVal"                   : 0,
+  "m_esModel"			: "es2022_R22_PRE",
+  "m_decorrelationModel"	: "1NP_v1",
+  "m_outputAlgoSystNames"       : "ElectronCalibrator_Syst",
+  #----------------------- Other ----------------------------#
+  "m_sort"                      : True,
+  "m_msgLevel"                  : "Info"
+})
+
+#%%%%%%%%%%%%%%%%%%%%%%%%% Electron Selector %%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("ElectronSelector", {
+    "m_name"                      : "ElectronSelector",
+    "m_inContainerName"           : "Electrons_Calibrate",
+    "m_outContainerName"          : "Electrons_Selected",
+    "m_createSelectedContainer"   : True,
+    "m_pT_min"                    : 20000.,
+    "m_eta_max"                   : 2.47,
+    "m_d0sig_max"                 : 5,
+    "m_z0sintheta_max"            : 0.5,
+    "m_readIDFlagsFromDerivation" : True,
+    "m_IsoWPList"                 : "Tight_VarRad",
+    "m_MinIsoWPCut"               : "Tight_VarRad",
+    "m_doOQCut"                   : True,
+    "m_vetoCrack"                 : True,
+    "m_doLHPID"                   : True,
+    "m_doLHPIDcut"                : True,
+    "m_LHOperatingPoint"          : "Tight",
+    "m_inputAlgoSystNames"        : "ElectronCalibrator_Syst",
+    "m_outputAlgoSystNames"       : "ElectronSelector_Syst",
+    "m_systName"                  : "Nominal",
+    "m_systVal"                   : 0,
+})
+
+
 #%%%%%%%%%%%%%%%%%%%%%%%%%% MetConstructor %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("METConstructor",     {
-  "m_name": "METConstructor",
-  "m_inputJets": "Jets_Selected",
-  "m_inputElectrons": "Electrons",
-  "m_inputMuons": "Muons",
-  "m_calculateSignificance": True,
-  "m_significanceTreatPUJets": False, #disable signifiance for PU jets as it requires fjvt decorations which are not available
-  "m_msgLevel"                : "Info",
-  "m_coreName": "MET_Core_AntiKt4EMPFlow",
-  "m_mapName": "METAssoc_AntiKt4EMPFlow",
-  "m_outputContainer": "METOutput_NewRefFinal",
+  "m_name"			: "METConstructor",
+  "m_inputJets"			: "Jets_Selected",
+  "m_inputElectrons"		: "Electrons_Selected",
+  "m_inputMuons"		: "Muons_Selected",
+  "m_calculateSignificance"	: True,
+  "m_significanceTreatPUJets"	: False, #disable signifiance for PU jets as it requires fjvt decorations which are not available
+  "m_msgLevel"                	: "Info",
+  "m_coreName"			: "MET_Core_AntiKt4EMPFlow",
+  "m_mapName"			: "METAssoc_AntiKt4EMPFlow",
+  "m_doPFlow"			: True, 
+  "m_outputContainer"		: "METOutput_NewRefFinal",
 })
 
 inFatJetContainerName = ""

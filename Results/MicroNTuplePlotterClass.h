@@ -325,6 +325,7 @@ public :
 
    		TH1F *h;
 		h = (TH1F*)h_temp->Clone();
+		cout << "h Integral: " << h->Integral()*1.39e8 << endl;
 
 		return h;
 
@@ -344,14 +345,17 @@ public :
 				h = (TH1F*)GetHist1D( myPlotParams, filetag_treename, cut_compare);
 				string hist_tag;
 				if (multiple_trees){
+					cout <<"multiple trees"<<endl;
 					hist_tag = Form( "%s", filetag_treename.c_str() );
 				}else{
 					string filetag_only = GetFiletag(filetag_treename);
- 					if (cuts_compare.size() > 0) hist_tag = cut_compare;
-					else if (use_better_legend_names) hist_tag = GetLegendNames(filetag_only);
-					else hist_tag = Form( "%s", filetag_only.c_str());
+ 					if (cuts_compare.size() > 1){hist_tag = cut_compare; cout <<"1"<<endl;}
+					else if (use_better_legend_names){hist_tag = GetLegendNames(filetag_only); cout <<"2"<<endl;}
+					else {hist_tag = Form( "%s", filetag_only.c_str()); cout<<"3"<<endl;}
    				}
 				hist_tags.push_back( hist_tag );
+				cout <<"filetag_treename: " <<filetag_treename<<endl;
+				cout <<"hist_tag: "<< hist_tag<<endl;
 				hists[hist_tag] = h;
 				i++;
 			}
@@ -372,7 +376,6 @@ public :
 				for( auto myPlotParams: myPlotParamsList ){
 					TH1F* h;
 					h = (TH1F*)GetHist1D( myPlotParams, filetag_treename, cut_compare);
-
 					string hist_tag = Form( "%s (%s)", myPlotParams.hist_name.c_str(), filetag_treename.c_str() );
 					hist_tags.push_back( hist_tag );
 					hists[hist_tag] = h;
@@ -395,18 +398,18 @@ public :
 		int i = -1;
 		for( auto hist_tag: hist_tags ){
 			i++;
-			cout << "stacking " << i << " hist.." << endl;
+			cout << "stacking " << i << " hist: "<< hist_tag << ".." << endl;
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
 		
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
-				legend_name = Form("%s (Int=%.0f)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
+				legend_name = Form("%s (Int=%4.2e)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1)*1.39e8 );
 			}
 			if (stamp_counts && !stamp_integral){
 				legend_name = Form("%s (NE=%i)", hist_tag.c_str(), int(h->GetEntries()));
 			}
 			if (stamp_counts && stamp_integral){
-				legend_name = Form("%s (NE=%i, Int=%.2e)", hist_tag.c_str(), int(h->GetEntries()), h->Integral(0,myPlotParams.nbins+1) );
+				legend_name = Form("%s (NE=%i, Int=%.2e)", hist_tag.c_str(), int(h->GetEntries()), h->Integral(0,myPlotParams.nbins+1)*1.39e8 );
 			}
 
 			if( plot_norm )
@@ -494,6 +497,7 @@ public :
 		for( auto PlotParams_temp: PlotParamsList ){
 
 			map<string,TH1F*> hists = GetHists( PlotParams_temp );
+			cout << hist_tags.size() <<endl;
 
 			TCanvas *myCanvas;
 

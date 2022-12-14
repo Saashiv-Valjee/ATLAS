@@ -28,8 +28,8 @@ c.algorithm("BasicEventSelection",    {
   "m_doPUreweighting"           : False,
   "m_lumiCalcFileNames"         : 'GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_348885-364292_OflLumi-13TeV-010.root,GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_354396-355468_OflLumi-13TeV-001.root',
   "m_prwActualMu2018File"       : "GoodRunsLists/data18_13TeV/20190708/purw.actualMu.2018.root",
-  "m_autoconfigPRW"             : False,
-  "m_PRWFileNames"              : "",
+  "m_autoconfigPRW"             : True,
+  "m_PRWFileNames"              : "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/PUfiles/",
   #-------------------------- Derivation -------------------------------#
   "m_derivationName"            : "PHYS",
   # -------------------------- Trigger ----------------------------------#
@@ -156,12 +156,47 @@ c.algorithm("JetSelector",     {
   "m_msgLevel"                  : "Info",
 })
 
+#%%%%%%%%%%%%%%%%%%%%%%%%% Muon Calibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("MuonCalibrator",	 {
+  "m_name"                      : "MuonCalibrate",
+  #----------------------- Container Flow ----------------------------#
+  "m_inContainerName"           : "Muons",
+  "m_outContainerName"          : "Muons_Calibrate",
+  #----------------------- Systematics ----------------------------#
+  "m_systName"                  : "Nominal",
+  "m_systVal"                   : 0,
+  "m_outputAlgoSystNames"       : "MuonCalibrator_Syst",
+  #----------------------- Other ----------------------------#
+  "m_sort"                      : True,
+  "m_forceDataCalib"		: True,
+  "m_calibrationMode"           : "correctData_IDMS",
+  "m_msgLevel"                  : "Info"
+})
+
+#%%%%%%%%%%%%%%%%%%%%%%%%% Muon Calibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("ElectronCalibrator",	 {
+  "m_name"                      : "ElectronCalibrate",
+  #----------------------- Container Flow ----------------------------#
+  "m_inContainerName"           : "Electrons",
+  "m_outContainerName"          : "Electrons_Calibrate",
+  #----------------------- Systematics ----------------------------#
+  "m_systName"                  : "Nominal",
+  "m_systVal"                   : 0,
+  "m_esModel"			: "es2022_R22_PRE",
+  "m_decorrelationModel"	: "1NP_v1",
+  "m_outputAlgoSystNames"       : "ElectronCalibrator_Syst",
+  #----------------------- Other ----------------------------#
+  "m_sort"                      : True,
+  "m_msgLevel"                  : "Info"
+})
+
+
 #%%%%%%%%%%%%%%%%%%%%%%%%%% MetConstructor %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("METConstructor",     {
   "m_name": "METConstructor",
   "m_inputJets": "Jets_Selected",
-  "m_inputElectrons": "Electrons",
-  "m_inputMuons": "Muons",
+  "m_inputElectrons": "Electrons_Calibrate",
+  "m_inputMuons": "Muons_Calibrate",
   "m_calculateSignificance": True,
   "m_significanceTreatPUJets": False, #disable signifiance for PU jets as it requires fjvt decorations which are not available
   "m_msgLevel"                : "Info",
