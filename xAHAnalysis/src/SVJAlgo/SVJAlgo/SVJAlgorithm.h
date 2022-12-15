@@ -15,6 +15,7 @@
 
 #ifndef __CINT__
   #include "xAODJet/JetContainer.h"
+  #include "xAODTruth/TruthParticleContainer.h"
   #include "xAODEventInfo/EventInfo.h"
   #include <xAODAnaHelpers/JetHists.h>
   #include "SVJAlgo/MiniTree.h"
@@ -34,6 +35,7 @@ class SVJAlgorithm : public xAH::Algorithm
     //configuration variables
     std::string m_inJetContainerName;      // input Jet container name
     std::string m_inFatJetContainerName;   // input Fat Jet container name
+    std::string m_inTruthParticlesContainerName;   // input Truth Particles container name
     std::string m_inMetContainerName;   // input MET container name
     std::string m_inputAlgo;          // input algo for when running systs
     std::string m_inputFatAlgo;       // input algo for when running systs
@@ -57,6 +59,7 @@ class SVJAlgorithm : public xAH::Algorithm
     std::string m_jetDetailStrSyst;   // jetsyst info add to tree
     std::string m_metDetailStr;       // met info add to tree
     std::string m_fatJetDetailStr;    // dat jet info add to tree
+    std::string m_truthParticlesDetailStr;    // dat jet info add to tree
 
   private:
     int m_eventCounter;     //!
@@ -105,6 +108,7 @@ public:
       const xAOD::JetContainer* truthJets,
       const xAOD::VertexContainer* vertices,
       const xAOD::MissingETContainer* met,
+      const xAOD::TruthParticleContainer* truthParticles,
       bool count,
       std::string systName = "");
 #endif // not __CINT__

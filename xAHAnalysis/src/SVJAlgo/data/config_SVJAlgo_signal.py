@@ -156,6 +156,28 @@ c.algorithm("JetSelector",     {
   "m_msgLevel"                  : "Info",
 })
 
+# large-r jet
+if opt.doFatJet: 
+  c.algorithm("JetSelector", 	{
+    "m_name"                      : "FatJetSelect",
+    #----------------------- Container Flow ----------------------------#
+    "m_inContainerName"           : "FatJets_Calibrate",
+    "m_outContainerName"          : "FatJets_Selected",
+    "m_inputAlgo"                 : "FatJetCalibrator_Syst",
+    "m_outputAlgo"                : "FatJetSelector_Syst",
+    "m_decorateSelectedObjects"   : True,
+    "m_createSelectedContainer"   : True,
+    #----------------------- Selections ----------------------------#
+    "m_cleanJets"                 : False,
+    "m_pass_min"                  : 0,
+    "m_pT_min"                    : 200e3,
+    "m_pT_max"                    : 3000e3,
+    "m_mass_min"		  : 40e3,
+    "m_mass_max"		  : 600e3,
+    "m_eta_max"                   : 2.0,
+    "m_msgLevel"                  : "Info",
+  })
+
 #%%%%%%%%%%%%%%%%%%%%%%%%% Muon Calibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("MuonCalibrator",	 {
   "m_name"                      : "MuonCalibrate",
@@ -236,8 +258,27 @@ c.algorithm("ElectronSelector", {
     "m_systVal"                   : 0,
 })
 
+#%%%%%%%%%%%%%%%%%%%%%%%%%% Overlap Removal %%%%%%%%%%%%%%%%%%%%%%%%%%#
+#Note: OR must not be applied to the containers passed to METmaker.
+c.algorithm("OverlapRemover", {
+    "m_name"                       : "OverlapRemover",
+    "m_useCutFlow"                 : True,
+    "m_decorateSelectedObjects"    : True,
+    "m_inContainerName_Jets"       : "Jets_Selected",
+    "m_inContainerName_Electrons"  : "Electrons_Selected",
+    "m_inContainerName_Muons"      : "Muons_Selected",
+    "m_inputAlgoJets"              : "JetSelector_Syst",
+    "m_inputAlgoMuons"             : "MuonSelector_Syst",
+    "m_inputAlgoElectrons"         : "ElectronSelector_Syst",
+    "m_outContainerName_Jets"      : "Jets_PassedOR",
+    "m_outContainerName_Electrons" : "Electrons_PassedOR",
+    "m_outContainerName_Muons"     : "Muons_PassedOR",
+    "m_outputAlgoSystNames"        : "OverlapRemovalAlgo_Syst",
+})
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% MetConstructor %%%%%%%%%%%%%%%%%%%%%%%%%%#
+#Note: OR must not be applied to the containers passed to METmaker.
 c.algorithm("METConstructor",     {
   "m_name"			: "METConstructor",
   "m_inputJets"			: "Jets_Selected",
@@ -256,31 +297,34 @@ inFatJetContainerName = ""
 inputFatAlgo = ""
 fatJetDetailStr = ""
 if opt.doFatJet:
-      inFatJetContainerName = "FatJets_Calibrate"
-      inputFatAlgo = "FatJetCalibrator_Syst"
+      inFatJetContainerName = "FatJets_Selected"
+      inputFatAlgo = "FatJetSelector_Syst"
       fatJetDetailStr = "kinematic substructure truth"
-##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
-c.algorithm("SVJAlgorithm",     {
-    "m_name"                    : "ResonanceAlgo",
+##%%%%%%%%%%%%%%%%%%%%%%%%%% SVJAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("SVJAlgorithm",    		 {
+    "m_name"                    	: "ResonanceAlgo",
     #----------------------- Container Flow ----------------------------#
-    "m_inJetContainerName"      : "Jets_Selected",
-    "m_inputAlgo"               : "JetSelector_Syst",
-    "m_inMetContainerName"      : "METOutput_NewRefFinal",
-    "m_inFatJetContainerName"   : inFatJetContainerName,
-    "m_inputFatAlgo"            : inputFatAlgo,
+    "m_inJetContainerName"      	: "Jets_PassedOR",
+    "m_inputAlgo"               	: "JetSelector_Syst",
+    "m_inMetContainerName"      	: "METOutput_NewRefFinal",
+    "m_inFatJetContainerName"   	: inFatJetContainerName,
+    "m_inputFatAlgo"            	: inputFatAlgo,
+    "m_inTruthParticlesContainerName"	: "TruthBSM",
     #----------------------- Selections ----------------------------#
-    "m_leadingJetPtCut"         : 100e3,
-    "m_subleadingJetPtCut"      : 50e3,
-    "m_metCut"                  : 0e3,
-    "m_jetMultiplicity"         : 1,
+    "m_leadingJetPtCut"         	: 100e3,
+    "m_subleadingJetPtCut"      	: 50e3,
+    #"m_metCut"                  	: 0e3,
+    "m_jetMultiplicity"         	: 1,
     #----------------------- Output ----------------------------#
-    "m_reclusterJets"           : False,
-    "m_eventDetailStr"          : "truth", #shapeEM
-    "m_jetDetailStr"            : "kinematic",
-    "m_fatJetDetailStr"	        : fatJetDetailStr,
-    "m_metDetailStr"            : "metClus",
-    "m_jetDetailStrSyst"        : "kinematic truth",
-    "m_trigDetailStr"           : "basic passTriggers",
+    "m_reclusterJets"           	: False,
+    "m_eventDetailStr"          	: "truth", #shapeEM
+    "m_jetDetailStr"            	: "kinematic",
+    "m_fatJetDetailStr"	        	: fatJetDetailStr,
+    "m_metDetailStr"            	: "metClus",
+    "m_jetDetailStrSyst"        	: "kinematic truth",
+    "m_trigDetailStr"           	: "basic passTriggers",
+    #"m_truthParticlesBranchName"	: "truthParicles",
+    "m_truthParticlesDetailStr"		: "type dressed origin children parents",
     #----------------------- Other ----------------------------#
     "m_writeTree"               : True,
     #"m_MCPileupCheckContainer"  : "AntiKt4TruthJets",

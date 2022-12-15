@@ -6,9 +6,11 @@ extra=""
 parentsubmitdir="/afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/xAHAnalysis/run/"
 infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v5/mc20_13TeV.515499.MGPy8EG_SVJSChan2j_2000_2.deriv.DAOD_PHYS.e8461_s3995_r13145_p5440/DAOD_PHYS.31296012._000001.pool.root.1"
 configFile=../src/SVJAlgo/data/config_SVJAlgo_signal.py
+#infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v5/mc20_13TeV.364704.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ4WithSW.deriv.DAOD_PHYS.e7142_s3681_r13145_p5440/DAOD_PHYS.31204907._000011.pool.root.1"
+#configFile=../src/SVJAlgo/data/config_SVJAlgo_bkg.py
 
-nevents=10
-submitdir=DAODtoTTREE_${nevents}
+nevents=10000
+submitdir=DAODtoTTREE_TRUTH_${nevents}
 
 
 echo "xAH_run.py --files ${infile} --nevents $nevents --config $configFile --extraOptions="--doFatJet" --submitDir ${parentsubmitdir}/$submitdir --log-level $loglevel $extra --force direct "

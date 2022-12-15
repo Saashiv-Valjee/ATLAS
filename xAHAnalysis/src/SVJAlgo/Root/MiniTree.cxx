@@ -1,5 +1,6 @@
 #include "xAODMuon/MuonContainer.h"
 #include "xAODEgamma/ElectronContainer.h"
+#include "xAODTruth/TruthParticleContainer.h"
 #include "xAODJet/JetContainer.h"
 #include "xAODEventInfo/EventInfo.h"
 #include "xAODAnaHelpers/HelperFunctions.h"

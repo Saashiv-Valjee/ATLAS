@@ -7,6 +7,7 @@
 #include "xAODJet/JetContainer.h"
 #include "xAODEventInfo/EventInfo.h"
 #include "xAODMissingET/MissingETContainer.h"
+#include "xAODTruth/TruthParticleContainer.h"
 #include <SVJAlgo/SVJAlgorithm.h>
 #include <xAODAnaHelpers/HelperFunctions.h>
 
@@ -44,6 +45,7 @@ SVJAlgorithm :: SVJAlgorithm () :
   m_inJetContainerName       = "";
   m_inFatJetContainerName    = "";
   m_inMetContainerName       = "";
+  m_inTruthParticlesContainerName       = "";
   m_inputAlgo                = "";
   m_inputFatAlgo             = "";
   m_msgLevel                 = MSG::INFO;
@@ -230,10 +232,12 @@ void SVJAlgorithm::AddTree( std::string name ) {
       miniTree->AddJets( m_jetDetailStrSyst );
       miniTree->AddMET( m_metDetailStr);
       if (m_inFatJetContainerName != "") miniTree->AddFatJets(m_fatJetDetailStr);
+      if (m_inTruthParticlesContainerName != "") miniTree->AddTruthParts(m_truthParticlesDetailStr);
     } else {
       miniTree->AddJets( m_jetDetailStr );
       miniTree->AddMET( m_metDetailStr);
       if (m_inFatJetContainerName != "" ) miniTree->AddFatJets(m_fatJetDetailStr);
+      if (m_inTruthParticlesContainerName != "" ) miniTree->AddTruthParts(m_truthParticlesDetailStr);
     }
   }
   m_myTrees[name] = miniTree;
@@ -283,6 +287,9 @@ EL::StatusCode SVJAlgorithm :: execute ()
     ANA_CHECK (HelperFunctions::retrieve(truthJets, m_MCPileupCheckContainer, m_event, m_store));
   }
 
+  const xAOD::TruthParticleContainer* truthParticles(nullptr);
+  if (m_inTruthParticlesContainerName != "") ANA_CHECK (HelperFunctions::retrieve(truthParticles, m_inTruthParticlesContainerName, m_event, m_store, msg()));
+
   //Set this first, as m_mcEventWeight is needed by passCut()
   if(m_isMC)
     m_mcEventWeight = eventInfo->mcEventWeight();
@@ -310,7 +317,7 @@ EL::StatusCode SVJAlgorithm :: execute ()
       ANA_CHECK (HelperFunctions::retrieve(met, m_inMetContainerName, m_event, m_store)); 
     }
     // executeAnalysis
-    pass = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, vertices, met, doCutflow, "" );
+    pass = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, vertices, met, truthParticles, doCutflow, "" );
 
   }
   else { 
@@ -323,7 +330,8 @@ EL::StatusCode SVJAlgorithm :: execute ()
         return StatusCode::FAILURE;
       }
     }
-    ANA_MSG_INFO("execute() : Found vector from "<<m_inputAlgo.c_str());
+    // Commented out to surpress # of lines in log
+    //ANA_MSG_INFO("execute() : Found vector from "<<m_inputAlgo.c_str());
 
     // loop over systematics
     bool saveContainerNames(false);
@@ -344,7 +352,7 @@ EL::StatusCode SVJAlgorithm :: execute ()
       // allign with Dijet naming conventions
       if( systName.empty() ) { doCutflow = m_useCutFlow; } // only doCutflow for nominal
       else { doCutflow = false; }
-      passOne = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, vertices, met, doCutflow, systName );
+      passOne = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, vertices, met, truthParticles, doCutflow, systName );
       // save the string if passing the selection
       if( saveContainerNames && passOne ) { vecOutContainerNames->push_back( systName ); }
       // the final decision - if at least one passes keep going!
@@ -377,6 +385,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     const xAOD::JetContainer* truthJets,
     const xAOD::VertexContainer* vertices,
     const xAOD::MissingETContainer* met,
+    const xAOD::TruthParticleContainer* truthParticles,
     bool doCutflow,
     std::string systName) {
   
@@ -458,6 +467,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
       if(signalJets)  m_myTrees[systName]->FillJets( signalJets, HelperFunctions::getPrimaryVertexLocation( vertices )  );
       if(met) m_myTrees[systName]->FillMET(met);
       if(fatJets) m_myTrees[systName]->FillFatJets( fatJets, HelperFunctions::getPrimaryVertexLocation( vertices ));
+      if(truthParticles) m_myTrees[systName]->FillTruth(truthParticles);
     }
     m_myTrees[systName]->Fill();
   }
