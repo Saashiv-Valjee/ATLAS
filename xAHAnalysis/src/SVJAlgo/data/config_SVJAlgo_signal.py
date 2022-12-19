@@ -23,13 +23,14 @@ c.algorithm("BasicEventSelection",    {
   "m_name"                      : "BasicEventSelect",
   "m_applyGRLCut"               : False, 
   #-------------------------- GRL --------------------------------------#
-  "m_GRLxml"                    : 'GoodRunsLists/data18_13TeV/20190708/data18_13TeV.periodAllYear_DetStatus-v105-pro22-13_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml',
+  "m_GRLxml"                    : 'GoodRunsLists/data18_13TeV/20190708/data18_13TeV.periodAllYear_DetStatus-v105-pro22-13_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml,GoodRunsLists/data17_13TeV/20180619/physics_25ns_Triggerno17e33prim.xml,GoodRunsLists/data15_13TeV/20170619/physics_25ns_21.0.19.xml,GoodRunsLists/data16_13TeV/20180129/physics_25ns_21.0.19.xml',
   #-------------------------- PRW --------------------------------------#
   "m_doPUreweighting"           : True,
-  "m_lumiCalcFileNames"         : 'GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_348885-364292_OflLumi-13TeV-010.root,GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_354396-355468_OflLumi-13TeV-001.root',
+  "m_lumiCalcFileNames"         : 'GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_348885-364292_OflLumi-13TeV-010.root,GoodRunsLists/data18_13TeV/20190708/ilumicalc_histograms_None_354396-355468_OflLumi-13TeV-001.root,GoodRunsLists/data17_13TeV/20180619/physics_25ns_Triggerno17e33prim.lumicalc.OflLumi-13TeV-010.root,GoodRunsLists/data15_13TeV/20170619/PHYS_StandardGRL_All_Good_25ns_276262-284484_OflLumi-13TeV-008.root,GoodRunsLists/data16_13TeV/20180129/PHYS_StandardGRL_All_Good_25ns_297730-311481_OflLumi-13TeV-009.root',
+  "m_prwActualMu2017File"	: "GoodRunsLists/data17_13TeV/20180619/physics_25ns_Triggerno17e33prim.actualMu.OflLumi-13TeV-010.root",
   "m_prwActualMu2018File"       : "GoodRunsLists/data18_13TeV/20190708/purw.actualMu.2018.root",
-  "m_autoconfigPRW"             : False,
-  "m_PRWFileNames"              : "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/PUfiles/NTUP_PILEUP.signal.mc20e.root",
+  "m_autoconfigPRW"             : True,
+  "m_PRWFileNames"              : "",
   #-------------------------- Derivation -------------------------------#
   "m_derivationName"            : "PHYS",
   # -------------------------- Trigger ----------------------------------#
