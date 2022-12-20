@@ -47,6 +47,10 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"all_jets_eta",
 		"all_jets_phi",
 		"all_jets_E",
+		"all_fatjets_pt",
+		"all_fatjets_eta",
+		"all_fatjets_phi",
+		"all_fatjets_m",
 	};
 
 	for (auto treename: treenames){
@@ -76,6 +80,11 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars_vector["all_jets_phi"] = jet_phi;
 	tree_output_vars_vector["all_jets_E"]= jet_E;	
 
+	tree_output_vars_vector["all_fatjets_pt"] = fatjet_pt;
+	tree_output_vars_vector["all_fatjets_eta"] = fatjet_eta;
+	tree_output_vars_vector["all_fatjets_phi"] = fatjet_phi;
+	tree_output_vars_vector["all_fatjets_m"]= fatjet_m;	
+	
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
 	tree_output_vars["mcEventWeight"] = mcEventWeight;

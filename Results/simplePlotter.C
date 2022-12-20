@@ -5,10 +5,10 @@
 #include "PlotParams.h"
 
 //string dir_data = "../MicroNTupleMaker/MicroNTuples/v1.1";
-string dir_data = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v5/v5.2";
+string dir_data = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v6/v6.1";
 string outfile_path = "/eos/user/e/ebusch/SVJ/Plots";
 Color_t mycolors[12] = { kBlack, kGray+2, kBlue+1, kAzure+7, kGreen+3, kSpring, kRed+1, kOrange+7, kRed, kAzure+7, kOrange };
-string cout_dict[25] = {"\n,", ",", ",", "\n", ",,", ",", "\n", ",", ",", ",", "\n", ",", ",,", "\n", ",", ",", ",", "\n", ",,,", "\n,", ",,", "\n,", ",", ",", "\n"}; 
+string cout_dict[30] = {"\n",",", ",", ",", "\n", ",,", ",", "\n", ",", ",", ",", "\n", ",", ",,", "\n", ",", ",", ",", "\n", ",,,", "\n,", ",,", "\n,", ",", ",", "\n"}; 
 
 vector<TH1D*> Get1DHists(vector<string> inputFiles, string branch, PlotParams myParams, string cut){
   // Collect the same 1D histogram from various input files
@@ -23,7 +23,8 @@ vector<TH1D*> Get1DHists(vector<string> inputFiles, string branch, PlotParams my
     //cout << inputFile << endl;
     //cout << "entries: " << h->GetEntries() << ", integral: " << h->Integral(0,myParams.nbins+1) << endl;
     cout << h->Integral(0,myParams.nbins+1);
-    cout << cout_dict[i];
+    if (i%4==0) cout << endl;
+    else cout << ",";
     i++;
     hists.push_back(h);
   }
@@ -110,13 +111,15 @@ void Plot1DHistsRatio(vector<TH1D*> hists, vector<string> leg_names, string bran
 
 void simplePlotter(){
 
-  vector<string> inputFiles = {"user.ebusch.totalBKG.root",
+  vector<string> inputFiles = {"user.ebusch.totalbkg.root",
 				//"user.ebusch.QCDbkg.root", 
 				//"user.ebusch.Znunu.root",
+				"user.ebusch.515479.root",
 				"user.ebusch.515480.root",
 				"user.ebusch.515481.root",
 				"user.ebusch.515482.root",
 				"user.ebusch.515483.root",
+				"user.ebusch.515484.root",
 				"user.ebusch.515485.root",
 				"user.ebusch.515486.root",
 				"user.ebusch.515487.root",
@@ -125,15 +128,21 @@ void simplePlotter(){
 				"user.ebusch.515490.root",
 				"user.ebusch.515495.root",
 				"user.ebusch.515496.root",
+				"user.ebusch.515497.root",
 				"user.ebusch.515498.root",
 				"user.ebusch.515499.root",
 				"user.ebusch.515500.root",
 				"user.ebusch.515501.root",
 				"user.ebusch.515502.root",
 				"user.ebusch.515507.root",
+				"user.ebusch.515508.root",
+				"user.ebusch.515509.root",
 				"user.ebusch.515510.root",
+				"user.ebusch.515515.root",
 				"user.ebusch.515516.root",
+				"user.ebusch.515517.root",
 				"user.ebusch.515518.root",
+				"user.ebusch.515523.root",
 				"user.ebusch.515524.root",
 				"user.ebusch.515525.root",
 				"user.ebusch.515526.root"};
@@ -151,7 +160,7 @@ void simplePlotter(){
   pt_balance = Get1DHists(inputFiles, "pt_balance_12", P_pt_balance_12);
   Plot1DHistsRatio(pt_balance, leg_names, "pt_balance",0); 
   */
-  /*
+  
   string my_cut = "jet1_pt > -900";
   vector<TH1D*> jet1_pt;
   jet1_pt = Get1DHists(inputFiles, "jet1_pt", P_jet1_pt, my_cut);
@@ -162,10 +171,10 @@ void simplePlotter(){
   string my_cut3 = "met_met > 200";
   vector<TH1D*> jet3_pt;
   jet3_pt = Get1DHists(inputFiles, "jet1_pt", P_jet1_pt, my_cut3);
-  */
-  string my_cut = "fatjet1_pt > 450";
-  vector<TH1D*> jet1_pt;
-  jet1_pt = Get1DHists(inputFiles, "jet1_pt", P_jet1_pt, my_cut);
+  
+  //string my_cut = "fatjet1_pt > 450";
+  //vector<TH1D*> jet1_pt;
+  //jet1_pt = Get1DHists(inputFiles, "jet1_pt", P_jet1_pt, my_cut);
 
 
   //Plot1DHists(jet1_pt, leg_names, "jet1_pt"); 

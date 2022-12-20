@@ -244,7 +244,7 @@ public :
 		if( debug) cout<<"MicroNTuplePlotter::SetHistDrawStyle()"<<endl;		
 
 		// All
-		if (hist_tag.find("50") == string::npos && solid_bkg)  h->SetFillColor(colors[i]);
+		if ((hist_tag.find("GeV") == string::npos && hist_tag.find("515") == string::npos) && solid_bkg)  h->SetFillColorAlpha(colors[i], 0.5);
 		else h->SetFillColor(0);
 		// Line Color
 		h->SetLineColor( colors[i] );

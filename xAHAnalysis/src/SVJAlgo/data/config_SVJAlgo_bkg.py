@@ -300,9 +300,9 @@ fatJetDetailStr = ""
 if opt.doFatJet:
       inFatJetContainerName = "FatJets_Selected"
       inputFatAlgo = "FatJetSelector_Syst"
-      fatJetDetailStr = "kinematic substructure truth"
-##%%%%%%%%%%%%%%%%%%%%%%%%%% SVJAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
-c.algorithm("SVJAlgorithm",    		 {
+      fatJetDetailStr = "kinematic"
+##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("SVJAlgorithm",    		{
     "m_name"                    	: "ResonanceAlgo",
     #----------------------- Container Flow ----------------------------#
     "m_inJetContainerName"      	: "Jets_PassedOR",
@@ -310,7 +310,6 @@ c.algorithm("SVJAlgorithm",    		 {
     "m_inMetContainerName"      	: "METOutput_NewRefFinal",
     "m_inFatJetContainerName"   	: inFatJetContainerName,
     "m_inputFatAlgo"            	: inputFatAlgo,
-    "m_inTruthParticlesContainerName"	: "TruthBSM",
     #----------------------- Selections ----------------------------#
     "m_leadingJetPtCut"         	: 450e3,
     "m_subleadingJetPtCut"      	: 50e3,
@@ -318,14 +317,15 @@ c.algorithm("SVJAlgorithm",    		 {
     "m_jetMultiplicity"         	: 1,
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
-    "m_eventDetailStr"          	: "truth", #shapeEM
+    "m_eventDetailStr"          	: "", #shapeEM
     "m_jetDetailStr"            	: "kinematic",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
     "m_metDetailStr"            	: "metClus",
-    "m_jetDetailStrSyst"        	: "kinematic truth",
+    "m_jetDetailStrSyst"        	: "kinematic",
     "m_trigDetailStr"           	: "basic passTriggers",
+    #"m_truthParticlesContainerName"	: "TruthParticles",
     #"m_truthParticlesBranchName"	: "truthParicles",
-    "m_truthParticlesDetailStr"		: "type dressed origin children parents",
+    #"m_truthParticlesDetailStr"	: "type dressed origin children parents",
     #----------------------- Other ----------------------------#
     "m_writeTree"               : True,
     #"m_MCPileupCheckContainer"  : "AntiKt4TruthJets",
