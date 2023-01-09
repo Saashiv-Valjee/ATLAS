@@ -123,7 +123,7 @@ void MicroNTupleMaker::Loop()
 		}	
 
 		// 2 fatjet situation
-		if (nfatjet > 1) {
+		/*if (nfatjet > 1) {
 			//cout << "fat jets" <<endl;
 			//cout << "nfatjet: " << nfatjet <<endl;
 			//cout << "size fatjet_pt: " << fatjet_pt->size() << endl;
@@ -134,7 +134,7 @@ void MicroNTupleMaker::Loop()
 		} else {
 			mT_JJ = -999;
 			mJJ_12 = -999;	
-		}
+		}*/
 		// HT
 		hT = GetHT(jet_pt);
 		

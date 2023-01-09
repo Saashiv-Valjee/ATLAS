@@ -20,15 +20,15 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		//"jet_asvj_mT", "jet_asvj_Split12", "jet_asvj_Split23", "jet_asvj_tau32", "jet_asvj_C2", "jet_asvj_D2", "jet_asvj_nTracks",
 		//"jet_svj_mT", "jet_svj_Split12", "jet_svj_Split23", "jet_svj_tau32", "jet_svj_C2", "jet_svj_D2", "jet_svj_nTracks",
 
-		"n_fatjets",
-		"fatjet1_pt", "fatjet1_eta", "fatjet1_phi", "fatjet1_m",
-        	"fatjet2_pt", "fatjet2_eta", "fatjet2_phi", "fatjet2_m", 
+		//"n_fatjets",
+		//"fatjet1_pt", "fatjet1_eta", "fatjet1_phi", "fatjet1_m",
+        	//"fatjet2_pt", "fatjet2_eta", "fatjet2_phi", "fatjet2_m", 
 
 		// -- Jet Calculations -- //
 		"maxphi_minphi", "dphi_min", "dphi_max",
                 "pt_balance_12", //"pt_balance_sa",
                 "mjj_12", "mT_jj", 
-		"mJJ_12", "mT_JJ",
+		//"mJJ_12", "mT_JJ",
 		"dR_12", "deta_12",
 		"deltaY_12", //"deltaY_sa",
 		"hT", "rT",
@@ -47,10 +47,10 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"all_jets_eta",
 		"all_jets_phi",
 		"all_jets_E",
-		"all_fatjets_pt",
-		"all_fatjets_eta",
-		"all_fatjets_phi",
-		"all_fatjets_m",
+		//"all_fatjets_pt",
+		//"all_fatjets_eta",
+		//"all_fatjets_phi",
+		//"all_fatjets_m",
 	};
 
 	for (auto treename: treenames){
@@ -80,10 +80,10 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars_vector["all_jets_phi"] = jet_phi;
 	tree_output_vars_vector["all_jets_E"]= jet_E;	
 
-	tree_output_vars_vector["all_fatjets_pt"] = fatjet_pt;
-	tree_output_vars_vector["all_fatjets_eta"] = fatjet_eta;
-	tree_output_vars_vector["all_fatjets_phi"] = fatjet_phi;
-	tree_output_vars_vector["all_fatjets_m"]= fatjet_m;	
+	//tree_output_vars_vector["all_fatjets_pt"] = fatjet_pt;
+	//tree_output_vars_vector["all_fatjets_eta"] = fatjet_eta;
+	//tree_output_vars_vector["all_fatjets_phi"] = fatjet_phi;
+	//tree_output_vars_vector["all_fatjets_m"]= fatjet_m;	
 	
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
@@ -108,8 +108,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 		tree_output_vars["jet2_E"] = -999;
 	}
 
-	tree_output_vars["n_fatjets"] = nfatjet;
-	if (nfatjet >= 1){
+	//tree_output_vars["n_fatjets"] = nfatjet;
+	/*if (nfatjet >= 1){
 		tree_output_vars["fatjet1_pt"] = fatjet_pt->at(0); // GeV
 		tree_output_vars["fatjet1_eta"] = fatjet_eta->at(0);
 		tree_output_vars["fatjet1_phi"] = fatjet_phi->at(0);
@@ -130,7 +130,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 		tree_output_vars["fatjet2_eta"] = -999;
 		tree_output_vars["fatjet2_phi"] = -999;
 		tree_output_vars["fatjet2_m"] = -999;
-	}
+	}*/
 	tree_output_vars["met_met"] = metFinalClus;
 	tree_output_vars["met_phi"] = metFinalClusPhi;
 	tree_output_vars["hT"] = hT;
@@ -139,9 +139,9 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["maxphi_minphi"] = maxphi_minphi;
         tree_output_vars["pt_balance_12"] = pt_balance_12;
         tree_output_vars["mjj_12"] = mjj_12;
-        tree_output_vars["mJJ_12"] = mJJ_12;
+        //tree_output_vars["mJJ_12"] = mJJ_12;
         tree_output_vars["mT_jj"] = mT_jj;
-        tree_output_vars["mT_JJ"] = mT_JJ;
+        //tree_output_vars["mT_JJ"] = mT_JJ;
 	tree_output_vars["dR_12"] = dR_12;
 	tree_output_vars["deta_12"] = deta_12;
         tree_output_vars["deltaY_12"] = deltaY_12;
