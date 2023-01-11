@@ -21,7 +21,6 @@ c = Config()
 #%%%%%%%%%%%%%%%%%%%%%%%%%% BasicEventSelection %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("BasicEventSelection",    { 
   "m_name"                      : "BasicEventSelect",
-  "m_applyGRLCut"               : False, 
   #-------------------------- GRL --------------------------------------#
   "m_GRLxml"                    : 'GoodRunsLists/data18_13TeV/20190708/data18_13TeV.periodAllYear_DetStatus-v105-pro22-13_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml,GoodRunsLists/data17_13TeV/20180619/physics_25ns_Triggerno17e33prim.xml,GoodRunsLists/data15_13TeV/20170619/physics_25ns_21.0.19.xml,GoodRunsLists/data16_13TeV/20180129/physics_25ns_21.0.19.xml',
   #-------------------------- PRW --------------------------------------#
@@ -37,8 +36,8 @@ c.algorithm("BasicEventSelection",    {
    "m_triggerSelection"          : "HLT_j380*", #"HLT_j380*, HLT_xe*", 
    "m_storePassHLT"              : True,
    "m_storeTrigDecisions"        : True,
-   "m_storePassL1"               : True,
-   "m_storeTrigKeys"             : False,
+   "m_storePassL1"	         : True,
+   "m_storeTrigKeys" 	         : False,
    "m_applyTriggerCut"           : True,
   # ---------------------------- Cuts ----------------------------------#
   "m_checkDuplicatesData"       : False,
@@ -47,7 +46,7 @@ c.algorithm("BasicEventSelection",    {
   "m_applyCoreFlagsCut"	        : False,
   "m_vertexContainerName"       : "PrimaryVertices",
   "m_applyPrimaryVertexCut"     : False,
-  "m_PVNTrack"                  : 2,
+  "m_PVNTrack"		        : 2,
   #---------------------------- Other ---------------------------------#
   "m_useMetaData"               : False,
   "m_msgLevel"                  : "Error",

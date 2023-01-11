@@ -49,6 +49,7 @@ public :
    float weight_scale, sumw;
    int n_svj, n_asvj;
    float dphi_min, dphi_max, maxphi_minphi;
+   float dphi_min_MET;
    float pt_balance_12;
    float mjj_12, mT_jj;
    //float mJJ_12, mT_JJ;

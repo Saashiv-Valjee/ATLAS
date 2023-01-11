@@ -157,10 +157,11 @@ public :
 	TString GetOutputFileName( PlotParams myPlotParams, string plot_type = ""){
 		if( debug) cout<<"MicroNTuplePlotter::GetOutputFileName()"<<endl;		
 
-		string output_file_name = "Plot"+plot_type;
+		string output_file_name;
 
-		output_file_name += "_"+myPlotParams.hist_name;
+		output_file_name = myPlotParams.hist_name;
 
+		if( plot_type != "") output_file_name += "_"+plot_type;
 		if( plot_norm ) output_file_name += "_norm";
 		if( plot_log  ) output_file_name += "_log";		
 		if( output_file_tag != "" ) output_file_name += "_"+output_file_tag;
@@ -281,11 +282,7 @@ public :
 	TH1F* GetHist1D( PlotParams myPlotParams, string filetag_treename, TCut cut_compare ){
                 if( debug) cout<<"MicroNTuplePlotter::GetHist1D()"<<endl;  
 
-                cout << "Getting 1D hist..." << endl;
-                cout << "Cut = " << cut_compare << endl;
-
                 string hist_name = myPlotParams.hist_name;
-                string title 	 = myPlotParams.title;
                 string label_x   = myPlotParams.label_x;
                 int NBins 	 = myPlotParams.nbins;
                 double xmin      = myPlotParams.xmin;
@@ -312,7 +309,7 @@ public :
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
-		cout << "cut_total = " << cut_total << endl;
+		if (debug) cout << "cut_total = " << cut_total << endl;
 
 		trees[filetag_treename]->Draw( Form( "%s >> "+hist_name_full, hist_name.c_str() ), cut_total , "");
 		//if( use_weight ){
@@ -325,11 +322,50 @@ public :
 
    		TH1F *h;
 		h = (TH1F*)h_temp->Clone();
-		cout << "h Integral: " << h->Integral()*1.39e8 << endl;
 
 		return h;
 
 	}
+
+	// -------------------------------------------------------------------------------------
+	TH2F* GetHist2D( PlotParams myPlotParams_x, PlotParams myPlotParams_y, string filetag_treename, TCut cut_compare ){
+                if( debug) cout<<"MicroNTuplePlotter::GetHist2D()"<<endl;  
+
+                string hist_name_x	 = myPlotParams_x.hist_name;
+                string label_x		 = myPlotParams_x.label_x;
+                int NBins_x	 	 = myPlotParams_x.nbins;
+                double xmin    		 = myPlotParams_x.xmin;
+                double xmax      	 = myPlotParams_x.xmax;
+		
+                string hist_name_y	 = myPlotParams_y.hist_name;
+                string label_y		 = myPlotParams_y.label_x;
+                int NBins_y	 	 = myPlotParams_y.nbins;
+                double ymin    		 = myPlotParams_y.xmin;
+                double ymax      	 = myPlotParams_y.xmax;
+
+		TCanvas *c_temp = new TCanvas();
+		TH2F *h_temp;
+
+		TString hist_name_full = Form("%s__%s__%s", hist_name_x.c_str(), hist_name_y.c_str(), filetag_treename.c_str());
+		h_temp = new TH2F( hist_name_full, "", NBins_x, xmin, xmax, NBins_y, ymin, ymax);	
+		
+		TCut cut_weight = Form( "weight" ); 
+
+		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		if(debug) cout << "cut_total = " << cut_total << endl;
+		
+		trees[filetag_treename]->Draw( Form( "%s:%s >> "+hist_name_full, hist_name_y.c_str(), hist_name_x.c_str() ), cut_total , "");
+ 		h_temp->GetYaxis()->SetTitle(Form("%s",label_y.c_str())); 
+ 		h_temp->GetXaxis()->SetTitle(Form("%s",label_x.c_str())); 
+ 		TH2F *h2;
+		h2 = (TH2F*)h_temp->Clone();
+
+		return h2;
+
+	}
+
 
 	// -------------------------------------------------------------------------------------
 	map<string,TH1F*> GetHists( PlotParams myPlotParams ){
@@ -550,6 +586,45 @@ public :
 			delete myCanvas;
 			hists.clear();
 
+		}
+
+	}
+
+	// -------------------------------------------------------------------------------------
+	void Plot2D( PlotParams myPlotParams_x, PlotParams myPlotParams_y  ){
+		if( debug) cout<<"MicroNTuplePlotter::Plot2D()"<<endl;		
+
+
+		GetTrees();
+		SetStyle();
+
+		for( auto filetag_treename: filetags_treenames ){
+			for( auto cut_compare: cuts_compare ){
+
+				TH2F* h2 = (TH2F*)GetHist2D( myPlotParams_x, myPlotParams_y, filetag_treename, cut_compare );
+
+				TCanvas *myCanvas = new TCanvas("c", "c", 1300, 1200);
+				myCanvas->SetRightMargin(0.14);
+				myCanvas->SetLeftMargin(0.14);
+				myCanvas->SetTopMargin(0.12);
+				myCanvas->SetBottomMargin(0.12);
+
+				if( plot_log ) 
+					gPad->SetLogz();
+
+				if( plot_norm )
+					h2->Scale(1./h2->Integral());
+
+				if( stamp_counts )
+					h2->Draw("colz TEXT");
+				else
+					h2->Draw("colz");
+				string output_file_name = myPlotParams_y.hist_name + "_vs_" + myPlotParams_x.hist_name; // GetOutputFileName(myPlotParams_x);
+				string filetag_only = GetFiletag(filetag_treename);
+				output_file_name += "_" + filetag_only + "_" + output_file_tag; 
+				myCanvas->SaveAs( outfile_path+"/"+output_file_name+".png", "png");
+
+			}
 		}
 
 	}

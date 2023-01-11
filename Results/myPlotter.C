@@ -3,7 +3,7 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v5/v5.2/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v6/v6.2/user.ebusch.";
 	//string path = "../MicroNTupleMaker/MicroNTuples/user.ebusch.";
 	
 	//vector<string> filetags = {"QCDbkg", "WpJets", "ZpJets", "ttbarr", "singlt", "dibson", "508547","508548","508549","508550" };
@@ -25,7 +25,7 @@ void myPlotter(){
         plotter.plot_norm =true;
         plotter.plot_log = true;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="v5p2_check";
+        plotter.output_file_tag ="v6p2_check";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
@@ -49,7 +49,7 @@ void myPlotter(){
 
         //***************** Binning and Legend *******************//  
         //vector<string> leg_names = {"Inclusive","jet1_pt > 450", "met_met > 200", "jet1_pt > 450 || met_met > 200"};
-	plotter.SetLegendManual( 0.45, 0.65, 0.9, 0.9, {} );
+	//plotter.SetLegendManual( 0.45, 0.65, 0.9, 0.9, {} );
 
         //***************** Reweight and Plot *******************//  
 	//plotter.SetOverlayedPlots( {P_jet1_pt, P_jet2_pt, P_jet_svj_pt, P_jet_asvj_pt}, OP_jet_pt );
@@ -66,10 +66,11 @@ void myPlotter(){
 
 	//plotter.SetPlots ( {P_jet1_pt, P_jet2_pt, P_jet2_eta, P_n_r04_jets, P_n_r10_jets} );
 	//plotter.SaveOutputFile("test");
-        plotter.SetPlots ( { P_jet1_pt} );
-	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_jet1_D2, P_jet1_C2, P_jet1_Split12, P_jet1_Split23, P_jet1_tau23} );
+        //plotter.SetPlots ( { P_jet1_pt} );
+	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T} );
 	//plotter.SetPlots ( {P_aplanarity, P_sphericity, P_sphericity_T, P_mT_jj, P_rT, P_hT, P_dR_12, P_deta_12, P_dphi_min, P_pt_balance_12, P_deltaY_12, P_jet1_C2, P_jet2_C2} );
-	//plotter.SetPlots( {P_jet1_pt, P_met_met, P_n_jets, P_n_fatjets, P_mT_jj, P_mjj_12, P_dphi_min, P_deta_12});
+	//plotter.SetPlots( {P_jet1_pt, P_met_met, P_n_jets, P_mT_jj, P_mjj_12, P_dphi_min, P_deta_12, P_rT, P_pt_balance_12});
 	//plotter.SetPlots ( {P_jet1_D2, P_jet2_D2, P_jet1_Split12, P_jet2_Split12, P_jet1_Split23, P_jet2_Split23} );
-	plotter.Plot("");
+	//plotter.Plot("");
+	plotter.Plot2D(P_mjj_12, P_deltaY_12);
 }

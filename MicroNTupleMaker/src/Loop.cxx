@@ -63,6 +63,8 @@ void MicroNTupleMaker::Loop()
 		dphi_min = svj_info[0].second;
 		dphi_max = svj_info[1].second;
 
+		dphi_min_MET = dphi_min/ metFinalClus;
+
 		//dphi_min_r04 = svj_info_r04[0].second;
 
 		// create relevant 4 vectors
