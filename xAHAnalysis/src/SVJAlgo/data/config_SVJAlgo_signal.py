@@ -319,7 +319,7 @@ c.algorithm("SVJAlgorithm",    		 {
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
     "m_eventDetailStr"          	: "truth", #shapeEM
-    "m_jetDetailStr"            	: "kinematic",
+    "m_jetDetailStr"            	: "kinematic trackAll",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
     "m_metDetailStr"            	: "metClus",
     "m_jetDetailStrSyst"        	: "kinematic truth",
