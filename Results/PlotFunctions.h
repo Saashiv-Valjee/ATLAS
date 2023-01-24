@@ -88,7 +88,12 @@ string GetLegendNames( string filetag  ){
   filetag_legend["508550"] = "750 GeV, 0.3";
   filetag_legend["515479"] = "500 GeV, 0.2";
   filetag_legend["515480"] = "500 GeV, 0.4";
+  filetag_legend["515481"] = "500 GeV, 0.6";
   filetag_legend["515482"] = "500 GeV, 0.8";
+  filetag_legend["515487"] = "1000 GeV, 0.2";
+  filetag_legend["515488"] = "1000 GeV, 0.4";
+  filetag_legend["515489"] = "1000 GeV, 0.6";
+  filetag_legend["515490"] = "1000 GeV, 0.8";
   filetag_legend["515499"] = "2000 GeV, 0.2";
   filetag_legend["515502"] = "2000 GeV, 0.8";
   filetag_legend["515523"] = "6000 GeV, 0.2";

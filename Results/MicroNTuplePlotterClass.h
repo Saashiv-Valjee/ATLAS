@@ -46,6 +46,7 @@ public :
         bool stamp_cuts = false;
         bool stamp_integral = true;
         bool stamp_counts = false;
+        bool violin = false;
 	bool manual_legend = false;
 	bool use_better_legend_names = true;
 	bool use_weight = true;
@@ -531,28 +532,52 @@ public :
 		TString draw_option = GetDrawOption();
 
 		for( auto PlotParams_temp: PlotParamsList ){
-
 			map<string,TH1F*> hists = GetHists( PlotParams_temp );
 			cout << hist_tags.size() <<endl;
 
 			TCanvas *myCanvas;
+			TPad *p1;
+			TPad *p2;
 
 			if( plot_type == "" || plot_type == "ratioonly" ) 
 				myCanvas = new TCanvas("c", "c", 1600, 1200);
 			else {
-				myCanvas = new TCanvas("c", "c", 1200, 1600);	
-				myCanvas->Divide(0,2);
+				myCanvas = new TCanvas("c", "c", 1600, 1200);	
+				p1 = new TPad("p1", "p1", 0.1,0.2,0.9,1.0);
+				p2 = new TPad("p2", "p2", 0.1,0.0,0.9,0.2);
+				p1->Draw();	
+				p2->Draw();	
 			}
 
 			THStack* hs;
 
-			if( plot_type != "ratioonly" ){
+			if( plot_type == "" || plot_type == "ratioonly" ){
 				hs = GetStackHist( hists, PlotParams_temp );
 				myCanvas->cd(1);
-				hs->Draw(draw_option); 
+				hs->Draw(draw_option);
+				if( plot_log )		gPad->SetLogy(); 
+				if( plot_log_x )	gPad->SetLogx(); 
+ 
 			} else {
-				hs = GetStackRatio( hists, PlotParams_temp, true, filetag_treename_divisor );
+				p1->cd();
+				hs = GetStackHist( hists, PlotParams_temp );
 				hs->Draw(draw_option); 				
+				if( plot_log )		p1->SetLogy(); 
+				if( plot_log_x )	p1->SetLogx(); 
+
+				p2->cd();
+				THStack* hsr = GetStackRatio( hists, PlotParams_temp, false, filetag_treename_divisor );
+ 				hsr->Draw(draw_option);
+				hsr->GetYaxis()->SetLabelSize(0.12);
+				hsr->GetYaxis()->SetTitleSize(0.08);
+				hsr->GetYaxis()->SetTitleOffset(0.3);
+				hsr->GetXaxis()->SetLabelSize(0.12);
+				hsr->GetXaxis()->SetTitleSize(0.0);
+
+				if( plot_log_ratio ) p2->SetLogy(); 	
+				if( plot_log_x ) p2->SetLogx(); 
+
+				p1->cd();
 			}
 
 			if( manual_legend )
@@ -563,7 +588,7 @@ public :
 			StampATLAS( "Internal", 140., 0.14, 0.84, 0.045 );
 			//if (stamp_cuts) StampCuts( 0.1, 0.91, 0.015 );			
 
-			if( plot_type == "ratio" ){
+			/*if( plot_type == "ratio" ){
 				myCanvas->cd(2);
 				if( plot_log_ratio ) gPad->SetLogy(); 	
 				if( plot_log_x ) gPad->SetLogx(); 
@@ -574,13 +599,13 @@ public :
 				hs_ratio->SetMaximum(2);
 				hs_ratio->Draw(draw_option);
 				myCanvas->cd(1);
-			}
+			}*/
 
 			myCanvas->cd(1);
-			if( plot_log )		gPad->SetLogy(); 
+			//if( plot_log )		gPad->SetLogy(); 
+			//if( plot_log_x )		gPad->SetLogx(); 
 
-			if( plot_log_x )	gPad->SetLogx(); 
-
+			cout << "saving" << endl;
 			TString output_file_name = GetOutputFileName(PlotParams_temp, plot_type);
 			myCanvas->SaveAs( outfile_path+"/"+output_file_name+".png", "png" );
 			delete myCanvas;
@@ -617,7 +642,11 @@ public :
 
 				if( stamp_counts )
 					h2->Draw("colz TEXT");
-				else
+				else if ( violin ){
+					//h2->SetBarWidth(3);
+					h2->SetFillStyle(0);
+					h2->Draw("violiny(112000000)");
+				}else
 					h2->Draw("colz");
 				string output_file_name = myPlotParams_y.hist_name + "_vs_" + myPlotParams_x.hist_name; // GetOutputFileName(myPlotParams_x);
 				string filetag_only = GetFiletag(filetag_treename);
@@ -667,7 +696,7 @@ public :
 		StampATLAS( "Internal", 140., 0.14, 0.84, 0.045 );
 		//StampCuts( 0.1, 0.91, 0.015 );			
 
-		myCanvas->cd(1);
+		myCanvas->cd();
 
 		if( plot_log )
 			gPad->SetLogy(); 

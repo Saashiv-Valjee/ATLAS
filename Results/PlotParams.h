@@ -11,7 +11,7 @@ typedef struct PlotParams PlotParams;
 
 // Physics Variables
 
-PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 70, 0, 3000};
+PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 20, 0, 500};
 PlotParams P_met_phi			= {"met_phi", "Missing E_{T} #phi", "#phi [rad]", 50, -3.14, 3.14 };
 PlotParams P_TruthMET_TruthSumEt 	= {"MET_TruthMET_TruthSumEt", "TruthMET SumE_{T}", "E [GeV]", 50, 0, 700};  
 PlotParams P_TruthMET_TruthPhi	 	= {"MET_TruthMET_TruthPhi", "TruthMET #phi", "#phi [rad]", 50, -3.14, 3.14};  
@@ -64,7 +64,7 @@ PlotParams P_dphi_min			= {"dphi_min", "#Delta#phi (closest jet, MET)", "#Delta#
 PlotParams P_deltaY_12			= {"deltaY_12", "#Delta Y (leading jet, subleading jet)", "#Delta Y", 50, 0, 5};
 PlotParams P_mjj_12			= {"mjj_12", "Invariant Mass R=0.4 Jets (Leading, Subleading)", "m_{jj} [GeV]", 100, 0, 3000};
 PlotParams P_mJJ_12			= {"mJJ_12", "Invariant Mass R=1.0 Jets (Leading, Subleading)", "m_{JJ} [GeV]", 100, 0, 3000};
-PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 150, 0, 10000};
+PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 20, 500, 3000};
 PlotParams P_mT_JJ			= {"mT_JJ", "mT System (R=1.0)", "mT [GeV]", 150, 0, 10000};
 PlotParams P_deta_12			= {"deta_12", "#Delta#eta (leading, subleading jet)", "#Delta#eta", 50, 0, 10};
 PlotParams P_dR_12			= {"dR_12", "#Delta R (leading, subleading jet)", "#Delta R", 50, 0, 10};
