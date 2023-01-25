@@ -54,7 +54,7 @@ SVJAlgorithm :: SVJAlgorithm () :
   m_MCPileupCheckContainer   = "AntiKt4TruthJets";
   m_leadingJetPtCut          = 100;
   m_subleadingJetPtCut       = 25;
-  m_metCut                   = 100;
+  m_metCut                   = -1;
   m_jetMultiplicity          = 2;
   m_yStarCut                 = -1; 
   m_reclusterJets            = false;
@@ -230,12 +230,12 @@ void SVJAlgorithm::AddTree( std::string name ) {
     //Fixme need to add syst strs for Met and FatJet
     if( !name.empty() ) { // save limited information for systematic variations
       miniTree->AddJets( m_jetDetailStrSyst );
-      miniTree->AddMET( m_metDetailStr);
+      if (m_inMetContainerName != "" ) miniTree->AddMET( m_metDetailStr);
       if (m_inFatJetContainerName != "") miniTree->AddFatJets(m_fatJetDetailStr);
       if (m_inTruthParticlesContainerName != "") miniTree->AddTruthParts(m_truthParticlesDetailStr);
     } else {
       miniTree->AddJets( m_jetDetailStr );
-      miniTree->AddMET( m_metDetailStr);
+      if (m_inMetContainerName != "" ) miniTree->AddMET( m_metDetailStr);
       if (m_inFatJetContainerName != "" ) miniTree->AddFatJets(m_fatJetDetailStr);
       if (m_inTruthParticlesContainerName != "" ) miniTree->AddTruthParts(m_truthParticlesDetailStr);
     }
@@ -313,7 +313,7 @@ EL::StatusCode SVJAlgorithm :: execute ()
   // then get the one collection and be done with it
   if( m_inputAlgo == "" || m_truthLevelOnly ) {
     ANA_CHECK (HelperFunctions::retrieve(signalJets, m_inJetContainerName, m_event, m_store));
-    if(!m_truthLevelOnly) { 
+    if(!m_truthLevelOnly && m_inMetContainerName != "") { 
       ANA_CHECK (HelperFunctions::retrieve(met, m_inMetContainerName, m_event, m_store)); 
     }
     // executeAnalysis
@@ -347,7 +347,7 @@ EL::StatusCode SVJAlgorithm :: execute ()
       inFatContainerName = m_inFatJetContainerName+systName;
       ANA_CHECK (HelperFunctions::retrieve(signalJets, inContainerName, m_event, m_store));
       if (m_inFatJetContainerName != "") ANA_CHECK (HelperFunctions::retrieve(fatJets, inFatContainerName, m_event, m_store));
-      ANA_CHECK (HelperFunctions::retrieve(met, m_inMetContainerName, m_event, m_store)); 
+      if (m_inMetContainerName != "") ANA_CHECK (HelperFunctions::retrieve(met, m_inMetContainerName, m_event, m_store)); 
       
       // allign with Dijet naming conventions
       if( systName.empty() ) { doCutflow = m_useCutFlow; } // only doCutflow for nominal
@@ -445,9 +445,11 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   }
   
   // MET Selection
-  const xAOD::MissingET* final_clus = *met->find("FinalClus");
-  if(final_clus->sumet() < m_metCut) {
-    wk()->skipEvent();  return EL::StatusCode::SUCCESS; 
+  if (m_inMetContainerName != "" && m_metCut >= 0) {
+    const xAOD::MissingET* final_clus = *met->find("FinalClus");
+    if(final_clus->sumet() < m_metCut) {
+      wk()->skipEvent();  return EL::StatusCode::SUCCESS; 
+    }
   }
   if(doCutflow) passCut();
 
