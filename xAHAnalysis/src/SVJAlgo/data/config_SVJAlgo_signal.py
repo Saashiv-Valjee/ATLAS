@@ -34,19 +34,19 @@ c.algorithm("BasicEventSelection",    {
   #-------------------------- Derivation -------------------------------#
   "m_derivationName"            : "PHYS",
   # -------------------------- Trigger ----------------------------------#
-   "m_triggerSelection"          : "HLT_j380*", #"HLT_j380*, HLT_xe*", 
+   "m_triggerSelection"          : "HLT_j380* | HLT_xe*", #"HLT_j380*, HLT_xe*", 
    "m_storePassHLT"              : True,
    "m_storeTrigDecisions"        : True,
    "m_storePassL1"               : True,
    "m_storeTrigKeys"             : False,
-   "m_applyTriggerCut"           : True,
+   "m_applyTriggerCut"           : False,
   # ---------------------------- Cuts ----------------------------------#
   "m_checkDuplicatesData"       : False,
   "m_applyGRLCut"               : False,
-  "m_applyEventCleaningCut"     : False,
-  "m_applyCoreFlagsCut"	        : False,
+  "m_applyEventCleaningCut"     : True,
+  "m_applyCoreFlagsCut"	        : True,
   "m_vertexContainerName"       : "PrimaryVertices",
-  "m_applyPrimaryVertexCut"     : False,
+  "m_applyPrimaryVertexCut"     : True,
   "m_PVNTrack"                  : 2,
   #---------------------------- Other ---------------------------------#
   "m_useMetaData"               : False,
@@ -65,7 +65,7 @@ c.algorithm("JetCalibrator",     {
   "m_outContainerName"          : "Jets_Calibrate",
   "m_outputAlgo"                : "JetCalibrator_Syst",
   "m_sort"                      : True,
-  "m_redoJVT"                   : False,
+  #"m_redoJVT"                   : False,
   #----------------------- Systematics ----------------------------#
   "m_systName"                  : 'Nominal',
   "m_systVal"                   : 0,
@@ -101,14 +101,14 @@ if opt.doFatJet:
     "m_outContainerName"          : "FatJets_Calibrate",
     "m_outputAlgo"                : "FatJetCalibrator_Syst",
     "m_sort"                      : True,
-    "m_redoJVT"                   : False,
+    #"m_redoJVT"                   : False,
     #----------------------- Systematics ----------------------------#
     "m_systName"                  : "Nominal",
     "m_systVal"                   : 0,
     #----------------------- Calibration ----------------------------#
     "m_calibConfigFullSim"        : "JES_MC16recommendation_FatJet_Trimmed_JMS_comb_17Oct2018.config",
     "m_calibConfigData"           : "JES_MC16recommendation_FatJet_Trimmed_JMS_comb_March2021.config",
-    "m_calibSequence"             : "EtaJES_JMS",                                    # recommendation as of May 11 2020
+    "m_calibSequence"             : "EtaJES_JMS", 
     "m_forceInsitu"               : False, # For data
     "m_forceSmear"                : False, # For MC
     #----------------------- JES/JER Uncertainty ----------------------------#
@@ -314,7 +314,7 @@ c.algorithm("SVJAlgorithm",    		 {
     #----------------------- Selections ----------------------------#
     "m_leadingJetPtCut"         	: 450e3,
     "m_subleadingJetPtCut"      	: 50e3,
-    #"m_metCut"                  	: 0e3,
+    "m_metCut"                  	: 0e3,
     "m_jetMultiplicity"         	: 1,
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
