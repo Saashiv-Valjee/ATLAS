@@ -34,7 +34,7 @@ c.algorithm("BasicEventSelection",    {
   #-------------------------- Derivation -------------------------------#
   "m_derivationName"            : "PHYS",
   # -------------------------- Trigger ----------------------------------#
-   "m_triggerSelection"          : "HLT_j380*", #"HLT_j380*, HLT_xe*", 
+   "m_triggerSelection"          : "HLT_j380* | HLT_xe*", #"HLT_j380*, HLT_xe*", 
    "m_storePassHLT"              : True,
    "m_storeTrigDecisions"        : True,
    "m_storePassL1"               : True,
@@ -43,10 +43,10 @@ c.algorithm("BasicEventSelection",    {
   # ---------------------------- Cuts ----------------------------------#
   "m_checkDuplicatesData"       : False,
   "m_applyGRLCut"               : False,
-  "m_applyEventCleaningCut"     : False,
-  "m_applyCoreFlagsCut"	        : False,
+  "m_applyEventCleaningCut"     : True,
+  "m_applyCoreFlagsCut"	        : True,
   "m_vertexContainerName"       : "PrimaryVertices",
-  "m_applyPrimaryVertexCut"     : False,
+  "m_applyPrimaryVertexCut"     : True,
   "m_PVNTrack"                  : 2,
   #---------------------------- Other ---------------------------------#
   "m_useMetaData"               : False,
@@ -65,15 +65,15 @@ c.algorithm("JetCalibrator",     {
   "m_outContainerName"          : "Jets_Calibrate",
   "m_outputAlgo"                : "JetCalibrator_Syst",
   "m_sort"                      : True,
-  "m_redoJVT"                   : False,
+  #"m_redoJVT"                   : False,
   #----------------------- Systematics ----------------------------#
   "m_systName"                  : 'Nominal',
   "m_systVal"                   : 0,
   #----------------------- Calibration ----------------------------#
   "m_calibConfigAFII"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
-  "m_calibConfigFullSim"        : "JES_MC16Recommendation_Consolidated_PFlow_Apr2019_Rel21.config",# recommendation as of May 11 2020
-  "m_calibConfigData"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
-  "m_calibSequence"             : "JetArea_Residual_EtaJES_GSC_Smear",                                    # recommendation as of May 11 2020
+  "m_calibConfigFullSim"        : "JES_MC20PreRecommendation_PFlow_Dec2022_Rel22.config",# preliminary rel22 jet recommendation 
+  "m_calibConfigData"           : "JES_MC20PreRecommendation_PFlow_Dec2022_Rel22.config",        # preliminary rel22 jet recommendation
+  "m_calibSequence"             : "JetArea_Residual_EtaJES_GSC", # for MC we should not include Smear at the moment
   "m_forceInsitu"               : False, # For data
   "m_forceSmear"                : False, # For MC
   #----------------------- JES/JER Uncertainty ----------------------------#
