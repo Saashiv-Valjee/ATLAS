@@ -39,10 +39,10 @@ c.algorithm("BasicEventSelection",    {
    "m_storeTrigDecisions"        : True,
    "m_storePassL1"               : True,
    "m_storeTrigKeys"             : False,
-   "m_applyTriggerCut"           : False,
+   "m_applyTriggerCut"           : True,
   # ---------------------------- Cuts ----------------------------------#
   "m_checkDuplicatesData"       : False,
-  "m_applyGRLCut"               : False,
+  "m_applyGRLCut"               : True,
   "m_applyEventCleaningCut"     : True,
   "m_applyCoreFlagsCut"	        : True,
   "m_vertexContainerName"       : "PrimaryVertices",
@@ -138,9 +138,10 @@ c.algorithm("JetSelector",     {
   "m_createSelectedContainer"   : True,
   #----------------------- Selections ----------------------------#
   "m_cleanJets"                 : False,
-  "m_pass_min"                  : 1,
+  "m_pass_min"                  : 2,
   "m_pT_min"                    : 20e3,
   "m_eta_max"                   : 4.5,
+  "m_useCutFlow"		: False,
   #----------------------- JVT ----------------------------#
   "m_doJVT"                     : False, # JVT is a pileup cut
   "m_pt_max_JVT"                : 60e3,
@@ -204,6 +205,7 @@ c.algorithm("MuonSelector", {
     "m_createSelectedContainer" : True,
     "m_pT_min"                  : 20000.,
     "m_eta_max"                 : 2.5,
+    "m_useCutFlow"		: False,
     "m_d0sig_max"               : 3,
     "m_z0sintheta_max"          : 0.5,
     "m_muonQualityStr"          : "Medium",
@@ -243,6 +245,7 @@ c.algorithm("ElectronSelector", {
     "m_createSelectedContainer"   : True,
     "m_pT_min"                    : 20000.,
     "m_eta_max"                   : 2.47,
+    "m_useCutFlow"		  : False,
     "m_d0sig_max"                 : 5,
     "m_z0sintheta_max"            : 0.5,
     "m_readIDFlagsFromDerivation" : True,
@@ -315,7 +318,7 @@ c.algorithm("SVJAlgorithm",    		 {
     "m_leadingJetPtCut"         	: 450e3,
     "m_subleadingJetPtCut"      	: 50e3,
     "m_metCut"                  	: 0e3,
-    "m_jetMultiplicity"         	: 1,
+    "m_jetMultiplicity"         	: 2,
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
     "m_eventDetailStr"          	: "truth", #shapeEM

@@ -74,7 +74,7 @@ class SVJAlgorithm : public xAH::Algorithm
 
     std::string m_treeStream;
 
-    void passCut();
+    void passCut(std::string label);
 #ifndef __CINT__
     std::map< std::string, JetHists*> m_jetHists; //!
     std::map< std::string, MiniTree* > m_myTrees; //!

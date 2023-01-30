@@ -185,19 +185,26 @@ EL::StatusCode SVJAlgorithm :: initialize ()
     
     // This algorithm only applies selections after the trigger is applied.
     // Here find the first bin that need to be filled: TriggerEfficiency 
-    m_cutflowFirst = m_cutflowHist->GetXaxis()->FindBin("TriggerEfficiency");
-    m_cutflowHistW->GetXaxis()->FindBin("TriggerEfficiency");
+
+    // Not needed - trigger is already saved
+    m_cutflowFirst = m_cutflowHist->GetXaxis()->FindBin("Trigger");
+    m_cutflowFirst++;
+    //m_cutflowFirst = m_cutflowHist->GetXaxis()->FindBin("TriggerEfficiency");
+    //m_cutflowHistW->GetXaxis()->FindBin("TriggerEfficiency");
     
-    m_cutflowHist->GetXaxis()->FindBin("AddJetSelect");
-    m_cutflowHistW->GetXaxis()->FindBin("AddJetSelect");
+    //m_cutflowHist->GetXaxis()->FindBin("JetMultiplicity");
+    //m_cutflowHistW->GetXaxis()->FindBin("JetMultiplicity");
 
-    if(m_useMCPileupCheck && m_isMC){
-      m_cutflowHist->GetXaxis()->FindBin("mcCleaning");
-      m_cutflowHistW->GetXaxis()->FindBin("mcCleaning");
-    }
+    //m_cutflowHist->GetXaxis()->FindBin("AddJetSelect");
+    //m_cutflowHistW->GetXaxis()->FindBin("AddJetSelect");
 
-    m_cutflowHist->GetXaxis()->FindBin("y*");
-    m_cutflowHistW->GetXaxis()->FindBin("y*");
+    //if(m_useMCPileupCheck && m_isMC){
+    //  m_cutflowHist->GetXaxis()->FindBin("mcCleaning");
+    //  m_cutflowHistW->GetXaxis()->FindBin("mcCleaning");
+    //}
+
+    //m_cutflowHist->GetXaxis()->FindBin("y*");
+    //m_cutflowHistW->GetXaxis()->FindBin("y*");
   
   }
 
@@ -397,26 +404,29 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   /////////////////////////////////////////////////////
 
   //Trigger Efficiency
-  if(doCutflow) passCut();
+  // not needed  - trigger already saved
+  //if(doCutflow) passCut();
  
   //Apply leading jet pT selection and jet multiplicity selection
   if (signalJets->size() < m_jetMultiplicity) {
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
+  if(doCutflow) passCut("JetMultiplicity");
 
   if (m_jetMultiplicity >= 1) {
     if( signalJets->at(0)->pt() < m_leadingJetPtCut ) {
       wk()->skipEvent();  return EL::StatusCode::SUCCESS;
     }
   }
+  if(doCutflow) passCut("LeadingJetPt");
   
   if (m_jetMultiplicity >= 2) {
     if( signalJets->at(1)->pt() < m_subleadingJetPtCut ) {
       wk()->skipEvent();  return EL::StatusCode::SUCCESS;
     }
   }
-  
-  if(doCutflow) passCut(); 
+  if(doCutflow) passCut("SubleadingJetPt");
+  //if(doCutflow) passCut(); 
 
   // mcCleaning selection
   // for lower slices this cut prevents the leading jets from being pileup jets
@@ -425,13 +435,13 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     if( truthJets->size() == 0 || (pTAvg / truthJets->at(0)->pt() > 1.4) ){
       wk()->skipEvent();  return EL::StatusCode::SUCCESS;
     }
-    if(doCutflow) passCut(); 
+    if(doCutflow) passCut("mcCleaning"); 
   }
 
   // yStar Selection
   if( m_yStarCut > 0 && signalJets->size() > 1 ) {
     if(fabs(signalJets->at(0)->rapidity() - signalJets->at(1)->rapidity())/2.0 < m_yStarCut){
-      if(doCutflow) passCut(); 
+      if(doCutflow) passCut(""); 
     }else{
       wk()->skipEvent();  return EL::StatusCode::SUCCESS;
     }
@@ -441,7 +451,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   }
   //Turn the cut off by setting m_yStarCut to a negative value 0
   else if ( m_yStarCut <= 0){
-    if(doCutflow) passCut();
+    if(doCutflow) passCut("y*");
   }
   
   // MET Selection
@@ -451,7 +461,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
       wk()->skipEvent();  return EL::StatusCode::SUCCESS; 
     }
   }
-  if(doCutflow) passCut();
+  if(doCutflow) passCut("METSelection");
 
   ANA_MSG_DEBUG("Event # "<< m_eventCounter);
 
@@ -481,7 +491,9 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
 //Easy method for automatically filling cutflow and incrementing counter //
 ///////////////////////////////////////////////////////////////////////////
 
-void SVJAlgorithm::passCut() {
+void SVJAlgorithm::passCut(std::string label) {
+  m_cutflowHist->GetXaxis()->FindBin(label.c_str());
+  m_cutflowHistW->GetXaxis()->FindBin(label.c_str());
   m_cutflowHist->Fill(m_iCutflow, 1);
   m_cutflowHistW->Fill(m_iCutflow, m_mcEventWeight);
   m_iCutflow++;
