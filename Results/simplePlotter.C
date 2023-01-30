@@ -4,10 +4,10 @@
 #include <math.h>
 #include "PlotParams.h"
 
-//string dir_data = "../MicroNTupleMaker/MicroNTuples/v1.1";
-string dir_data = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v6/v6.1";
+string dir_data = "../MicroNTupleMaker/MicroNTuples";
+//string dir_data = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v6/v6.1";
 string outfile_path = "/eos/user/e/ebusch/SVJ/Plots";
-Color_t mycolors[12] = { kBlack, kGray+2, kBlue+1, kAzure+7, kGreen+3, kSpring, kRed+1, kOrange+7, kRed, kAzure+7, kOrange };
+Color_t mycolors[12] = { kBlack, kBlue+1, kAzure+7, kGreen+3, kSpring, kRed+1, kOrange+7, kRed, kAzure+7, kOrange };
 string cout_dict[30] = {"\n",",", ",", ",", "\n", ",,", ",", "\n", ",", ",", ",", "\n", ",", ",,", "\n", ",", ",", ",", "\n", ",,,", "\n,", ",,", "\n,", ",", ",", "\n"}; 
 
 vector<TH1D*> Get1DHists(vector<string> inputFiles, string branch, PlotParams myParams, string cut){
@@ -48,7 +48,7 @@ void Plot1DHists(vector<TH1D*> hists, vector<string> leg_names, string branch){
     if( hists[i]->Integral() == 0 ){cout << "No entries for " << leg_names[i] << " " << branch << "; skipping" << endl; continue;}
     //hists[i]->GetYaxis()->SetRangeUser(1e-10,1e4);
     hists[i]->SetLineColor(mycolors[i]);
-    if (i<2) hists[i]->SetFillColorAlpha(kBlack, 0.3*(2/(i+1)));
+    if (i<1) hists[i]->SetFillColorAlpha(kBlack, 0.3*(2/(i+1)));
     double nEvent = hists[i]->Integral(0,hists[i]->GetNbinsX()+1);
     double nEventScaled = nEvent*1.39e8;
     nEvents.push_back(nEventScaled);
@@ -111,43 +111,12 @@ void Plot1DHistsRatio(vector<TH1D*> hists, vector<string> leg_names, string bran
 
 void simplePlotter(){
 
-  vector<string> inputFiles = {"user.ebusch.totalbkg.root",
-				//"user.ebusch.QCDbkg.root", 
-				//"user.ebusch.Znunu.root",
-				"user.ebusch.515479.root",
-				"user.ebusch.515480.root",
-				"user.ebusch.515481.root",
-				"user.ebusch.515482.root",
-				"user.ebusch.515483.root",
-				"user.ebusch.515484.root",
-				"user.ebusch.515485.root",
-				"user.ebusch.515486.root",
-				"user.ebusch.515487.root",
-				"user.ebusch.515488.root",
-				"user.ebusch.515489.root",
-				"user.ebusch.515490.root",
-				"user.ebusch.515495.root",
-				"user.ebusch.515496.root",
-				"user.ebusch.515497.root",
-				"user.ebusch.515498.root",
-				"user.ebusch.515499.root",
-				"user.ebusch.515500.root",
-				"user.ebusch.515501.root",
-				"user.ebusch.515502.root",
-				"user.ebusch.515507.root",
-				"user.ebusch.515508.root",
-				"user.ebusch.515509.root",
-				"user.ebusch.515510.root",
-				"user.ebusch.515515.root",
-				"user.ebusch.515516.root",
-				"user.ebusch.515517.root",
-				"user.ebusch.515518.root",
-				"user.ebusch.515523.root",
-				"user.ebusch.515524.root",
-				"user.ebusch.515525.root",
-				"user.ebusch.515526.root"};
+  vector<string> inputFiles = { "user.ebusch.364707..root",
+				"user.ebusch.515507..root",
+				"user.ebusch.515510..root"
+			       };
 
-  vector<string> leg_names = {"QCD         ", "ZNuNu     ", "500   | 0.4", "500   | 0.8", "2000 | 0.2", "2000 | 0.6", "6000 | 0.4", "6000 | 0.8"};
+  vector<string> leg_names = {"QCD", "3000 0.2", "3000 0.8"};
 
   //vector<string> inputFiles = {"user.ebusch.QCDbkg.root", "user.ebusch.508547.root", "user.ebusch.508548.root", "user.ebusch.508549.root", "user.ebusch.508550.root"};
   //vector<string> leg_names = {"QCD", "1500/ 0.8", "1500/ 0.3", "750/ 0.8", "750/0.3"};
@@ -163,9 +132,10 @@ void simplePlotter(){
   
   string my_cut = "jet1_pt > -900";
   vector<TH1D*> jet1_pt;
-  jet1_pt = Get1DHists(inputFiles, "jet1_pt", P_jet1_pt, my_cut);
+  jet1_pt = Get1DHists(inputFiles, "dphi_MET_j1j2", P_dphi_MET_j1j2, my_cut);
   
-  string my_cut2 = "jet1_pt > 450";
+  /* Trigger study
+  string my_cut2 = "jet1_pt > 450"
   vector<TH1D*> jet2_pt;
   jet2_pt = Get1DHists(inputFiles, "jet1_pt", P_jet1_pt, my_cut2);
   string my_cut3 = "met_met > 200";
@@ -175,9 +145,9 @@ void simplePlotter(){
   //string my_cut = "fatjet1_pt > 450";
   //vector<TH1D*> jet1_pt;
   //jet1_pt = Get1DHists(inputFiles, "jet1_pt", P_jet1_pt, my_cut);
+  */
 
-
-  //Plot1DHists(jet1_pt, leg_names, "jet1_pt"); 
+  Plot1DHists(jet1_pt, leg_names, "dphi_MET_j1j2"); 
 
   //vector<TH1D*> met_met;
   //met_met = Get1DHists(inputFiles, "met_met", P_met_met, my_cut);

@@ -12,6 +12,14 @@ float MicroNTupleMaker::GetDPhi(float phi1, float phi2){
 }
 
 /* =================================================================== */
+float MicroNTupleMaker::GetDPhiMET(TLorentzVector v1, TLorentzVector v2, float met_phi){
+	TLorentzVector v12;
+	v12 = -v1-v2;
+	float dPhi = GetDPhi(v12.Phi(), met_phi);
+	return fabs(dPhi);
+}
+
+/* =================================================================== */
 vector<pair<int,float>> MicroNTupleMaker::FindSVJ( vector<float> *jet_phi ){
 
   	float maxphi = 0;
@@ -62,6 +70,18 @@ float MicroNTupleMaker::GetMt(TLorentzVector v1, TLorentzVector v2, float met_me
  	TLorentzVector jj = v1 + v2;
 	TLorentzVector met_v;
 	met_v.SetPtEtaPhiM(met_met,0,met_phi,0.0);
+ 	float dijetEt = sqrt(pow(jj.M(),2) + pow(jj.Pt(),2));
+	float mT2 = pow(dijetEt + met_v.Et(),2) - pow((jj+met_v).Pt(),2);	
+ 	return sqrt(mT2);
+}
+
+/* =================================================================== */
+float MicroNTupleMaker::GetMtNeg(TLorentzVector v1, TLorentzVector v2){
+ 	TLorentzVector jj = v1 + v2;
+	TLorentzVector met_v_temp;
+	TLorentzVector met_v;
+	met_v_temp.SetPtEtaPhiM(jj.Pt(),0,jj.Phi(),0.0);
+	met_v = -met_v_temp;
  	float dijetEt = sqrt(pow(jj.M(),2) + pow(jj.Pt(),2));
 	float mT2 = pow(dijetEt + met_v.Et(),2) - pow((jj+met_v).Pt(),2);	
  	return sqrt(mT2);

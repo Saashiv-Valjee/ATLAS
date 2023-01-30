@@ -79,6 +79,58 @@ void StampATLAS( const std::string & text = "Internal", float lumi=140., float x
 }
 
 // -------------------------------------------------------------------------------------
+TH1F* GetCDF( TH1F* h ){
+	// Cumulative Distribution Function. Returns the fraction of events to the right of
+	// the x-axis value
+	// TODO: @Elena -- you found an indexing bug here?
+
+	TH1F* h_cdf = (TH1F*)h->Clone();
+	h_cdf->Reset();
+	double integral = h->Integral();
+	int NBins = h->GetNbinsX()+1;
+	for( int i=1; i<=NBins; i++ ){
+		//integral += h->GetBinContent(i);
+		double integral_temp = h->Integral(i, NBins); //integral;
+		h_cdf->SetBinContent(i, integral_temp);
+	}
+	return h_cdf;
+}
+
+// -------------------------------------------------------------------------------------
+TH1F* GetReverseCDF( TH1F* h ){
+	// Reverse Cumulative Distribution Function. Returns the fraction of events to the 
+	// left of the x-axis value
+
+	TH1F* h_cdf = (TH1F*)h->Clone();
+	h_cdf->Reset();
+	double integral = h->Integral();
+	int NBins = h->GetNbinsX()+1;
+	for( int i=1; i<NBins; i++ ){
+		//integral += h->GetBinContent(i);
+		double integral_temp = h->Integral(1, i); //integral;
+		h_cdf->SetBinContent(i, integral_temp);
+	}
+	return h_cdf;
+}
+
+
+// -------------------------------------------------------------------------------------
+TH1F* GetSqrtTH1( TH1F* h ){
+
+	TH1F *h_sqrt = (TH1F*)h->Clone();
+	h_sqrt->Reset(); 
+	for (int bin=1; bin<h->GetNbinsX()+1; bin++){
+		double bin_content  	= h->GetBinContent(bin);
+		double sqrt_bin_content = sqrt( bin_content );
+		double error = 0.5*(sqrt_bin_content / bin_content)*h->GetBinError(bin);
+		h_sqrt->SetBinContent(bin, sqrt_bin_content);
+		h_sqrt->SetBinError(bin, error);
+	}
+	return h_sqrt;
+}
+
+
+// -------------------------------------------------------------------------------------
 string GetLegendNames( string filetag  ){
   cout <<"PlotFunctions::GetLegendNames()"<<endl;
   map<string, string> filetag_legend;

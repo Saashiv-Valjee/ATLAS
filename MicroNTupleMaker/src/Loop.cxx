@@ -43,7 +43,7 @@ void MicroNTupleMaker::Loop()
 		cutflow->Fill(0);
 	
 		// apply nSmallRJets >=2 (required for code to run) 	
-		if (njet < 1) continue;
+		if (njet < 2) continue;
 		//cutflow->Fill(1);      
 			
                 // check DSID
@@ -95,6 +95,11 @@ void MicroNTupleMaker::Loop()
 			//jet_asvj_mT = v_asvj.Mt();
                 	mT_jj = GetMt(v1,v2,metFinalClus, metFinalClusPhi);
 
+			// -j1_pT -j2_pT
+			met_jj_neg = jet_pt->at(0) + jet_pt->at(1);
+			mT_jj_neg = GetMtNeg(v1,v2);
+			dphi_MET_j1j2 = GetDPhiMET(v1,v2,metFinalClusPhi);
+
 			// distance between jets
 			dR_12 = GetdR(v1,v2);
 			deta_12 = GetDEta(v1.Eta(),v2.Eta());
@@ -115,6 +120,8 @@ void MicroNTupleMaker::Loop()
 			pt_balance_12 = -999;
 			mjj_12 = -999;
 			mT_jj = -999;
+			mT_jj_neg = -999;
+			met_jj_neg = -999;
 			dR_12 = -999;
 			deta_12 = -999;
 			deltaY_12 = -999;

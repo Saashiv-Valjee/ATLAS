@@ -55,6 +55,9 @@ public :
 	double legx1, legx2, legy1, legy2;
 	vector<string> legend_names;
 
+	// Significance formula
+	string significance_formula = "ssqrtb";
+
 	// -------------------------------------------------------------------------------------
 	MicroNTuplePlotter( vector<string> IN_filetags, string IN_infile_path ){
 		SetStyle();
@@ -520,6 +523,87 @@ public :
 		return hs; 
 	}
 
+        // -------------------------------------------------------------------------------------
+        THStack* GetStackSignificance( map<string,TH1F*> hists, PlotParams myPlotParams, string filetag_treename_divisor = "" ){
+                if( debug) cout<<"MicroNTuplePlotter::GetStackSignificance()"<<endl;
+
+                string label_y;
+                if( significance_formula == "ssqrtb" )
+                        label_y = Form("Signal CDF / sqrt(data CDF)");
+                else if( significance_formula == "Z" )
+                        label_y = Form("Significance Z");
+                else if( significance_formula == "Zprime" )
+                        label_y = Form("Significance Z'");
+                else if( significance_formula == "ssqrtb_sigeff" )
+                        label_y = Form("Eff_{S} * #frac{S}{#sqrt(data)}");
+                else{
+                        cout<<"ERROR: Invalid significance_formula."<<endl;
+                        THStack* hs_empty;
+                        return hs_empty;
+                }
+
+                THStack* hs = new THStack(Form( "hs_%s", myPlotParams.hist_name.c_str() ), Form(" ; %s; %s", myPlotParams.label_x.c_str(), label_y.c_str() ));
+
+                if( filetag_treename_divisor == "" ) filetag_treename_divisor = hist_tags[0];
+
+                TH1F *h_b_temp    = (TH1F*)hists[filetag_treename_divisor]->Clone();
+                TH1F *h_cdf_b     = (TH1F*) GetCDF( h_b_temp );
+                TH1F *h_cdf_sqrtb = (TH1F*) GetSqrtTH1( h_cdf_b );
+	
+		legend_names.clear();
+
+                int i = -1;
+                for( auto hist_tag: hist_tags ){
+                        i++;
+
+                        if( hist_tag == filetag_treename_divisor ) continue;
+
+                        TH1F *h_s_temp    = (TH1F*) hists[hist_tag]->Clone();
+                        TH1F *h_cdf_s     = (TH1F*) GetCDF( h_s_temp );
+                        TH1F *h_cdf_sqrts = (TH1F*) GetSqrtTH1( h_cdf_s );
+                        TH1F *h_cdf_seff  = (TH1F*) h_cdf_s->Clone();
+                        h_cdf_seff->Scale( 1./h_cdf_seff->GetBinContent(1) );
+
+                        // S/Sqrt(b) (default)
+                        TH1F *h_ssqrtb = (TH1F*)h_cdf_s->Clone();
+                        h_ssqrtb->Divide( h_cdf_sqrtb );
+
+                        TH1F* h;
+                        if( significance_formula == "ssqrtb"){
+                                h = (TH1F*) h_ssqrtb->Clone();
+                        }/* else if( significance_formula == "Z"){ // Significance
+                                TH1F *h_Z = (TH1F*) GetSignificanceZ( h_cdf_s, h_cdf_b);
+                                h = (TH1F*) h_Z->Clone();
+                        } else if( significance_formula == "Zprime"){ // Devin's Formula
+                                TH1F *h_Zprime = (TH1F*) DevinsFormulaZprime( h_cdf_s, h_cdf_b);
+                                h = (TH1F*) h_Zprime->Clone();
+                        } else if ( significance_formula == "ssqrtb_sigeff" ){ // sig_eff * S/Sqrt(b)
+                                TH1F *h_sigeff_ssqrtb = (TH1F*)h_ssqrtb->Clone();
+                                h_sigeff_ssqrtb->Multiply( h_cdf_seff );
+                                h = (TH1F*) h_sigeff_ssqrtb->Clone();
+                        }*/ else {
+				cout << "ERROR: significance formula not implemented" << endl;
+			}
+
+                        SetHistDrawStyle( h, hist_tag, i );
+
+                        double max_x = h->GetXaxis()->GetBinCenter( h->GetMaximumBin() );
+                        double max_y = h->GetMaximum();
+			string max_vals =  Form("%.1e , %.1f ", max_y, max_x );
+                        h->SetName( Form("%s", max_vals.c_str() ));
+			legend_names.push_back(Form("%s", max_vals.c_str()));
+			
+
+                        if( plot_log_ratio ) h->SetMaximum( h->GetMaximum()*10. );
+                        else               h->SetMaximum( h->GetMaximum()*1.25 );
+
+                        hs->Add( h );
+                }
+
+                return hs;
+
+        }
+
 	// -------------------------------------------------------------------------------------
 	void Plot( string plot_type = "", string filetag_treename_divisor = "" ){
 		if( debug) cout<<"MicroNTuplePlotter::Plot()"<<endl;		
@@ -565,12 +649,23 @@ public :
 				if( plot_log )		p1->SetLogy(); 
 				if( plot_log_x )	p1->SetLogx(); 
 
-				p2->cd();
-				THStack* hsr = GetStackRatio( hists, PlotParams_temp, false, filetag_treename_divisor );
- 				hsr->Draw(draw_option);
+				THStack* hsr;
+				if (plot_type == "ratio"){
+					p2->cd();
+					hsr = GetStackRatio( hists, PlotParams_temp, false, filetag_treename_divisor );
+ 					hsr->Draw(draw_option);
+				} else if (plot_type == "sig" || plot_type == "ssqrtb" ){
+					p2->cd();
+					hsr = GetStackSignificance( hists, PlotParams_temp, filetag_treename_divisor );
+					hsr->Draw("nostack");
+				} else {
+					cout << "ERROR: unrecognized plot type " << plot_type << "; Exiting..." << endl;
+					return;
+				}
+					
 				hsr->GetYaxis()->SetLabelSize(0.12);
 				hsr->GetYaxis()->SetTitleSize(0.08);
-				hsr->GetYaxis()->SetTitleOffset(0.3);
+				hsr->GetYaxis()->SetTitleOffset(0.6);
 				hsr->GetXaxis()->SetLabelSize(0.12);
 				hsr->GetXaxis()->SetTitleSize(0.0);
 
@@ -578,30 +673,38 @@ public :
 				if( plot_log_x ) p2->SetLogx(); 
 
 				p1->cd();
+		
 			}
 
 			if( manual_legend )
 				gPad->BuildLegend(legx1,legx2,legy1,legy2,"");
-			else
+			else if ( plot_type == "sig" || plot_type == "ssqrtb"){
+				gPad->BuildLegend(0.55,0.65,0.78,0.9,"");
+				TPaveText *t = new TPaveText(.72,.65,.9,.9, "NDC");
+				t->AddText("Significance, Max Cut");
+				for (auto sig_val: legend_names){
+					cout << sig_val << endl;
+					t->AddText(Form("%s", sig_val.c_str()));
+				}
+				t->Draw("same");
+			}else
 				gPad->BuildLegend(0.55,0.65,0.9,0.9,"");
 	
 			StampATLAS( "Internal", 140., 0.14, 0.84, 0.045 );
 			//if (stamp_cuts) StampCuts( 0.1, 0.91, 0.015 );			
 
-			/*if( plot_type == "ratio" ){
-				myCanvas->cd(2);
-				if( plot_log_ratio ) gPad->SetLogy(); 	
-				if( plot_log_x ) gPad->SetLogx(); 
-
-				THStack* hs_ratio = GetStackRatio( hists, PlotParams_temp, false, filetag_treename_divisor );	
-
-				hs_ratio->SetMinimum(0);
-				hs_ratio->SetMaximum(2);
-				hs_ratio->Draw(draw_option);
-				myCanvas->cd(1);
+			myCanvas->cd(1);
+			/*if (plot_type == "sig" || plot_type == "ssqrtb"){
+				TPaveText *t = new TPaveText(.75,.65,.9,.9, "NDC");
+				for (auto sig_val: legend_names){
+					cout << sig_val << endl;
+					t->AddText(Form("A %s", sig_val.c_str()));
+				}
+				t->Draw("same");
+				myCanvas->Modified();
+				myCanvas->Update();
 			}*/
 
-			myCanvas->cd(1);
 			//if( plot_log )		gPad->SetLogy(); 
 			//if( plot_log_x )		gPad->SetLogx(); 
 
