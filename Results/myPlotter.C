@@ -7,7 +7,7 @@ void myPlotter(){
 	//string path = "../MicroNTupleMaker/MicroNTuples/user.ebusch.";
 	
 	//vector<string> filetags = {"QCDbkg", "WpJets", "ZpJets", "ttbarr", "singlt", "dibson", "508547","508548","508549","508550" };
-	vector<string> filetags = {"v6smallQCD", "515487", "515490", "515499", "515502", "515523", "515526"};
+	vector<string> filetags = {"v6smallQCD", /*"515487", "515490",*/ "515499", "515502", /*"515523", "515526"*/};
 	//vector<string> filetags = {"QCDtest.mc20e", "515479.mc20e", "515482.mc20e", "515499.mc20e", "515502.mc20e", "515523.mc20e", "515526.mc20e"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
 	vector<string> filetags_background = {"364702", "364703", "364704", "364705", "364706", "364707", "364708", "364709", "364710", "364711", "364712", "QCDbkg"};
@@ -26,16 +26,18 @@ void myPlotter(){
         plotter.plot_log = true;
         plotter.plot_log_ratio = true;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="sig";
+        plotter.output_file_tag ="deltaY_withsig";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
         plotter.violin = false;
 	plotter.stamp_integral = false;
-        plotter.solid_bkg = true;
+        plotter.solid_bkg = false;
 	plotter.use_better_legend_names=true;
+	plotter.reverse_cdf_plots = {"fabs(jet1_eta)", "fabs(jet2_eta)", "dphi_min", "deltaY_12"};
+	plotter.use_normalized_cdf = false;
 	//plotter.SetLegendManual( 0.5, 0.5, 0.9, 0.9 );
-	plotter.colors = {kBlack, /*kGray+2,*/ kBlue+1, kAzure+7, kGreen+3, kSpring, kRed+1, kOrange-3, kPink+10, kPink+1, kYellow, kYellow-3  }; //2 background
+	plotter.colors = {kBlack, kGray+2, kBlue+1, kAzure+7, kGreen+3, kSpring, kRed+1, kOrange-3, kPink+10, kPink+1, kYellow, kYellow-3  }; //2 background
         //plotter.colors = {kBlack, kBlue+1, kRed+1, kBlue+1, kAzure+10, kViolet-3, kRed+2, kOrange+10, kRed-7, kOrange+1};
         //plotter.colors = { kRed, kOrange-3, kYellow+1, kSpring-1, kAzure, kBlue+2, kViolet}; //rainbow
         //plotter.colors = { kRed, kRed+2, kOrange-3, kYellow+1, kSpring, kGreen+3, kCyan+1, kAzure, kBlue+2, kViolet, kMagenta-9, kBlack}; //10 gradient + black
@@ -46,7 +48,7 @@ void myPlotter(){
 
         //***************** Plot Cut options *******************// 
         plotter.SetCuts(cuts["njet"]);
-       	//plotter.SetComparisonCuts({"met_met<30", "met_met >30 && met_met < 50", "met_met > 50"});	
+       	plotter.SetComparisonCuts({"deltaY_12 < 5.0", "deltaY_12 < 3.0"});	
         //plotter.ApplySelectiveCuts("508548", "dPhi_min < 2.0");
 
         //***************** Binning and Legend *******************//  
@@ -66,12 +68,12 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_m, P_jet2_m, P_jet_svj_m, P_jet_asvj_m}, OP_jet_m );
 	//plotter.PlotOverlay("");
 
-	//plotter.SetPlots ( {P_mT_jj} );
+	plotter.SetPlots ( {P_mT_jj} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_pt} );
-	plotter.SetPlots( {P_met_met, P_jet2_pt, P_dphi_min, P_deltaY_12, P_rT, P_pt_balance_12});
+	//plotter.SetPlots( {P_fabs_jet1_eta, P_fabs_jet2_eta, P_deltaY_12, P_dphi_min, P_jet2_pt });
 	//plotter.SetPlots ( {P_jet1_D2, P_jet2_D2, P_jet1_Split12, P_jet2_Split12, P_jet1_Split23, P_jet2_Split23} );
-	plotter.Plot("sig");
+	plotter.Plot("ratio");
 
         //***************** 2D Plot *******************// 	
 	//plotter.Plot2D(P_mT_jj, P_met_met);

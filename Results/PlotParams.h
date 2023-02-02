@@ -22,10 +22,12 @@ PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 7
 PlotParams P_jet1_eta			= {"jet1_eta", "Leading R=0.4 Jet Eta", "#eta", 50, -5.0, 5.0};
 PlotParams P_jet1_phi			= {"jet1_phi", "Leading R=0.4 Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet1_E			= {"jet1_E", "Leading R=0.4 Jet E", "Energy [GeV]", 50, 0, 3000};
-PlotParams P_jet2_pt			= {"jet2_pt", "Subleading R=0.4 Jet p_{T}", "p_{T} [GeV]", 100, 0, 2000};
+PlotParams P_jet2_pt			= {"jet2_pt", "Subleading R=0.4 Jet p_{T}", "p_{T} [GeV]", 100, 0, 400};
 PlotParams P_jet2_eta			= {"jet2_eta", "Subleading R=0.4 Jet Eta", "#eta", 50, -5.0, 5.0};
 PlotParams P_jet2_phi			= {"jet2_phi", "Subleading R=0.4 Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet2_E			= {"jet2_E", "Subleading R=0.4 Jet E", "Energy [GeV]", 50, 0, 300};
+PlotParams P_fabs_jet1_eta		= {"fabs(jet1_eta)", "Leading R=0.4 Jet |Eta|", "|#eta|", 50, 0, 3.0};
+PlotParams P_fabs_jet2_eta		= {"fabs(jet2_eta)", "Subleading R=0.4 Jet |Eta|", "|#eta|", 50, 0, 3.0};
 
 PlotParams P_fatjet1_pt			= {"fatjet1_pt", "Leading R=1.0 Jet p_{T}", "p_{T} [GeV]", 70, 0, 3500};
 PlotParams P_fatjet1_eta		= {"fatjet1_eta", "Leading R=1.0 Jet Eta", "#eta", 50, -5.0, 5.0};

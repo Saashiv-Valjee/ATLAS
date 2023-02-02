@@ -4,8 +4,8 @@
 #include <math.h>
 #include "PlotParams.h"
 
-string dir_data = "../MicroNTupleMaker/MicroNTuples";
-//string dir_data = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v6/v6.1";
+//string dir_data = "../MicroNTupleMaker/MicroNTuples";
+string dir_data = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v6/v6.2";
 string outfile_path = "/eos/user/e/ebusch/SVJ/Plots";
 Color_t mycolors[12] = { kBlack, kBlue+1, kAzure+7, kGreen+3, kSpring, kRed+1, kOrange+7, kRed, kAzure+7, kOrange };
 string cout_dict[30] = {"\n",",", ",", ",", "\n", ",,", ",", "\n", ",", ",", ",", "\n", ",", ",,", "\n", ",", ",", ",", "\n", ",,,", "\n,", ",,", "\n,", ",", ",", "\n"}; 
@@ -22,9 +22,9 @@ vector<TH1D*> Get1DHists(vector<string> inputFiles, string branch, PlotParams my
     tree0->Draw(Form("%s >> h", branch.c_str()), Form("weight*(%s)", cut.c_str()));
     //cout << inputFile << endl;
     //cout << "entries: " << h->GetEntries() << ", integral: " << h->Integral(0,myParams.nbins+1) << endl;
-    cout << h->Integral(0,myParams.nbins+1);
-    if (i%4==0) cout << endl;
-    else cout << ",";
+    cout << h->Integral(0,myParams.nbins+1) << endl;;
+    //if (i%4==0) cout << endl;
+    //else cout << ",";
     i++;
     hists.push_back(h);
   }
@@ -111,9 +111,13 @@ void Plot1DHistsRatio(vector<TH1D*> hists, vector<string> leg_names, string bran
 
 void simplePlotter(){
 
-  vector<string> inputFiles = { "user.ebusch.364707..root",
-				"user.ebusch.515507..root",
-				"user.ebusch.515510..root"
+  vector<string> inputFiles = { "user.ebusch.v6smallQCD.root",
+				"user.ebusch.515487.root",
+				"user.ebusch.515490.root",
+				"user.ebusch.515499.root",
+				"user.ebusch.515502.root",
+				"user.ebusch.515523.root",
+				"user.ebusch.515526.root"
 			       };
 
   vector<string> leg_names = {"QCD", "3000 0.2", "3000 0.8"};
@@ -130,9 +134,9 @@ void simplePlotter(){
   Plot1DHistsRatio(pt_balance, leg_names, "pt_balance",0); 
   */
   
-  string my_cut = "jet1_pt > -900";
+  string my_cut = "n_jets >= 2 && fabs(jet1_eta) < 2.0 && fabs(jet2_eta) < 2.0";
   vector<TH1D*> jet1_pt;
-  jet1_pt = Get1DHists(inputFiles, "dphi_MET_j1j2", P_dphi_MET_j1j2, my_cut);
+  jet1_pt = Get1DHists(inputFiles, "deltaY_12", P_deltaY_12, my_cut);
   
   /* Trigger study
   string my_cut2 = "jet1_pt > 450"
@@ -147,7 +151,7 @@ void simplePlotter(){
   //jet1_pt = Get1DHists(inputFiles, "jet1_pt", P_jet1_pt, my_cut);
   */
 
-  Plot1DHists(jet1_pt, leg_names, "dphi_MET_j1j2"); 
+  //Plot1DHists(jet1_pt, leg_names, "dphi_MET_j1j2"); 
 
   //vector<TH1D*> met_met;
   //met_met = Get1DHists(inputFiles, "met_met", P_met_met, my_cut);

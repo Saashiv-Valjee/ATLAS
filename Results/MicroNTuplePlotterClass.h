@@ -29,13 +29,14 @@ public :
 	TCut cuts_all;
 	vector<TCut> cuts_compare = {""};
 	map<string,TCut> selective_cuts;
+	bool alternate_divisors = false;
 
 	// Plot Options
 	vector<Color_t> colors    = { kBlack, kMagenta-7, kRed, kOrange, kGreen+2, kAzure+7, kBlue+2 };
-	vector<Style_t> linestyle = { kSolid, kSolid, kSolid,  kSolid, kSolid, kSolid, kSolid };
+	vector<Style_t> linestyle = { kSolid, kSolid, kSolid,  kSolid, kSolid, kSolid, kSolid, kSolid, kSolid };
 	Width_t linewidth = 4;
-	vector<Style_t> markerstyle = { 1, 1, 1, 1, 1, 1, 1 }; // Empty (Default)
-	vector<Size_t> markersize = { 1, 1, 1, 1, 1, 1, 1 }; // Empty (Default)
+	vector<Style_t> markerstyle = { 1, 1, 1, 1, 1, 1, 1, 1 }; // Empty (Default)
+	vector<Size_t> markersize = { 1, 1, 1, 1, 1, 1, 1, 1 }; // Empty (Default)
 
 	bool plot_log  = false; 
 	bool plot_log_x = false; 
@@ -57,6 +58,8 @@ public :
 
 	// Significance formula
 	string significance_formula = "ssqrtb";
+	vector<string> reverse_cdf_plots = {""};
+	bool use_normalized_cdf = false;
 
 	// -------------------------------------------------------------------------------------
 	MicroNTuplePlotter( vector<string> IN_filetags, string IN_infile_path ){
@@ -153,7 +156,7 @@ public :
 				filetags_treenames.push_back( GetFiletagTreename( filetags[i], treenames[i]) );
 			}
 		}
-		cout << "len trees = " << filetags_treenames.size() << endl;
+		cout << "# of trees = " << filetags_treenames.size() << endl;
 		//if( !trees_ok ) cout<<"ERROR: Input files or trees do not exist. Check input file paths & parameters.."<<endl;
 	}
 
@@ -296,6 +299,10 @@ public :
 		TH1F *h_temp;
 
 		TString hist_name_full = Form("%s__%s", hist_name.c_str(), filetag_treename.c_str());
+		if (hist_name_full.Contains("(")){
+			hist_name_full.Replace(hist_name_full.First("("), 1, "");
+			hist_name_full.Replace(hist_name_full.First(")"), 1, "");
+		}
 		while (gDirectory->FindObject(hist_name_full)) {
 			cout << hist_name_full << " exists" << endl; 
 			hist_name_full.Append("x");
@@ -315,7 +322,10 @@ public :
 		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if (debug) cout << "cut_total = " << cut_total << endl;
 
+		cout << "hist_name: " << hist_name << endl;
+		cout << "hist_name_full: " << hist_name_full << endl;
 		trees[filetag_treename]->Draw( Form( "%s >> "+hist_name_full, hist_name.c_str() ), cut_total , "");
+		cout << "hist_n_entries: " << h_temp->GetEntries() << endl;
 		//if( use_weight ){
                 //        if( debug ) cout<<Form( "%s - %f*(weight/weight) >> "+hist_name_full, hist_name.c_str(), shift )<<endl;
                 //        trees[filetag_treename]->Draw( Form( "%s - %f*(weight/weight) >> "+hist_name_full, hist_name.c_str(), shift ), cut_total , "");
@@ -385,17 +395,16 @@ public :
 				h = (TH1F*)GetHist1D( myPlotParams, filetag_treename, cut_compare);
 				string hist_tag;
 				if (multiple_trees){
-					cout <<"multiple trees"<<endl;
 					hist_tag = Form( "%s", filetag_treename.c_str() );
 				}else{
 					string filetag_only = GetFiletag(filetag_treename);
- 					if (cuts_compare.size() > 1){hist_tag = cut_compare; cout <<"1"<<endl;}
-					else if (use_better_legend_names){hist_tag = GetLegendNames(filetag_only); cout <<"2"<<endl;}
-					else {hist_tag = Form( "%s", filetag_only.c_str()); cout<<"3"<<endl;}
+ 					if (cuts_compare.size() > 1){hist_tag = Form("%s ; "+cut_compare, filetag_only.c_str());}
+					else if (use_better_legend_names){hist_tag = GetLegendNames(filetag_only);}
+					else {hist_tag = Form( "%s", filetag_only.c_str());}
    				}
 				hist_tags.push_back( hist_tag );
-				cout <<"filetag_treename: " <<filetag_treename<<endl;
-				cout <<"hist_tag: "<< hist_tag<<endl;
+				if(debug) cout <<"filetag_treename: " <<filetag_treename<<endl;
+				if(debug) cout <<"hist_tag: "<< hist_tag<<endl;
 				hists[hist_tag] = h;
 				i++;
 			}
@@ -438,7 +447,6 @@ public :
 		int i = -1;
 		for( auto hist_tag: hist_tags ){
 			i++;
-			cout << "stacking " << i << " hist: "<< hist_tag << ".." << endl;
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
 		
 			string legend_name = hist_tag;
@@ -468,7 +476,6 @@ public :
 				h->SetName( Form("%s", legend_names.at(i).c_str() ) );
 			else 
 				h->SetName( Form("%s", legend_name.c_str()) );	// GetBetterCutTitle
-			cout << "legend name:" << legend_name << endl;
 			hs->Add( h );	
 		}
 
@@ -476,7 +483,7 @@ public :
 	}	
 
 	// -------------------------------------------------------------------------------------
-	THStack* GetStackRatio( map<string,TH1F*> hists, PlotParams myPlotParams, bool alternate_divisors, string filetag_treename_divisor = "" ){
+	THStack* GetStackRatio( map<string,TH1F*> hists, PlotParams myPlotParams, string filetag_treename_divisor = "" ){
 		if( debug) cout<<"MicroNTuplePlotter::GetStackRatio()"<<endl;		
 
 		if( filetag_treename_divisor == "" ) 
@@ -528,8 +535,10 @@ public :
                 if( debug) cout<<"MicroNTuplePlotter::GetStackSignificance()"<<endl;
 
                 string label_y;
-                if( significance_formula == "ssqrtb" )
-                        label_y = Form("Signal CDF / sqrt(data CDF)");
+                if( significance_formula == "ssqrtb" && ! use_normalized_cdf )
+                        label_y = Form("Signal CDF / #sqrt{bkg CDF}");
+		else if ( significance_formula == "ssqrtb" &&  use_normalized_cdf )
+                        label_y = Form("Norm Sig CDF / #sqrt{bkg CDF}");	
                 else if( significance_formula == "Z" )
                         label_y = Form("Significance Z");
                 else if( significance_formula == "Zprime" )
@@ -546,10 +555,13 @@ public :
 
                 if( filetag_treename_divisor == "" ) filetag_treename_divisor = hist_tags[0];
 
-                TH1F *h_b_temp    = (TH1F*)hists[filetag_treename_divisor]->Clone();
-                TH1F *h_cdf_b     = (TH1F*) GetCDF( h_b_temp );
-                TH1F *h_cdf_sqrtb = (TH1F*) GetSqrtTH1( h_cdf_b );
-	
+                TH1F *h_b_temp      = (TH1F*)hists[filetag_treename_divisor]->Clone();
+		if( use_normalized_cdf )
+			h_b_temp->Scale(1./h_b_temp->Integral());	
+                TH1F *h_cdf_b       = (TH1F*) GetCDF( h_b_temp );
+                TH1F *h_cdf_b_r     = (TH1F*) GetReverseCDF( h_b_temp );
+                TH1F *h_cdf_sqrtb   = (TH1F*) GetSqrtTH1( h_cdf_b );
+                TH1F *h_cdf_sqrtb_r = (TH1F*) GetSqrtTH1( h_cdf_b_r );
 		legend_names.clear();
 
                 int i = -1;
@@ -557,17 +569,27 @@ public :
                         i++;
 
                         if( hist_tag == filetag_treename_divisor ) continue;
+			bool use_reverse_cdf = find(reverse_cdf_plots.begin(),reverse_cdf_plots.end(), myPlotParams.hist_name) != reverse_cdf_plots.end();
 
                         TH1F *h_s_temp    = (TH1F*) hists[hist_tag]->Clone();
-                        TH1F *h_cdf_s     = (TH1F*) GetCDF( h_s_temp );
+			if( use_normalized_cdf )
+				h_s_temp->Scale(1./h_s_temp->Integral());	
+                        TH1F *h_cdf_s;
+			if (use_reverse_cdf)
+			    h_cdf_s = (TH1F*) GetReverseCDF( h_s_temp );	
+			else
+			    h_cdf_s = (TH1F*) GetCDF( h_s_temp );
                         TH1F *h_cdf_sqrts = (TH1F*) GetSqrtTH1( h_cdf_s );
                         TH1F *h_cdf_seff  = (TH1F*) h_cdf_s->Clone();
                         h_cdf_seff->Scale( 1./h_cdf_seff->GetBinContent(1) );
 
                         // S/Sqrt(b) (default)
                         TH1F *h_ssqrtb = (TH1F*)h_cdf_s->Clone();
-                        h_ssqrtb->Divide( h_cdf_sqrtb );
-
+			if (use_reverse_cdf)
+                        	h_ssqrtb->Divide( h_cdf_sqrtb_r );
+			else
+                        	h_ssqrtb->Divide( h_cdf_sqrtb );	
+		
                         TH1F* h;
                         if( significance_formula == "ssqrtb"){
                                 h = (TH1F*) h_ssqrtb->Clone();
@@ -617,7 +639,6 @@ public :
 
 		for( auto PlotParams_temp: PlotParamsList ){
 			map<string,TH1F*> hists = GetHists( PlotParams_temp );
-			cout << hist_tags.size() <<endl;
 
 			TCanvas *myCanvas;
 			TPad *p1;
@@ -652,7 +673,7 @@ public :
 				THStack* hsr;
 				if (plot_type == "ratio"){
 					p2->cd();
-					hsr = GetStackRatio( hists, PlotParams_temp, false, filetag_treename_divisor );
+					hsr = GetStackRatio( hists, PlotParams_temp, filetag_treename_divisor );
  					hsr->Draw(draw_option);
 				} else if (plot_type == "sig" || plot_type == "ssqrtb" ){
 					p2->cd();
@@ -681,9 +702,13 @@ public :
 			else if ( plot_type == "sig" || plot_type == "ssqrtb"){
 				gPad->BuildLegend(0.55,0.65,0.78,0.9,"");
 				TPaveText *t = new TPaveText(.72,.65,.9,.9, "NDC");
-				t->AddText("Significance, Max Cut");
+				bool use_reverse_cdf = find(reverse_cdf_plots.begin(),reverse_cdf_plots.end(), PlotParams_temp.hist_name) != reverse_cdf_plots.end();
+				if (use_reverse_cdf)
+					t->AddText("Significance, Max Cut");
+				else
+					t->AddText("Significance, Min Cut");
+
 				for (auto sig_val: legend_names){
-					cout << sig_val << endl;
 					t->AddText(Form("%s", sig_val.c_str()));
 				}
 				t->Draw("same");
@@ -708,7 +733,6 @@ public :
 			//if( plot_log )		gPad->SetLogy(); 
 			//if( plot_log_x )		gPad->SetLogx(); 
 
-			cout << "saving" << endl;
 			TString output_file_name = GetOutputFileName(PlotParams_temp, plot_type);
 			myCanvas->SaveAs( outfile_path+"/"+output_file_name+".png", "png" );
 			delete myCanvas;
