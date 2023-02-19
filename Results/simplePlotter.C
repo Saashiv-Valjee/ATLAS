@@ -22,7 +22,7 @@ vector<TH1D*> Get1DHists(vector<string> inputFiles, string branch, PlotParams my
     tree0->Draw(Form("%s >> h", branch.c_str()), Form("weight*(%s)", cut.c_str()));
     //cout << inputFile << endl;
     //cout << "entries: " << h->GetEntries() << ", integral: " << h->Integral(0,myParams.nbins+1) << endl;
-    cout << h->Integral(0,myParams.nbins+1) << endl;;
+    cout << h->Integral(0,myParams.nbins+1) << endl;
     //if (i%4==0) cout << endl;
     //else cout << ",";
     i++;
@@ -111,7 +111,7 @@ void Plot1DHistsRatio(vector<TH1D*> hists, vector<string> leg_names, string bran
 
 void simplePlotter(){
 
-  vector<string> inputFiles = { "user.ebusch.v6smallQCD.root",
+/*  vector<string> inputFiles = { "user.ebusch.v6smallQCD.root",
 				"user.ebusch.515487.root",
 				"user.ebusch.515490.root",
 				"user.ebusch.515499.root",
@@ -119,6 +119,61 @@ void simplePlotter(){
 				"user.ebusch.515523.root",
 				"user.ebusch.515526.root"
 			       };
+*/
+    vector<string> inputFiles = {"user.ebusch.v6smallQCD.root",
+				"user.ebusch.509962.root",
+				"user.ebusch.509963.root",
+				"user.ebusch.509964.root",
+				"user.ebusch.509965.root",
+				"user.ebusch.509966.root",
+				"user.ebusch.509967.root",
+				"user.ebusch.509968.root",
+				"user.ebusch.509969.root",
+				"user.ebusch.509971.root",
+				"user.ebusch.515479.root",
+				"user.ebusch.515480.root",
+				"user.ebusch.515481.root",
+				"user.ebusch.515482.root",
+				"user.ebusch.515483.root",
+				"user.ebusch.515484.root",
+				"user.ebusch.515485.root",
+				"user.ebusch.515486.root",
+				"user.ebusch.515487.root",
+				"user.ebusch.515489.root",
+				"user.ebusch.515490.root",
+				"user.ebusch.515491.root",
+				"user.ebusch.515492.root",
+				"user.ebusch.515493.root",
+				"user.ebusch.515494.root",
+				"user.ebusch.515495.root",
+				"user.ebusch.515496.root",
+				"user.ebusch.515497.root",
+				"user.ebusch.515498.root",
+				"user.ebusch.515499.root",
+				"user.ebusch.515500.root",
+				"user.ebusch.515501.root",
+				"user.ebusch.515502.root",
+				"user.ebusch.515503.root",
+				"user.ebusch.515504.root",
+				"user.ebusch.515505.root",
+				"user.ebusch.515506.root",
+				"user.ebusch.515507.root",
+				"user.ebusch.515508.root",
+				"user.ebusch.515509.root",
+				"user.ebusch.515510.root",
+				"user.ebusch.515512.root",
+				"user.ebusch.515513.root",
+				"user.ebusch.515515.root",
+				"user.ebusch.515516.root",
+				"user.ebusch.515518.root",
+				"user.ebusch.515519.root",
+				"user.ebusch.515521.root",
+				"user.ebusch.515523.root",
+				"user.ebusch.515524.root",
+				"user.ebusch.515525.root",
+				"user.ebusch.515526.root"
+				};
+
 
   vector<string> leg_names = {"QCD", "3000 0.2", "3000 0.8"};
 
@@ -134,7 +189,7 @@ void simplePlotter(){
   Plot1DHistsRatio(pt_balance, leg_names, "pt_balance",0); 
   */
   
-  string my_cut = "n_jets >= 2 && fabs(jet1_eta) < 2.0 && fabs(jet2_eta) < 2.0";
+  string my_cut = "n_jets >= 2";
   vector<TH1D*> jet1_pt;
   jet1_pt = Get1DHists(inputFiles, "deltaY_12", P_deltaY_12, my_cut);
   

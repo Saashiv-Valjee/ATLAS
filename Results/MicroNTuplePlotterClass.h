@@ -713,7 +713,7 @@ public :
 				}
 				t->Draw("same");
 			}else
-				gPad->BuildLegend(0.55,0.65,0.9,0.9,"");
+				gPad->BuildLegend(0.70,0.65,0.9,0.9,"");
 	
 			StampATLAS( "Internal", 140., 0.14, 0.84, 0.045 );
 			//if (stamp_cuts) StampCuts( 0.1, 0.91, 0.015 );			

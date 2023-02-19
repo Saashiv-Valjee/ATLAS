@@ -63,11 +63,14 @@ PlotParams P_pt_balance_12	 	= {"pt_balance_12", "p_{T} balance leading-subleadi
 PlotParams P_pt_balance_sa		= {"pt_balance_sa", "p_{T} balance svj-antisvj", "pt balance", 50, 0, 1};
 PlotParams P_dphi_max			= {"dphi_max", "#Delta#phi (furthest jet, MET)", "#Delta#phi", 50, 0, 3.14};
 PlotParams P_dphi_min			= {"dphi_min", "#Delta#phi (closest jet, MET)", "#Delta#phi", 50, 0, 3.14};
+PlotParams P_dphi_min_MET		= {"dphi_min_MET", "#Delta#phi (closest jet, MET) / MET", "#Delta#phi/MET", 50, 0, 0.5};
 PlotParams P_dphi_MET_j1j2		= {"dphi_MET_j1j2", "#Delta#phi (MET, -j1-j2)", "#Delta#phi", 50, 0, 3.14};
 PlotParams P_deltaY_12			= {"deltaY_12", "#Delta Y (leading jet, subleading jet)", "#Delta Y", 50, 0, 5};
 PlotParams P_mjj_12			= {"mjj_12", "Invariant Mass R=0.4 Jets (Leading, Subleading)", "m_{jj} [GeV]", 100, 0, 3000};
 PlotParams P_mJJ_12			= {"mJJ_12", "Invariant Mass R=1.0 Jets (Leading, Subleading)", "m_{JJ} [GeV]", 100, 0, 3000};
-PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 20, 500, 3000};
+PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 80, 500, 6000};
+PlotParams P_mT_jj_neg			= {"mT_jj_neg", "mT(j1,j2,-(j1+j2))", "mT Neg [GeV]", 80, 500, 6000};
+PlotParams P_met_jj_neg 		= {"met_jj_neg", "-j1-j2", "MET Approx [GeV]", 50, 0, 1000};
 PlotParams P_mT_JJ			= {"mT_JJ", "mT System (R=1.0)", "mT [GeV]", 150, 0, 10000};
 PlotParams P_deta_12			= {"deta_12", "#Delta#eta (leading, subleading jet)", "#Delta#eta", 50, 0, 10};
 PlotParams P_dR_12			= {"dR_12", "#Delta R (leading, subleading jet)", "#Delta R", 50, 0, 10};
@@ -84,4 +87,6 @@ PlotParams OP_jet_pt			= {"jet_pt", "Jet Pt", "p_{T} [GeV]", 50, 0, 1000};
 PlotParams OP_jet_eta			= {"jet_eta", "Jet Eta", "#eta", 50, -2.5, 2.5};
 PlotParams OP_jet_phi			= {"jet_phi", "Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams OP_jet_m			= {"jet_m", "Jet M", "M [GeV]", 50, 0, 1000};
+PlotParams OP_met_neg			= {"met_neg", "MET and Neg MET", "MET [GeV]", 50, 0, 1000};
+PlotParams OP_mT_neg			= {"mT_neg", "mT and Neg mT", "mT [GeV]", 50, 500, 3000};
 

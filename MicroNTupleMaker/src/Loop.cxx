@@ -44,8 +44,12 @@ void MicroNTupleMaker::Loop()
 	
 		// apply nSmallRJets >=2 (required for code to run) 	
 		if (njet < 2) continue;
-		//cutflow->Fill(1);      
-			
+		cutflow->Fill(1);      
+		
+		//jet1_eta preselection
+		if (fabs(jet_eta->at(0)) > 2.0) continue;
+		cutflow->Fill(2);      
+	
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
  
@@ -76,6 +80,16 @@ void MicroNTupleMaker::Loop()
 			v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
 			//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));
 			//v_asvj.SetPtEtaPhiE(jet_pt->at(n_asvj), jet_eta->at(n_asvj), jet_phi->at(n_asvj), jet_E->at(n_asvj));
+
+			// y* preselection
+			deltaY_12 = GetDeltaY(v1,v2);
+			if (deltaY_12 > 2.8) continue;
+			cutflow->Fill(3);      
+
+			// distance between jets
+			dR_12 = GetdR(v1,v2);
+			deta_12 = GetDEta(v1.Eta(),v2.Eta());
+			//deltaY_sa = GetDeltaY(v_svj,v_asvj);
 			
 			// svj variablei
 			maxphi_minphi = dphi_max - dphi_min;
@@ -100,11 +114,6 @@ void MicroNTupleMaker::Loop()
 			mT_jj_neg = GetMtNeg(v1,v2);
 			dphi_MET_j1j2 = GetDPhiMET(v1,v2,metFinalClusPhi);
 
-			// distance between jets
-			dR_12 = GetdR(v1,v2);
-			deta_12 = GetDEta(v1.Eta(),v2.Eta());
-			deltaY_12 = GetDeltaY(v1,v2);
-			//deltaY_sa = GetDeltaY(v_svj,v_asvj);
 		
 			// rT
 			rT = metFinalClus / mT_jj;
