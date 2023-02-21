@@ -47,7 +47,7 @@ void MicroNTupleMaker::Loop()
 		cutflow->Fill(1);      
 		
 		//jet1_eta preselection
-		if (fabs(jet_eta->at(0)) > 2.0) continue;
+		if (fabs(jet_eta->at(0)) > 2.1) continue;
 		cutflow->Fill(2);      
 	
                 // check DSID
