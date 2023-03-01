@@ -34,14 +34,14 @@ c.algorithm("BasicEventSelection",    {
   #-------------------------- Derivation -------------------------------#
   "m_derivationName"            : "PHYS",
   # -------------------------- Trigger ----------------------------------#
-   "m_triggerSelection"          : "HLT_j380* | HLT_xe*", #"HLT_j380*, HLT_xe*", 
+   "m_triggerSelection"          : "HLT_j380*", #"HLT_j380*, HLT_xe*", 
    "m_storePassHLT"              : True,
    "m_storeTrigDecisions"        : True,
    "m_storePassL1"               : True,
    "m_storeTrigKeys"             : False,
    "m_applyTriggerCut"           : True,
   # ---------------------------- Cuts ----------------------------------#
-  "m_checkDuplicatesData"       : False,
+  "m_checkDuplicatesData"       : True,
   "m_applyGRLCut"               : True,
   "m_applyEventCleaningCut"     : True,
   "m_applyCoreFlagsCut"	        : True,
@@ -70,10 +70,10 @@ c.algorithm("JetCalibrator",     {
   "m_systName"                  : 'Nominal',
   "m_systVal"                   : 0,
   #----------------------- Calibration ----------------------------#
-  "m_calibConfigAFII"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
-  "m_calibConfigFullSim"        : "JES_MC16Recommendation_Consolidated_PFlow_Apr2019_Rel21.config",# recommendation as of May 11 2020
-  "m_calibConfigData"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
-  "m_calibSequence"             : "JetArea_Residual_EtaJES_GSC_Smear",                                    # recommendation as of May 11 2020
+  #"m_calibConfigAFII"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
+  "m_calibConfigFullSim"        : "PreRec_R22_PFlow_ResPU_EtaJES_GSC_February23_230215.config",   # recommendation as of Feb 15 2023
+  "m_calibConfigData"           : "PreRec_R22_PFlow_ResPU_EtaJES_GSC_February23_230215.config",   # recommendation as of Feb 15 2023
+  "m_calibSequence"             : "JetArea_Residual_EtaJES_GSC",                                  # recommendation as of Feb 15 2023
   "m_forceInsitu"               : False, # For data
   "m_forceSmear"                : False, # For MC
   #----------------------- JES/JER Uncertainty ----------------------------#
@@ -323,6 +323,7 @@ c.algorithm("SVJAlgorithm",    		 {
     "m_reclusterJets"           	: False,
     "m_eventDetailStr"          	: "truth", #shapeEM
     "m_jetDetailStr"            	: "kinematic trackAll",
+    #"m_allTrackDetailStr"		: "kinematic",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
     "m_metDetailStr"            	: "metClus",
     "m_jetDetailStrSyst"        	: "kinematic truth",

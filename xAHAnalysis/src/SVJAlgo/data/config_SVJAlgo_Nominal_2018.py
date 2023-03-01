@@ -67,10 +67,10 @@ c.algorithm("JetCalibrator",     {
   "m_systName"                  : 'Nominal',
   "m_systVal"                   : 0,
   #----------------------- Calibration ----------------------------#
-  "m_calibConfigAFII"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
-  "m_calibConfigFullSim"        : "JES_MC16Recommendation_Consolidated_PFlow_Apr2019_Rel21.config",# recommendation as of May 11 2020
-  "m_calibConfigData"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
-  "m_calibSequence"             : "JetArea_Residual_EtaJES_GSC",                                    # recommendation as of May 11 2020
+  #"m_calibConfigAFII"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
+  "m_calibConfigFullSim"        : "PreRec_R22_PFlow_ResPU_EtaJES_GSC_February23_230215.config",   # recommendation as of Feb 15 2023
+  "m_calibConfigData"           : "PreRec_R22_PFlow_ResPU_EtaJES_GSC_February23_230215.config",   # recommendation as of Feb 15 2023
+  "m_calibSequence"             : "JetArea_Residual_EtaJES_GSC_Insitu",                                    # recommendation as of Feb 15 2023
   "m_forceInsitu"               : False, # For data
   "m_forceSmear"                : False, # For MC
   #----------------------- JES/JER Uncertainty ----------------------------#

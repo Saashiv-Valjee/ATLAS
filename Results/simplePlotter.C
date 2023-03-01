@@ -189,7 +189,7 @@ void simplePlotter(){
   Plot1DHistsRatio(pt_balance, leg_names, "pt_balance",0); 
   */
   
-  string my_cut = "n_jets >= 2";
+  string my_cut = "n_jets >= 2 && fabs(jet1_eta) < 2.1 && fabs(jet2_eta) < 2.1 && deltaY_12 < 2.8";
   vector<TH1D*> jet1_pt;
   jet1_pt = Get1DHists(inputFiles, "deltaY_12", P_deltaY_12, my_cut);
   
