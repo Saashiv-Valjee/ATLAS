@@ -407,26 +407,36 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   // not needed  - trigger already saved
   //if(doCutflow) passCut();
  
-  //Apply leading jet pT selection and jet multiplicity selection
+  // Jet multiplicity
   if (signalJets->size() < m_jetMultiplicity) {
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
   if(doCutflow) passCut("JetMultiplicity");
 
+  // Leading jet pT and eta
   if (m_jetMultiplicity >= 1) {
     if( signalJets->at(0)->pt() < m_leadingJetPtCut ) {
       wk()->skipEvent();  return EL::StatusCode::SUCCESS;
     }
+    if(doCutflow) passCut("LeadingJetPt");
+
+    if( signalJets->at(0)->eta() >= m_leadingJetEtaCut ) {
+      wk()->skipEvent();  return EL::StatusCode::SUCCESS;
+    }
+    if(doCutflow) passCut("LeadingJetEta");
   }
-  if(doCutflow) passCut("LeadingJetPt");
   
+  // Subleading jet pT and eta
   if (m_jetMultiplicity >= 2) {
     if( signalJets->at(1)->pt() < m_subleadingJetPtCut ) {
       wk()->skipEvent();  return EL::StatusCode::SUCCESS;
     }
+    if(doCutflow) passCut("SubleadingJetPt");
+    if( signalJets->at(1)->eta() >= m_subleadingJetEtaCut ) {
+      wk()->skipEvent();  return EL::StatusCode::SUCCESS;
+    }
+    if(doCutflow) passCut("SubleadingJetEta");
   }
-  if(doCutflow) passCut("SubleadingJetPt");
-  //if(doCutflow) passCut(); 
 
   // mcCleaning selection
   // for lower slices this cut prevents the leading jets from being pileup jets

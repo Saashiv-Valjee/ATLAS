@@ -48,6 +48,8 @@ class SVJAlgorithm : public xAH::Algorithm
     bool m_useMCPileupCheck;          // determined by name of MCPileupCheckContainer
     float m_leadingJetPtCut;          // Leading jet Pt cut
     float m_subleadingJetPtCut;          // Leading jet Pt cut
+    float m_leadingJetEtaCut;          // Leading jet Pt cut
+    float m_subleadingJetEtaCut;          // Leading jet Pt cut
     uint m_jetMultiplicity;          // Leading jet Pt cut
     float m_yStarCut;                 // yStar Cut
     bool m_truthLevelOnly;            // truthLevelOnly info

@@ -317,6 +317,8 @@ c.algorithm("SVJAlgorithm",    		 {
     #----------------------- Selections ----------------------------#
     "m_leadingJetPtCut"         	: 450e3,
     "m_subleadingJetPtCut"      	: 50e3,
+    "m_leadingJetEtaCut"         	: 2.1,
+    "m_subleadingJetEtaCut"      	: 2.1,
     "m_metCut"                  	: 0e3,
     "m_jetMultiplicity"         	: 2,
     #----------------------- Output ----------------------------#
