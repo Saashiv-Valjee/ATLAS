@@ -11,8 +11,8 @@ void MicroNTupleMaker::DeclareHistograms(){
   // SR temp additions
   cutflow->GetXaxis()->SetBinLabel(6,"d#eta(j1,j2) < 1.5");
   cutflow->GetXaxis()->SetBinLabel(7,"rT > 0.15");
-  cutflow->GetXaxis()->SetBinLabel(8,"mT > 1.5 TeV");
-  //cutflow->GetXaxis()->SetBinLabel(9,"d#phi_{min}(j_{1,2},MET) < 0.8");
+  //cutflow->GetXaxis()->SetBinLabel(8,"mT > 1.5 TeV");
+  cutflow->GetXaxis()->SetBinLabel(8,"d#phi_{min}(j_{1,2},MET) < 0.8");
 }
 
 /* =============================================================================================== */

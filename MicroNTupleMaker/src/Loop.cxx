@@ -123,11 +123,11 @@ void MicroNTupleMaker::Loop()
 		if ( rT <= 0.15) continue;
 		cutflow->Fill(6);
 		// apply mT > 1.5 TeV
-		if ( mT_jj <= 1500) continue;
-		cutflow->Fill(7);
+		//if ( mT_jj <= 1500) continue;
+		//cutflow->Fill(7);
 		// apply dphi < 0.8
-		//if ( dphi_min >= 0.8) continue;
-		//cutflow->Fill(8);
+		if ( dphi_min >= 0.8) continue;
+		cutflow->Fill(7);
 		
 		/*if ( rT > 0.25){
 			mT_jj_highRT = mT_jj;
