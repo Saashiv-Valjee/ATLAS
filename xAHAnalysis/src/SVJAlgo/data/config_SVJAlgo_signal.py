@@ -21,7 +21,6 @@ c = Config()
 #%%%%%%%%%%%%%%%%%%%%%%%%%% BasicEventSelection %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("BasicEventSelection",    { 
   "m_name"                      : "BasicEventSelect",
-  "m_applyGRLCut"               : False, 
   #-------------------------- GRL --------------------------------------#
   "m_GRLxml"                    : 'GoodRunsLists/data18_13TeV/20190708/data18_13TeV.periodAllYear_DetStatus-v105-pro22-13_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml,GoodRunsLists/data17_13TeV/20180619/physics_25ns_Triggerno17e33prim.xml,GoodRunsLists/data15_13TeV/20170619/physics_25ns_21.0.19.xml,GoodRunsLists/data16_13TeV/20180129/physics_25ns_21.0.19.xml',
   #-------------------------- PRW --------------------------------------#
@@ -91,40 +90,6 @@ c.algorithm("JetCalibrator",     {
 
 })
 
-# large-r jet
-if opt.doFatJet: 
-  c.algorithm("JetCalibrator",     {
-    "m_name"                      : "FatJetCalibrate",
-    #----------------------- Container Flow ----------------------------#
-    "m_inContainerName"           : "AntiKt10LCTopoTrimmedPtFrac5SmallR20Jets",
-    "m_jetAlgo"                   : "AntiKt10LCTopoTrimmedPtFrac5SmallR20",
-    "m_outContainerName"          : "FatJets_Calibrate",
-    "m_outputAlgo"                : "FatJetCalibrator_Syst",
-    "m_sort"                      : True,
-    #"m_redoJVT"                   : False,
-    #----------------------- Systematics ----------------------------#
-    "m_systName"                  : "Nominal",
-    "m_systVal"                   : 0,
-    #----------------------- Calibration ----------------------------#
-    "m_calibConfigFullSim"        : "JES_MC16recommendation_FatJet_Trimmed_JMS_comb_17Oct2018.config",
-    "m_calibConfigData"           : "JES_MC16recommendation_FatJet_Trimmed_JMS_comb_March2021.config",
-    "m_calibSequence"             : "EtaJES_JMS", 
-    "m_forceInsitu"               : False, # For data
-    "m_forceSmear"                : False, # For MC
-    #----------------------- JES/JER Uncertainty ----------------------------#
-    "m_uncertConfig"              : "rel21/Winter2021/R10_CategoryJES_FullJER_FullJMS.config",  # recommendation as of May 11 2020
-    "m_uncertMCType"              : "MC16",
-    #----------------------- Cleaning ----------------------------#
-    # Turn it off for the moment, need to add it back
-    "m_doCleaning"                : False,
-    "m_jetCleanCutLevel"          : "LooseBad",
-    "m_jetCleanUgly"              : False,
-    "m_saveAllCleanDecisions"     : False,
-    "m_cleanParent"               : False,
-    #----------------------- Other ----------------------------#
-    "m_msgLevel"                  : "Info",
-  
-  })
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% JetSelector %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("JetSelector",     {
@@ -158,27 +123,6 @@ c.algorithm("JetSelector",     {
   "m_msgLevel"                  : "Info",
 })
 
-# large-r jet
-if opt.doFatJet: 
-  c.algorithm("JetSelector", 	{
-    "m_name"                      : "FatJetSelect",
-    #----------------------- Container Flow ----------------------------#
-    "m_inContainerName"           : "FatJets_Calibrate",
-    "m_outContainerName"          : "FatJets_Selected",
-    "m_inputAlgo"                 : "FatJetCalibrator_Syst",
-    "m_outputAlgo"                : "FatJetSelector_Syst",
-    "m_decorateSelectedObjects"   : True,
-    "m_createSelectedContainer"   : True,
-    #----------------------- Selections ----------------------------#
-    "m_cleanJets"                 : False,
-    "m_pass_min"                  : 0,
-    "m_pT_min"                    : 200e3,
-    "m_pT_max"                    : 3000e3,
-    "m_mass_min"		  : 40e3,
-    "m_mass_max"		  : 600e3,
-    "m_eta_max"                   : 2.0,
-    "m_msgLevel"                  : "Info",
-  })
 
 #%%%%%%%%%%%%%%%%%%%%%%%%% Muon Calibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("MuonCalibrator",	 {
@@ -324,14 +268,14 @@ c.algorithm("SVJAlgorithm",    		 {
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
     "m_eventDetailStr"          	: "truth", #shapeEM
-    "m_jetDetailStr"            	: "kinematic trackAll",
+    "m_jetDetailStr"            	: "kinematic trackAll constituentAll truth",
     #"m_allTrackDetailStr"		: "kinematic",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
     "m_metDetailStr"            	: "metClus",
     "m_jetDetailStrSyst"        	: "kinematic truth",
     "m_trigDetailStr"           	: "basic passTriggers",
     #"m_truthParticlesBranchName"	: "truthParicles",
-    "m_truthParticlesDetailStr"		: "type dressed origin children parents",
+    "m_truthParticlesDetailStr"		: "origin children parents",
     #----------------------- Other ----------------------------#
     "m_writeTree"               : True,
     #"m_MCPileupCheckContainer"  : "AntiKt4TruthJets",

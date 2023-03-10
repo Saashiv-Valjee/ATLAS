@@ -147,6 +147,10 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
         //tree_output_vars["mJJ_12"] = mJJ_12;
         tree_output_vars["mT_jj"] = mT_jj;
         tree_output_vars["mT_jj_neg"] = mT_jj_neg;
+        tree_output_vars["mT_jj_SR1"] = mT_jj;
+        tree_output_vars["mT_jj_neg_SR1"] = mT_jj_neg;
+        tree_output_vars["mT_jj_SR2"] = mT_jj;
+        tree_output_vars["mT_jj_neg_SR2"] = mT_jj_neg;
         tree_output_vars["met_jj_neg"] = met_jj_neg;
         //tree_output_vars["mT_JJ"] = mT_JJ;
 	tree_output_vars["dR_12"] = dR_12;

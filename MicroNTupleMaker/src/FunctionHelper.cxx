@@ -29,7 +29,8 @@ vector<pair<int,float>> MicroNTupleMaker::FindSVJ( vector<float> *jet_phi ){
         vector<pair<int,float>> jet_info;
         pair<int,float> svj_info;
         pair<int,float> asvj_info; 
-	for (int i =0; i<jet_phi->size(); i++) {
+	//for (int i =0; i<jet_phi->size(); i++) {
+	for (int i =0; i<2; i++) {
     		float dPhi = GetDPhi(jet_phi->at(i),metFinalClusPhi);
     		if (fabs(dPhi) > maxphi){maxphi = fabs(dPhi); n_asvj = i;}
     		if (fabs(dPhi) < minphi){minphi = fabs(dPhi); n_svj = i;}
