@@ -9,8 +9,9 @@ void MicroNTupleMaker::SetWeight(double sumWInput){
 	sumw = sumWInput;
 	double gfe = GetGenFilterEff(dsid);
 	double xs = GetXSection(dsid);
+        double lumi = 1.39e8 //(lumi in nb)
 
-	weight_scale = xs*gfe/sumw;
+	weight_scale = lumi*xs*gfe/sumw;
 }
 
 /* ====================================================================================================================== */

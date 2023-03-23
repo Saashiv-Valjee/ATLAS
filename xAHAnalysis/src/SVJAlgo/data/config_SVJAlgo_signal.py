@@ -43,6 +43,7 @@ c.algorithm("BasicEventSelection",    {
   "m_checkDuplicatesData"       : True,
   "m_applyGRLCut"               : True,
   "m_applyEventCleaningCut"     : True,
+  "m_applyJetCleaningEventFlag" : True,
   "m_applyCoreFlagsCut"	        : True,
   "m_vertexContainerName"       : "PrimaryVertices",
   "m_applyPrimaryVertexCut"     : True,
@@ -102,11 +103,11 @@ c.algorithm("JetSelector",     {
   "m_decorateSelectedObjects"   : True,
   "m_createSelectedContainer"   : True,
   #----------------------- Selections ----------------------------#
-  "m_cleanJets"                 : False,
+  "m_cleanJets"                 : True,
   "m_pass_min"                  : 2,
   "m_pT_min"                    : 20e3,
   "m_eta_max"                   : 4.5,
-  "m_useCutFlow"		: False,
+  "m_useCutFlow"		: True,
   #----------------------- JVT ----------------------------#
   "m_doJVT"                     : False, # JVT is a pileup cut
   "m_pt_max_JVT"                : 60e3,
@@ -263,12 +264,13 @@ c.algorithm("SVJAlgorithm",    		 {
     "m_subleadingJetPtCut"      	: 50e3,
     "m_leadingJetEtaCut"         	: 2.1,
     "m_subleadingJetEtaCut"      	: 2.1,
-    "m_metCut"                  	: 0e3,
+    "m_metCut"                  	: -1,
     "m_jetMultiplicity"         	: 2,
+    "m_yStarCut"			: 1.4,
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
     "m_eventDetailStr"          	: "truth", #shapeEM
-    "m_jetDetailStr"            	: "kinematic trackAll constituentAll truth",
+    "m_jetDetailStr"            	: "kinematic trackPV flavorTag truth energy",
     #"m_allTrackDetailStr"		: "kinematic",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
     "m_metDetailStr"            	: "metClus",
@@ -279,6 +281,7 @@ c.algorithm("SVJAlgorithm",    		 {
     #----------------------- Other ----------------------------#
     "m_writeTree"               : True,
     #"m_MCPileupCheckContainer"  : "AntiKt4TruthJets",
+    "m_useMCPileupCheck"	: True,
     "m_MCPileupCheckContainer"  : "None",
 #    "m_truthLevelOnly"          : False , #Protection when running on truth xAOD.
     "m_msgLevel"                : "Info",

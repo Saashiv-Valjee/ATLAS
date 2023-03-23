@@ -414,29 +414,21 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   if(doCutflow) passCut("JetMultiplicity");
 
   // Leading jet pT and eta
-  if (m_jetMultiplicity >= 1) {
-    if( signalJets->at(0)->pt() < m_leadingJetPtCut ) {
-      wk()->skipEvent();  return EL::StatusCode::SUCCESS;
-    }
-    if(doCutflow) passCut("LeadingJetPt");
+  if( signalJets->at(0)->pt() < m_leadingJetPtCut ) {
+    wk()->skipEvent();  return EL::StatusCode::SUCCESS;
+  }
+  if(doCutflow) passCut("LeadingJetPt");
 
-    if( signalJets->at(0)->eta() >= m_leadingJetEtaCut ) {
-      wk()->skipEvent();  return EL::StatusCode::SUCCESS;
-    }
-    if(doCutflow) passCut("LeadingJetEta");
+  if( signalJets->at(0)->eta() >= m_leadingJetEtaCut ) {
+    wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
+  if(doCutflow) passCut("LeadingJetEta");
   
-  // Subleading jet pT and eta
-  if (m_jetMultiplicity >= 2) {
-    if( signalJets->at(1)->pt() < m_subleadingJetPtCut ) {
-      wk()->skipEvent();  return EL::StatusCode::SUCCESS;
-    }
-    if(doCutflow) passCut("SubleadingJetPt");
-    if( signalJets->at(1)->eta() >= m_subleadingJetEtaCut ) {
-      wk()->skipEvent();  return EL::StatusCode::SUCCESS;
-    }
-    if(doCutflow) passCut("SubleadingJetEta");
+  // Subleading jet eta
+  if( signalJets->at(1)->eta() >= m_subleadingJetEtaCut ) {
+    wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
+  if(doCutflow) passCut("SubleadingJetEta");
 
   // mcCleaning selection
   // for lower slices this cut prevents the leading jets from being pileup jets
@@ -450,18 +442,10 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
 
   // yStar Selection
   if( m_yStarCut > 0 && signalJets->size() > 1 ) {
-    if(fabs(signalJets->at(0)->rapidity() - signalJets->at(1)->rapidity())/2.0 < m_yStarCut){
-      if(doCutflow) passCut(""); 
-    }else{
+    if(fabs(signalJets->at(0)->rapidity() - signalJets->at(1)->rapidity())/2.0 >= m_yStarCut){
       wk()->skipEvent();  return EL::StatusCode::SUCCESS;
-    }
-  }
-  else if( m_yStarCut > 0){
-    wk()->skipEvent();  return EL::StatusCode::SUCCESS;
-  }
-  //Turn the cut off by setting m_yStarCut to a negative value 0
-  else if ( m_yStarCut <= 0){
-    if(doCutflow) passCut("y*");
+    } 
+    if(doCutflow) passCut("y*"); 
   }
   
   // MET Selection
@@ -470,8 +454,8 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     if(final_clus->sumet() < m_metCut) {
       wk()->skipEvent();  return EL::StatusCode::SUCCESS; 
     }
+    if(doCutflow) passCut("METSelection");
   }
-  if(doCutflow) passCut("METSelection");
 
   ANA_MSG_DEBUG("Event # "<< m_eventCounter);
 
