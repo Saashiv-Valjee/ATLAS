@@ -6,24 +6,22 @@ extra=""
 parentsubmitdir="/afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/xAHAnalysis/run/"
 
 ## Signal
-infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.515499.MGPy8EG_SVJSChan2j_2000_2.deriv.DAOD_PHYS.e8461_s3995_r13167_p5440/DAOD_PHYS.31295849._000001.pool.root.1"
-configFile=../src/SVJAlgo/data/config_SVJAlgo_signal.py
+#infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.515499.MGPy8EG_SVJSChan2j_2000_2.deriv.DAOD_PHYS.e8461_s3995_r13167_p5440/DAOD_PHYS.31295849._000001.pool.root.1"
+#configFile=../src/SVJAlgo/data/config_SVJAlgo_signal.py
 
 ## Emerging jets
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc21_13p6TeV.801925.Py8EG_Zprime2EJs_Ld1p6_rho3p2_pi0p8_Zp600_l1.deriv.DAOD_PHYS.e8453_s3873_r13829_p5440/DAOD_PHYS.31233085._000001.pool.root.1"
 #configFile=../src/SVJAlgo/data/config_SVJAlgo_signal.py
 ## Multijet
-#infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.364706.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ6WithSW.deriv.DAOD_PHYS.e7142_s3681_r13145_p5440/DAOD_PHYS.31204957._000013.pool.root.1"
-#configFile=../src/SVJAlgo/data/config_SVJAlgo_bkg.py
+infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.364706.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ6WithSW.deriv.DAOD_PHYS.e7142_s3681_r13145_p5440/DAOD_PHYS.31204957._000013.pool.root.1"
+configFile=../src/SVJAlgo/data/config_SVJAlgo_bkg.py
 
 ## Data
-#infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/data/data17_13TeV.00324320.physics_Main.deriv.DAOD_PHYS.r13286_p4910_p5440/DAOD_PHYS.31140221._000023.pool.root.1"
+#infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/data18_13TeV.00348618.physics_Main.deriv.DAOD_PHYS.r13286_p4910_p5440/DAOD_PHYS.31130202._000295.pool.root.1"
 #configFile=../src/SVJAlgo/data/config_SVJAlgo_Nominal_2018.py
 
-
-
 nevents=1000
-submitdir=SIG_to_TTREE_${nevents}
+submitdir=QCD_to_TTREE_${nevents}
 
 
 echo "xAH_run.py --files ${infile} --nevents $nevents --config $configFile --extraOptions="" --submitDir ${parentsubmitdir}/$submitdir --log-level $loglevel $extra --force direct "

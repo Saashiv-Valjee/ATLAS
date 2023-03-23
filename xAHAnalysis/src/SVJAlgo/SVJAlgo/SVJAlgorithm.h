@@ -36,6 +36,8 @@ class SVJAlgorithm : public xAH::Algorithm
     std::string m_inJetContainerName;      // input Jet container name
     std::string m_inFatJetContainerName;   // input Fat Jet container name
     std::string m_inTruthParticlesContainerName;   // input Truth Particles container name
+    std::string m_inEleContainerName;   // input Electron container name
+    std::string m_inMuContainerName;    // input Muon container name
     std::string m_inMetContainerName;   // input MET container name
     std::string m_inputAlgo;          // input algo for when running systs
     std::string m_inputFatAlgo;       // input algo for when running systs
@@ -45,6 +47,7 @@ class SVJAlgorithm : public xAH::Algorithm
     bool m_useCutFlow;                // true will write out cutflow histograms
     bool m_writeTree;                 // true will write out a TTree
     std::string m_MCPileupCheckContainer; // Name of truth container for MC Pileup Check
+    bool m_doLepVeto;                 //Apply lepton veto or not
     bool m_useMCPileupCheck;          // determined by name of MCPileupCheckContainer
     float m_leadingJetPtCut;          // Leading jet Pt cut
     float m_subleadingJetPtCut;          // Leading jet Pt cut
@@ -68,8 +71,6 @@ class SVJAlgorithm : public xAH::Algorithm
 
     TH1D* m_cutflowHist;    //!
     TH1D* m_cutflowHistW;   //!
-    int m_cutflowFirst;     //!
-    int m_iCutflow;         //!
     float m_mcEventWeight;  //!
 
     std::stringstream m_ss; //!
@@ -108,6 +109,8 @@ public:
       const xAOD::JetContainer* signalJets,
       const xAOD::JetContainer* fatJets,
       const xAOD::JetContainer* truthJets,
+      const xAOD::ElectronContainer* electrons,
+      const xAOD::MuonContainer* muons,
       const xAOD::VertexContainer* vertices,
       const xAOD::MissingETContainer* met,
       const xAOD::TruthParticleContainer* truthParticles,

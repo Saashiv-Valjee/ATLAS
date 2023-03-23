@@ -5,6 +5,8 @@
 
 #include "xAODTracking/VertexContainer.h"
 #include "xAODJet/JetContainer.h"
+#include "xAODEgamma/ElectronContainer.h"
+#include "xAODMuon/MuonContainer.h"
 #include "xAODEventInfo/EventInfo.h"
 #include "xAODMissingET/MissingETContainer.h"
 #include "xAODTruth/TruthParticleContainer.h"
@@ -43,6 +45,8 @@ SVJAlgorithm :: SVJAlgorithm () :
   ANA_MSG_INFO("SVJAlgorithm() : Calling constructor");
 
   m_inJetContainerName       = "";
+  m_inEleContainerName       = "";
+  m_inMuContainerName        = "";
   m_inFatJetContainerName    = "";
   m_inMetContainerName       = "";
   m_inTruthParticlesContainerName       = "";
@@ -57,6 +61,7 @@ SVJAlgorithm :: SVJAlgorithm () :
   m_metCut                   = -1;
   m_jetMultiplicity          = 2;
   m_yStarCut                 = -1; 
+  m_doLepVeto                = false;
   m_reclusterJets            = false;
   m_truthLevelOnly           = false;
   m_eventDetailStr           = "truth pileup";
@@ -176,36 +181,12 @@ EL::StatusCode SVJAlgorithm :: initialize ()
     m_isMC = ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) ) ? true : false;
   }
 
-
   if(m_useCutFlow) {
 
     TFile *file = wk()->getOutputFile ("cutflow");
     m_cutflowHist  = (TH1D*)file->Get("cutflow");
     m_cutflowHistW = (TH1D*)file->Get("cutflow_weighted");
-    
-    // This algorithm only applies selections after the trigger is applied.
-    // Here find the first bin that need to be filled: TriggerEfficiency 
-
-    // Not needed - trigger is already saved
-    m_cutflowFirst = m_cutflowHist->GetXaxis()->FindBin("Trigger");
-    m_cutflowFirst++;
-    //m_cutflowFirst = m_cutflowHist->GetXaxis()->FindBin("TriggerEfficiency");
-    //m_cutflowHistW->GetXaxis()->FindBin("TriggerEfficiency");
-    
-    //m_cutflowHist->GetXaxis()->FindBin("JetMultiplicity");
-    //m_cutflowHistW->GetXaxis()->FindBin("JetMultiplicity");
-
-    //m_cutflowHist->GetXaxis()->FindBin("AddJetSelect");
-    //m_cutflowHistW->GetXaxis()->FindBin("AddJetSelect");
-
-    //if(m_useMCPileupCheck && m_isMC){
-    //  m_cutflowHist->GetXaxis()->FindBin("mcCleaning");
-    //  m_cutflowHistW->GetXaxis()->FindBin("mcCleaning");
-    //}
-
-    //m_cutflowHist->GetXaxis()->FindBin("y*");
-    //m_cutflowHistW->GetXaxis()->FindBin("y*");
-  
+      
   }
 
   ANA_MSG_INFO("initialize() : Succesfully initialized! \n");
@@ -270,8 +251,6 @@ EL::StatusCode SVJAlgorithm :: execute ()
   ANA_MSG_DEBUG("execute(): Applying selection");
   ++m_eventCounter;
 
-  m_iCutflow = m_cutflowFirst;
-
   /////////////////////////////////////////////////////////////////////
   //                      Retrieve containers                        //
   /////////////////////////////////////////////////////////////////////
@@ -315,7 +294,8 @@ EL::StatusCode SVJAlgorithm :: execute ()
   const xAOD::JetContainer* signalJets = 0;
   const xAOD::MissingETContainer* met = 0;
   const xAOD::JetContainer* fatJets = 0;
-
+  const xAOD::ElectronContainer* electrons = 0;
+  const xAOD::MuonContainer* muons = 0;
   // If input comes from xAOD, or just running one collection,
   // then get the one collection and be done with it
   if( m_inputAlgo == "" || m_truthLevelOnly ) {
@@ -323,8 +303,13 @@ EL::StatusCode SVJAlgorithm :: execute ()
     if(!m_truthLevelOnly && m_inMetContainerName != "") { 
       ANA_CHECK (HelperFunctions::retrieve(met, m_inMetContainerName, m_event, m_store)); 
     }
+    if(m_doLepVeto){
+      ANA_CHECK (HelperFunctions::retrieve(electrons, m_inEleContainerName, m_event, m_store));
+      ANA_CHECK (HelperFunctions::retrieve(muons, m_inMuContainerName, m_event, m_store));
+    }
+ 
     // executeAnalysis
-    pass = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, vertices, met, truthParticles, doCutflow, "" );
+    pass = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, electrons, muons, vertices, met, truthParticles, doCutflow, "" );
 
   }
   else { 
@@ -355,11 +340,16 @@ EL::StatusCode SVJAlgorithm :: execute ()
       ANA_CHECK (HelperFunctions::retrieve(signalJets, inContainerName, m_event, m_store));
       if (m_inFatJetContainerName != "") ANA_CHECK (HelperFunctions::retrieve(fatJets, inFatContainerName, m_event, m_store));
       if (m_inMetContainerName != "") ANA_CHECK (HelperFunctions::retrieve(met, m_inMetContainerName, m_event, m_store)); 
+  
+      if(m_doLepVeto){
+	ANA_CHECK (HelperFunctions::retrieve(electrons, m_inEleContainerName, m_event, m_store));
+	ANA_CHECK (HelperFunctions::retrieve(muons, m_inMuContainerName, m_event, m_store));
+      }
       
       // allign with Dijet naming conventions
       if( systName.empty() ) { doCutflow = m_useCutFlow; } // only doCutflow for nominal
       else { doCutflow = false; }
-      passOne = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, vertices, met, truthParticles, doCutflow, systName );
+      passOne = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, electrons, muons, vertices, met, truthParticles, doCutflow, systName );
       // save the string if passing the selection
       if( saveContainerNames && passOne ) { vecOutContainerNames->push_back( systName ); }
       // the final decision - if at least one passes keep going!
@@ -390,6 +380,8 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     const xAOD::JetContainer* signalJets,
     const xAOD::JetContainer* fatJets,
     const xAOD::JetContainer* truthJets,
+    const xAOD::ElectronContainer* electrons,
+    const xAOD::MuonContainer* muons,
     const xAOD::VertexContainer* vertices,
     const xAOD::MissingETContainer* met,
     const xAOD::TruthParticleContainer* truthParticles,
@@ -457,6 +449,11 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     if(doCutflow) passCut("METSelection");
   }
 
+  if(electrons->size() > 0 && muons->size() > 0){
+    wk()->skipEvent();  return EL::StatusCode::SUCCESS;
+  }
+  if(doCutflow) passCut("LeptonVeto");
+
   ANA_MSG_DEBUG("Event # "<< m_eventCounter);
 
   //////////////////////
@@ -486,11 +483,11 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
 ///////////////////////////////////////////////////////////////////////////
 
 void SVJAlgorithm::passCut(std::string label) {
-  m_cutflowHist->GetXaxis()->FindBin(label.c_str());
-  m_cutflowHistW->GetXaxis()->FindBin(label.c_str());
-  m_cutflowHist->Fill(m_iCutflow, 1);
-  m_cutflowHistW->Fill(m_iCutflow, m_mcEventWeight);
-  m_iCutflow++;
+
+  int newbin = m_cutflowHist->GetXaxis()->FindBin(label.c_str());
+  int newbin_w = m_cutflowHistW->GetXaxis()->FindBin(label.c_str());
+  m_cutflowHist->Fill(newbin, 1);
+  m_cutflowHistW->Fill(newbin_w, m_mcEventWeight);
 }
 
 EL::StatusCode SVJAlgorithm :: postExecute ()
