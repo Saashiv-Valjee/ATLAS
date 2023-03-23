@@ -305,6 +305,8 @@ c.algorithm("SVJAlgorithm",    		{
     "m_name"                    	: "ResonanceAlgo",
     #----------------------- Container Flow ----------------------------#
     "m_inJetContainerName"      	: "Jets_PassedOR",
+    "m_inEleContainerName"              : "Electrons_PassedOR", 
+    "m_inMuContainerName"               : "Muons_PassedOR", 
     "m_inputAlgo"               	: "JetSelector_Syst",
     "m_inMetContainerName"      	: "METOutput_NewRefFinal",
     "m_inFatJetContainerName"   	: inFatJetContainerName,
@@ -313,7 +315,9 @@ c.algorithm("SVJAlgorithm",    		{
     "m_leadingJetPtCut"         	: 450e3,
     "m_subleadingJetPtCut"      	: 50e3,
     #"m_metCut"                  	: 0e3,
-    "m_jetMultiplicity"         	: 1,
+    "m_jetMultiplicity"         	: 2,
+    #----------------------- Lepton Veto ----------------------------#
+    "m_doLepVeto"                       : True,
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
     "m_eventDetailStr"          	: "", #shapeEM
