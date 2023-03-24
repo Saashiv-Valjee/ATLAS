@@ -21,11 +21,6 @@ c.algorithm("BasicEventSelection",    {
   "m_name"                      : "BasicEventSelect",
   #-------------------------- GRL --------------------------------------#
   "m_GRLxml"                    : 'GoodRunsLists/data18_13TeV/20190318/data18_13TeV.periodAllYear_DetStatus-v102-pro22-04_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml,GoodRunsLists/data17_13TeV/20180619/data17_13TeV.periodAllYear_DetStatus-v99-pro22-01_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml,GoodRunsLists/data15_13TeV/20170619/data15_13TeV.periodAllYear_DetStatus-v89-pro21-02_Unknown_PHYS_StandardGRL_All_Good_25ns.xml,GoodRunsLists/data16_13TeV/20180129/data16_13TeV.periodAllYear_DetStatus-v89-pro21-01_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml',
-  #-------------------------- PRW --------------------------------------#
-  #"m_doPUreweighting"           : False,
-  #"m_lumiCalcFileNames"         : "",
-  #"m_autoconfigPRW"             : False,
-  #"m_PRWFileNames"              : "",
   #-------------------------- Derivation -------------------------------#
   "m_derivationName"            : "PHYS",
   # -------------------------- Trigger ----------------------------------#
@@ -33,7 +28,7 @@ c.algorithm("BasicEventSelection",    {
    "m_storePassHLT"              : True,
    "m_storeTrigDecisions"        : True,
    "m_storePassL1"               : True,
-   "m_storeTrigKeys"             : False,
+   "m_storeTrigKeys"             : True,
    "m_applyTriggerCut"           : True,
   # ---------------------------- Cuts ----------------------------------#
   "m_checkDuplicatesData"       : True,
@@ -205,7 +200,7 @@ c.algorithm("ElectronSelector", {
 #Note: OR must not be applied to the containers passed to METmaker.
 c.algorithm("OverlapRemover", {
     "m_name"                       : "OverlapRemover",
-    "m_useCutFlow"                 : False,
+    "m_useCutFlow"                 : True,
     "m_decorateSelectedObjects"    : True,
     "m_inContainerName_Jets"       : "Jets_Selected",
     "m_inContainerName_Electrons"  : "Electrons_Selected",
