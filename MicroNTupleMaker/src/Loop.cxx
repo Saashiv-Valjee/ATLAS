@@ -50,6 +50,10 @@ void MicroNTupleMaker::Loop()
 		if (fabs(jet_eta->at(0)) > 2.1) continue;
 		cutflow->Fill(2);      
 	
+		//jet1_eta preselection
+		if (fabs(jet_eta->at(1)) > 2.1) continue;
+		cutflow->Fill(3);      
+
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
  
@@ -58,11 +62,7 @@ void MicroNTupleMaker::Loop()
 		//vector<pair<int,float>> svj_info_r04;
 		svj_info = FindSVJ( jet_phi );
 		//svj_info_r04 = FindSVJ( jet_phi );
-		
-		// apply dphi < 2.0
-		//if (svj_info[0].second > 2.0) continue;
-		//cutflow->Fill(3);
-		
+ 			
 		// assign SVJ variables
 		dphi_min = svj_info[0].second;
 		dphi_max = svj_info[1].second;
@@ -74,71 +74,78 @@ void MicroNTupleMaker::Loop()
 		// create relevant 4 vectors
 		TLorentzVector v1, v2, v1fat, v2fat;
 
-		// 2 jet situation
-		if (njet > 1) {
-			v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
-			v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
-			//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));
-			//v_asvj.SetPtEtaPhiE(jet_pt->at(n_asvj), jet_eta->at(n_asvj), jet_phi->at(n_asvj), jet_E->at(n_asvj));
+		v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
+		v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
+		//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));
+		//v_asvj.SetPtEtaPhiE(jet_pt->at(n_asvj), jet_eta->at(n_asvj), jet_phi->at(n_asvj), jet_E->at(n_asvj));
 
-			// y* preselection
-			deltaY_12 = GetDeltaY(v1,v2);
-			if (deltaY_12 > 2.8) continue;
-			cutflow->Fill(3);      
+		// y* preselection
+		deltaY_12 = GetDeltaY(v1,v2);
+		if (deltaY_12 > 2.8) continue;
+		cutflow->Fill(4);      
 
-			// distance between jets
-			dR_12 = GetdR(v1,v2);
-			deta_12 = GetDEta(v1.Eta(),v2.Eta());
-			//deltaY_sa = GetDeltaY(v_svj,v_asvj);
-			
-			// svj variablei
-			maxphi_minphi = dphi_max - dphi_min;
-	
-			// pt balance
-			pt_balance_12 = GetPtBalance(v1,v2);
-			//pt_balance_sa = GetPtBalance(v_svj,v_asvj);
-			
-			//Mjj
-			mjj_12 = GetMjj(v1,v2);      
-			//mjj_sa = GetMjj(v_svj,v_asvj);      
-
-			//mT
-			//jet1_mT = v1.Mt();
-			//jet2_mT = v2.Mt();
-			//jet_svj_mT = v_svj.Mt();
-			//jet_asvj_mT = v_asvj.Mt();
-                	mT_jj = GetMt(v1,v2,metFinalClus, metFinalClusPhi);
-
-			// -j1_pT -j2_pT
-			met_jj_neg = jet_pt->at(0) + jet_pt->at(1);
-			mT_jj_neg = GetMtNeg(v1,v2);
-			dphi_MET_j1j2 = GetDPhiMET(v1,v2,metFinalClusPhi);
-
+		// distance between jets
+		dR_12 = GetdR(v1,v2);
+		deta_12 = GetDEta(v1.Eta(),v2.Eta());
+		//deltaY_sa = GetDeltaY(v_svj,v_asvj);
 		
-			// rT
-			rT = metFinalClus / mT_jj;
-			
-			// event shape variables
-			map<string,float> shape_variables = GetShapeVariables(jet_pt, jet_eta, jet_phi, jet_E, true);
-			aplanarity = shape_variables["Aplanarity"];
-			sphericity = shape_variables["Sphericity"];
-			sphericity_T = shape_variables["Transverse_Sphericity"];		
-		// 1 jet situation
-		} else {
-			maxphi_minphi = -999; 
-			pt_balance_12 = -999;
-			mjj_12 = -999;
-			mT_jj = -999;
-			mT_jj_neg = -999;
-			met_jj_neg = -999;
-			dR_12 = -999;
-			deta_12 = -999;
-			deltaY_12 = -999;
-			rT = -999;
-			aplanarity = -999;
-			sphericity = -999;
-			sphericity_T = -999;
-		}	
+		// svj variablei
+		maxphi_minphi = dphi_max - dphi_min;
+	
+		// pt balance
+		pt_balance_12 = GetPtBalance(v1,v2);
+		//pt_balance_sa = GetPtBalance(v_svj,v_asvj);
+		
+		//Mjj
+		mjj_12 = GetMjj(v1,v2);      
+		//mjj_sa = GetMjj(v_svj,v_asvj);      
+
+		//mT
+		//jet1_mT = v1.Mt();
+		//jet2_mT = v2.Mt();
+		//jet_svj_mT = v_svj.Mt();
+		//jet_asvj_mT = v_asvj.Mt();
+                mT_jj = GetMt(v1,v2,metFinalClus, metFinalClusPhi);
+
+		// -j1_pT -j2_pT
+		met_jj_neg = jet_pt->at(0) + jet_pt->at(1);
+		mT_jj_neg = GetMtNeg(v1,v2);
+		dphi_MET_j1j2 = GetDPhiMET(v1,v2,metFinalClusPhi);
+
+		// rT
+		rT = metFinalClus / mT_jj;
+
+		// SR selection
+		// apply dEta < 1.5
+		if ( deltaY_12 >= 1.5) continue;
+		cutflow->Fill(5);
+		// apply rT > 0.15
+		if ( rT <= 0.15) continue;
+		cutflow->Fill(6);
+		// apply mT > 1.5 TeV
+		//if ( mT_jj <= 1500) continue;
+		//cutflow->Fill(7);
+		// apply dphi < 0.8
+		if ( dphi_min >= 0.8) continue;
+		cutflow->Fill(7);
+		
+		/*if ( rT > 0.25){
+			mT_jj_highRT = mT_jj;
+			mT_jj_neg_highRT = mT_jj_neg;
+			mT_jj_lowRt = -999;
+			mT_jj_neg_lowRt = -999;
+                }else {
+			mT_jj_highRT = -999;
+			mT_jj_neg_highRT = -999;
+			mT_jj_lowRt = mT_jj;
+			mT_jj_neg_lowRt = mT_jj_neg;
+		}*/
+
+		// event shape variables
+		map<string,float> shape_variables = GetShapeVariables(jet_pt, jet_eta, jet_phi, jet_E, true);
+		aplanarity = shape_variables["Aplanarity"];
+		sphericity = shape_variables["Sphericity"];
+		sphericity_T = shape_variables["Transverse_Sphericity"];		
 
 		// 2 fatjet situation
 		/*if (nfatjet > 1) {
