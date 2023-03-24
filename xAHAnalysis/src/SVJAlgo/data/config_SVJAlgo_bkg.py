@@ -43,6 +43,7 @@ c.algorithm("BasicEventSelection",    {
   "m_checkDuplicatesData"       : True,
   "m_applyGRLCut"               : True,
   "m_applyEventCleaningCut"     : True,
+  "m_applyJetCleaningEventFlag" : True,
   "m_applyCoreFlagsCut"	        : True,
   "m_vertexContainerName"       : "PrimaryVertices",
   "m_applyPrimaryVertexCut"     : True,
@@ -90,40 +91,6 @@ c.algorithm("JetCalibrator",     {
 
 })
 
-# large-r jet
-if opt.doFatJet: 
-  c.algorithm("JetCalibrator",     {
-    "m_name"                      : "FatJetCalibrate",
-    #----------------------- Container Flow ----------------------------#
-    "m_inContainerName"           : "AntiKt10LCTopoTrimmedPtFrac5SmallR20Jets",
-    "m_jetAlgo"                   : "AntiKt10LCTopoTrimmedPtFrac5SmallR20",
-    "m_outContainerName"          : "FatJets_Calibrate",
-    "m_outputAlgo"                : "FatJetCalibrator_Syst",
-    "m_sort"                      : True,
-    #"m_redoJVT"                   : False,
-    #----------------------- Systematics ----------------------------#
-    "m_systName"                  : "Nominal",
-    "m_systVal"                   : 0,
-    #----------------------- Calibration ----------------------------#
-    "m_calibConfigFullSim"        : "JES_MC16recommendation_FatJet_Trimmed_JMS_comb_17Oct2018.config",
-    "m_calibConfigData"           : "JES_MC16recommendation_FatJet_Trimmed_JMS_comb_March2021.config",
-    "m_calibSequence"             : "EtaJES_JMS",                                    # recommendation as of May 11 2020
-    "m_forceInsitu"               : False, # For data
-    "m_forceSmear"                : False, # For MC
-    #----------------------- JES/JER Uncertainty ----------------------------#
-    "m_uncertConfig"              : "rel21/Winter2021/R10_CategoryJES_FullJER_FullJMS.config",  # recommendation as of May 11 2020
-    "m_uncertMCType"              : "MC16",
-    #----------------------- Cleaning ----------------------------#
-    # Turn it off for the moment, need to add it back
-    "m_doCleaning"                : False,
-    "m_jetCleanCutLevel"          : "LooseBad",
-    "m_jetCleanUgly"              : False,
-    "m_saveAllCleanDecisions"     : False,
-    "m_cleanParent"               : False,
-    #----------------------- Other ----------------------------#
-    "m_msgLevel"                  : "Info",
-  
-  })
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% JetSelector %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("JetSelector",     {
@@ -136,10 +103,11 @@ c.algorithm("JetSelector",     {
   "m_decorateSelectedObjects"   : True,
   "m_createSelectedContainer"   : True,
   #----------------------- Selections ----------------------------#
-  "m_cleanJets"                 : False,
-  "m_pass_min"                  : 1,
+  "m_cleanJets"                 : True,
+  "m_pass_min"                  : 2,
   "m_pT_min"                    : 20e3,
   "m_eta_max"                   : 4.5,
+  "m_useCutFlow"		: True,
   #----------------------- JVT ----------------------------#
   "m_doJVT"                     : False, # JVT is a pileup cut
   "m_pt_max_JVT"                : 60e3,
@@ -156,27 +124,6 @@ c.algorithm("JetSelector",     {
   "m_msgLevel"                  : "Info",
 })
 
-# large-r jet
-if opt.doFatJet: 
-  c.algorithm("JetSelector", 	{
-    "m_name"                      : "FatJetSelect",
-    #----------------------- Container Flow ----------------------------#
-    "m_inContainerName"           : "FatJets_Calibrate",
-    "m_outContainerName"          : "FatJets_Selected",
-    "m_inputAlgo"                 : "FatJetCalibrator_Syst",
-    "m_outputAlgo"                : "FatJetSelector_Syst",
-    "m_decorateSelectedObjects"   : True,
-    "m_createSelectedContainer"   : True,
-    #----------------------- Selections ----------------------------#
-    "m_cleanJets"                 : False,
-    "m_pass_min"                  : 0,
-    "m_pT_min"                    : 200e3,
-    "m_pT_max"                    : 3000e3,
-    "m_mass_min"		  : 40e3,
-    "m_mass_max"		  : 600e3,
-    "m_eta_max"                   : 2.0,
-    "m_msgLevel"                  : "Info",
-  })
 
 #%%%%%%%%%%%%%%%%%%%%%%%%% Muon Calibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
 c.algorithm("MuonCalibrator",	 {
@@ -299,9 +246,9 @@ fatJetDetailStr = ""
 if opt.doFatJet:
       inFatJetContainerName = "FatJets_Selected"
       inputFatAlgo = "FatJetSelector_Syst"
-      fatJetDetailStr = "kinematic"
-##%%%%%%%%%%%%%%%%%%%%%%%%%% DijetResonanceAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%#
-c.algorithm("SVJAlgorithm",    		{
+      fatJetDetailStr = "kinematic substructure truth"
+##%%%%%%%%%%%%%%%%%%%%%%%%%% SVJAlgo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
+c.algorithm("SVJAlgorithm",    		 {
     "m_name"                    	: "ResonanceAlgo",
     #----------------------- Container Flow ----------------------------#
     "m_inJetContainerName"      	: "Jets_PassedOR",
@@ -314,26 +261,26 @@ c.algorithm("SVJAlgorithm",    		{
     #----------------------- Selections ----------------------------#
     "m_leadingJetPtCut"         	: 450e3,
     "m_subleadingJetPtCut"      	: 50e3,
-    #"m_metCut"                  	: 0e3,
+    "m_leadingJetEtaCut"         	: 2.1,
+    "m_subleadingJetEtaCut"      	: 2.1,
+    "m_metCut"                  	: -1,
     "m_jetMultiplicity"         	: 2,
+    "m_yStarCut"			: 1.4,
     #----------------------- Lepton Veto ----------------------------#
     "m_doLepVeto"                       : True,
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
-    "m_eventDetailStr"          	: "", #shapeEM
-    "m_jetDetailStr"            	: "kinematic",
+    "m_eventDetailStr"          	: "",
+    "m_jetDetailStr"            	: "kinematic trackPV flavorTag truth energy",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
     "m_metDetailStr"            	: "metClus",
     "m_jetDetailStrSyst"        	: "kinematic",
     "m_trigDetailStr"           	: "basic passTriggers",
-    #"m_truthParticlesContainerName"	: "TruthParticles",
-    #"m_truthParticlesBranchName"	: "truthParicles",
-    #"m_truthParticlesDetailStr"	: "type dressed origin children parents",
     #----------------------- Other ----------------------------#
     "m_writeTree"               : True,
     #"m_MCPileupCheckContainer"  : "AntiKt4TruthJets",
+    "m_useMCPileupCheck"	: True,
     "m_MCPileupCheckContainer"  : "None",
-#    "m_truthLevelOnly"          : False , #Protection when running on truth xAOD.
     "m_msgLevel"                : "Info",
 })
 
