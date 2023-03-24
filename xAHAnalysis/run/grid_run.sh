@@ -15,8 +15,8 @@ do
 	do
 		inputFile=${BKG}_${MC}.txt
 		echo $inputFile
-		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v6c.${MC} --optGridNGBPerJob=2"
-		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v6c.${MC} --optGridNGBPerJob=2
+		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2"
+		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2
 	done
 done
 
@@ -27,8 +27,8 @@ do
 	do
 		inputFile=${SIG}_${MC}.txt
 		echo $inputFile
-		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $sigconfigFile --extraOptions="" --force --submitDir $submitdir prun $PUfile --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v6c.${MC} --optGridNGBPerJob=2"
-		xAH_run.py --inputRucio --inputList --files $inputFile --config $sigconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v6c.${MC} --optGridNGBPerJob=2
+		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $sigconfigFile --extraOptions="" --force --submitDir $submitdir prun $PUfile --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2"
+		xAH_run.py --inputRucio --inputList --files $inputFile --config $sigconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2
 	done
 done
 
