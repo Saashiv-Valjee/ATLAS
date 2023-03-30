@@ -1,104 +1,27 @@
 /* ====================================================================================================================== */
 void MicroNTupleMaker::SetWeight(double sumWInput){
 
-        //Int_t dsid_int;
-        fChain->GetEntry(0);
-	dsid_int = mcChannelNumber;
-        string dsid = to_string(dsid_int); 
+        //Int_t dsid_int = 0;
 
+	if (fChain == 0) return;
+	Long64_t nentries = fChain->GetEntriesFast();
+	Long64_t nbytes = 0, nb = 0;
+	for (Long64_t jentry=0; jentry<nentries;jentry++) {
+		Long64_t ientry = LoadTree(jentry);
+		if (ientry < 0) break;
+	  	nb = fChain->GetEntry(jentry);   nbytes += nb;
+                dsid_int = mcChannelNumber;
+		if (dsid_int != 0) break;	  
+	}
+	cout << "Found DSID: " << dsid_int << endl;
+
+        string dsid = to_string(dsid_int); 
 	sumw = sumWInput;
 	double gfe = GetGenFilterEff(dsid);
 	double xs = GetXSection(dsid);
-        double lumi = 1.39e8 //(lumi in nb)
+        double lumi = 1.39e8; //(lumi in nb)
 
 	weight_scale = lumi*xs*gfe/sumw;
-}
-
-/* ====================================================================================================================== */
-double MicroNTupleMaker::GetSumW(string dsid){
-
-	// Eventually: read from cutflow table
-	// Temp solution: input by hand
-	
-        double my_sumw = 0.0;
-
-        //my_sumw = MetaData_EventCount->GetBinContent(3)
-
-        /*
-	// Cross section in nb
-	ma
-	// Multijet
-	sumw["364702"] = 121027;       
-	sumw["364703"] = 4772.79;
-	sumw["364704"] = 107.418;
-	sumw["364705"] = 3.00517;
-	sumw["364706"] = 0.0889688;
-	sumw["364707"] = 0.0122396;
-	sumw["364708"] = 0.00354308;
-	sumw["364709"] = 0.000661628;
-	sumw["364710"] = 7.54144e-05;
-	sumw["364711"] = 4.15448e-05;
-	sumw["364712"] = 2.41811e-05;
-
-	// Signal
-	sumw["508547"] = 52946.2;       
-	sumw["508548"] = 51757.8;     
-	sumw["508549"] = 995391;       
-	sumw["508550"] = 1.01754e+06;  
-	
-	//Z+jets
-	sumw["700323"] = 4.51978e+14 ; 
-	sumw["700324"] = 1.5935e+15  ; 
-	sumw["700325"] = 4.45063e+15 ; 
-	sumw["700326"] = 2.28232e+14 ; 
-	sumw["700327"] = 6.29402e+14 ; 
-	sumw["700328"] = 6.34815e+14 ; 
-	sumw["700329"] = 2.25487e+14 ; 
-	sumw["700330"] = 6.71013e+14 ; 
-	sumw["700331"] = 5.4226e+14  ; 
-	sumw["700332"] = 1.84023e+14 ; 
-	sumw["700333"] = 4.70829e+14 ; 
-	sumw["700334"] = 4.25959e+14 ; 
-	sumw["700335"] = 3.9533e+14  ; 
-	sumw["700336"] = 5.09234e+14 ; 
-	sumw["700337"] = 7.70998e+14 ; 
-	
-	//W+jets
-	sumw["700338"] = 4.05101e+15 ; 
-	sumw["700339"] = 1.78335e+16 ; 
-	sumw["700340"] = 9.41937e+16 ; 
-	sumw["700341"] = 3.77004e+15 ; 
-	sumw["700342"] = 2.1413e+16  ; 
-	sumw["700343"] = 9.48676e+16 ; 
-	sumw["700344"] = 7.74448e+14 ; 
-	sumw["700345"] = 5.75794e+15 ; 
-	sumw["700346"] = 2.30811e+16 ; 
-	sumw["700347"] = 4.52994e+14 ; 
-	sumw["700348"] = 2.30502e+15 ; 
-	sumw["700349"] = 2.30821e+16 ; 
-
-	//ttbar
-	sumw["410470"] = 3.41682e+11; 
-	sumw["410471"] = 1.28473e+11; 
-	sumw["410644"] = 1.58214e+07; 
-	sumw["410645"] = 9.91738e+06; 
-	sumw["410646"] = 1.48172e+09; 
-	sumw["410647"] = 1.47944e+09; 
-	sumw["410658"] = 3.60382e+09; 
-	sumw["410659"] = 2.15396e+09; 
-	sumw["363355"] = 1.27821e+07; 
-	sumw["363357"] = 2.04357e+06; 
-	sumw["363359"] = 8.23153e+06; 
-	sumw["363360"] = 5.01748e+06; 
-        sumw["363489"] = 8.62635e+06;
-
-
-        map<string, double>::iterator iter = sumw.find(dsid);
-	if (iter != sumw.end()) my_sumw = sumw[dsid];
-	else cout << "ERROR: No SumW info found for DSID " << dsid << endl;
-        */
-	return my_sumw;
-
 }
 
 /* ====================================================================================================================== */

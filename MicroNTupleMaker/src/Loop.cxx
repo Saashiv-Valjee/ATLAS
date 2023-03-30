@@ -40,6 +40,7 @@ void MicroNTupleMaker::Loop()
 		if (processedEntries % 10000 == 0 && nentries <= 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		if (processedEntries % 100000 == 0 && nentries > 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		
+		/* cutflow - defunct
 		cutflow->Fill(0);
 	
 		// apply nSmallRJets >=2 (required for code to run) 	
@@ -53,7 +54,7 @@ void MicroNTupleMaker::Loop()
 		//jet1_eta preselection
 		if (fabs(jet_eta->at(1)) > 2.1) continue;
 		cutflow->Fill(3);      
-
+		*/
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
  
@@ -81,8 +82,8 @@ void MicroNTupleMaker::Loop()
 
 		// y* preselection
 		deltaY_12 = GetDeltaY(v1,v2);
-		if (deltaY_12 > 2.8) continue;
-		cutflow->Fill(4);      
+		//if (deltaY_12 > 2.8) continue;
+		//cutflow->Fill(4);      
 
 		// distance between jets
 		dR_12 = GetdR(v1,v2);
@@ -115,7 +116,8 @@ void MicroNTupleMaker::Loop()
 		// rT
 		rT = metFinalClus / mT_jj;
 
-		// SR selection
+		/* 
+ 		// SR selection
 		// apply dEta < 1.5
 		if ( deltaY_12 >= 1.5) continue;
 		cutflow->Fill(5);
@@ -123,12 +125,13 @@ void MicroNTupleMaker::Loop()
 		if ( rT <= 0.15) continue;
 		cutflow->Fill(6);
 		// apply mT > 1.5 TeV
-		//if ( mT_jj <= 1500) continue;
-		//cutflow->Fill(7);
+		if ( mT_jj <= 1500) continue;
+		cutflow->Fill(7);
 		// apply dphi < 0.8
 		if ( dphi_min >= 0.8) continue;
 		cutflow->Fill(7);
-		
+		*/
+
 		/*if ( rT > 0.25){
 			mT_jj_highRT = mT_jj;
 			mT_jj_neg_highRT = mT_jj_neg;
