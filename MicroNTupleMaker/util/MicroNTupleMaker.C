@@ -113,18 +113,13 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
         // Weight from Metadata histogram
         double sumWInput = metadata->GetBinContent(3);
 
-	// Class instance
-        cout << "Declaring class" <<endl;
-	class MicroNTupleMaker myMaker(fChain);
-	// find DSID and set weight
-	myMaker.SetWeight(sumWInput);
 
 	// Create output file
-	//string dsid = "";
-        //string user = "user.rgarg.";
-        //if (local) dsid = infiletag.substr(user.length(),6);
-	//if (local) cout << "DSID: " << dsid << endl;
-        string dsid = to_string(myMaker.dsid_int);
+	string dsid = "";
+        string user = "user.rgarg.";
+        if (local) dsid = infiletag.substr(user.length(),6);
+	if (local) cout << "DSID: " << dsid << endl;
+        //string dsid = to_string(myMaker.dsid_int);
 	string mc = "";
 	if (infiletag.find("mc20a") != string::npos) mc = "mc20a";
 	if (infiletag.find("mc20d") != string::npos) mc = "mc20d";
@@ -139,6 +134,11 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	TFile *fout = new TFile( outfilename, "RECREATE" );	
 	cout << "Will write to "<<outfilename<<endl;
 
+	// Class instance
+        cout << "Declaring class" <<endl;
+	class MicroNTupleMaker myMaker(fChain);
+	// find DSID and set weight
+	myMaker.SetWeight(sumWInput);
 	// Fill and loop
 	myMaker.DeclareHistograms(metadata, cutflow, cutflow_weighted);
 	myMaker.DeclareOutputTrees();
