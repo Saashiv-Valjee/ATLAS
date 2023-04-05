@@ -51,6 +51,8 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	
 	TChain *fChain = new TChain("outTree");
 	TH1F *metadata;
+	TH1F *cutflow;
+	TH1F *cutflow_weighted;
 	
 	if ( !local ){
 		// Add tree to chain
@@ -64,10 +66,16 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 		f1->ls();
 		cout << "Getting metadata" <<endl;
 		TH1F* h1 = (TH1F*) f1->Get("MetaData_EventCount");
+		TH1F* h2 = (TH1F*) f1->Get("cutflow");
+		TH1F* h3 = (TH1F*) f1->Get("cutflow_weighted");
 		cout << "Cloning metadata" <<endl;
 		metadata = (TH1F*) h1->Clone();
+		cutflow = (TH1F*) h2->Clone();
+		cutflow_weighted = (TH1F*) h3->Clone();
 		cout << "Setting directory to 0" <<endl;
 		metadata->SetDirectory(0);
+		cutflow->SetDirectory(0);
+		cutflow_weighted->SetDirectory(0);
 		cout << "Closing file" <<endl;
 		f1->Close();
 		cout << "metadata sumW: " << metadata->GetBinContent(3) << endl;
@@ -80,27 +88,44 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 			fChain->Add(path_string);
 			//TFile *f = new TFile( path_string, "READ");
 			std::unique_ptr<TFile> f( TFile::Open(path_string, "READ") );
-			TH1F* h = (TH1F*) f->Get("MetaData_EventCount");
-			if (file_count ==1){metadata = (TH1F*) h->Clone(); metadata->SetDirectory(0);} 
-			else metadata->Add(h);
-			cout << "h sumW: " << h->GetBinContent(3) << endl;
+			TH1F* h1l = (TH1F*) f->Get("MetaData_EventCount");
+			TH1F* h2l = (TH1F*) f->Get("cutflow");
+			TH1F* h3l = (TH1F*) f->Get("cutflow_weighted");
+			if (file_count ==1){
+				metadata = (TH1F*) h1l->Clone();
+				cutflow = (TH1F*) h2l->Clone();
+				cutflow_weighted = (TH1F*) h3l->Clone();
+				metadata->SetDirectory(0);
+				cutflow->SetDirectory(0);
+				cutflow_weighted->SetDirectory(0);
+			} else {
+				metadata->Add(h1l);
+				cutflow->Add(h2l);
+				cutflow_weighted->Add(h3l);
+			}
+			cout << "h sumW: " << h1l->GetBinContent(3) << endl;
 			f->Close();
 			cout << "metadata sumW: " << metadata->GetBinContent(3) << endl;
 		}
 		cout << "Added " << file_count << " files to the chain" << endl;
 	}
 
+        // Weight from Metadata histogram
+        double sumWInput = metadata->GetBinContent(3);
+
+
 	// Create output file
 	string dsid = "";
-        if (local) dsid = infiletag.substr(12,6);
+        string user = "user.rgarg.";
+        if (local) dsid = infiletag.substr(user.length(),6);
 	if (local) cout << "DSID: " << dsid << endl;
-
-	string outfiletag="";
+        //string dsid = to_string(myMaker.dsid_int);
 	string mc = "";
-	if (infiletag.find("mc16a") != string::npos) mc = "mc16a";
-	if (infiletag.find("mc16d") != string::npos) mc = "mc16d";
-	if (infiletag.find("mc16e") != string::npos) mc = "mc16e";
-	outfiletag = "user.ebusch." + dsid + "." + mc;
+	if (infiletag.find("mc20a") != string::npos) mc = "mc20a";
+	if (infiletag.find("mc20d") != string::npos) mc = "mc20d";
+	if (infiletag.find("mc20e") != string::npos) mc = "mc20e";
+
+	string outfiletag = "user.ebusch." + dsid + "." + mc;
         TString outfilename;
      
 	if (local) outfilename = Form( "MicroNTuples/%s.root", outfiletag.c_str() );
@@ -109,18 +134,13 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	TFile *fout = new TFile( outfilename, "RECREATE" );	
 	cout << "Will write to "<<outfilename<<endl;
 
-        // Weight from Metadata histogram
-        double sumWInput = metadata->GetBinContent(3);
-        //double sumWInput = 1.0;
-
-        cout << "Declaring class" <<endl;
 	// Class instance
+        cout << "Declaring class" <<endl;
 	class MicroNTupleMaker myMaker(fChain);
-	
-        myMaker.year_mc = mc;
+	// find DSID and set weight
 	myMaker.SetWeight(sumWInput);
-
-	myMaker.DeclareHistograms();
+	// Fill and loop
+	myMaker.DeclareHistograms(metadata, cutflow, cutflow_weighted);
 	myMaker.DeclareOutputTrees();
 	myMaker.Loop();
 	myMaker.WriteOutputTrees();
