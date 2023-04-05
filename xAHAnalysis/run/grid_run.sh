@@ -21,7 +21,7 @@ dataconfigFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_data.py
 for BKG in wplusjets zplusjets #ttbar
 do
 	submitdir=grid_${BKG}
-	for MC in mc20a mc20d mc20e
+	for MC in mc20a #mc20d mc20e
 	do
 		inputFile=${BKG}_${MC}.txt
 		echo $inputFile
