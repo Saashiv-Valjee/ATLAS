@@ -42,6 +42,14 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"all_jets_eta",
 		"all_jets_phi",
 		"all_jets_E",
+		"all_jets_NumTrkPt500PV",
+		"all_jets_NumTrkPt1000PV",
+		"all_jets_SumPtTrkPt500PV",
+		"all_jets_TrackWidthPt1000PV",
+		"all_jets_Width",
+		"all_jets_EMFrac",
+		"all_jets_DL1r"
+		"all_jets_FracSamplingMax",
 		//"all_fatjets_pt",
 		//"all_fatjets_eta",
 		//"all_fatjets_phi",
@@ -74,6 +82,14 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars_vector["all_jets_eta"] = jet_eta;
 	tree_output_vars_vector["all_jets_phi"] = jet_phi;
 	tree_output_vars_vector["all_jets_E"]= jet_E;	
+	tree_output_vars_vector["all_jets_NumTrkPt500PV"]= jet_NumTrkPt500PV;	
+	tree_output_vars_vector["all_jets_NumTrkPt1000PV"]= jet_NumTrkPt1000PV;	
+	tree_output_vars_vector["all_jets_SumPtTrkPt500PV"]= jet_SumPtTrkPt500PV;	
+	tree_output_vars_vector["all_jets_TrackWidthPt1000PV"]= jet_TrackWidthPt1000PV;	
+	tree_output_vars_vector["all_jets_Width"]= jet_Width;	
+	tree_output_vars_vector["all_jets_EMFrac"]= jet_EMFrac;	
+	tree_output_vars_vector["all_jets_DL1r"]= jet_DL1r;	
+	tree_output_vars_vector["all_jets_FracSamplingMax"]= jet_FracSamplingMax;	
 	
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
