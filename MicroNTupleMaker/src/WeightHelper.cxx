@@ -1,19 +1,11 @@
 /* ====================================================================================================================== */
 void MicroNTupleMaker::SetWeight(double sumWInput){
 
-	if (fChain == 0) return;
-	Long64_t nentries = fChain->GetEntriesFast();
-	Long64_t nbytes = 0, nb = 0;
-	for (Long64_t jentry=0; jentry<nentries;jentry++) {
-		Long64_t ientry = LoadTree(jentry);
-		if (ientry < 0) break;
-	  	nb = fChain->GetEntry(jentry);   nbytes += nb;
-                dsid_int = mcChannelNumber;
-		if (dsid_int != 0) break;	  
-	}
-	cout << "Found DSID: " << dsid_int << endl;
-        string dsid = to_string(dsid_int); 
-
+        //Int_t dsid_int;
+        fChain->GetEntry(0);
+        dsid_int = mcChannelNumber;
+       	string dsid = to_string(dsid_int); 
+       
 	sumw = sumWInput;
 	double gfe = GetGenFilterEff(dsid);
 	double xs = GetXSection(dsid);
