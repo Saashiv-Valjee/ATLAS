@@ -34,7 +34,6 @@ configFile=../src/SVJAlgo/data/config_SVJAlgo_MC.py
 nevents=10000
 submitdir=SIG_to_TTREE_${nevents}
 
-
 echo "xAH_run.py --files ${infile} --nevents $nevents --config $configFile --extraOptions="" --submitDir ${parentsubmitdir}/$submitdir --log-level $loglevel $extra --force direct "
 xAH_run.py --files ${infile} --nevents $nevents --config $configFile --extraOptions="" --submitDir ${parentsubmitdir}/$submitdir --log-level $loglevel $extra --force direct 
 

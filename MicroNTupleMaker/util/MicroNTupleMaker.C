@@ -19,11 +19,10 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	// Check for infile //
 	
 	string fullinfilepath;
-	
 	// Running remotely
 	if( !local ) { // Path from base dir -- when ONLY file tag is provided
 	        fullinfilepath = infiletag;
-		
+	        cout<< "running not locally"<<endl;	
 		/*
 	        // Local & global paths
 	        TString infilepath_local = "../" + tmp_infilepath;
@@ -42,12 +41,15 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 		*/
  	// Running locally - must provide path to inputs and true flag
 	} else {
+                
+	        cout<< "running locally"<<endl;	
 		fullinfilepath = infilepath + infiletag;
 	}
-	
+//added	
+	cout << "infilepath"<< infilepath<<", infiletag"<<infiletag<<endl;	
 	// ----- Read in File(s) & Tree ----- // 
 	
-	cout<<"Reading in "<<fullinfilepath<<endl;
+	cout<<"Reading in fullinfilepath: "<<fullinfilepath<<endl;
 	
 	TChain *fChain = new TChain("outTree");
 	TH1F *metadata;
@@ -120,16 +122,21 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
         if (local) dsid = infiletag.substr(user.length(),6);
 	if (local) cout << "DSID: " << dsid << endl;
         //string dsid = to_string(myMaker.dsid_int);
+        cout<< "infiletag"<<infiletag <<endl;
+        if (local) cout<<" infiletag.substr(user.length(),6)" << infiletag.substr(user.length(),6)<<"DSID" <<dsid <<endl; //this line causes a trouble when using run_test.sh
 	string mc = "";
 	if (infiletag.find("mc20a") != string::npos) mc = "mc20a";
 	if (infiletag.find("mc20d") != string::npos) mc = "mc20d";
 	if (infiletag.find("mc20e") != string::npos) mc = "mc20e";
-
-	string outfiletag = "user.ebusch." + dsid + "." + mc;
+        cout <<"mc"<<mc<<endl;
+	//string outfiletag = "user.ebusch." + dsid + "." + mc;
+	string outfiletag = "user.kipark." + infiletag + "." + mc;
         TString outfilename;
      
 	if (local) outfilename = Form( "MicroNTuples/%s.root", outfiletag.c_str() );
 	else outfilename = "output.root";
+	//added
+        //else outfilename = Form( "/eos/user/k/kipark/ana-exot-2021-19/MicroNTupleMaker/MicroNTuples/%s.root", outfiletag.c_str() );
 
 	TFile *fout = new TFile( outfilename, "RECREATE" );	
 	cout << "Will write to "<<outfilename<<endl;
