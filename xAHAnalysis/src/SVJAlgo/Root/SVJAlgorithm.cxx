@@ -411,13 +411,13 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   }
   if(doCutflow) passCut("LeadingJetPt");
 
-  if( signalJets->at(0)->eta() >= m_leadingJetEtaCut ) {
+  if( fabs(signalJets->at(0)->eta()) >= m_leadingJetEtaCut ) {
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
   if(doCutflow) passCut("LeadingJetEta");
   
   // Subleading jet eta
-  if( signalJets->at(1)->eta() >= m_subleadingJetEtaCut ) {
+  if( fabs(signalJets->at(1)->eta()) >= m_subleadingJetEtaCut ) {
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
   if(doCutflow) passCut("SubleadingJetEta");
