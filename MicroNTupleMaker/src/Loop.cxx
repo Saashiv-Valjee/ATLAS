@@ -47,14 +47,14 @@ void MicroNTupleMaker::Loop()
 		if (njet < 2) continue;
 		cutflow->Fill(1);      
 		
+		*/
 		//jet1_eta preselection
 		if (fabs(jet_eta->at(0)) > 2.1) continue;
-		cutflow->Fill(2);      
+		//cutflow->Fill(2);      
 	
 		//jet1_eta preselection
 		if (fabs(jet_eta->at(1)) > 2.1) continue;
-		cutflow->Fill(3);      
-		*/
+		//cutflow->Fill(3);      
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
  
