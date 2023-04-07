@@ -1,0 +1,52 @@
+{
+  "Avg": {
+    "nprocs": 8.0,
+    "nthreads": 15.0,
+    "pss": 35153.0,
+    "rchar": 409471150.0,
+    "read_bytes": 168891733.0,
+    "rss": 41368.0,
+    "rx_bytes": 202866.0,
+    "rx_packets": 1633.0,
+    "swap": 0.0,
+    "tx_bytes": 304866.0,
+    "tx_packets": 500.0,
+    "vmem": 1150184.0,
+    "wchar": 159860316.0,
+    "write_bytes": 81920000.0
+  },
+  "HW": {
+    "cpu": {
+      "CPUs": 32,
+      "CoresPerSocket": 8,
+      "ModelName": "Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz",
+      "Sockets": 2,
+      "ThreadsPerCore": 2
+    },
+    "mem": {
+      "MemTotal": 131602108
+    }
+  },
+  "Max": {
+    "nprocs": 8,
+    "nthreads": 15,
+    "pss": 35153,
+    "rchar": 24568269,
+    "read_bytes": 10133504,
+    "rss": 41368,
+    "rx_bytes": 12172,
+    "rx_packets": 98,
+    "stime": 1,
+    "swap": 0,
+    "tx_bytes": 18292,
+    "tx_packets": 30,
+    "utime": 1,
+    "vmem": 1150184,
+    "wchar": 9591619,
+    "write_bytes": 4915200,
+    "wtime": 6
+  },
+  "prmon": {
+    "Version": "3.0.0"
+  }
+}

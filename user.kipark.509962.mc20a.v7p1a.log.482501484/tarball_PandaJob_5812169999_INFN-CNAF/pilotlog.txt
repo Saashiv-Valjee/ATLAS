@@ -1,0 +1,409 @@
+2023-04-07 11:05:23,561 | INFO     | ****************************************
+2023-04-07 11:05:23,561 | INFO     | ***  PanDA Pilot version 3.5.1 (17)  ***
+2023-04-07 11:05:23,561 | INFO     | ****************************************
+2023-04-07 11:05:23,561 | INFO     | 
+2023-04-07 11:05:23,564 | INFO     | architecture information:
+2023-04-07 11:05:23,636 | INFO     | 
+LSB Version:	:core-4.1-amd64:core-4.1-noarch:cxx-4.1-amd64:cxx-4.1-noarch:desktop-4.1-amd64:desktop-4.1-noarch:languages-4.1-amd64:languages-4.1-noarch:printing-4.1-amd64:printing-4.1-noarch
+Distributor ID:	CentOS
+Description:	CentOS Linux release 7.9.2009 (Core)
+Release:	7.9.2009
+Codename:	Core
+2023-04-07 11:05:23,636 | INFO     | ****************************************
+2023-04-07 11:05:24,137 | INFO     | cache: check cert validity: wanted=1h (2400s with grace) left=94.93h (now=1680865524 validity=1681207255 left=341731)
+2023-04-07 11:05:24,138 | INFO     | cert validity time is verified
+2023-04-07 11:05:24,138 | INFO     | cache: check proxy validity: wanted=1h (2400s with grace) left=94.93h (now=1680865524 validity=1681207255 left=341731)
+2023-04-07 11:05:24,138 | INFO     | proxy validity time is verified
+2023-04-07 11:05:24,138 | INFO     | executing command: df -mP /tmp/atlas_pf1poBB8
+2023-04-07 11:05:24,157 | INFO     | sufficient remaining disk space (852045594624 B)
+2023-04-07 11:05:24,157 | INFO     | since timefloor=3600 s and only 20.444469213485718 s has passed since launch, pilot can run another job
+2023-04-07 11:05:24,157 | INFO     | did not find any local job definition file
+2023-04-07 11:05:24,158 | INFO     | will download job definition from server
+2023-04-07 11:05:24,158 | INFO     | available WN disk space: 812573 MB
+2023-04-07 11:05:24,158 | INFO     | sending disk space 200000 MB to dispatcher
+2023-04-07 11:05:24,161 | INFO     | executing command: df -mP /tmp/atlas_pf1poBB8
+2023-04-07 11:05:24,179 | INFO     | executing server command: https://aipanda052.cern.ch:25443/server/panda/getJob
+2023-04-07 11:05:24,180 | INFO     | executing command: curl -sS --compressed --connect-timeout 100 --max-time 120 --capath /cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/etc/grid-security-emi/certificates --cert /home/condor/execute//dir_19307/x509up_u25606_pilot --cacert /home/condor/execute//dir_19307/x509up_u25606_pilot --key /home/condor/execute//dir_19307/x509up_u25606_pilot -H 'User-Agent: pilot/3.5.1 (17) (Python 3.9.14; Linux x86_64)' -H 'Accept: application/json' --config /tmp/atlas_pf1poBB8/curl_getJob.config https://aipanda052.cern.ch:25443/server/panda/getJob
+2023-04-07 11:05:24,919 | INFO     | job definition = {'StatusCode': 0, 'PandaID': 5812169999, 'prodSourceLabel': 'user', 'swRelease': 'NULL', 'homepackage': 'NULL', 'transformation': 'http://pandaserver.cern.ch:25085/trf/user/runGen-00-00-02', 'jobName': 'user.kipark.509962.mc20a.v7p1a.5812169999', 'jobDefinitionID': 11, 'cloud': 'IT', 'inFiles': 'user.rgarg.32860630._000001.tree.root,panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'dispatchDblock': 'NULL,panda.0407105854.23583.lib._33011675', 'dispatchDBlockToken': 'NULL,NULL', 'dispatchDBlockTokenForOut': 'NULL,NULL', 'outFiles': 'user.kipark.509962.mc20a.v7p1a.log.33011675.000001.log.tgz,user.kipark.33011675._000001.output.root', 'destinationDblock': 'user.kipark.509962.33011675_sub4072383,user.kipark.509962.33011675_sub4072384', 'destinationDBlockToken': 'NULL,NULL', 'prodDBlocks': 'user.rgarg:user.rgarg.509962.MGPy8EG_SVJSChan2j_500_0.v7a.mc20a_tree.root.480275438,NULL', 'prodDBlockToken': 'NULL,local', 'realDatasets': 'user.kipark.509962.mc20a.v7p1a.log/,user.kipark.509962.mc20a.v7p1a_output.root/', 'realDatasetsIn': 'user.rgarg:user.rgarg.509962.MGPy8EG_SVJSChan2j_500_0.v7a.mc20a_tree.root,panda.0407105854.23583.lib._33011675', 'fileDestinationSE': 'INFN-CNAF/SCORE,INFN-CNAF/SCORE', 'logFile': 'user.kipark.509962.mc20a.v7p1a.log.33011675.000001.log.tgz', 'logGUID': 'fecc27a7-8d6a-4e10-9d3d-84cfcbfc190f', 'jobPars': '-j "" --sourceURL https://aipanda048.cern.ch -r . -l panda.0407105854.23583.lib._33011675.32274822442.lib.tgz -o "{\'output.root\': \'user.kipark.33011675._000001.output.root\'}" -i "[\'user.rgarg.32860630._000001.tree.root\']" -p "export%20ATLAS_LOCAL_ROOT_BASE%3D/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase%3B%20source%20/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/user/atlasLocalSetup.sh%3B%20lsetup%20%27root%206.20.06-x86_64-centos7-gcc8-opt%27%3B%20./exe/MicroNTupleMaker%20%25IN" --cmtConfig x86_64-centos7-gcc8-opt ', 'attemptNr': 1, 'GUID': '5E308C59-7A16-4196-B79E-631C984AB2F8,CB6DAF8B-6CA7-4D53-92C7-E332A059BD06', 'checksum': 'ad:0d06db28,ad:f6959036', 'fsize': '855913,1094383', 'scopeIn': 'user.rgarg,panda', 'scopeOut': 'user.kipark', 'scopeLog': 'user.kipark', 'ddmEndPointIn': 'INFN-T1_DATADISK,INFN-T1_DATADISK', 'ddmEndPointOut': 'INFN-T1_SCRATCHDISK,INFN-T1_SCRATCHDISK', 'destinationSE': 'NULL', 'prodUserID': '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602', 'maxCpuCount': 345600, 'minRamCount': 1800, 'maxDiskCount': 300, 'cmtConfig': 'x86_64-centos7-gcc8-opt@centos7', 'processingType': 'panda-client-1.5.42-jedi-run', 'transferType': 'NULL', 'sourceSite': 'NULL', 'currentPriority': 999, 'taskID': 33011675, 'coreCount': 1, 'jobsetID': 8, 'reqID': 8, 'nucleus': 'NULL', 'maxWalltime': 345600, 'ioIntensity': None, 'ioIntensityUnit': None, 'nSent': 0}
+2023-04-07 11:05:24,920 | INFO     | cleaning jobparams: -j "" --sourceURL https://aipanda048.cern.ch -r . -l panda.0407105854.23583.lib._33011675.32274822442.lib.tgz -o "{'output.root': 'user.kipark.33011675._000001.output.root'}" -i "['user.rgarg.32860630._000001.tree.root']" -p "export%20ATLAS_LOCAL_ROOT_BASE%3D/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase%3B%20source%20/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/user/atlasLocalSetup.sh%3B%20lsetup%20%27root%206.20.06-x86_64-centos7-gcc8-opt%27%3B%20./exe/MicroNTupleMaker%20%25IN" --cmtConfig x86_64-centos7-gcc8-opt 
+2023-04-07 11:05:24,922 | INFO     | cleaned jobparams: -j '' --sourceURL https://aipanda048.cern.ch -r . -l panda.0407105854.23583.lib._33011675.32274822442.lib.tgz -o '{'"'"'output.root'"'"': '"'"'user.kipark.33011675._000001.output.root'"'"'}' -i '['"'"'user.rgarg.32860630._000001.tree.root'"'"']' -p export%20ATLAS_LOCAL_ROOT_BASE%3D/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase%3B%20source%20/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/user/atlasLocalSetup.sh%3B%20lsetup%20%27root%206.20.06-x86_64-centos7-gcc8-opt%27%3B%20./exe/MicroNTupleMaker%20%25IN --cmtConfig x86_64-centos7-gcc8-opt
+2023-04-07 11:05:24,925 | WARNING  | cache file=/tmp/atlas_pf1poBB8/cric_pandaqueues.json is not available: [Errno 2] No such file or directory: '/tmp/atlas_pf1poBB8/cric_pandaqueues.json' .. skipped
+2023-04-07 11:05:24,957 | INFO     | queuedata: following keys will be overwritten by Job values: {'cmtconfig': 'x86_64-centos7-gcc8-opt'}
+2023-04-07 11:05:24,957 | INFO     | queuedata: following keys will be overwritten by config values: {'maxwdir_broken': '14336 MB', 'es_stageout_gap': 601}
+2023-04-07 11:05:25,008 | WARNING  | failed to convert data for key=reqID, raw=8 to type=<class 'list'>
+2023-04-07 11:05:25,009 | INFO     | added file 'user.rgarg.32860630._000001.tree.root' with accessmode 'direct'
+2023-04-07 11:05:25,009 | INFO     | added file 'panda.0407105854.23583.lib._33011675.32274822442.lib.tgz' with accessmode 'copy'
+2023-04-07 11:05:25,009 | INFO     | received job: 5812169999 (sleep until the job has finished)
+2023-04-07 11:05:25,011 | INFO     | resetting any existing errors
+2023-04-07 11:05:25,070 | INFO     | processing PanDA job 5812169999 from task 33011675
+2023-04-07 11:05:25,071 | INFO     | set ATHENA_PROC_NUMBER_JOB and ATHENA_CORE_NUMBER to 1 (ATHENA_PROC_NUMBER will not be overwritten)
+2023-04-07 11:05:25,071 | INFO     | the production proxy will be replaced by a user proxy (to be downloaded)
+2023-04-07 11:05:25,071 | INFO     | attempt to download a new proxy (proxy_type=unified)
+2023-04-07 11:05:25,071 | INFO     | download proxy from server (type='unified', x509_payload=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy)
+2023-04-07 11:05:25,072 | INFO     | executing command: curl -sS --compressed --connect-timeout 100 --max-time 120 --capath /cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/etc/grid-security-emi/certificates --cert /home/condor/execute//dir_19307/x509up_u25606_pilot --cacert /home/condor/execute//dir_19307/x509up_u25606_pilot --key /home/condor/execute//dir_19307/x509up_u25606_pilot -H 'User-Agent: pilot/3.5.1 (17) (Python 3.9.14; Linux x86_64)' -H 'Accept: application/json' --config /tmp/atlas_pf1poBB8/curl_getProxy.config https://aipanda189.cern.ch:25443/server/panda/getProxy
+2023-04-07 11:05:26,914 | INFO     | executing command: voms-proxy-info -all --file=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy
+2023-04-07 11:05:27,504 | INFO     | Proxy not found: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy (No such file or directory)
+
+2023-04-07 11:05:27,505 | INFO     | created file: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy
+2023-04-07 11:05:27,505 | INFO     | executing command: export X509_USER_PROXY=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy;arcproxy -i subject
+2023-04-07 11:05:27,537 | INFO     | subject=/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=atlpilo2/CN=663551/CN=Robot: ATLAS Pilot2/CN=1261360060/CN=1622136256/CN=2089605931/CN=524023728/CN=1138692253
+2023-04-07 11:05:27,537 | INFO     | executing command: export X509_USER_PROXY=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy;arcproxy -i validityEnd -i validityLeft -i vomsACvalidityEnd -i vomsACvalidityLeft
+2023-04-07 11:05:27,570 | INFO     | validity_end_cert = 1681206623
+2023-04-07 11:05:27,570 | INFO     | validity_end = 1681206623
+2023-04-07 11:05:27,570 | INFO     | cache: check cert validity: wanted=1h (2400s with grace) left=94.75h (now=1680865528 validity=1681206623 left=341095)
+2023-04-07 11:05:27,570 | INFO     | cert validity time is verified
+2023-04-07 11:05:27,570 | INFO     | cache: check proxy validity: wanted=1h (2400s with grace) left=94.75h (now=1680865528 validity=1681206623 left=341095)
+2023-04-07 11:05:27,570 | INFO     | proxy validity time is verified
+2023-04-07 11:05:27,570 | INFO     | proxy verified (proxy type='unified')
+2023-04-07 11:05:27,571 | INFO     | removing no longer needed file: /tmp/atlas_pf1poBB8/memory_monitor_summary.json
+2023-04-07 11:05:27,571 | INFO     | appended file: /tmp/atlas_pf1poBB8/pilot3/pandaIDs.out
+2023-04-07 11:05:27,787 | INFO     | job 5812169999 has state 'starting' - sending heartbeat
+2023-04-07 11:05:27,788 | INFO     | collecting machine features
+2023-04-07 11:05:27,788 | INFO     | machine features path does not exist (path="")
+2023-04-07 11:05:27,788 | INFO     | collecting job features
+2023-04-07 11:05:27,788 | INFO     | job features path does not exist (path="")
+2023-04-07 11:05:27,788 | INFO     | payload/TRF did not report the number of read events
+2023-04-07 11:05:27,789 | INFO     | executing command: lscpu
+2023-04-07 11:05:27,860 | INFO     | found 16 cores (8 cores per socket, 2 sockets)
+2023-04-07 11:05:27,860 | INFO     | executing command: grep -o 'avx2[^ ]*\|AVX2[^ ]*' /proc/cpuinfo
+2023-04-07 11:05:27,940 | INFO     | neither /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/memory_monitor_summary.json, nor /tmp/atlas_pf1poBB8/memory_monitor_summary.json exist
+2023-04-07 11:05:27,940 | WARNING  | file does not exist either: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/memory_monitor_output.txt
+2023-04-07 11:05:27,940 | INFO     | memory summary dictionary not yet available
+2023-04-07 11:05:27,940 | INFO     | server update attempt 1/10
+2023-04-07 11:05:27,948 | INFO     | executing command: curl -sS --compressed --connect-timeout 100 --max-time 120 --capath /cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/etc/grid-security-emi/certificates --cert /home/condor/execute//dir_19307/x509up_u25606_pilot --cacert /home/condor/execute//dir_19307/x509up_u25606_pilot --key /home/condor/execute//dir_19307/x509up_u25606_pilot -H 'User-Agent: pilot/3.5.1 (17) (Python 3.9.14; Linux x86_64)' -H 'Accept: application/json' --config /tmp/atlas_pf1poBB8/curl_updateJob_5812169999.config https://aipanda052.cern.ch:25443/server/panda/updateJob
+2023-04-07 11:05:28,364 | INFO     | server updateJob request completed in 1s for job 5812169999
+2023-04-07 11:05:28,365 | INFO     | server responded with: res = {'StatusCode': 0, 'command': 'NULL'}
+2023-04-07 11:05:28,365 | INFO     | stage-in will not be done in a container
+2023-04-07 11:05:28,366 | INFO     | configured copytools per activity: acopytools={'pr': ['rucio'], 'pw': ['rucio'], 'read_lan': ['rucio'], 'write_lan': ['rucio'], 'default': ['rucio']}
+2023-04-07 11:05:28,366 | INFO     | will use input file destination: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999
+2023-04-07 11:05:28,366 | INFO     | trying to use copytool=rucio for activity=['pr', 'default']
+2023-04-07 11:05:28,366 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:28,386 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:28,406 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:28,424 | INFO     | calling rucio.list_replicas() with query={'schemes': ['srm', 'root', 'davs', 'gsiftp', 'https', 'storm', 'file'], 'dids': [{'scope': 'user.rgarg', 'name': 'user.rgarg.32860630._000001.tree.root'}, {'scope': 'panda', 'name': 'panda.0407105854.23583.lib._33011675.32274822442.lib.tgz'}], 'sort': 'geoip', 'client_location': {'ip': '131.154.197.231', 'ip6': '::', 'fqdn': 'wn-200-10-21-09-a.cr.cnaf.infn.it', 'site': 'INFN-T1'}, 'signature_lifetime': 86400}
+2023-04-07 11:05:28,577 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:28,602 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:28,623 | INFO     | Number of resolved replicas:
+lfn=user.rgarg.32860630._000001.tree.root: replicas=2, is_directaccess=True
+lfn=panda.0407105854.23583.lib._33011675.32274822442.lib.tgz: replicas=2, is_directaccess=False
+2023-04-07 11:05:28,625 | INFO     | [stage-in] surl (srm replica) from Rucio: pfn=storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root, ddmendpoint=INFN-T1_SCRATCHDISK
+2023-04-07 11:05:28,625 | INFO     | [stage-in] found replica to be used for lfn=user.rgarg.32860630._000001.tree.root: ddmendpoint=INFN-T1_SCRATCHDISK, pfn=storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root
+2023-04-07 11:05:28,625 | INFO     | [stage-in] surl (srm replica) from Rucio: pfn=storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz, ddmendpoint=INFN-T1_SCRATCHDISK
+2023-04-07 11:05:28,625 | INFO     | [stage-in] found replica to be used for lfn=panda.0407105854.23583.lib._33011675.32274822442.lib.tgz: ddmendpoint=INFN-T1_SCRATCHDISK, pfn=storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz
+2023-04-07 11:05:28,695 | INFO     | skipping input file size check since maxinputsize=-1
+2023-04-07 11:05:28,695 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:28,710 | INFO     | ready to transfer (stage-in) files: [ accessmode=direct
+ allow_lan=True
+ allow_wan=False
+ checkinputsize=True
+ checksum={'adler32': '0d06db28'}
+ dataset=user.rgarg:user.rgarg.509962.MGPy8EG_SVJSChan2j_500_0.v7a.mc20a_tree.root
+ ddm_activity=['read_lan', 'read_wan']
+ ddmendpoint=INFN-T1_SCRATCHDISK
+ direct_access_lan=False
+ direct_access_wan=True
+ domain=lan
+ filesize=855913
+ filetype=input
+ guid=5E308C59-7A16-4196-B79E-631C984AB2F8
+ inputddms=['INFN-T1_DATADISK', 'INFN-T1_DATATAPE', 'INFN-T1_MCTAPE', 'INFN-T1_SCRATCHDISK']
+ is_tar=False
+ lfn=user.rgarg.32860630._000001.tree.root
+ mtime=0
+ protocol_id=None
+ protocols=None
+ replicas=[{'pfn': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root', 'ddmendpoint': 'INFN-T1_SCRATCHDISK', 'domain': 'lan'}, {'pfn': 'root://xrootd-atlas.cr.cnaf.infn.it:1094//atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root', 'ddmendpoint': 'INFN-T1_SCRATCHDISK', 'domain': 'lan'}]
+ scope=user.rgarg
+ status=None
+ status_code=0
+ storage_token=NULL
+ surl=storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root
+ turl=storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root
+ workdir=None
+,  accessmode=copy
+ allow_lan=True
+ allow_wan=False
+ checkinputsize=True
+ checksum={'adler32': 'f6959036'}
+ dataset=panda.0407105854.23583.lib._33011675
+ ddm_activity=['read_lan', 'read_wan']
+ ddmendpoint=INFN-T1_SCRATCHDISK
+ direct_access_lan=False
+ direct_access_wan=True
+ domain=lan
+ filesize=1094383
+ filetype=input
+ guid=CB6DAF8B-6CA7-4D53-92C7-E332A059BD06
+ inputddms=['INFN-T1_DATADISK', 'INFN-T1_DATATAPE', 'INFN-T1_MCTAPE', 'INFN-T1_SCRATCHDISK']
+ is_tar=False
+ lfn=panda.0407105854.23583.lib._33011675.32274822442.lib.tgz
+ mtime=0
+ protocol_id=None
+ protocols=None
+ replicas=[{'pfn': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'ddmendpoint': 'INFN-T1_SCRATCHDISK', 'domain': 'lan'}, {'pfn': 'root://xrootd-atlas.cr.cnaf.infn.it:1094//atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'ddmendpoint': 'INFN-T1_SCRATCHDISK', 'domain': 'lan'}]
+ scope=panda
+ status=None
+ status_code=0
+ storage_token=local
+ surl=storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz
+ turl=storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz
+ workdir=None
+]
+2023-04-07 11:05:28,711 | DEBUG    | RUCIO_LOCAL_SITE_ID=INFN-T1_SCRATCHDISK
+2023-04-07 11:05:28,711 | DEBUG    | trace_report[localSite]=INFN-T1_DATADISK
+2023-04-07 11:05:28,711 | INFO     | rucio copytool, downloading file with scope:user.rgarg lfn:user.rgarg.32860630._000001.tree.root
+2023-04-07 11:05:28,711 | INFO     | the file will be stored in /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999
+2023-04-07 11:05:28,711 | INFO     | overall transfer timeout=310
+2023-04-07 11:05:28,749 | INFO     | rucio API stage-in dictionary: {'did_scope': 'user.rgarg', 'did_name': 'user.rgarg.32860630._000001.tree.root', 'did': 'user.rgarg:user.rgarg.32860630._000001.tree.root', 'rse': 'INFN-T1_SCRATCHDISK', 'base_dir': '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999', 'no_subdir': True, 'pfn': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root', 'transfer_timeout': 300, 'connection_timeout': 3600}
+2023-04-07 11:05:28,749 | INFO     | *** rucio API downloading file (taking over logging) ***
+2023-04-07 11:05:28,750 | INFO     | Processing 1 item(s) for input
+2023-04-07 11:05:28,750 | DEBUG    | Preparing PFN download of user.rgarg:user.rgarg.32860630._000001.tree.root (storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root) from INFN-T1_SCRATCHDISK
+2023-04-07 11:05:28,750 | INFO     | Using main thread to download 1 file(s)
+2023-04-07 11:05:28,750 | DEBUG    | Start processing queued downloads
+2023-04-07 11:05:28,750 | INFO     | Preparing download of user.rgarg:user.rgarg.32860630._000001.tree.root
+2023-04-07 11:05:28,750 | INFO     | Trying to download with storm and timeout of 300s from INFN-T1_SCRATCHDISK: user.rgarg:user.rgarg.32860630._000001.tree.root 
+2023-04-07 11:05:28,753 | INFO     | Using PFN: storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root
+2023-04-07 11:05:28,753 | INFO     | storm.Default: StoRM protocol: /storage/gpfs_atlas/atlas/atlasscratchdisk/rucio///user/rgarg/ff/af//user.rgarg.32860630._000001.tree.root->/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.rgarg.32860630._000001.tree.root.part
+2023-04-07 11:05:28,753 | DEBUG    | renaming '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.rgarg.32860630._000001.tree.root.part' to '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.rgarg.32860630._000001.tree.root'
+2023-04-07 11:05:28,753 | INFO     | File user.rgarg:user.rgarg.32860630._000001.tree.root successfully downloaded in 0.0 seconds
+2023-04-07 11:05:28,753 | INFO     | *** rucio API download client finished ***
+2023-04-07 11:05:28,753 | DEBUG    | client returned [{'did_scope': 'user.rgarg', 'did_name': 'user.rgarg.32860630._000001.tree.root', 'did': 'user.rgarg:user.rgarg.32860630._000001.tree.root', 'rse': 'INFN-T1_SCRATCHDISK', 'base_dir': '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999', 'no_subdir': True, 'pfn': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root', 'connection_timeout': 3600, 'input_dids': {<rucio.common.didtype.DID object at 0x2ae09492e7f0>: {}}, 'scope': 'user.rgarg', 'name': 'user.rgarg.32860630._000001.tree.root', 'sources': [{'pfn': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root', 'rse': 'INFN-T1_SCRATCHDISK'}], 'dest_file_paths': ['/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.rgarg.32860630._000001.tree.root'], 'temp_file_path': '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.rgarg.32860630._000001.tree.root.part', 'merged_options': {'ignore_checksum': True, 'transfer_timeout': 300}, 'attemptnr': 1, 'clientState': <FileDownloadState.DONE: 'DONE'>}]
+2023-04-07 11:05:28,753 | DEBUG    | trace_report_out=[{'hostname': 'wn-200-10-21-09-a.cr.cnaf.infn.it', 'localSite': 'INFN-T1_SCRATCHDISK', 'account': 'pilot', 'eventType': 'get_sm_a', 'eventVersion': '3.5.1 (17)+1.30.3', 'protocol': 'storm', 'clientState': <FileDownloadState.DONE: 'DONE'>, 'remoteSite': 'INFN-T1_SCRATCHDISK', 'timeStart': 1680865528.3659701, 'catStart': 1680865528.7118917, 'relativeStart': 1680865528.3664834, 'transferStart': 1680865528.7532644, 'validateStart': 1680865528.6027198, 'timeEnd': None, 'dataset': 'user.rgarg:user.rgarg.509962.MGPy8EG_SVJSChan2j_500_0.v7a.mc20a_tree.root', 'version': None, 'duid': None, 'filename': 'user.rgarg.32860630._000001.tree.root', 'guid': '5E308C597A164196B79E631C984AB2F8', 'filesize': 855913, 'usr': '6bd6583f41c658b75251c5c5b9ada3da', 'appid': '5812169999', 'ip': '131.154.197.231', 'suspicious': '0', 'usrdn': '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602', 'url': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root', 'stateReason': 'OK', 'uuid': '58ddaf80d9fe4bb399a5e8a904df23d2', 'taskid': '33011675', 'pq': 'INFN-CNAF', 'scope': 'user.rgarg', 'datasetScope': '', 'transferEnd': 1680865528.7535052}]
+2023-04-07 11:05:28,776 | WARNING  | failed to get adler32 checksum for file /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.rgarg.32860630._000001.tree.root - [Errno 30] Read-only file system: '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.rgarg.32860630._000001.tree.root' (attempting alternative)
+2023-04-07 11:05:28,802 | INFO     | checksum (catalog): 0d06db28 (type: adler32)
+2023-04-07 11:05:28,802 | INFO     | checksum (local): 0d06db28
+2023-04-07 11:05:28,802 | INFO     | catalog and local checksum values are the same
+2023-04-07 11:05:28,802 | INFO     | tracing server: https://rucio-lb-prod.cern.ch/traces/
+2023-04-07 11:05:28,803 | INFO     | sending tracing report: {'eventType': 'get_sm_a', 'eventVersion': '3.5.1 (17)+1.30.3', 'protocol': 'storm', 'clientState': 'DONE', 'localSite': 'INFN-T1_SCRATCHDISK', 'remoteSite': 'INFN-T1_SCRATCHDISK', 'timeStart': 1680865528.3659701, 'catStart': 1680865528.7118917, 'relativeStart': 1680865528.3664834, 'transferStart': 1680865528.3664834, 'validateStart': 1680865528.6027198, 'timeEnd': 1680865528.8028684, 'dataset': 'user.rgarg:user.rgarg.509962.MGPy8EG_SVJSChan2j_500_0.v7a.mc20a_tree.root', 'version': None, 'duid': None, 'filename': 'user.rgarg.32860630._000001.tree.root', 'guid': '5E308C597A164196B79E631C984AB2F8', 'filesize': 855913, 'usr': '6bd6583f41c658b75251c5c5b9ada3da', 'appid': '5812169999', 'hostname': 'wn-200-10-21-09-a.cr.cnaf.infn.it', 'ip': '131.154.197.231', 'suspicious': '0', 'usrdn': '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602', 'url': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root', 'stateReason': 'OK', 'uuid': '58ddaf80d9fe4bb399a5e8a904df23d2', 'taskid': '33011675', 'pq': 'INFN-CNAF', 'scope': 'user.rgarg'}
+2023-04-07 11:05:28,803 | INFO     | executing command: curl --connect-timeout 20 --max-time 120 --cacert /home/condor/execute//dir_19307/x509up_u25606_pilot -v -k -d "{\"eventType\": \"get_sm_a\", \"eventVersion\": \"3.5.1 (17)+1.30.3\", \"protocol\": \"storm\", \"clientState\": \"DONE\", \"localSite\": \"INFN-T1_SCRATCHDISK\", \"remoteSite\": \"INFN-T1_SCRATCHDISK\", \"timeStart\": 1680865528.3659701, \"catStart\": 1680865528.7118917, \"relativeStart\": 1680865528.3664834, \"transferStart\": 1680865528.3664834, \"validateStart\": 1680865528.6027198, \"timeEnd\": 1680865528.8028684, \"dataset\": \"user.rgarg:user.rgarg.509962.MGPy8EG_SVJSChan2j_500_0.v7a.mc20a_tree.root\", \"version\": null, \"duid\": null, \"filename\": \"user.rgarg.32860630._000001.tree.root\", \"guid\": \"5E308C597A164196B79E631C984AB2F8\", \"filesize\": 855913, \"usr\": \"6bd6583f41c658b75251c5c5b9ada3da\", \"appid\": \"5812169999\", \"hostname\": \"wn-200-10-21-09-a.cr.cnaf.infn.it\", \"ip\": \"131.154.197.231\", \"suspicious\": \"0\", \"usrdn\": \"/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602\", \"url\": \"storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/user/rgarg/ff/af/user.rgarg.32860630._000001.tree.root\", \"stateReason\": \"OK\", \"uuid\": \"58ddaf80d9fe4bb399a5e8a904df23d2\", \"taskid\": \"33011675\", \"pq\": \"INFN-CNAF\", \"scope\": \"user.rgarg\"}" https://rucio-lb-prod.cern.ch/traces/
+2023-04-07 11:05:29,034 | INFO     | tracing report sent
+2023-04-07 11:05:29,034 | INFO     | rucio copytool, downloading file with scope:panda lfn:panda.0407105854.23583.lib._33011675.32274822442.lib.tgz
+2023-04-07 11:05:29,035 | INFO     | the file will be stored in /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999
+2023-04-07 11:05:29,035 | INFO     | overall transfer timeout=311
+2023-04-07 11:05:29,038 | INFO     | rucio API stage-in dictionary: {'did_scope': 'panda', 'did_name': 'panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'did': 'panda:panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'rse': 'INFN-T1_SCRATCHDISK', 'base_dir': '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999', 'no_subdir': True, 'pfn': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'transfer_timeout': 301, 'connection_timeout': 3600}
+2023-04-07 11:05:29,038 | INFO     | *** rucio API downloading file (taking over logging) ***
+2023-04-07 11:05:29,039 | INFO     | Processing 1 item(s) for input
+2023-04-07 11:05:29,039 | DEBUG    | Preparing PFN download of panda:panda.0407105854.23583.lib._33011675.32274822442.lib.tgz (storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz) from INFN-T1_SCRATCHDISK
+2023-04-07 11:05:29,039 | INFO     | Using main thread to download 1 file(s)
+2023-04-07 11:05:29,039 | DEBUG    | Start processing queued downloads
+2023-04-07 11:05:29,039 | INFO     | Preparing download of panda:panda.0407105854.23583.lib._33011675.32274822442.lib.tgz
+2023-04-07 11:05:29,040 | INFO     | Trying to download with storm and timeout of 301s from INFN-T1_SCRATCHDISK: panda:panda.0407105854.23583.lib._33011675.32274822442.lib.tgz 
+2023-04-07 11:05:29,040 | INFO     | Using PFN: storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz
+2023-04-07 11:05:29,041 | INFO     | storm.Default: StoRM protocol: /storage/gpfs_atlas/atlas/atlasscratchdisk/rucio///panda/a6/b1//panda.0407105854.23583.lib._33011675.32274822442.lib.tgz->/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz.part
+2023-04-07 11:05:29,041 | DEBUG    | renaming '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz.part' to '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz'
+2023-04-07 11:05:29,041 | INFO     | File panda:panda.0407105854.23583.lib._33011675.32274822442.lib.tgz successfully downloaded in 0.0 seconds
+2023-04-07 11:05:29,041 | INFO     | *** rucio API download client finished ***
+2023-04-07 11:05:29,041 | DEBUG    | client returned [{'did_scope': 'panda', 'did_name': 'panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'did': 'panda:panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'rse': 'INFN-T1_SCRATCHDISK', 'base_dir': '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999', 'no_subdir': True, 'pfn': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'connection_timeout': 3600, 'input_dids': {<rucio.common.didtype.DID object at 0x2ae0495e1b50>: {}}, 'scope': 'panda', 'name': 'panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'sources': [{'pfn': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'rse': 'INFN-T1_SCRATCHDISK'}], 'dest_file_paths': ['/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz'], 'temp_file_path': '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz.part', 'merged_options': {'ignore_checksum': True, 'transfer_timeout': 301}, 'attemptnr': 1, 'clientState': <FileDownloadState.DONE: 'DONE'>}]
+2023-04-07 11:05:29,041 | DEBUG    | trace_report_out=[{'hostname': 'wn-200-10-21-09-a.cr.cnaf.infn.it', 'localSite': 'INFN-T1_SCRATCHDISK', 'account': 'pilot', 'eventType': 'get_sm_a', 'eventVersion': '3.5.1 (17)+1.30.3', 'protocol': 'storm', 'clientState': <FileDownloadState.DONE: 'DONE'>, 'remoteSite': 'INFN-T1_SCRATCHDISK', 'timeStart': 1680865528.3659701, 'catStart': 1680865529.0350099, 'relativeStart': 1680865528.3664834, 'transferStart': 1680865529.040768, 'validateStart': 1680865528.6027198, 'timeEnd': 1680865528.8028684, 'dataset': 'panda.0407105854.23583.lib._33011675', 'version': None, 'duid': None, 'filename': 'panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'guid': 'CB6DAF8B6CA74D5392C7E332A059BD06', 'filesize': 1094383, 'usr': '6bd6583f41c658b75251c5c5b9ada3da', 'appid': '5812169999', 'ip': '131.154.197.231', 'suspicious': '0', 'usrdn': '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602', 'url': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'stateReason': 'OK', 'uuid': 'a8e174d86f884b859d8f15b6fd00e6cf', 'taskid': '33011675', 'pq': 'INFN-CNAF', 'scope': 'panda', 'datasetScope': '', 'transferEnd': 1680865529.0411253}]
+2023-04-07 11:05:29,049 | WARNING  | failed to get adler32 checksum for file /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz - [Errno 30] Read-only file system: '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz' (attempting alternative)
+2023-04-07 11:05:29,055 | INFO     | checksum (catalog): f6959036 (type: adler32)
+2023-04-07 11:05:29,055 | INFO     | checksum (local): f6959036
+2023-04-07 11:05:29,055 | INFO     | catalog and local checksum values are the same
+2023-04-07 11:05:29,055 | INFO     | tracing server: https://rucio-lb-prod.cern.ch/traces/
+2023-04-07 11:05:29,055 | INFO     | sending tracing report: {'eventType': 'get_sm_a', 'eventVersion': '3.5.1 (17)+1.30.3', 'protocol': 'storm', 'clientState': 'DONE', 'localSite': 'INFN-T1_SCRATCHDISK', 'remoteSite': 'INFN-T1_SCRATCHDISK', 'timeStart': 1680865528.3659701, 'catStart': 1680865529.0350099, 'relativeStart': 1680865528.3664834, 'transferStart': 1680865528.3664834, 'validateStart': 1680865528.6027198, 'timeEnd': 1680865529.0555577, 'dataset': 'panda.0407105854.23583.lib._33011675', 'version': None, 'duid': None, 'filename': 'panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'guid': 'CB6DAF8B6CA74D5392C7E332A059BD06', 'filesize': 1094383, 'usr': '6bd6583f41c658b75251c5c5b9ada3da', 'appid': '5812169999', 'hostname': 'wn-200-10-21-09-a.cr.cnaf.infn.it', 'ip': '131.154.197.231', 'suspicious': '0', 'usrdn': '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602', 'url': 'storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz', 'stateReason': 'OK', 'uuid': 'a8e174d86f884b859d8f15b6fd00e6cf', 'taskid': '33011675', 'pq': 'INFN-CNAF', 'scope': 'panda'}
+2023-04-07 11:05:29,056 | INFO     | executing command: curl --connect-timeout 20 --max-time 120 --cacert /home/condor/execute//dir_19307/x509up_u25606_pilot -v -k -d "{\"eventType\": \"get_sm_a\", \"eventVersion\": \"3.5.1 (17)+1.30.3\", \"protocol\": \"storm\", \"clientState\": \"DONE\", \"localSite\": \"INFN-T1_SCRATCHDISK\", \"remoteSite\": \"INFN-T1_SCRATCHDISK\", \"timeStart\": 1680865528.3659701, \"catStart\": 1680865529.0350099, \"relativeStart\": 1680865528.3664834, \"transferStart\": 1680865528.3664834, \"validateStart\": 1680865528.6027198, \"timeEnd\": 1680865529.0555577, \"dataset\": \"panda.0407105854.23583.lib._33011675\", \"version\": null, \"duid\": null, \"filename\": \"panda.0407105854.23583.lib._33011675.32274822442.lib.tgz\", \"guid\": \"CB6DAF8B6CA74D5392C7E332A059BD06\", \"filesize\": 1094383, \"usr\": \"6bd6583f41c658b75251c5c5b9ada3da\", \"appid\": \"5812169999\", \"hostname\": \"wn-200-10-21-09-a.cr.cnaf.infn.it\", \"ip\": \"131.154.197.231\", \"suspicious\": \"0\", \"usrdn\": \"/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602\", \"url\": \"storm://xfer.cr.cnaf.infn.it:8443/storage/gpfs_atlas/atlas/atlasscratchdisk/rucio/panda/a6/b1/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz\", \"stateReason\": \"OK\", \"uuid\": \"a8e174d86f884b859d8f15b6fd00e6cf\", \"taskid\": \"33011675\", \"pq\": \"INFN-CNAF\", \"scope\": \"panda\"}" https://rucio-lb-prod.cern.ch/traces/
+2023-04-07 11:05:29,295 | INFO     | tracing report sent
+2023-04-07 11:05:29,296 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:29,313 | INFO     | summary of transferred files:
+2023-04-07 11:05:29,313 | INFO     |  -- lfn=user.rgarg.32860630._000001.tree.root, status_code=0, status=transferred
+2023-04-07 11:05:29,313 | INFO     |  -- lfn=panda.0407105854.23583.lib._33011675.32274822442.lib.tgz, status_code=0, status=transferred
+2023-04-07 11:05:29,314 | INFO     | stage-in finished
+2023-04-07 11:05:29,382 | INFO     | created file: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/PoolFileCatalog.xml
+2023-04-07 11:05:29,383 | INFO     | created input file metadata:
+<?xml version="1.0" ?>
+<!DOCTYPE POOLFILECATALOG SYSTEM "InMemory">
+<POOLFILECATALOG>
+  <File ID="5E308C59-7A16-4196-B79E-631C984AB2F8">
+    <physical>
+      <pfn filetype="ROOT_All" name="user.rgarg.32860630._000001.tree.root"/>
+    </physical>
+    <logical/>
+  </File>
+  <File ID="CB6DAF8B-6CA7-4D53-92C7-E332A059BD06">
+    <physical>
+      <pfn filetype="ROOT_All" name="panda.0407105854.23583.lib._33011675.32274822442.lib.tgz"/>
+    </physical>
+    <logical/>
+  </File>
+</POOLFILECATALOG>
+
+2023-04-07 11:05:38,652 | INFO     | job 5812169999 has state 'running' - sending heartbeat
+2023-04-07 11:05:38,652 | INFO     | collecting machine features
+2023-04-07 11:05:38,653 | INFO     | machine features path does not exist (path="")
+2023-04-07 11:05:38,653 | INFO     | collecting job features
+2023-04-07 11:05:38,653 | INFO     | job features path does not exist (path="")
+2023-04-07 11:05:38,653 | INFO     | payload/TRF did not report the number of read events
+2023-04-07 11:05:38,654 | INFO     | executing command: lscpu
+2023-04-07 11:05:38,678 | INFO     | found 16 cores (8 cores per socket, 2 sockets)
+2023-04-07 11:05:38,679 | INFO     | executing command: grep -o 'avx2[^ ]*\|AVX2[^ ]*' /proc/cpuinfo
+2023-04-07 11:05:38,703 | INFO     | neither /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/memory_monitor_summary.json, nor /tmp/atlas_pf1poBB8/memory_monitor_summary.json exist
+2023-04-07 11:05:38,703 | WARNING  | file does not exist either: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/memory_monitor_output.txt
+2023-04-07 11:05:38,703 | INFO     | memory summary dictionary not yet available
+2023-04-07 11:05:38,703 | INFO     | server update attempt 1/10
+2023-04-07 11:05:38,705 | INFO     | executing command: curl -sS --compressed --connect-timeout 100 --max-time 120 --capath /cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/etc/grid-security-emi/certificates --cert /home/condor/execute//dir_19307/x509up_u25606_pilot --cacert /home/condor/execute//dir_19307/x509up_u25606_pilot --key /home/condor/execute//dir_19307/x509up_u25606_pilot -H 'User-Agent: pilot/3.5.1 (17) (Python 3.9.14; Linux x86_64)' -H 'Accept: application/json' --config /tmp/atlas_pf1poBB8/curl_updateJob_5812169999.config https://aipanda189.cern.ch:25443/server/panda/updateJob
+2023-04-07 11:05:39,044 | INFO     | server updateJob request completed in 1s for job 5812169999
+2023-04-07 11:05:39,044 | INFO     | server responded with: res = {'StatusCode': 0, 'command': 'NULL'}
+2023-04-07 11:05:39,045 | INFO     | will use payload executor: <pilot.control.payloads.generic.Executor object at 0x2ae04958b1c0>
+2023-04-07 11:05:39,045 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:39,061 | INFO     | pilot will prepare the setup
+2023-04-07 11:05:39,061 | INFO     | pilot is running a user analysis job
+2023-04-07 11:05:39,061 | INFO     | nothing to verify (for remote files)
+2023-04-07 11:05:39,061 | WARNING  | base trace report does not exist (/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/base_trace_report.json) - input file traces should already have been sent
+2023-04-07 11:05:39,061 | INFO     | generic job (non-ATLAS specific or with undefined swRelease)
+2023-04-07 11:05:39,062 | INFO     | executing command [trial 1/3]: curl -sS "http://pandaserver.cern.ch:25085/trf/user/runGen-00-00-02" > /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/runGen-00-00-02
+2023-04-07 11:05:39,147 | INFO     | curl command returned: (None)
+2023-04-07 11:05:39,148 | INFO     | successfully downloaded script
+2023-04-07 11:05:39,149 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:39,170 | INFO     | will not add ATHENA_PROC_NUMBER to cmd since the value is 1
+2023-04-07 11:05:39,170 | INFO     | will not add ATHENA_CORE_NUMBER to cmd since the value is 1
+2023-04-07 11:05:39,170 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:39,189 | INFO     | payload run command: export PANDA_RESOURCE='INFN-CNAF';export FRONTIER_ID="[33011675_5812169999]";export CMSSW_VERSION=$FRONTIER_ID;export PandaID=5812169999;export PanDA_TaskID='33011675';export PanDA_AttemptNr='1';export INDS='unknown';export ROOT_TTREECACHE_SIZE=1;export ROOTCORE_NCPUS=1;export RUCIO_APPID='panda-client-1.5.42-jedi-run';export RUCIO_ACCOUNT='pilot'; export MAKEFLAGS='-j1 QUICK=1 -l1';export X509_USER_PROXY=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy;./runGen-00-00-02 -j '' --sourceURL https://aipanda048.cern.ch -r . -l panda.0407105854.23583.lib._33011675.32274822442.lib.tgz -o '{'"'"'output.root'"'"': '"'"'user.kipark.33011675._000001.output.root'"'"'}' -i '['"'"'user.rgarg.32860630._000001.tree.root'"'"']' -p export%20ATLAS_LOCAL_ROOT_BASE%3D/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase%3B%20source%20/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/user/atlasLocalSetup.sh%3B%20lsetup%20%27root%206.20.06-x86_64-centos7-gcc8-opt%27%3B%20./exe/MicroNTupleMaker%20%25IN --cmtConfig x86_64-centos7-gcc8-opt; 
+2023-04-07 11:05:39,190 | INFO     | payload iteration loop #1
+2023-04-07 11:05:39,190 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:39,209 | INFO     | 
+
+payload execution command:
+
+export PANDA_RESOURCE='INFN-CNAF';export FRONTIER_ID="[33011675_5812169999]";export CMSSW_VERSION=$FRONTIER_ID;export PandaID=5812169999;export PanDA_TaskID='33011675';export PanDA_AttemptNr='1';export INDS='unknown';export ROOT_TTREECACHE_SIZE=1;export ROOTCORE_NCPUS=1;export RUCIO_APPID='panda-client-1.5.42-jedi-run';export RUCIO_ACCOUNT='pilot'; export MAKEFLAGS='-j1 QUICK=1 -l1';export X509_USER_PROXY=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy;./runGen-00-00-02 -j '' --sourceURL https://aipanda048.cern.ch -r . -l panda.0407105854.23583.lib._33011675.32274822442.lib.tgz -o '{'"'"'output.root'"'"': '"'"'user.kipark.33011675._000001.output.root'"'"'}' -i '['"'"'user.rgarg.32860630._000001.tree.root'"'"']' -p export%20ATLAS_LOCAL_ROOT_BASE%3D/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase%3B%20source%20/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/user/atlasLocalSetup.sh%3B%20lsetup%20%27root%206.20.06-x86_64-centos7-gcc8-opt%27%3B%20./exe/MicroNTupleMaker%20%25IN --cmtConfig x86_64-centos7-gcc8-opt; 
+
+2023-04-07 11:05:39,209 | INFO     | created file: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/my_release_setup.sh
+2023-04-07 11:05:39,209 | INFO     | created file: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/container_script.sh
+2023-04-07 11:05:39,210 | INFO     | executing command: export X509_USER_PROXY=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy;if [ -z "$ATLAS_LOCAL_ROOT_BASE" ]; then export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase; fi;export thePlatform="centos7";export PandaID=5812169999;source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh -c $thePlatform -s /srv/my_release_setup.sh -r /srv/container_script.sh -e "-B /storage/gpfs_atlas:/storage/gpfs_atlas:ro"
+2023-04-07 11:05:39,217 | INFO     | started -- pid=10846 executable=export PANDA_RESOURCE='INFN-CNAF';export FRONTIER_ID="[33011675_5812169999]";export CMSSW_VERSION=$FRONTIER_ID;export PandaID=5812169999;export PanDA_TaskID='33011675';export PanDA_AttemptNr='1';export INDS='unknown';export ROOT_TTREECACHE_SIZE=1;export ROOTCORE_NCPUS=1;export RUCIO_APPID='panda-client-1.5.42-jedi-run';export RUCIO_ACCOUNT='pilot'; export MAKEFLAGS='-j1 QUICK=1 -l1';export X509_USER_PROXY=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy;./runGen-00-00-02 -j '' --sourceURL https://aipanda048.cern.ch -r . -l panda.0407105854.23583.lib._33011675.32274822442.lib.tgz -o '{'"'"'output.root'"'"': '"'"'user.kipark.33011675._000001.output.root'"'"'}' -i '['"'"'user.rgarg.32860630._000001.tree.root'"'"']' -p export%20ATLAS_LOCAL_ROOT_BASE%3D/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase%3B%20source%20/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/user/atlasLocalSetup.sh%3B%20lsetup%20%27root%206.20.06-x86_64-centos7-gcc8-opt%27%3B%20./exe/MicroNTupleMaker%20%25IN --cmtConfig x86_64-centos7-gcc8-opt; 
+2023-04-07 11:05:39,217 | INFO     | utility command to be executed after the payload: MemoryMonitor 
+2023-04-07 11:05:39,218 | INFO     | executing command: ps -u 5661 axfo pid,user,args
+2023-04-07 11:05:39,296 | INFO     | executing command: ps -u 5661 axfo pid,user,args
+2023-04-07 11:05:39,364 | INFO     | will use pid=10846 for memory monitor
+2023-04-07 11:05:39,364 | INFO     | executing command: cd /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999;export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase;source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh --quiet;lsetup prmon;prmon --pid 10846 --filename memory_monitor_output.txt --json-summary memory_monitor_summary.json --interval 60
+2023-04-07 11:05:39,374 | INFO     | job 5812169999 has state 'running' - sending heartbeat
+2023-04-07 11:05:39,375 | INFO     | collecting machine features
+2023-04-07 11:05:39,375 | INFO     | machine features path does not exist (path="")
+2023-04-07 11:05:39,375 | INFO     | collecting job features
+2023-04-07 11:05:39,375 | INFO     | job features path does not exist (path="")
+2023-04-07 11:05:39,376 | INFO     | payload/TRF did not report the number of read events
+2023-04-07 11:05:39,377 | INFO     | executing command: lscpu
+2023-04-07 11:05:39,417 | INFO     | found 16 cores (8 cores per socket, 2 sockets)
+2023-04-07 11:05:39,418 | INFO     | executing command: grep -o 'avx2[^ ]*\|AVX2[^ ]*' /proc/cpuinfo
+2023-04-07 11:05:39,457 | INFO     | neither /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/memory_monitor_summary.json, nor /tmp/atlas_pf1poBB8/memory_monitor_summary.json exist
+2023-04-07 11:05:39,457 | WARNING  | file does not exist either: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/memory_monitor_output.txt
+2023-04-07 11:05:39,457 | INFO     | memory summary dictionary not yet available
+2023-04-07 11:05:39,457 | INFO     | server update attempt 1/10
+2023-04-07 11:05:39,459 | INFO     | executing command: curl -sS --compressed --connect-timeout 100 --max-time 120 --capath /cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase/etc/grid-security-emi/certificates --cert /home/condor/execute//dir_19307/x509up_u25606_pilot --cacert /home/condor/execute//dir_19307/x509up_u25606_pilot --key /home/condor/execute//dir_19307/x509up_u25606_pilot -H 'User-Agent: pilot/3.5.1 (17) (Python 3.9.14; Linux x86_64)' -H 'Accept: application/json' --config /tmp/atlas_pf1poBB8/curl_updateJob_5812169999.config https://aipanda058.cern.ch:25443/server/panda/updateJob
+2023-04-07 11:05:39,909 | INFO     | server updateJob request completed in 0s for job 5812169999
+2023-04-07 11:05:39,910 | INFO     | server responded with: res = {'StatusCode': 0, 'command': 'NULL'}
+2023-04-07 11:05:39,910 | INFO     | will wait for graceful exit
+2023-04-07 11:05:56,026 | INFO     | 
+
+finished pid=10846 exit_code=0 state=finished
+
+2023-04-07 11:05:56,026 | INFO     | existing post-setup time: 1680865539.1900032 s (since epoch) (current time: 1680865556.026931)
+2023-04-07 11:05:56,027 | INFO     | payload setup finished 4.809996843338013 s later than previously recorded
+2023-04-07 11:05:56,027 | INFO     | stopping process 'MemoryMonitor' with signal 10
+2023-04-07 11:05:56,027 | INFO     | taking a short nap (3 s) to allow the memory monitor to finish writing to the summary file (#0/#20)
+2023-04-07 11:05:59,031 | INFO     | copied /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/memory_monitor_summary.json to /tmp/atlas_pf1poBB8
+2023-04-07 11:05:59,031 | INFO     | CPU consumption time: 8.870000000000001 s (rounded to 9 s)
+2023-04-07 11:05:59,031 | INFO     | main payload execution returned zero exit code
+2023-04-07 11:05:59,032 | WARNING  | job report does not exist: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/jobReport.json
+2023-04-07 11:05:59,032 | WARNING  | file does not exist: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/metadata.xml
+2023-04-07 11:05:59,033 | INFO     | generated guid for lfn=user.kipark.33011675._000001.output.root: ED7B19B0-966F-43FC-8E2C-C40E3D206E37
+2023-04-07 11:05:59,033 | INFO     | looking for number of processed events (source #1: jobReport.json)
+2023-04-07 11:05:59,033 | INFO     | looking for number of processed events (source #2: metadata.xml)
+2023-04-07 11:05:59,033 | WARNING  | file does not exist: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/metadata.xml
+2023-04-07 11:05:59,033 | INFO     | looking for number of processed events (source #3: athena summary file(s)
+2023-04-07 11:05:59,033 | INFO     | did not find any athena summary files
+2023-04-07 11:05:59,034 | INFO     | looking for out-of-memory errors in payload.stderr
+2023-04-07 11:05:59,034 | INFO     | looking for out-of-memory errors in payload.stdout
+2023-04-07 11:05:59,037 | INFO     | executing command: tail -n 10 /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/payload.stdout
+2023-04-07 11:05:59,055 | INFO     | executing command: tail -n 10 /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/payload.stdout
+2023-04-07 11:05:59,075 | INFO     | main payload error analysis completed - did not find any errors
+2023-04-07 11:05:59,256 | INFO     | will perform stage-out for job id=5812169999
+2023-04-07 11:05:59,256 | INFO     | prepare to stage-out 1 output file(s)
+2023-04-07 11:05:59,257 | INFO     | switched proxy on unified dispatch queue: X509_USER_PROXY=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy
+2023-04-07 11:05:59,257 | INFO     | stage-out will not be done in a container
+2023-04-07 11:05:59,257 | INFO     | configured copytools per activity: acopytools={'pr': ['rucio'], 'pw': ['rucio'], 'read_lan': ['rucio'], 'write_lan': ['rucio'], 'default': ['rucio']}
+2023-04-07 11:05:59,258 | INFO     | trying to use copytool=rucio for activity=['pw', 'w', 'default']
+2023-04-07 11:05:59,259 | INFO     | ready to transfer (stage-out) files: [ accessmode=
+ activity=['pw', 'w', 'default']
+ allow_lan=True
+ allow_wan=False
+ checkinputsize=True
+ checksum={'adler32': 'e70bc83f'}
+ dataset=user.kipark.509962.mc20a.v7p1a_output.root/
+ ddm_activity=['write_lan', 'write_wan']
+ ddmendpoint=INFN-T1_SCRATCHDISK
+ direct_access_lan=False
+ direct_access_wan=False
+ domain=
+ filesize=374538
+ filetype=output
+ guid=ED7B19B0-966F-43FC-8E2C-C40E3D206E37
+ inputddms=['INFN-T1_DATADISK', 'INFN-T1_DATATAPE', 'INFN-T1_MCTAPE', 'INFN-T1_SCRATCHDISK']
+ is_tar=False
+ lfn=user.kipark.33011675._000001.output.root
+ mtime=0
+ protocol_id=None
+ protocols=None
+ replicas=None
+ scope=user.kipark
+ status=None
+ status_code=0
+ storage_token=
+ surl=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.kipark.33011675._000001.output.root
+ turl=
+ workdir=None
+]
+2023-04-07 11:05:59,318 | INFO     | rucio stage-out: X509_USER_PROXY=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy
+2023-04-07 11:05:59,318 | INFO     | rucio copytool, uploading file with scope: user.kipark and lfn: user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,319 | INFO     | the file will be uploaded to INFN-T1_SCRATCHDISK
+2023-04-07 11:05:59,319 | INFO     | overall transfer timeout=310
+2023-04-07 11:05:59,320 | INFO     | rucio API stage-out dictionary: {'path': '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.kipark.33011675._000001.output.root', 'rse': 'INFN-T1_SCRATCHDISK', 'did_scope': 'user.kipark', 'no_register': True, 'transfer_timeout': 300, 'connection_timeout': 3600, 'guid': 'ED7B19B0-966F-43FC-8E2C-C40E3D206E37'}
+2023-04-07 11:05:59,321 | INFO     | *** rucio API uploading file (taking over logging) ***
+2023-04-07 11:05:59,321 | DEBUG    | summary_file_path=/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/rucio_upload.json
+2023-04-07 11:05:59,321 | DEBUG    | trace_report_out=[]
+2023-04-07 11:05:59,323 | DEBUG    | Num. of files that upload client is processing: 1
+2023-04-07 11:05:59,425 | DEBUG    | Input validation done.
+2023-04-07 11:05:59,425 | INFO     | Preparing upload for file user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,455 | DEBUG    | wan domain is used for the upload
+2023-04-07 11:05:59,455 | DEBUG    | gfal.Default: connecting to storage
+2023-04-07 11:05:59,458 | DEBUG    | gfal.Default: checking if file exists None
+2023-04-07 11:05:59,459 | DEBUG    | Checking if davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root exists
+2023-04-07 11:05:59,459 | DEBUG    | gfal.Default: checking if file exists davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,490 | DEBUG    | gfal.Default: closing protocol connection
+2023-04-07 11:05:59,492 | DEBUG    | [{'hostname': 'xfer.cr.cnaf.infn.it', 'scheme': 'davs', 'port': 8443, 'prefix': '/webdav/atlas/atlasscratchdisk/rucio/', 'impl': 'rucio.rse.protocols.gfal.Default', 'domains': {'lan': {'read': 0, 'write': 1, 'delete': 1}, 'wan': {'read': 1, 'write': 1, 'delete': 1, 'third_party_copy_read': 1, 'third_party_copy_write': 1}}, 'extended_attributes': None}]
+2023-04-07 11:05:59,492 | INFO     | Trying upload with davs to INFN-T1_SCRATCHDISK
+2023-04-07 11:05:59,492 | DEBUG    | Processing upload with the domain: wan
+2023-04-07 11:05:59,493 | DEBUG    | gfal.Default: connecting to storage
+2023-04-07 11:05:59,495 | DEBUG    | The PFN created from the LFN: davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,495 | DEBUG    | gfal.Default: checking if file exists davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,523 | DEBUG    | gfal.Default: checking if file exists davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root.rucio.upload
+2023-04-07 11:05:59,540 | DEBUG    | put: Attempt 1
+2023-04-07 11:05:59,540 | DEBUG    | gfal.Default: uploading file from user.kipark.33011675._000001.output.root to davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root.rucio.upload
+2023-04-07 11:05:59,648 | INFO     | Successful upload of temporary file. davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root.rucio.upload
+2023-04-07 11:05:59,648 | DEBUG    | skip_upload_stat=False
+2023-04-07 11:05:59,649 | DEBUG    | stat: pfn=davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root.rucio.upload
+2023-04-07 11:05:59,649 | DEBUG    | gfal.Default: getting stats of file davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root.rucio.upload
+2023-04-07 11:05:59,686 | DEBUG    | Filesize: Expected=374538 Found=374538
+2023-04-07 11:05:59,686 | DEBUG    | Checksum: Expected=e70bc83f Found=e70bc83f
+2023-04-07 11:05:59,686 | DEBUG    | Renaming file davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root.rucio.upload to davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,686 | DEBUG    | gfal.Default: renaming file from davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root.rucio.upload to davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,712 | DEBUG    | gfal.Default: closing protocol connection
+2023-04-07 11:05:59,714 | DEBUG    | Upload done.
+2023-04-07 11:05:59,714 | INFO     | Successfully uploaded file user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,714 | DEBUG    | Summary will be available at /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/rucio_upload.json
+2023-04-07 11:05:59,714 | WARNING  | *** rucio API upload client finished ***
+2023-04-07 11:05:59,714 | DEBUG    | client returned 0
+2023-04-07 11:05:59,715 | DEBUG    | set turl=davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root
+2023-04-07 11:05:59,715 | INFO     | local checksum (e70bc83f) = remote checksum (e70bc83f)
+2023-04-07 11:05:59,715 | INFO     | tracing server: https://rucio-lb-prod.cern.ch/traces/
+2023-04-07 11:05:59,715 | INFO     | sending tracing report: {'eventType': 'put_sm_a', 'eventVersion': '3.5.1 (17)+1.30.3', 'protocol': 'davs', 'clientState': 'DONE', 'localSite': 'INFN-T1_SCRATCHDISK', 'remoteSite': 'INFN-T1_SCRATCHDISK', 'timeStart': 1680865559.2575674, 'catStart': 1680865559.318996, 'relativeStart': 1680865559.2580187, 'transferStart': 1680865559.2580192, 'validateStart': None, 'timeEnd': 1680865559.7153463, 'dataset': 'user.kipark.509962.mc20a.v7p1a_output.root/', 'version': None, 'duid': None, 'filename': 'user.kipark.33011675._000001.output.root', 'guid': 'ED7B19B0966F43FC8E2CC40E3D206E37', 'filesize': 374538, 'usr': '6bd6583f41c658b75251c5c5b9ada3da', 'appid': '5812169999', 'hostname': 'wn-200-10-21-09-a.cr.cnaf.infn.it', 'ip': '131.154.197.231', 'suspicious': '0', 'usrdn': '/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602', 'url': '/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.kipark.33011675._000001.output.root', 'stateReason': 'OK', 'uuid': '6d5c42cc528645167799eb42f6510147', 'taskid': '33011675', 'pq': 'INFN-CNAF', 'scope': 'user.kipark'}
+2023-04-07 11:05:59,715 | INFO     | executing command: curl --connect-timeout 20 --max-time 120 --cacert /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/x509up_u25606_pilot-unified.proxy -v -k -d "{\"eventType\": \"put_sm_a\", \"eventVersion\": \"3.5.1 (17)+1.30.3\", \"protocol\": \"davs\", \"clientState\": \"DONE\", \"localSite\": \"INFN-T1_SCRATCHDISK\", \"remoteSite\": \"INFN-T1_SCRATCHDISK\", \"timeStart\": 1680865559.2575674, \"catStart\": 1680865559.318996, \"relativeStart\": 1680865559.2580187, \"transferStart\": 1680865559.2580192, \"validateStart\": null, \"timeEnd\": 1680865559.7153463, \"dataset\": \"user.kipark.509962.mc20a.v7p1a_output.root/\", \"version\": null, \"duid\": null, \"filename\": \"user.kipark.33011675._000001.output.root\", \"guid\": \"ED7B19B0966F43FC8E2CC40E3D206E37\", \"filesize\": 374538, \"usr\": \"6bd6583f41c658b75251c5c5b9ada3da\", \"appid\": \"5812169999\", \"hostname\": \"wn-200-10-21-09-a.cr.cnaf.infn.it\", \"ip\": \"131.154.197.231\", \"suspicious\": \"0\", \"usrdn\": \"/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=kipark/CN=851541/CN=Ki Ryeong Park/CN=1825548602\", \"url\": \"/tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/user.kipark.33011675._000001.output.root\", \"stateReason\": \"OK\", \"uuid\": \"6d5c42cc528645167799eb42f6510147\", \"taskid\": \"33011675\", \"pq\": \"INFN-CNAF\", \"scope\": \"user.kipark\"}" https://rucio-lb-prod.cern.ch/traces/
+2023-04-07 11:05:59,940 | INFO     | tracing report sent
+2023-04-07 11:05:59,941 | INFO     | executing command: ps aux -q 29805
+2023-04-07 11:05:59,960 | INFO     | switched back proxy on unified dispatch queue: X509_USER_PROXY=/home/condor/execute//dir_19307/x509up_u25606_pilot (reset X509_UNIFIED_DISPATCH)
+2023-04-07 11:05:59,960 | INFO     | summary of transferred files:
+2023-04-07 11:05:59,960 | INFO     |  -- lfn=user.kipark.33011675._000001.output.root, status_code=0, status=transferred
+2023-04-07 11:05:59,961 | INFO     | executing command: ls -lF /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999
+2023-04-07 11:05:59,990 | INFO     | executing command: ls -lF /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999
+2023-04-07 11:06:00,004 | INFO     | removing file: /tmp/atlas_pf1poBB8/PanDA_Pilot-5812169999/panda.0407105854.23583.lib._33011675.32274822442.lib.tgz
+2023-04-07 11:06:00,005 | INFO     | will create archive /tmp/atlas_pf1poBB8/user.kipark.509962.mc20a.v7p1a.log.33011675.000001.log.tgz
+2023-04-07 11:06:00,005 | INFO     | executing command: pwd;tar cvfz /tmp/atlas_pf1poBB8/user.kipark.509962.mc20a.v7p1a.log.33011675.000001.log.tgz tarball_PandaJob_5812169999_INFN-CNAF --dereference --one-file-system; echo $?

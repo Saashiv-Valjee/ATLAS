@@ -1,0 +1,12 @@
+{
+ "user.kipark:user.kipark.33011675._000001.output.root": {
+  "adler32": "e70bc83f",
+  "bytes": 374538,
+  "guid": "ED7B19B0966F43FC8E2CC40E3D206E37",
+  "md5": "1095e61b84c0a16a15e07ba4adac2399",
+  "name": "user.kipark.33011675._000001.output.root",
+  "pfn": "davs://xfer.cr.cnaf.infn.it:8443/webdav/atlas/atlasscratchdisk/rucio/user/kipark/94/af/user.kipark.33011675._000001.output.root",
+  "rse": "INFN-T1_SCRATCHDISK",
+  "scope": "user.kipark"
+ }
+}
