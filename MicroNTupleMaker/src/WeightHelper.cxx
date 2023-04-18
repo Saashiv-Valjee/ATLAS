@@ -5,7 +5,8 @@ void MicroNTupleMaker::SetWeight(double sumWInput){
         fChain->GetEntry(0);
         dsid_int = mcChannelNumber;
        	string dsid = to_string(dsid_int); 
-       
+	
+	cout << "Setting weights using DSID " << dsid << endl;       
 	sumw = sumWInput;
 	double gfe = GetGenFilterEff(dsid);
 	double xs = GetXSection(dsid);
@@ -22,6 +23,8 @@ double MicroNTupleMaker::GetGenFilterEff(string dsid){
 	// Gen Filter Eff
 	map<string, double> gfe;
 	// Multijet
+	gfe["364700"] = 9.75e-1; 
+	gfe["364701"] = 2.44e-2; 
 	gfe["364702"] = 9.86e-3; 
 	gfe["364703"] = 1.17e-2;
 	gfe["364704"] = 1.34e-2;
@@ -162,6 +165,8 @@ double MicroNTupleMaker::GetXSection(string dsid){
 	// Cross section in nb
 	map<string, double> xs;
 	// Multijet
+	xs["364700"] = 7.81e+7; 
+	xs["364701"] = 7.81e+7; 
 	xs["364702"] = 2.43e+6; 
 	xs["364703"] = 2.65e+4;
 	xs["364704"] = 2.55e+2;
