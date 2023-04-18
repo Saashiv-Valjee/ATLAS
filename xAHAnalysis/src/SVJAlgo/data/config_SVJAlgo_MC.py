@@ -42,7 +42,7 @@ c.algorithm("BasicEventSelection",    {
   "m_PVNTrack"                  : 2,
   #---------------------------- Other ---------------------------------#
   "m_useMetaData"               : False,
-  "m_msgLevel"                  : "Info",
+  "m_msgLevel"                  : "Error",
 })
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% JetCalibrator %%%%%%%%%%%%%%%%%%%%%%%%%%#
@@ -263,7 +263,7 @@ c.algorithm("SVJAlgorithm",    		 {
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
     "m_eventDetailStr"          	: "",
-    "m_jetDetailStr"            	: "kinematic allTrack flavorTag truth energy",
+    "m_jetDetailStr"            	: "kinematic allTrack flavorTag trackPV energy",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
     "m_metDetailStr"            	: "metClus",
     "m_jetDetailStrSyst"        	: "kinematic",

@@ -29,6 +29,20 @@ PlotParams P_jet2_E			= {"jet2_E", "Subleading R=0.4 Jet E", "Energy [GeV]", 50,
 PlotParams P_fabs_jet1_eta		= {"fabs(jet1_eta)", "Leading R=0.4 Jet |Eta|", "|#eta|", 50, 0, 3.0};
 PlotParams P_fabs_jet2_eta		= {"fabs(jet2_eta)", "Subleading R=0.4 Jet |Eta|", "|#eta|", 50, 0, 3.0};
 
+PlotParams P_jet1_NumTrkPt1000PV	= {"jet1_NumTrkPt1000PV", "Leading R=0.4 Jet NumTrkPt1000PV", "NumTrk", 60, 0, 60};
+PlotParams P_jet1_NumTrkPt500PV		= {"jet1_NumTrkPt500PV", "Leading R=0.4 Jet NumTrkPt500PV", "NumTrk", 60, 0, 60};
+PlotParams P_jet1_TrackWidthPt1000PV	= {"jet1_TrackWidthPt1000PV", "Leading R=0.4 Jet TrackWidthPt1000PV", "TrackWidth", 50, 0.0, 1.0};
+PlotParams P_jet1_SumPtTrkPt500PV	= {"jet1_SumPtTrkPt500PV", "Leading R=0.4 Jet SumPtTrkPt500PV", "SumPt", 50, 0, 2000};
+PlotParams P_jet1_Width			= {"jet1_Width", "Leading R=0.4 Jet Width", "Width", 50, 0, 0.3};
+PlotParams P_jet1_EMFrac		= {"jet1_EMFrac", "Leading R=0.4 Jet EMFrac", "EMFrac", 50, 0, 1};
+PlotParams P_jet2_NumTrkPt1000PV	= {"jet2_NumTrkPt1000PV", "Subleading R=0.4 Jet NumTrkPt1000PV", "NumTrk", 60, 0, 60};
+PlotParams P_jet2_NumTrkPt500PV		= {"jet2_NumTrkPt500PV", "Subleading R=0.4 Jet NumTrkPt500PV", "NumTrk", 60, 0, 60};
+PlotParams P_jet2_TrackWidthPt1000PV	= {"jet2_TrackWidthPt1000PV", "Subleading R=0.4 Jet TrackWidthPt1000PV", "TrackWidth", 50, 0.0, 1.0};
+PlotParams P_jet2_SumPtTrkPt500PV	= {"jet2_SumPtTrkPt500PV", "Subleading R=0.4 Jet SumPtTrkPt500PV", "SumPt", 50, 0, 2000};
+PlotParams P_jet2_Width			= {"jet2_Width", "Subleading R=0.4 Jet Width", "Width", 50, 0, 0.3};
+PlotParams P_jet2_EMFrac		= {"jet2_EMFrac", "Subleading R=0.4 Jet EMFrac", "EMFrac", 50, 0, 1};
+
+
 PlotParams P_fatjet1_pt			= {"fatjet1_pt", "Leading R=1.0 Jet p_{T}", "p_{T} [GeV]", 70, 0, 3500};
 PlotParams P_fatjet1_eta		= {"fatjet1_eta", "Leading R=1.0 Jet Eta", "#eta", 50, -5.0, 5.0};
 PlotParams P_fatjet1_phi		= {"fatjet1_phi", "Leading R=1.0 Jet Phi", "#phi", 50, -3.14, 3.14};
