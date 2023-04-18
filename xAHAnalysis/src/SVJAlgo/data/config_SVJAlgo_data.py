@@ -286,7 +286,7 @@ c.algorithm("SVJAlgorithm",    		 {
     #----------------------- Output ----------------------------#
     "m_reclusterJets"           	: False,
     "m_eventDetailStr"          	: "",
-    "m_jetDetailStr"            	: "kinematic trackPV flavorTag energy",
+    "m_jetDetailStr"            	: "kinematic trackPV flavorTag energy allTrack",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
     "m_metDetailStr"            	: "metClus",
     "m_jetDetailStrSyst"        	: "kinematic",

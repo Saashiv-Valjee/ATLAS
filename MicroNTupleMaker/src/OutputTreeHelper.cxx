@@ -11,8 +11,8 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"n_jets",
         	"jet1_pt", "jet1_eta", "jet1_phi", "jet1_E", 
         	"jet2_pt", "jet2_eta", "jet2_phi", "jet2_E", 
-		"jet1_DL1r", "jet1_EMFrac", "jet1_FracSamplingMax", "jet1_Width",
-		"jet2_DL1r", "jet2_EMFrac", "jet2_FracSamplingMax", "jet2_Width",
+		"jet1_DL1dv01", "jet1_GN1", "jet1_EMFrac", "jet1_FracSamplingMax", "jet1_Width",
+		"jet2_DL1dv01", "jet2_GN1", "jet2_EMFrac", "jet2_FracSamplingMax", "jet2_Width",
        		"jet1_NumTrkPt500PV", "jet1_NumTrkPt1000PV", "jet1_SumPtTrkPt500PV", "jet1_TrackWidthPt1000PV",
        		"jet2_NumTrkPt500PV", "jet2_NumTrkPt1000PV", "jet2_SumPtTrkPt500PV", "jet2_TrackWidthPt1000PV",
 
@@ -48,13 +48,15 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"all_jets_TrackWidthPt1000PV",
 		"all_jets_Width",
 		"all_jets_EMFrac",
-		"all_jets_DL1r"
-		"all_jets_FracSamplingMax",
+		"all_jets_DL1dv01",
+		"all_jets_GN1"
+		"all_jets_FracSamplingMax"
 		//"all_fatjets_pt",
 		//"all_fatjets_eta",
 		//"all_fatjets_phi",
 		//"all_fatjets_m",
 	};
+
 
 	for (auto treename: treenames){
 		tree_output[treename] = new TTree( Form("%s",treename.c_str()), Form("%s",treename.c_str()) );
@@ -88,7 +90,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars_vector["all_jets_TrackWidthPt1000PV"]= jet_TrackWidthPt1000PV;	
 	tree_output_vars_vector["all_jets_Width"]= jet_Width;	
 	tree_output_vars_vector["all_jets_EMFrac"]= jet_EMFrac;	
-	tree_output_vars_vector["all_jets_DL1r"]= jet_DL1r;	
+	tree_output_vars_vector["all_jets_DL1dv01"]= jet_DL1dv01;	
+	tree_output_vars_vector["all_jets_GN1"]= jet_GN1;	
 	tree_output_vars_vector["all_jets_FracSamplingMax"]= jet_FracSamplingMax;	
 	
 	tree_output_vars["runNumber"] = runNumber;
@@ -103,7 +106,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["jet1_phi"] = jet_phi->at(0);
 	tree_output_vars["jet1_E"] = jet_E->at(0);
 
-        tree_output_vars["jet1_DL1r"] = jet_DL1r->at(0);
+        tree_output_vars["jet1_DL1dv01"] = jet_DL1dv01->at(0);
+        tree_output_vars["jet1_GN1"] = jet_GN1->at(0);
         tree_output_vars["jet1_SumPtTrkPt500PV"] = jet_SumPtTrkPt500PV->at(0);
         tree_output_vars["jet1_NumTrkPt500PV"] = jet_NumTrkPt500PV->at(0);
         tree_output_vars["jet1_TrackWidthPt1000PV"] = jet_TrackWidthPt1000PV->at(0);
@@ -117,7 +121,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 		tree_output_vars["jet2_phi"] = jet_phi->at(1);
 		tree_output_vars["jet2_E"] = jet_E->at(1);
 
-        	tree_output_vars["jet2_DL1r"] = jet_DL1r->at(1);
+        	tree_output_vars["jet2_DL1dv01"] = jet_DL1dv01->at(1);
+        	tree_output_vars["jet2_GN1"] = jet_GN1->at(1);
         	tree_output_vars["jet2_SumPtTrkPt500PV"] = jet_SumPtTrkPt500PV->at(1);
         	tree_output_vars["jet2_NumTrkPt500PV"] = jet_NumTrkPt500PV->at(1);
         	tree_output_vars["jet2_TrackWidthPt1000PV"] = jet_TrackWidthPt1000PV->at(1);
@@ -132,7 +137,8 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 		tree_output_vars["jet2_phi"] = -999;
 		tree_output_vars["jet2_E"] = -999;
 
-        	tree_output_vars["jet2_DL1r"] = -999;
+        	tree_output_vars["jet2_DL1dv01"] = -999;
+        	tree_output_vars["jet2_GN1"] = -999;
         	tree_output_vars["jet2_SumPtTrkPt500PV"] = -999;
         	tree_output_vars["jet2_NumTrkPt500PV"] = -999;
         	tree_output_vars["jet2_TrackWidthPt1000PV"] = -999;
