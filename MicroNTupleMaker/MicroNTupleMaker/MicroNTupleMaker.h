@@ -321,6 +321,8 @@ void MicroNTupleMaker::Init(TTree *tree)
    // (once per file to be processed).
 
    // Set object pointer
+   passedTriggers = 0;
+   disabledTriggers = 0;
    jet_E = 0;
    jet_pt = 0;
    jet_phi = 0;
