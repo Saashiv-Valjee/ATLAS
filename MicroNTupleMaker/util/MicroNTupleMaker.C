@@ -148,7 +148,7 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	// Fill and loop
 	myMaker.DeclareHistograms(metadata, cutflow, cutflow_weighted);
 	myMaker.DeclareOutputTrees();
-	myMaker.Loop();
+	//myMaker.Loop();
 	myMaker.WriteOutputTrees();
 	myMaker.WriteHistograms();
 }
