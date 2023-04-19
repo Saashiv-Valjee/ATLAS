@@ -49,7 +49,7 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"all_jets_Width",
 		"all_jets_EMFrac",
 		"all_jets_DL1dv01",
-		"all_jets_GN1"
+		"all_jets_GN1",
 		"all_jets_FracSamplingMax"
 		//"all_fatjets_pt",
 		//"all_fatjets_eta",
