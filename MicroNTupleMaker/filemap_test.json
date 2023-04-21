@@ -1,3 +1,2 @@
-[{"inDS":"user.rgarg:user.rgarg.364701.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ1WithSW.v7a.mc20d_tree.root", "outDS":"user.ebusch.364701.mc20d.v7p2testa"},
-{"inDS":"user.rgarg:user.rgarg.364704.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ4WithSW.v7a.mc20d_tree.root", "outDS":"user.ebusch.364704.mc20d.v7p2testa"},
-{"inDS":"user.rgarg:user.rgarg.364712.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ12WithSW.v7a.mc20d_tree.root", "outDS":"user.ebusch.364712.mc20d.v7p2testa"}]
+[{"inDS":"user.rgarg:user.rgarg.364706.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ6WithSW.v7a.mc20d_tree.root", "outDS":"user.ebusch.364706.mc20d.v7p2testd"},
+{"inDS":"user.rgarg:user.rgarg.364710.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ10WithSW.v7a.mc20d_tree.root", "outDS":"user.ebusch.364710.mc20d.v7p2testd"}]
