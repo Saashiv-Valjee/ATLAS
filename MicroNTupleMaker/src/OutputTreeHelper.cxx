@@ -18,13 +18,12 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 
 		// -- Jet Calculations -- //
 		"maxphi_minphi", "dphi_min", "dphi_max",
-		"dphi_min_MET",
 		"dphi_MET_j1j2",
                 "pt_balance_12", //"pt_balance_sa",
                 "mjj_12", "mT_jj", 
 		"mT_jj_neg", "met_jj_neg",
 		//"mJJ_12", "mT_JJ",
-		"dR_12", "deta_12",
+		"dR_12", "deta_12", "dphi_12",
 		"deltaY_12", //"deltaY_sa",
 		"hT", "rT",
 		"aplanarity", "sphericity", "sphericity_T",	
@@ -44,13 +43,13 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"all_jets_E",
 		"all_jets_NumTrkPt500PV",
 		"all_jets_NumTrkPt1000PV",
-		"all_jets_SumPtTrkPt500PV",
-		"all_jets_TrackWidthPt1000PV",
+		//"all_jets_SumPtTrkPt500PV",
+		//"all_jets_TrackWidthPt1000PV",
 		"all_jets_Width",
-		"all_jets_EMFrac",
-		"all_jets_DL1dv01",
-		"all_jets_GN1",
-		"all_jets_FracSamplingMax"
+		//"all_jets_EMFrac",
+		//"all_jets_DL1dv01",
+		//"all_jets_GN1",
+		//"all_jets_FracSamplingMax"
 		//"all_fatjets_pt",
 		//"all_fatjets_eta",
 		//"all_fatjets_phi",
@@ -86,13 +85,13 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars_vector["all_jets_E"]= jet_E;	
 	tree_output_vars_vector["all_jets_NumTrkPt500PV"]= jet_NumTrkPt500PV;	
 	tree_output_vars_vector["all_jets_NumTrkPt1000PV"]= jet_NumTrkPt1000PV;	
-	tree_output_vars_vector["all_jets_SumPtTrkPt500PV"]= jet_SumPtTrkPt500PV;	
-	tree_output_vars_vector["all_jets_TrackWidthPt1000PV"]= jet_TrackWidthPt1000PV;	
+	//tree_output_vars_vector["all_jets_SumPtTrkPt500PV"]= jet_SumPtTrkPt500PV;	
+	//tree_output_vars_vector["all_jets_TrackWidthPt1000PV"]= jet_TrackWidthPt1000PV;	
 	tree_output_vars_vector["all_jets_Width"]= jet_Width;	
-	tree_output_vars_vector["all_jets_EMFrac"]= jet_EMFrac;	
-	tree_output_vars_vector["all_jets_DL1dv01"]= jet_DL1dv01;	
-	tree_output_vars_vector["all_jets_GN1"]= jet_GN1;	
-	tree_output_vars_vector["all_jets_FracSamplingMax"]= jet_FracSamplingMax;	
+	//tree_output_vars_vector["all_jets_EMFrac"]= jet_EMFrac;	
+	//tree_output_vars_vector["all_jets_DL1dv01"]= jet_DL1dv01;	
+	//tree_output_vars_vector["all_jets_GN1"]= jet_GN1;	
+	//tree_output_vars_vector["all_jets_FracSamplingMax"]= jet_FracSamplingMax;	
 	
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
@@ -154,7 +153,6 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["rT"] = rT;
 
 	tree_output_vars["maxphi_minphi"] = maxphi_minphi;
-	tree_output_vars["dphi_min_MET"] = dphi_min_MET;
 	tree_output_vars["dphi_MET_j1j2"] = dphi_MET_j1j2;
         tree_output_vars["pt_balance_12"] = pt_balance_12;
 
@@ -166,6 +164,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["dR_12"] = dR_12;
 	tree_output_vars["deta_12"] = deta_12;
         tree_output_vars["deltaY_12"] = deltaY_12;
+        tree_output_vars["dphi_12"] = dphi_12;
 	tree_output_vars["dphi_min"] = dphi_min;
 	tree_output_vars["dphi_max"] = dphi_max;
 	tree_output_vars["aplanarity"] = aplanarity;

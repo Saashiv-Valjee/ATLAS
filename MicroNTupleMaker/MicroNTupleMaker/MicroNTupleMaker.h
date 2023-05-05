@@ -49,14 +49,13 @@ public :
    float weight_scale, sumw;
    int n_svj, n_asvj;
    float dphi_min, dphi_max, maxphi_minphi;
-   float dphi_min_MET;
    float dphi_MET_j1j2;
    float pt_balance_12;
    float mjj_12, mT_jj;
    float mT_jj_neg, met_jj_neg;
    //float mJJ_12, mT_JJ;
    float hT, dR_12, deta_12, rT;
-   float deltaY_12;
+   float deltaY_12, dphi_12;
    float aplanarity, sphericity, sphericity_T;
 
    //Weight histogram
@@ -243,12 +242,12 @@ public :
    virtual void     Show(Long64_t entry = -1);
 
    // FunctionHelpers 
-   virtual vector<pair<int,float>> FindSVJ( vector<float> *jet_phi);
+   //virtual vector<pair<int,float>> FindSVJ( vector<float> *jet_phi);
    virtual float    		GetPtBalance(TLorentzVector v1, TLorentzVector v2);
-   virtual float    		GetDPhi(float phi1, float phi2);
-   virtual float    		GetDPhiMET(TLorentzVector v1, TLorentzVector v2, float met_phi);
+   virtual float    		GetDPhi(TLorentzVector v1, TLorentzVector v2);
+   virtual float    		GetDPhiMET(TLorentzVector v1, TLorentzVector v2, TLorentzVector met_v);
    virtual float    		GetMjj(TLorentzVector v1, TLorentzVector v2);
-   virtual float    		GetMt(TLorentzVector v1, TLorentzVector v2, float met, float met_phi);
+   virtual float    		GetMt(TLorentzVector v1, TLorentzVector v2, TLorentzVector met_v);
    virtual float    		GetMtNeg(TLorentzVector v1, TLorentzVector v2);
    virtual float    		GetDeltaY(TLorentzVector v1, TLorentzVector v2);
    virtual float    		GetHT(vector<float> *jet_pt);
@@ -266,7 +265,7 @@ public :
    virtual void     	WriteHistograms();
 
    // WeightHelper
-   virtual void     	SetWeight(double sumWInput);
+   virtual void     	SetWeight();
    virtual double     	GetGenFilterEff(string dsid);
    virtual double     	GetXSection(string dsid);
 };

@@ -11,6 +11,13 @@ typedef struct PlotParams PlotParams;
 
 // Physics Variables
 
+float getDphi(float phi1, float phi2){
+    float dPhi = fabs(phi1 - phi2);
+    if(dPhi > 3.14)  dPhi = 2*3.14-dPhi;
+    return dPhi;
+}
+
+
 PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 50, 0, 1000};
 PlotParams P_met_phi			= {"met_phi", "Missing E_{T} #phi", "#phi [rad]", 50, -3.14, 3.14 };
 PlotParams P_TruthMET_TruthSumEt 	= {"MET_TruthMET_TruthSumEt", "TruthMET SumE_{T}", "E [GeV]", 50, 0, 700};  
@@ -31,17 +38,21 @@ PlotParams P_fabs_jet2_eta		= {"fabs(jet2_eta)", "Subleading R=0.4 Jet |Eta|", "
 
 PlotParams P_jet1_NumTrkPt1000PV	= {"jet1_NumTrkPt1000PV", "Leading R=0.4 Jet NumTrkPt1000PV", "NumTrk", 60, 0, 60};
 PlotParams P_jet1_NumTrkPt500PV		= {"jet1_NumTrkPt500PV", "Leading R=0.4 Jet NumTrkPt500PV", "NumTrk", 60, 0, 60};
-PlotParams P_jet1_TrackWidthPt1000PV	= {"jet1_TrackWidthPt1000PV", "Leading R=0.4 Jet TrackWidthPt1000PV", "TrackWidth", 50, 0.0, 1.0};
+PlotParams P_jet1_TrackWidthPt1000PV	= {"jet1_TrackWidthPt1000PV", "Leading R=0.4 Jet TrackWidthPt1000PV", "TrackWidth", 50, 0.0, 0.5};
 PlotParams P_jet1_SumPtTrkPt500PV	= {"jet1_SumPtTrkPt500PV", "Leading R=0.4 Jet SumPtTrkPt500PV", "SumPt", 50, 0, 2000};
 PlotParams P_jet1_Width			= {"jet1_Width", "Leading R=0.4 Jet Width", "Width", 50, 0, 0.3};
 PlotParams P_jet1_EMFrac		= {"jet1_EMFrac", "Leading R=0.4 Jet EMFrac", "EMFrac", 50, 0, 1};
 PlotParams P_jet2_NumTrkPt1000PV	= {"jet2_NumTrkPt1000PV", "Subleading R=0.4 Jet NumTrkPt1000PV", "NumTrk", 60, 0, 60};
 PlotParams P_jet2_NumTrkPt500PV		= {"jet2_NumTrkPt500PV", "Subleading R=0.4 Jet NumTrkPt500PV", "NumTrk", 60, 0, 60};
-PlotParams P_jet2_TrackWidthPt1000PV	= {"jet2_TrackWidthPt1000PV", "Subleading R=0.4 Jet TrackWidthPt1000PV", "TrackWidth", 50, 0.0, 1.0};
+PlotParams P_jet2_TrackWidthPt1000PV	= {"jet2_TrackWidthPt1000PV", "Subleading R=0.4 Jet TrackWidthPt1000PV", "TrackWidth", 50, 0.0, 0.5};
 PlotParams P_jet2_SumPtTrkPt500PV	= {"jet2_SumPtTrkPt500PV", "Subleading R=0.4 Jet SumPtTrkPt500PV", "SumPt", 50, 0, 2000};
-PlotParams P_jet2_Width			= {"jet2_Width", "Subleading R=0.4 Jet Width", "Width", 50, 0, 0.3};
+PlotParams P_jet2_Width			= {"jet2_Width", "Subleading R=0.4 Jet Width", "Width", 100, 0, 0.3};
 PlotParams P_jet2_EMFrac		= {"jet2_EMFrac", "Subleading R=0.4 Jet EMFrac", "EMFrac", 50, 0, 1};
 
+PlotParams P_jet1_GN1			= {"jet1_GN1", "Leading R=0.4 Jet GN1", "GN1", 60, -12, 25};
+PlotParams P_jet2_GN1			= {"jet2_GN1", "Subleading R=0.4 Jet GN1", "GN1", 60, -12, 25};
+PlotParams P_jet1_DL1dv01		= {"jet1_DL1dv01", "Leading R=0.4 Jet DL1dv01", "DL1dv01", 60, -10, 20};
+PlotParams P_jet2_DL1dv01		= {"jet2_DL1dv01", "Subleading R=0.4 Jet DL1dv01", "DL1dv01", 60, -10, 20};
 
 PlotParams P_fatjet1_pt			= {"fatjet1_pt", "Leading R=1.0 Jet p_{T}", "p_{T} [GeV]", 70, 0, 3500};
 PlotParams P_fatjet1_eta		= {"fatjet1_eta", "Leading R=1.0 Jet Eta", "#eta", 50, -5.0, 5.0};
@@ -88,6 +99,9 @@ PlotParams P_met_jj_neg 		= {"met_jj_neg", "-j1-j2", "MET Approx [GeV]", 80, 400
 PlotParams P_mT_JJ			= {"mT_JJ", "mT System (R=1.0)", "mT [GeV]", 150, 0, 10000};
 PlotParams P_deta_12			= {"deta_12", "#Delta#eta (leading, subleading jet)", "#Delta#eta", 50, 0, 10};
 PlotParams P_dR_12			= {"dR_12", "#Delta R (leading, subleading jet)", "#Delta R", 50, 0, 10};
+PlotParams P_dphi_12			= {"getDphi(jet1_phi, jet2_phi)", "#Delta#phi (j1,j2)", "#Delta#phi", 50,0,3.2};
+PlotParams P_dphi_23			= {"getDphi(jet2_phi, all_jets_phi[2])", "#Delta#phi (j2,j3)", "#Delta#phi", 50,0,3.2};
+PlotParams P_dphi_best			= {"max(getDphi(jet1_phi,jet2_phi),getDphi(jet2_phi,all_jets_phi[2]))", "max #Delta#phi(j1,j2,j3)", "#Delta#Phi", 50,0,3.2};
 PlotParams P_rT			 	= {"rT", "MET/mT", "RT", 50, 0, 1.5};
 PlotParams P_hT				= {"hT", "Jet pT Sum", "HT [GeV]", 50, 0, 2500};
 PlotParams P_hT_r04			= {"hT_r04", "Small-R Jet pT Sum", "HT [GeV]", 100, 0, 3000};

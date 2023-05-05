@@ -1,5 +1,5 @@
 /* ====================================================================================================================== */
-void MicroNTupleMaker::SetWeight(double sumWInput){
+void MicroNTupleMaker::SetWeight(){
 
         //Int_t dsid_int;
         fChain->GetEntry(0);
@@ -7,12 +7,12 @@ void MicroNTupleMaker::SetWeight(double sumWInput){
        	string dsid = to_string(dsid_int); 
 	
 	cout << "Setting weights using DSID " << dsid << endl;       
-	sumw = sumWInput;
+
 	double gfe = GetGenFilterEff(dsid);
 	double xs = GetXSection(dsid);
         double lumi = 1.39e8; //(lumi in nb)
 
-	weight_scale = lumi*xs*gfe/sumw;
+	weight_scale = lumi*xs*gfe;
 }
 
 /* ====================================================================================================================== */

@@ -4,23 +4,20 @@ float MicroNTupleMaker::GetDEta(float eta1, float eta2){
 }
 
 /* =================================================================== */
-float MicroNTupleMaker::GetDPhi(float phi1, float phi2){
-    float dPhi = phi1 - phi2;
-    if(dPhi > 3.14)  dPhi -= 2*3.14;
-    if(dPhi < -3.14) dPhi += 2*3.14;
-    return dPhi;
+float MicroNTupleMaker::GetDPhi(TLorentzVector v1, TLorentzVector v2){ 
+    return fabs(v1.DeltaPhi(v2));
 }
 
 /* =================================================================== */
-float MicroNTupleMaker::GetDPhiMET(TLorentzVector v1, TLorentzVector v2, float met_phi){
+float MicroNTupleMaker::GetDPhiMET(TLorentzVector v1, TLorentzVector v2, TLorentzVector met){
 	TLorentzVector v12;
 	v12 = -v1-v2;
-	float dPhi = GetDPhi(v12.Phi(), met_phi);
-	return fabs(dPhi);
+	float dPhi = GetDPhi(v12, met);
+	return dPhi;
 }
 
 /* =================================================================== */
-vector<pair<int,float>> MicroNTupleMaker::FindSVJ( vector<float> *jet_phi ){
+/*vector<pair<int,float>> MicroNTupleMaker::FindSVJ( vector<float> *jet_phi ){
 
   	float maxphi = 0;
   	float minphi = 10; 
@@ -43,7 +40,7 @@ vector<pair<int,float>> MicroNTupleMaker::FindSVJ( vector<float> *jet_phi ){
         jet_info.push_back(asvj_info);
 	return jet_info;
 	
-}
+}*/
 
 /* =================================================================== */
 float MicroNTupleMaker::GetPtBalance(TLorentzVector v1, TLorentzVector v2){
@@ -67,10 +64,8 @@ float MicroNTupleMaker::GetDeltaY(TLorentzVector v1, TLorentzVector v2){
 }
 
 /* =================================================================== */
-float MicroNTupleMaker::GetMt(TLorentzVector v1, TLorentzVector v2, float met_met, float met_phi){
+float MicroNTupleMaker::GetMt(TLorentzVector v1, TLorentzVector v2, TLorentzVector met_v){
  	TLorentzVector jj = v1 + v2;
-	TLorentzVector met_v;
-	met_v.SetPtEtaPhiM(met_met,0,met_phi,0.0);
  	float dijetEt = sqrt(pow(jj.M(),2) + pow(jj.Pt(),2));
 	float mT2 = pow(dijetEt + met_v.Et(),2) - pow((jj+met_v).Pt(),2);	
  	return sqrt(mT2);
@@ -97,9 +92,7 @@ float MicroNTupleMaker::GetHT(vector<float> *jet_pt){
 
 /* =================================================================== */
 float MicroNTupleMaker::GetdR(TLorentzVector v1, TLorentzVector v2){
-	float dphi = GetDPhi(v1.Phi(), v2.Phi());
-	float deta = GetDEta(v1.Eta(), v2.Eta());	
-	return sqrt( pow(dphi,2) + pow(deta,2));
+	return v1.DeltaR(v2);
 }
 
 /* =================================================================== */
