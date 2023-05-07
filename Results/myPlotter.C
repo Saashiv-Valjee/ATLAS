@@ -3,11 +3,11 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	//string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v6/v6.5/user.ebusch.";
-	string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v7/v7.2/user.ebusch.";
+	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
 	//vector<string> filetags = {"QCDbkg", "WpJets", "ZpJets", "ttbarr", "singlt", "dibson", "508547","508548","508549","508550" };
-	vector<string> filetags = {"QCDbkg", "515487", "515490", "515503", "515506", "515523", "515526"}; // pairs
+	vector<string> filetags = {"QCDbkg"};//, "515487", "515490", "515503", "515506", "515523", "515526"}; // pairs
 	//vector<string> filetags = {/*"totalBKG",*/ "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
 	//vector<string> filetags = {"QCDbkg", "Znunu", "515503", "515506"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
@@ -33,20 +33,21 @@ void myPlotter(){
 	class MicroNTuplePlotter plotter( filetags, path );
 
         //***************** Plot General options *******************// 
-        plotter.plot_norm = true;
+        plotter.plot_norm = false;
         plotter.plot_log = true;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="v7p1";
+        plotter.output_file_tag ="v7p2";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
+	plotter.stamp_integral = true;
+	plotter.stamp_cuts = true;
         plotter.violin = false;
-	plotter.stamp_integral = false;
         plotter.solid_bkg = true;
 	plotter.use_better_legend_names=true;
 	plotter.reverse_cdf_plots = {"fabs(jet1_eta)", "fabs(jet2_eta)", "dphi_min", "deltaY_12"};
-	plotter.use_normalized_cdf = false;
+	plotter.use_normalized_cdf = true;
 	//plotter.SetLegendManual( 0.5, 0.5, 0.9, 0.9 );
 	plotter.colors = {kBlack, /*kGray+2,*/ kBlue+1, kAzure+7, kGreen+3, kSpring, kRed+1, kOrange-3, kPink+10, kPink+1, kYellow, kYellow-3  }; //pairs
         //plotter.colors = { kBlack, kRed, kOrange-3, kYellow+1, kSpring-1, kAzure, kBlue+2, kViolet}; //rainbow
@@ -57,8 +58,8 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_pt, P_jet2_pt, P_jet_svj_pt, P_jet_asvj_pt}, OP_jet_pt );
 
         //***************** Plot Cut options *******************// 
-        //plotter.SetCuts(cuts["njet"]);
-       	//plotter.SetComparisonCuts({"deltaY_12 < 5.0", "deltaY_12 < 3.0"});	
+        //plotter.SetCuts("jet2_Width > 0.07");
+       	plotter.SetComparisonCuts({"", "jet2_Width > 0.07"});	
         //plotter.ApplySelectiveCuts("508548", "dPhi_min < 2.0");
 
         //***************** Binning and Legend *******************//  
@@ -79,12 +80,12 @@ void myPlotter(){
 	//plotter.PlotOverlay("");
 
 	//plotter.SetPlots ( plot_all );
-	plotter.SetPlots ( {P_jet2_SumPtTrkPt500PV, P_jet2_NumTrkPt500PV, P_jet2_TrackWidthPt1000PV, P_jet2_NumTrkPt1000PV, P_jet2_Width, P_jet2_EMFrac});
+	//plotter.SetPlots ( {P_jet2_SumPtTrkPt500PV, P_jet2_NumTrkPt500PV, P_jet2_TrackWidthPt1000PV, P_jet2_NumTrkPt1000PV, P_jet2_Width, P_jet2_EMFrac});
 	//plotter.SaveOutputFile("test");
-        //plotter.SetPlots ( { P_jet1_phi, P_jet2_phi, P_pt_balance_12, P_mT_jj, P_jet1_E, P_jet2_E, P_n_jets, P_met_met, P_maxphi_minphi, P_rT, P_mT_jj_neg} );
+        //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
 	//plotter.SetPlots( {P_dphi_min_MET, P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2});
-	//plotter.SetPlots ( {P_jet1_D2, P_jet2_D2, P_jet1_Split12, P_jet2_Split12, P_jet1_Split23, P_jet2_Split23} );
-	plotter.Plot("");
+	plotter.SetPlots ( {P_mT_jj} );
+	plotter.Plot("ratio");
 
         //***************** 2D Plot *******************// 	
 	//plotter.Plot2D(P_mT_jj, P_met_met);
