@@ -10,9 +10,9 @@ void MicroNTupleMaker::SetWeight(){
 
 	double gfe = GetGenFilterEff(dsid);
 	double xs = GetXSection(dsid);
-        double lumi = 1.39e8; //(lumi in nb)
+        //double lumi = 1.39e8; //(lumi in nb)
 
-	weight_scale = lumi*xs*gfe;
+	weight_scale = xs*gfe;
 }
 
 /* ====================================================================================================================== */

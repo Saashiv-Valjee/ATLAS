@@ -40,11 +40,6 @@ void MicroNTupleMaker::Loop()
 		if (processedEntries % 10000 == 0 && nentries <= 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		if (processedEntries % 100000 == 0 && nentries > 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		
-		// preselection
-		if (jet_Width->at(1) < 0.07) continue;
-                cutflow->Fill(15);
-		cutflow_weighted->Fill(15, mcEventWeight*weight_scale);
-
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
 

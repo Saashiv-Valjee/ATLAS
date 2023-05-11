@@ -315,7 +315,7 @@ public :
                         h_temp = new TH1F( hist_name_full, "", NBins, xmin, xmax);
                 }
 
-		TCut cut_weight = Form( "weight" ); 
+		TCut cut_weight = Form( "weight/SumW" ); 
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
@@ -363,7 +363,7 @@ public :
 		TString hist_name_full = Form("%s__%s__%s", hist_name_x.c_str(), hist_name_y.c_str(), filetag_treename.c_str());
 		h_temp = new TH2F( hist_name_full, "", NBins_x, xmin, xmax, NBins_y, ymin, ymax);	
 		
-		TCut cut_weight = Form( "weight" ); 
+		TCut cut_weight = Form( "weight/SumW" ); 
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
