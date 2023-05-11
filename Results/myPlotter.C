@@ -3,11 +3,11 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v7/v7.2/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v7/v7.3/user.ebusch.";
 	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
 	//vector<string> filetags = {"QCDbkg", "WpJets", "ZpJets", "ttbarr", "singlt", "dibson", "508547","508548","508549","508550" };
-	vector<string> filetags = {"QCDbkg"};//, "515487", "515490", "515503", "515506", "515523", "515526"}; // pairs
+	vector<string> filetags = {"QCDbkg"};// "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
 	//vector<string> filetags = {/*"totalBKG",*/ "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
 	//vector<string> filetags = {"QCDbkg", "Znunu", "515503", "515506"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
@@ -27,22 +27,33 @@ void myPlotter(){
 					P_mT_jj,
 					P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2,
 					P_pt_balance_12, P_maxphi_minphi, P_rT,
-					P_n_jets, P_hT, P_deltaY_12
+					P_n_jets, P_hT, P_deltaY_12,
+					P_dphi_12, P_dphi_min
+					};
+
+	vector<PlotParams> plot_trks= {	P_jet2_SumPtTrkPt500PV, P_jet2_NumTrkPt500PV, 
+					P_jet2_TrackWidthPt1000PV, P_jet2_NumTrkPt1000PV,
+					P_jet2_Width, P_jet2_EMFrac,
+					P_jet1_SumPtTrkPt500PV, P_jet1_NumTrkPt500PV, 
+					P_jet1_TrackWidthPt1000PV, P_jet1_NumTrkPt1000PV, 
+					P_jet1_Width, P_jet1_EMFrac,
+					P_jet1_DL1dv01, P_jet2_DL1dv01, 
+					P_jet1_GN1, P_jet2_GN1
 					};
 
 	class MicroNTuplePlotter plotter( filetags, path );
 
         //***************** Plot General options *******************// 
-        plotter.plot_norm = false;
-        plotter.plot_log = true;
+        plotter.plot_norm = true;
+        plotter.plot_log = false;
         plotter.plot_log_ratio = false;
-	plotter.plot_error = false;
-        plotter.output_file_tag ="v7p2";
+	plotter.plot_error = true;
+        plotter.output_file_tag ="v7p3";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
-	plotter.stamp_integral = true;
-	plotter.stamp_cuts = true;
+	plotter.stamp_integral = false;
+	plotter.stamp_cuts = false;
         plotter.violin = false;
         plotter.solid_bkg = true;
 	plotter.use_better_legend_names=true;
@@ -59,7 +70,7 @@ void myPlotter(){
 
         //***************** Plot Cut options *******************// 
         //plotter.SetCuts("jet2_Width > 0.07");
-       	plotter.SetComparisonCuts({"", "jet2_Width > 0.07"});	
+       	//plotter.SetComparisonCuts({"", "dphi_min>0.1", "dphi_min>0.5"});	
         //plotter.ApplySelectiveCuts("508548", "dPhi_min < 2.0");
 
         //***************** Binning and Legend *******************//  
@@ -80,12 +91,12 @@ void myPlotter(){
 	//plotter.PlotOverlay("");
 
 	//plotter.SetPlots ( plot_all );
-	//plotter.SetPlots ( {P_jet2_SumPtTrkPt500PV, P_jet2_NumTrkPt500PV, P_jet2_TrackWidthPt1000PV, P_jet2_NumTrkPt1000PV, P_jet2_Width, P_jet2_EMFrac});
+	plotter.SetPlots ( {P_met_phi} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
 	//plotter.SetPlots( {P_dphi_min_MET, P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2});
-	plotter.SetPlots ( {P_mT_jj} );
-	plotter.Plot("ratio");
+	//plotter.SetPlots ( {P_mT_jj, P_jet1_pt} );
+	plotter.Plot("");
 
         //***************** 2D Plot *******************// 	
 	//plotter.Plot2D(P_mT_jj, P_met_met);

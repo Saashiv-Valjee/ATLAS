@@ -5,7 +5,7 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 	vector<string> myvars = {
         	 
 		// -- EventLevel -- //
-		"runNumber", "eventNumber","mcEventWeight","weight","SumW",
+		"runNumber", "eventNumber","mcEventWeight","weight","sumw",
 
 		// -- JetLevel -- //
 		"n_jets",
@@ -60,8 +60,8 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 	for (auto treename: treenames){
 		tree_output[treename] = new TTree( Form("%s",treename.c_str()), Form("%s",treename.c_str()) );
 		
-                for( auto var: myvars_vector ) 
-			tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars_vector[var] );
+                //for( auto var: myvars_vector ) 
+		//	tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars_vector[var] );
 
                 for( auto var: myvars_string ) 
 			tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars_string[var] );
@@ -79,15 +79,15 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 
 	tree_output_vars_string["year"] = year_mc;
 
-	tree_output_vars_vector["all_jets_pt"] = jet_pt;
-	tree_output_vars_vector["all_jets_eta"] = jet_eta;
-	tree_output_vars_vector["all_jets_phi"] = jet_phi;
-	tree_output_vars_vector["all_jets_E"]= jet_E;	
-	tree_output_vars_vector["all_jets_NumTrkPt500PV"]= jet_NumTrkPt500PV;	
-	tree_output_vars_vector["all_jets_NumTrkPt1000PV"]= jet_NumTrkPt1000PV;	
+	//tree_output_vars_vector["all_jets_pt"] = jet_pt;
+	//tree_output_vars_vector["all_jets_eta"] = jet_eta;
+	//tree_output_vars_vector["all_jets_phi"] = jet_phi;
+	//tree_output_vars_vector["all_jets_E"]= jet_E;	
+	//tree_output_vars_vector["all_jets_NumTrkPt500PV"]= jet_NumTrkPt500PV;	
+	//tree_output_vars_vector["all_jets_NumTrkPt1000PV"]= jet_NumTrkPt1000PV;	
 	//tree_output_vars_vector["all_jets_SumPtTrkPt500PV"]= jet_SumPtTrkPt500PV;	
 	//tree_output_vars_vector["all_jets_TrackWidthPt1000PV"]= jet_TrackWidthPt1000PV;	
-	tree_output_vars_vector["all_jets_Width"]= jet_Width;	
+	//tree_output_vars_vector["all_jets_Width"]= jet_Width;	
 	//tree_output_vars_vector["all_jets_EMFrac"]= jet_EMFrac;	
 	//tree_output_vars_vector["all_jets_DL1dv01"]= jet_DL1dv01;	
 	//tree_output_vars_vector["all_jets_GN1"]= jet_GN1;	
@@ -97,7 +97,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["eventNumber"] = eventNumber;
 	tree_output_vars["mcEventWeight"] = mcEventWeight;
 	tree_output_vars["weight"] = mcEventWeight*weight_scale;
-	tree_output_vars["SumW"] = sumw;
+	tree_output_vars["sumw"] = sumw;
 
 	tree_output_vars["n_jets"] = njet;
 	tree_output_vars["jet1_pt"] = jet_pt->at(0); // GeV

@@ -103,9 +103,9 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 				cutflow->Add(h2l);
 				cutflow_weighted->Add(h3l);
 			}
-			cout << "h sumW: " << h1l->GetBinContent(3) << endl;
+			cout << "h sumW: " << h3l->GetBinContent(1) << endl;
 			f->Close();
-			cout << "metadata sumW: " << metadata->GetBinContent(3) << endl;
+			cout << "cutflow_w sumW: " << cutflow_weighted->GetBinContent(1) << endl;
 			fChain->Add(path_string);
 			
 		}
@@ -113,7 +113,7 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	}
 
         // Weight from Metadata histogram
-	double sumWInput = metadata->GetBinContent(3);
+	double sumWInput = cutflow_weighted->GetBinContent(1);
 	//double sumWInput = 1;
 
 	// Create output file
@@ -126,6 +126,7 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	if (infiletag.find("mc20a") != string::npos) mc = "mc20a";
 	if (infiletag.find("mc20d") != string::npos) mc = "mc20d";
 	if (infiletag.find("mc20e") != string::npos) mc = "mc20e";
+	if (infiletag.find("data") != string::npos) mc = "data";
         if (local) cout <<"mc: "<<mc<<endl;
 	string outfiletag = "user.ebusch." + dsid + "." + mc;
 	//string outfiletag = "user.kipark." + infiletag + "." + mc;
