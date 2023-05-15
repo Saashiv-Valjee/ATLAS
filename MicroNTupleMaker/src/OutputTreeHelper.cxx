@@ -148,17 +148,9 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	}
 
 	tree_output_vars["met_met"] = metFinalClus;
-	tree_output_vars["met_phi"] = metFinalClusPhi;
-	tree_output_vars["hT"] = hT;
 	tree_output_vars["rT"] = rT;
 
-	tree_output_vars["maxphi_minphi"] = maxphi_minphi;
-	tree_output_vars["dphi_MET_j1j2"] = dphi_MET_j1j2;
-        tree_output_vars["pt_balance_12"] = pt_balance_12;
-
-        tree_output_vars["mjj_12"] = mjj_12;
         tree_output_vars["mT_jj"] = mT_jj;
-        tree_output_vars["mT_jj_neg"] = mT_jj_neg;
         tree_output_vars["met_jj_neg"] = met_jj_neg;
 
 	tree_output_vars["dR_12"] = dR_12;
@@ -170,7 +162,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["aplanarity"] = aplanarity;
 	tree_output_vars["sphericity"] = sphericity;
 	tree_output_vars["sphericity_T"] = sphericity_T;
-
+        tree_output_vars["mT_jj_neg"] = mT_jj_neg;
 
 	tree_output[treename]->Fill();
 }
