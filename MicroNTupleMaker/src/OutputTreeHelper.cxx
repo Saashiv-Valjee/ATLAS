@@ -11,22 +11,12 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"n_jets",
         	"jet1_pt", "jet1_eta", "jet1_phi", "jet1_E", 
         	"jet2_pt", "jet2_eta", "jet2_phi", "jet2_E", 
-		"jet1_DL1dv01", "jet1_GN1", "jet1_EMFrac", "jet1_FracSamplingMax", "jet1_Width",
-		"jet2_DL1dv01", "jet2_GN1", "jet2_EMFrac", "jet2_FracSamplingMax", "jet2_Width",
-       		"jet1_NumTrkPt500PV", "jet1_NumTrkPt1000PV", "jet1_SumPtTrkPt500PV", "jet1_TrackWidthPt1000PV",
-       		"jet2_NumTrkPt500PV", "jet2_NumTrkPt1000PV", "jet2_SumPtTrkPt500PV", "jet2_TrackWidthPt1000PV",
+        	"jet3_pt", "jet3_eta", "jet3_phi", "jet3_E", 
 
 		// -- Jet Calculations -- //
-		"maxphi_minphi", "dphi_min", "dphi_max",
-		"dphi_MET_j1j2",
-                "pt_balance_12", //"pt_balance_sa",
-                "mjj_12", "mT_jj", 
-		"mT_jj_neg", "met_jj_neg",
-		//"mJJ_12", "mT_JJ",
-		"dR_12", "deta_12", "dphi_12",
-		"deltaY_12", //"deltaY_sa",
-		"hT", "rT",
-		"aplanarity", "sphericity", "sphericity_T",	
+                "mT_jj", 
+		"mT_jj_neg",
+		"rT",
 
 		// -- MET -- //
         	"met_met", "met_phi"
