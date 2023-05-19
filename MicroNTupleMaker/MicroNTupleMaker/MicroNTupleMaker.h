@@ -113,6 +113,15 @@ public :
    vector<vector<float> > *jet_fJvtEff_SF_Medium;
    vector<int>     *jet_fJvtPass_Tight;
    vector<vector<float> > *jet_fJvtEff_SF_Tight;
+   vector<int>     *jet_GhostTrackCount;
+   vector<float>   *jet_GhostTrackPt;
+   vector<vector<float> > *jet_GhostTrack_pt;
+   vector<vector<float> > *jet_GhostTrack_qOverP;
+   vector<vector<float> > *jet_GhostTrack_eta;
+   vector<vector<float> > *jet_GhostTrack_phi;
+   vector<vector<float> > *jet_GhostTrack_e;
+   vector<vector<float> > *jet_GhostTrack_d0;
+   vector<vector<float> > *jet_GhostTrack_z0;
    vector<float>   *jet_DL1r;
    vector<float>   *jet_DL1r_pu;
    vector<float>   *jet_DL1r_pc;
@@ -131,17 +140,6 @@ public :
    vector<float>   *jet_GN1_pb;
    vector<int>     *jet_HadronConeExclTruthLabelID;
    vector<int>     *jet_HadronConeExclExtendedTruthLabelID;
-   vector<int>     *jet_ConeTruthLabelID;
-   vector<int>     *jet_TruthCount;
-   vector<float>   *jet_TruthLabelDeltaR_B;
-   vector<float>   *jet_TruthLabelDeltaR_C;
-   vector<float>   *jet_TruthLabelDeltaR_T;
-   vector<int>     *jet_PartonTruthLabelID;
-   vector<float>   *jet_GhostTruthAssociationFraction;
-   vector<float>   *jet_truth_E;
-   vector<float>   *jet_truth_pt;
-   vector<float>   *jet_truth_phi;
-   vector<float>   *jet_truth_eta;
    Float_t         metFinalClus;
    Float_t         metFinalClusPx;
    Float_t         metFinalClusPy;
@@ -196,6 +194,15 @@ public :
    TBranch        *b_jet_fJvtEff_SF_Medium;   //!
    TBranch        *b_jet_fJvtPass_Tight;   //!
    TBranch        *b_jet_fJvtEff_SF_Tight;   //!
+   TBranch        *b_jet_GhostTrackCount;   //!
+   TBranch        *b_jet_GhostTrackPt;   //!
+   TBranch        *b_jet_GhostTrack_pt;   //!
+   TBranch        *b_jet_GhostTrack_qOverP;   //!
+   TBranch        *b_jet_GhostTrack_eta;   //!
+   TBranch        *b_jet_GhostTrack_phi;   //!
+   TBranch        *b_jet_GhostTrack_e;   //!
+   TBranch        *b_jet_GhostTrack_d0;   //!
+   TBranch        *b_jet_GhostTrack_z0;   //!
    TBranch        *b_jet_DL1r;   //!
    TBranch        *b_jet_DL1r_pu;   //!
    TBranch        *b_jet_DL1r_pc;   //!
@@ -214,17 +221,6 @@ public :
    TBranch        *b_jet_GN1_pb;   //!
    TBranch        *b_jet_HadronConeExclTruthLabelID;   //!
    TBranch        *b_jet_HadronConeExclExtendedTruthLabelID;   //!
-   TBranch        *b_jet_ConeTruthLabelID;   //!
-   TBranch        *b_jet_TruthCount;   //!
-   TBranch        *b_jet_TruthLabelDeltaR_B;   //!
-   TBranch        *b_jet_TruthLabelDeltaR_C;   //!
-   TBranch        *b_jet_TruthLabelDeltaR_T;   //!
-   TBranch        *b_jet_PartonTruthLabelID;   //!
-   TBranch        *b_jet_GhostTruthAssociationFraction;   //!
-   TBranch        *b_jet_truth_E;   //!
-   TBranch        *b_jet_truth_pt;   //!
-   TBranch        *b_jet_truth_phi;   //!
-   TBranch        *b_jet_truth_eta;   //!
    TBranch        *b_metFinalClus;   //!
    TBranch        *b_metFinalClusPx;   //!
    TBranch        *b_metFinalClusPy;   //!
@@ -356,6 +352,15 @@ void MicroNTupleMaker::Init(TTree *tree)
    jet_fJvtEff_SF_Medium = 0;
    jet_fJvtPass_Tight = 0;
    jet_fJvtEff_SF_Tight = 0;
+   jet_GhostTrackCount = 0;
+   jet_GhostTrackPt = 0;
+   jet_GhostTrack_pt = 0;
+   jet_GhostTrack_qOverP = 0;
+   jet_GhostTrack_eta = 0;
+   jet_GhostTrack_phi = 0;
+   jet_GhostTrack_e = 0;
+   jet_GhostTrack_d0 = 0;
+   jet_GhostTrack_z0 = 0;
    jet_DL1r = 0;
    jet_DL1r_pu = 0;
    jet_DL1r_pc = 0;
@@ -374,17 +379,6 @@ void MicroNTupleMaker::Init(TTree *tree)
    jet_GN1_pb = 0;
    jet_HadronConeExclTruthLabelID = 0;
    jet_HadronConeExclExtendedTruthLabelID = 0;
-   jet_ConeTruthLabelID = 0;
-   jet_TruthCount = 0;
-   jet_TruthLabelDeltaR_B = 0;
-   jet_TruthLabelDeltaR_C = 0;
-   jet_TruthLabelDeltaR_T = 0;
-   jet_PartonTruthLabelID = 0;
-   jet_GhostTruthAssociationFraction = 0;
-   jet_truth_E = 0;
-   jet_truth_pt = 0;
-   jet_truth_phi = 0;
-   jet_truth_eta = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -438,6 +432,15 @@ void MicroNTupleMaker::Init(TTree *tree)
    fChain->SetBranchAddress("jet_fJvtEff_SF_Medium", &jet_fJvtEff_SF_Medium, &b_jet_fJvtEff_SF_Medium);
    fChain->SetBranchAddress("jet_fJvtPass_Tight", &jet_fJvtPass_Tight, &b_jet_fJvtPass_Tight);
    fChain->SetBranchAddress("jet_fJvtEff_SF_Tight", &jet_fJvtEff_SF_Tight, &b_jet_fJvtEff_SF_Tight);
+   fChain->SetBranchAddress("jet_GhostTrackCount", &jet_GhostTrackCount, &b_jet_GhostTrackCount);
+   fChain->SetBranchAddress("jet_GhostTrackPt", &jet_GhostTrackPt, &b_jet_GhostTrackPt);
+   fChain->SetBranchAddress("jet_GhostTrack_pt", &jet_GhostTrack_pt, &b_jet_GhostTrack_pt);
+   fChain->SetBranchAddress("jet_GhostTrack_qOverP", &jet_GhostTrack_qOverP, &b_jet_GhostTrack_qOverP);
+   fChain->SetBranchAddress("jet_GhostTrack_eta", &jet_GhostTrack_eta, &b_jet_GhostTrack_eta);
+   fChain->SetBranchAddress("jet_GhostTrack_phi", &jet_GhostTrack_phi, &b_jet_GhostTrack_phi);
+   fChain->SetBranchAddress("jet_GhostTrack_e", &jet_GhostTrack_e, &b_jet_GhostTrack_e);
+   fChain->SetBranchAddress("jet_GhostTrack_d0", &jet_GhostTrack_d0, &b_jet_GhostTrack_d0);
+   fChain->SetBranchAddress("jet_GhostTrack_z0", &jet_GhostTrack_z0, &b_jet_GhostTrack_z0);
    fChain->SetBranchAddress("jet_DL1r", &jet_DL1r, &b_jet_DL1r);
    fChain->SetBranchAddress("jet_DL1r_pu", &jet_DL1r_pu, &b_jet_DL1r_pu);
    fChain->SetBranchAddress("jet_DL1r_pc", &jet_DL1r_pc, &b_jet_DL1r_pc);
@@ -456,17 +459,6 @@ void MicroNTupleMaker::Init(TTree *tree)
    fChain->SetBranchAddress("jet_GN1_pb", &jet_GN1_pb, &b_jet_GN1_pb);
    fChain->SetBranchAddress("jet_HadronConeExclTruthLabelID", &jet_HadronConeExclTruthLabelID, &b_jet_HadronConeExclTruthLabelID);
    fChain->SetBranchAddress("jet_HadronConeExclExtendedTruthLabelID", &jet_HadronConeExclExtendedTruthLabelID, &b_jet_HadronConeExclExtendedTruthLabelID);
-   fChain->SetBranchAddress("jet_ConeTruthLabelID", &jet_ConeTruthLabelID, &b_jet_ConeTruthLabelID);
-   fChain->SetBranchAddress("jet_TruthCount", &jet_TruthCount, &b_jet_TruthCount);
-   fChain->SetBranchAddress("jet_TruthLabelDeltaR_B", &jet_TruthLabelDeltaR_B, &b_jet_TruthLabelDeltaR_B);
-   fChain->SetBranchAddress("jet_TruthLabelDeltaR_C", &jet_TruthLabelDeltaR_C, &b_jet_TruthLabelDeltaR_C);
-   fChain->SetBranchAddress("jet_TruthLabelDeltaR_T", &jet_TruthLabelDeltaR_T, &b_jet_TruthLabelDeltaR_T);
-   fChain->SetBranchAddress("jet_PartonTruthLabelID", &jet_PartonTruthLabelID, &b_jet_PartonTruthLabelID);
-   fChain->SetBranchAddress("jet_GhostTruthAssociationFraction", &jet_GhostTruthAssociationFraction, &b_jet_GhostTruthAssociationFraction);
-   fChain->SetBranchAddress("jet_truth_E", &jet_truth_E, &b_jet_truth_E);
-   fChain->SetBranchAddress("jet_truth_pt", &jet_truth_pt, &b_jet_truth_pt);
-   fChain->SetBranchAddress("jet_truth_phi", &jet_truth_phi, &b_jet_truth_phi);
-   fChain->SetBranchAddress("jet_truth_eta", &jet_truth_eta, &b_jet_truth_eta);
    fChain->SetBranchAddress("metFinalClus", &metFinalClus, &b_metFinalClus);
    fChain->SetBranchAddress("metFinalClusPx", &metFinalClusPx, &b_metFinalClusPx);
    fChain->SetBranchAddress("metFinalClusPy", &metFinalClusPy, &b_metFinalClusPy);
