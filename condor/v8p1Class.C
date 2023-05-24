@@ -4,7 +4,7 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 
-void fileSkimmer::WriteOutput(){
+void v8p1Class::WriteOutput(){
 	myTree->Write();
 	myFile->Close();
 }

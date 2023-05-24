@@ -263,7 +263,7 @@ void v8p1Class::Init(TTree *tree)
    Notify();
 }
 
-void fileSkimmer::declareNewTree(TString fileName)
+void v8p1Class::declareNewTree(TString fileName)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
@@ -281,8 +281,53 @@ void fileSkimmer::declareNewTree(TString fileName)
    //all_jets_E = 0;
    year = 0;
 
-   myTree->Branch("all_jets_pt", &all_jets_pt);
-   myTree->Branch("all_jets_eta", &all_jets_eta);
+   myTree->Branch("jet0_GhostTrack_pt", 	&jet0_GhostTrack_pt);
+   myTree->Branch("jet0_GhostTrack_eta", 	&jet0_GhostTrack_eta); 
+   myTree->Branch("jet0_GhostTrack_phi",	&jet0_GhostTrack_phi);
+   myTree->Branch("jet0_GhostTrack_e",		&jet0_GhostTrack_e);
+   myTree->Branch("jet0_GhostTrack_d0", 	&jet0_GhostTrack_d0);
+   myTree->Branch("jet0_GhostTrack_z0", 	&jet0_GhostTrack_z0);
+   myTree->Branch("jet0_GhostTrack_qOverP", 	&jet0_GhostTrack_qOverP);
+   myTree->Branch("jet1_GhostTrack_pt", 	&jet1_GhostTrack_pt);
+   myTree->Branch("jet1_GhostTrack_eta", 	&jet1_GhostTrack_eta); 
+   myTree->Branch("jet1_GhostTrack_phi", 	&jet1_GhostTrack_phi); 
+   myTree->Branch("jet1_GhostTrack_e",		&jet1_GhostTrack_e);
+   myTree->Branch("jet1_GhostTrack_d0",	 	&jet1_GhostTrack_d0);
+   myTree->Branch("jet1_GhostTrack_z0", 	&jet1_GhostTrack_z0);
+   myTree->Branch("jet1_GhostTrack_qOverP", 	&jet1_GhostTrack_qOverP);
+   myTree->Branch("year", 			&year);
+   myTree->Branch("runNumber", 			&runNumber);
+   myTree->Branch("eventNumber",		&eventNumber);
+   myTree->Branch("mcEventWeight", 		&mcEventWeight);
+   myTree->Branch("weight",			&my_weight);
+   myTree->Branch("sumw",			&sumw);
+   myTree->Branch("n_jets", 			&n_jets);
+   myTree->Branch("jet1_pt",			&jet1_pt); 
+   myTree->Branch("jet1_eta", 			&jet1_eta);
+   myTree->Branch("jet1_phi", 			&jet1_phi);
+   myTree->Branch("jet1_E", 			&jet1_E);
+   myTree->Branch("jet2_pt", 			&jet2_pt);
+   myTree->Branch("jet2_eta", 			&jet2_eta);
+   myTree->Branch("jet2_phi", 			&jet2_phi);
+   myTree->Branch("jet2_E",			&jet2_E);
+   myTree->Branch("jet1_Width", 		&jet1_Width);
+   myTree->Branch("jet1_NumTrkPt1000PV", 	&jet1_NumTrkPt1000PV);
+   myTree->Branch("jet2_Width", 		&jet2_Width);
+   myTree->Branch("jet2_NumTrkPt1000PV", 	&jet2_NumTrkPt1000PV);
+   myTree->Branch("met_met", 			&met_met);
+   myTree->Branch("met_phi", 			&met_phi);
+   myTree->Branch("mT_jj", 			&mT_jj);
+   myTree->Branch("mT_jj_neg",			&mT_jj_neg);
+   myTree->Branch("met_jj_neg", 		&met_jj_neg);
+   myTree->Branch("rT", 			&rT);
+   myTree->Branch("maxphi_minphi", 		&maxphi_minphi);
+   myTree->Branch("dphi_min", 			&dphi_min);
+   myTree->Branch("dphi_max", 			&dphi_max);
+   myTree->Branch("pt_balance_12", 		&pt_balance_12);
+   myTree->Branch("dR_12", 			&dR_12);
+   myTree->Branch("deta_12", 			&deta_12);
+   myTree->Branch("dphi_12", 			&dphi_12);
+   myTree->Branch("deltaY_12", 			&deltaY_12);
 }
 
 Bool_t v8p1Class::Notify()
