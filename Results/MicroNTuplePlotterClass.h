@@ -315,7 +315,7 @@ public :
                         h_temp = new TH1F( hist_name_full, "", NBins, xmin, xmax);
                 }
 
-		TCut cut_weight = Form( "weight/SumW" ); 
+		TCut cut_weight = Form( "weight" ); 
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
