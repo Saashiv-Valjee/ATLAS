@@ -167,9 +167,21 @@ fileSkimmer::fileSkimmer(TString fileName) : fChain(0)
    Init(tree);
    my_sumw = cw->GetBinContent(1);
    //special cases for large files; need to change by hand after calculating sumw
-   if (fileName.Contains("33478045")) my_sumw = 47.6641; //JZ4
-   if (fileName.Contains("33478046")) my_sumw = 1.31332; //JZ5
+   if (fileName.Contains("33806122")) my_sumw = 27.143906; //JZ4 mc20a
+   if (fileName.Contains("33806121")) my_sumw = 33.369070; //JZ4 mc20d
+   if (fileName.Contains("33478045")) my_sumw = 47.6641; //JZ4 mc20e
+   if (fileName.Contains("33806123")) my_sumw = 0.85085811; //JZ5 mc20a
+   if (fileName.Contains("33478035")) my_sumw = 0.99324683; //JZ5 mc20d
+   if (fileName.Contains("33478046")) my_sumw = 1.31332; //JZ5 mc20e
+   if (fileName.Contains("33478024")) my_sumw = 0.022212899; //JZ6 mc20a
+   if (fileName.Contains("33478036")) my_sumw = 0.027802473; // JZ6 mc20d
+   if (fileName.Contains("33478047")) my_sumw = 0.038903665; // JZ6 mc20e
+   // special case years
+   if (fileName.Contains("33806122") || fileName.Contains("33806123") || fileName.Contains("33478024")) my_year = 2016;
+   if (fileName.Contains("33806121") || fileName.Contains("33478035") || fileName.Contains("33478036")) my_year = 2017;
    if (fileName.Contains("3347804")) my_year = 2018;
+
+   // normal years
    if (fileName.Contains("mc20a")) my_year = 2016; 
    if (fileName.Contains("mc20d")) my_year = 2017; 
    if (fileName.Contains("mc20e")) my_year = 2018; 
@@ -300,7 +312,7 @@ void fileSkimmer::declareNewTree(TString fileName)
    // Init() will be called many times when running on PROOF
    // (once per file to be processed).
 
-   myFile = new TFile("skim."+fileName, "RECREATE");
+   myFile = new TFile("skim0."+fileName, "RECREATE");
    myTree = new TTree("PostSel","PostSel");
    //all_jets_pt = 0;
    //all_jets_eta = 0;

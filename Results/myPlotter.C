@@ -3,16 +3,15 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v7/v7.4/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v8/v8.1/skim.user.ebusch.";
 	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
-	vector<string> filetags = {"BKGskim","" };
-	//vector<string> filetags = {"QCDbkg"};// "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
+	///vector<string> filetags = {"QCDbkg"};// "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
 	//vector<string> filetags = {"QCDskim", "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
 	//vector<string> filetags = {"QCDbkg", "Znunu", "515503", "515506"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
 	//vector<string> filetags = {"QCDskim.mc20e","364703.mc20e", "364704.mc20e", "364705.mc20e", "364706.mc20e", "364707.mc20e", "364708.mc20e", "364709.mc20e"};
-	//vector<string> filetags = {"QCDskim.mc20e","515495.mc20e", "515498.mc20e", "515515.mc20e", "515518.mc20e"};
+	vector<string> filetags = {"QCDskim.mc20e","515495.mc20e", "515498.mc20e", "515515.mc20e", "515518.mc20e"};
 
 	// - cuts
 	//map<string, TCut> cuts;	
@@ -94,7 +93,7 @@ void myPlotter(){
 	//plotter.PlotOverlay("");
 
 	//plotter.SetPlots ( plot_all );
-	plotter.SetPlots ( {P_mT_jj} );
+	plotter.SetPlots ( {P_jet1_eta, P_jet2_eta} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
 	//plotter.SetPlots( {P_dphi_min_MET, P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2});
