@@ -3,15 +3,15 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v8/v8.1/skim.user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v8/v8.1/user.ebusch.";
 	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
 	///vector<string> filetags = {"QCDbkg"};// "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
 	//vector<string> filetags = {"QCDskim", "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
-	//vector<string> filetags = {"QCDbkg", "Znunu", "515503", "515506"};
+	vector<string> filetags = {"QCDskim", "515504", "515505"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
 	//vector<string> filetags = {"QCDskim.mc20e","364703.mc20e", "364704.mc20e", "364705.mc20e", "364706.mc20e", "364707.mc20e", "364708.mc20e", "364709.mc20e"};
-	vector<string> filetags = {"QCDskim.mc20e","515495.mc20e", "515498.mc20e", "515515.mc20e", "515518.mc20e"};
+	//vector<string> filetags = {"QCDskim.mc20e","515495.mc20e", "515498.mc20e", "515515.mc20e", "515518.mc20e"};
 
 	// - cuts
 	//map<string, TCut> cuts;	
@@ -46,18 +46,18 @@ void myPlotter(){
 	class MicroNTuplePlotter plotter( filetags, path );
 
         //***************** Plot General options *******************// 
-        plotter.plot_norm = true;
+        plotter.plot_norm = false;
         plotter.plot_log = true;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="v8p1";
+        plotter.output_file_tag ="cms_check";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
-	plotter.stamp_integral = false;
+	plotter.stamp_integral = true;
 	plotter.stamp_cuts = false;
         plotter.violin = false;
-        plotter.solid_bkg = true;
+        plotter.solid_bkg = false;
 	plotter.use_better_legend_names=true;
 	plotter.reverse_cdf_plots = {"fabs(jet1_eta)", "fabs(jet2_eta)", "dphi_min", "deltaY_12"};
 	plotter.use_normalized_cdf = true;
@@ -71,7 +71,7 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_pt, P_jet2_pt, P_jet_svj_pt, P_jet_asvj_pt}, OP_jet_pt );
 
         //***************** Plot Cut options *******************// 
-        //plotter.SetCuts("jet2_Width > 0.07");
+        plotter.SetCuts("rT > 0.25 && dphi_min < 0.8 && deltaY_12 < 1.5");
        	//plotter.SetComparisonCuts({"", "dphi_min>0.1", "dphi_min>0.5"});	
         //plotter.ApplySelectiveCuts("508548", "dPhi_min < 2.0");
 
@@ -93,7 +93,7 @@ void myPlotter(){
 	//plotter.PlotOverlay("");
 
 	//plotter.SetPlots ( plot_all );
-	plotter.SetPlots ( {P_jet1_eta, P_jet2_eta} );
+	plotter.SetPlots ( {P_mT_jj} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
 	//plotter.SetPlots( {P_dphi_min_MET, P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2});

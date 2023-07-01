@@ -10,7 +10,7 @@ eosPath = "root://eosatlas.cern.ch//eos/atlas/atlascerngroupdisk/phys-exotics/jd
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    for file_list in ["test.txt"]:
+    for file_list in ["jz4jz5jz6_v8p1.txt"]:
         with open(file_list, "r") as f:
             files = []
             for line in f:
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             os.system("echo 'initialdir = /afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/condor/v8.1' >> submit.sub")
             os.system("echo 'workdir = /afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/condor' >> submit.sub")
             os.system("echo 'transfer_input_files = $(workdir)/condor_run.sh, $(workdir)/fileSkimmer.C, $(workdir)/fileSkimmer.h, "+filePath+"' >> submit.sub")
-            os.system("echo 'transfer_output_files = skim0."+fileName+"' >> submit.sub")
+            os.system("echo 'transfer_output_files = skim2."+fileName+"' >> submit.sub")
             os.system("echo 'queue arguments from args.txt' >> submit.sub")
  
             os.system("condor_submit submit.sub")

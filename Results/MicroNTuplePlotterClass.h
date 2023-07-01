@@ -451,7 +451,7 @@ public :
 		
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
-				legend_name = Form("%s (Int=%4.2e)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
+				legend_name = Form("%s (Int=%.4e)", hist_tag.c_str(), h->Integral(1,myPlotParams.nbins) );
 			}
 			if (stamp_counts && !stamp_integral){
 				legend_name = Form("%s (NE=%i)", hist_tag.c_str(), int(h->GetEntries()));
