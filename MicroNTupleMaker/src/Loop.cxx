@@ -46,6 +46,11 @@ void MicroNTupleMaker::Loop()
 		// create relevant 4 vectors
 		TLorentzVector v1, v2, met_v;
 
+		// MET preselection
+		if(metFinalClus < 200) continue;
+		cutflow->Fill(16);
+		cutflow_weighted->Fill(16,mcEventWeight);
+                
 		v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
 		v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
 		//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));

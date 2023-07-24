@@ -11,8 +11,7 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"n_jets",
         	"jet1_pt", "jet1_eta", "jet1_phi", "jet1_E", 
         	"jet2_pt", "jet2_eta", "jet2_phi", "jet2_E", 
-		"jet1_Width", "jet1_NumTrkPt1000PV",
-		"jet2_Width", "jet2_NumTrkPt1000PV",
+		"jet1_Width", "jet2_Width",
 
 		// -- MET -- //
         	"met_met", "met_phi",
@@ -85,14 +84,12 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["jet1_phi"] = jet_phi->at(0);
 	tree_output_vars["jet1_E"] = jet_E->at(0);
 	tree_output_vars["jet1_Width"] = jet_Width->at(0);
-	tree_output_vars["jet1_NumTrkPt1000PV"] = jet_NumTrkPt1000PV->at(0);
 
 	tree_output_vars["jet2_pt"] = jet_pt->at(1);
 	tree_output_vars["jet2_eta"] = jet_eta->at(1);
 	tree_output_vars["jet2_phi"] = jet_phi->at(1);
 	tree_output_vars["jet2_E"] = jet_E->at(1);
 	tree_output_vars["jet2_Width"] = jet_Width->at(1);
-	tree_output_vars["jet2_NumTrkPt1000PV"] = jet_NumTrkPt1000PV->at(1);
 
 	tree_output_vars["met_met"] = metFinalClus;
         tree_output_vars["met_phi"] = metFinalClusPhi;

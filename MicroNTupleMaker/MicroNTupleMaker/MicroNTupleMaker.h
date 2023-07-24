@@ -91,28 +91,6 @@ public :
    vector<float>   *jet_FracSamplingMaxIndex;
    vector<float>   *jet_GhostMuonSegmentCount;
    vector<float>   *jet_Width;
-   vector<float>   *jet_NumTrkPt1000PV;
-   vector<float>   *jet_SumPtTrkPt1000PV;
-   vector<float>   *jet_TrackWidthPt1000PV;
-   vector<float>   *jet_NumTrkPt500PV;
-   vector<float>   *jet_SumPtTrkPt500PV;
-   vector<float>   *jet_TrackWidthPt500PV;
-   vector<float>   *jet_JVFPV;
-   vector<float>   *jet_JvtJvfcorr;
-   vector<float>   *jet_JvtRpt;
-   vector<float>   *jet_Jvt;
-   vector<int>     *jet_JvtPass_Loose;
-   vector<vector<float> > *jet_JvtEff_SF_Loose;
-   vector<int>     *jet_JvtPass_Medium;
-   vector<vector<float> > *jet_JvtEff_SF_Medium;
-   vector<int>     *jet_JvtPass_Tight;
-   vector<vector<float> > *jet_JvtEff_SF_Tight;
-   vector<int>     *jet_fJvtPass_Loose;
-   vector<vector<float> > *jet_fJvtEff_SF_Loose;
-   vector<int>     *jet_fJvtPass_Medium;
-   vector<vector<float> > *jet_fJvtEff_SF_Medium;
-   vector<int>     *jet_fJvtPass_Tight;
-   vector<vector<float> > *jet_fJvtEff_SF_Tight;
    vector<int>     *jet_GhostTrackCount;
    vector<float>   *jet_GhostTrackPt;
    vector<vector<float> > *jet_GhostTrack_pt;
@@ -122,24 +100,6 @@ public :
    vector<vector<float> > *jet_GhostTrack_e;
    vector<vector<float> > *jet_GhostTrack_d0;
    vector<vector<float> > *jet_GhostTrack_z0;
-   vector<float>   *jet_DL1r;
-   vector<float>   *jet_DL1r_pu;
-   vector<float>   *jet_DL1r_pc;
-   vector<float>   *jet_DL1r_pb;
-   vector<float>   *jet_DL1dv00;
-   vector<float>   *jet_DL1dv00_pu;
-   vector<float>   *jet_DL1dv00_pc;
-   vector<float>   *jet_DL1dv00_pb;
-   vector<float>   *jet_DL1dv01;
-   vector<float>   *jet_DL1dv01_pu;
-   vector<float>   *jet_DL1dv01_pc;
-   vector<float>   *jet_DL1dv01_pb;
-   vector<float>   *jet_GN1;
-   vector<float>   *jet_GN1_pu;
-   vector<float>   *jet_GN1_pc;
-   vector<float>   *jet_GN1_pb;
-   vector<int>     *jet_HadronConeExclTruthLabelID;
-   vector<int>     *jet_HadronConeExclExtendedTruthLabelID;
    Float_t         metFinalClus;
    Float_t         metFinalClusPx;
    Float_t         metFinalClusPy;
@@ -172,28 +132,6 @@ public :
    TBranch        *b_jet_FracSamplingMaxIndex;   //!
    TBranch        *b_jet_GhostMuonSegmentCount;   //!
    TBranch        *b_jet_Width;   //!
-   TBranch        *b_jet_NumTrkPt1000PV;   //!
-   TBranch        *b_jet_SumPtTrkPt1000PV;   //!
-   TBranch        *b_jet_TrackWidthPt1000PV;   //!
-   TBranch        *b_jet_NumTrkPt500PV;   //!
-   TBranch        *b_jet_SumPtTrkPt500PV;   //!
-   TBranch        *b_jet_TrackWidthPt500PV;   //!
-   TBranch        *b_jet_JVFPV;   //!
-   TBranch        *b_jet_JvtJvfcorr;   //!
-   TBranch        *b_jet_JvtRpt;   //!
-   TBranch        *b_jet_Jvt;   //!
-   TBranch        *b_jet_JvtPass_Loose;   //!
-   TBranch        *b_jet_JvtEff_SF_Loose;   //!
-   TBranch        *b_jet_JvtPass_Medium;   //!
-   TBranch        *b_jet_JvtEff_SF_Medium;   //!
-   TBranch        *b_jet_JvtPass_Tight;   //!
-   TBranch        *b_jet_JvtEff_SF_Tight;   //!
-   TBranch        *b_jet_fJvtPass_Loose;   //!
-   TBranch        *b_jet_fJvtEff_SF_Loose;   //!
-   TBranch        *b_jet_fJvtPass_Medium;   //!
-   TBranch        *b_jet_fJvtEff_SF_Medium;   //!
-   TBranch        *b_jet_fJvtPass_Tight;   //!
-   TBranch        *b_jet_fJvtEff_SF_Tight;   //!
    TBranch        *b_jet_GhostTrackCount;   //!
    TBranch        *b_jet_GhostTrackPt;   //!
    TBranch        *b_jet_GhostTrack_pt;   //!
@@ -203,24 +141,6 @@ public :
    TBranch        *b_jet_GhostTrack_e;   //!
    TBranch        *b_jet_GhostTrack_d0;   //!
    TBranch        *b_jet_GhostTrack_z0;   //!
-   TBranch        *b_jet_DL1r;   //!
-   TBranch        *b_jet_DL1r_pu;   //!
-   TBranch        *b_jet_DL1r_pc;   //!
-   TBranch        *b_jet_DL1r_pb;   //!
-   TBranch        *b_jet_DL1dv00;   //!
-   TBranch        *b_jet_DL1dv00_pu;   //!
-   TBranch        *b_jet_DL1dv00_pc;   //!
-   TBranch        *b_jet_DL1dv00_pb;   //!
-   TBranch        *b_jet_DL1dv01;   //!
-   TBranch        *b_jet_DL1dv01_pu;   //!
-   TBranch        *b_jet_DL1dv01_pc;   //!
-   TBranch        *b_jet_DL1dv01_pb;   //!
-   TBranch        *b_jet_GN1;   //!
-   TBranch        *b_jet_GN1_pu;   //!
-   TBranch        *b_jet_GN1_pc;   //!
-   TBranch        *b_jet_GN1_pb;   //!
-   TBranch        *b_jet_HadronConeExclTruthLabelID;   //!
-   TBranch        *b_jet_HadronConeExclExtendedTruthLabelID;   //!
    TBranch        *b_metFinalClus;   //!
    TBranch        *b_metFinalClusPx;   //!
    TBranch        *b_metFinalClusPy;   //!
@@ -330,28 +250,6 @@ void MicroNTupleMaker::Init(TTree *tree)
    jet_FracSamplingMaxIndex = 0;
    jet_GhostMuonSegmentCount = 0;
    jet_Width = 0;
-   jet_NumTrkPt1000PV = 0;
-   jet_SumPtTrkPt1000PV = 0;
-   jet_TrackWidthPt1000PV = 0;
-   jet_NumTrkPt500PV = 0;
-   jet_SumPtTrkPt500PV = 0;
-   jet_TrackWidthPt500PV = 0;
-   jet_JVFPV = 0;
-   jet_JvtJvfcorr = 0;
-   jet_JvtRpt = 0;
-   jet_Jvt = 0;
-   jet_JvtPass_Loose = 0;
-   jet_JvtEff_SF_Loose = 0;
-   jet_JvtPass_Medium = 0;
-   jet_JvtEff_SF_Medium = 0;
-   jet_JvtPass_Tight = 0;
-   jet_JvtEff_SF_Tight = 0;
-   jet_fJvtPass_Loose = 0;
-   jet_fJvtEff_SF_Loose = 0;
-   jet_fJvtPass_Medium = 0;
-   jet_fJvtEff_SF_Medium = 0;
-   jet_fJvtPass_Tight = 0;
-   jet_fJvtEff_SF_Tight = 0;
    jet_GhostTrackCount = 0;
    jet_GhostTrackPt = 0;
    jet_GhostTrack_pt = 0;
@@ -361,24 +259,6 @@ void MicroNTupleMaker::Init(TTree *tree)
    jet_GhostTrack_e = 0;
    jet_GhostTrack_d0 = 0;
    jet_GhostTrack_z0 = 0;
-   jet_DL1r = 0;
-   jet_DL1r_pu = 0;
-   jet_DL1r_pc = 0;
-   jet_DL1r_pb = 0;
-   jet_DL1dv00 = 0;
-   jet_DL1dv00_pu = 0;
-   jet_DL1dv00_pc = 0;
-   jet_DL1dv00_pb = 0;
-   jet_DL1dv01 = 0;
-   jet_DL1dv01_pu = 0;
-   jet_DL1dv01_pc = 0;
-   jet_DL1dv01_pb = 0;
-   jet_GN1 = 0;
-   jet_GN1_pu = 0;
-   jet_GN1_pc = 0;
-   jet_GN1_pb = 0;
-   jet_HadronConeExclTruthLabelID = 0;
-   jet_HadronConeExclExtendedTruthLabelID = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -410,28 +290,6 @@ void MicroNTupleMaker::Init(TTree *tree)
    fChain->SetBranchAddress("jet_FracSamplingMaxIndex", &jet_FracSamplingMaxIndex, &b_jet_FracSamplingMaxIndex);
    fChain->SetBranchAddress("jet_GhostMuonSegmentCount", &jet_GhostMuonSegmentCount, &b_jet_GhostMuonSegmentCount);
    fChain->SetBranchAddress("jet_Width", &jet_Width, &b_jet_Width);
-   fChain->SetBranchAddress("jet_NumTrkPt1000PV", &jet_NumTrkPt1000PV, &b_jet_NumTrkPt1000PV);
-   fChain->SetBranchAddress("jet_SumPtTrkPt1000PV", &jet_SumPtTrkPt1000PV, &b_jet_SumPtTrkPt1000PV);
-   fChain->SetBranchAddress("jet_TrackWidthPt1000PV", &jet_TrackWidthPt1000PV, &b_jet_TrackWidthPt1000PV);
-   fChain->SetBranchAddress("jet_NumTrkPt500PV", &jet_NumTrkPt500PV, &b_jet_NumTrkPt500PV);
-   fChain->SetBranchAddress("jet_SumPtTrkPt500PV", &jet_SumPtTrkPt500PV, &b_jet_SumPtTrkPt500PV);
-   fChain->SetBranchAddress("jet_TrackWidthPt500PV", &jet_TrackWidthPt500PV, &b_jet_TrackWidthPt500PV);
-   fChain->SetBranchAddress("jet_JVFPV", &jet_JVFPV, &b_jet_JVFPV);
-   fChain->SetBranchAddress("jet_JvtJvfcorr", &jet_JvtJvfcorr, &b_jet_JvtJvfcorr);
-   fChain->SetBranchAddress("jet_JvtRpt", &jet_JvtRpt, &b_jet_JvtRpt);
-   fChain->SetBranchAddress("jet_Jvt", &jet_Jvt, &b_jet_Jvt);
-   fChain->SetBranchAddress("jet_JvtPass_Loose", &jet_JvtPass_Loose, &b_jet_JvtPass_Loose);
-   fChain->SetBranchAddress("jet_JvtEff_SF_Loose", &jet_JvtEff_SF_Loose, &b_jet_JvtEff_SF_Loose);
-   fChain->SetBranchAddress("jet_JvtPass_Medium", &jet_JvtPass_Medium, &b_jet_JvtPass_Medium);
-   fChain->SetBranchAddress("jet_JvtEff_SF_Medium", &jet_JvtEff_SF_Medium, &b_jet_JvtEff_SF_Medium);
-   fChain->SetBranchAddress("jet_JvtPass_Tight", &jet_JvtPass_Tight, &b_jet_JvtPass_Tight);
-   fChain->SetBranchAddress("jet_JvtEff_SF_Tight", &jet_JvtEff_SF_Tight, &b_jet_JvtEff_SF_Tight);
-   fChain->SetBranchAddress("jet_fJvtPass_Loose", &jet_fJvtPass_Loose, &b_jet_fJvtPass_Loose);
-   fChain->SetBranchAddress("jet_fJvtEff_SF_Loose", &jet_fJvtEff_SF_Loose, &b_jet_fJvtEff_SF_Loose);
-   fChain->SetBranchAddress("jet_fJvtPass_Medium", &jet_fJvtPass_Medium, &b_jet_fJvtPass_Medium);
-   fChain->SetBranchAddress("jet_fJvtEff_SF_Medium", &jet_fJvtEff_SF_Medium, &b_jet_fJvtEff_SF_Medium);
-   fChain->SetBranchAddress("jet_fJvtPass_Tight", &jet_fJvtPass_Tight, &b_jet_fJvtPass_Tight);
-   fChain->SetBranchAddress("jet_fJvtEff_SF_Tight", &jet_fJvtEff_SF_Tight, &b_jet_fJvtEff_SF_Tight);
    fChain->SetBranchAddress("jet_GhostTrackCount", &jet_GhostTrackCount, &b_jet_GhostTrackCount);
    fChain->SetBranchAddress("jet_GhostTrackPt", &jet_GhostTrackPt, &b_jet_GhostTrackPt);
    fChain->SetBranchAddress("jet_GhostTrack_pt", &jet_GhostTrack_pt, &b_jet_GhostTrack_pt);
@@ -441,24 +299,6 @@ void MicroNTupleMaker::Init(TTree *tree)
    fChain->SetBranchAddress("jet_GhostTrack_e", &jet_GhostTrack_e, &b_jet_GhostTrack_e);
    fChain->SetBranchAddress("jet_GhostTrack_d0", &jet_GhostTrack_d0, &b_jet_GhostTrack_d0);
    fChain->SetBranchAddress("jet_GhostTrack_z0", &jet_GhostTrack_z0, &b_jet_GhostTrack_z0);
-   fChain->SetBranchAddress("jet_DL1r", &jet_DL1r, &b_jet_DL1r);
-   fChain->SetBranchAddress("jet_DL1r_pu", &jet_DL1r_pu, &b_jet_DL1r_pu);
-   fChain->SetBranchAddress("jet_DL1r_pc", &jet_DL1r_pc, &b_jet_DL1r_pc);
-   fChain->SetBranchAddress("jet_DL1r_pb", &jet_DL1r_pb, &b_jet_DL1r_pb);
-   fChain->SetBranchAddress("jet_DL1dv00", &jet_DL1dv00, &b_jet_DL1dv00);
-   fChain->SetBranchAddress("jet_DL1dv00_pu", &jet_DL1dv00_pu, &b_jet_DL1dv00_pu);
-   fChain->SetBranchAddress("jet_DL1dv00_pc", &jet_DL1dv00_pc, &b_jet_DL1dv00_pc);
-   fChain->SetBranchAddress("jet_DL1dv00_pb", &jet_DL1dv00_pb, &b_jet_DL1dv00_pb);
-   fChain->SetBranchAddress("jet_DL1dv01", &jet_DL1dv01, &b_jet_DL1dv01);
-   fChain->SetBranchAddress("jet_DL1dv01_pu", &jet_DL1dv01_pu, &b_jet_DL1dv01_pu);
-   fChain->SetBranchAddress("jet_DL1dv01_pc", &jet_DL1dv01_pc, &b_jet_DL1dv01_pc);
-   fChain->SetBranchAddress("jet_DL1dv01_pb", &jet_DL1dv01_pb, &b_jet_DL1dv01_pb);
-   fChain->SetBranchAddress("jet_GN1", &jet_GN1, &b_jet_GN1);
-   fChain->SetBranchAddress("jet_GN1_pu", &jet_GN1_pu, &b_jet_GN1_pu);
-   fChain->SetBranchAddress("jet_GN1_pc", &jet_GN1_pc, &b_jet_GN1_pc);
-   fChain->SetBranchAddress("jet_GN1_pb", &jet_GN1_pb, &b_jet_GN1_pb);
-   fChain->SetBranchAddress("jet_HadronConeExclTruthLabelID", &jet_HadronConeExclTruthLabelID, &b_jet_HadronConeExclTruthLabelID);
-   fChain->SetBranchAddress("jet_HadronConeExclExtendedTruthLabelID", &jet_HadronConeExclExtendedTruthLabelID, &b_jet_HadronConeExclExtendedTruthLabelID);
    fChain->SetBranchAddress("metFinalClus", &metFinalClus, &b_metFinalClus);
    fChain->SetBranchAddress("metFinalClusPx", &metFinalClusPx, &b_metFinalClusPx);
    fChain->SetBranchAddress("metFinalClusPy", &metFinalClusPy, &b_metFinalClusPy);
