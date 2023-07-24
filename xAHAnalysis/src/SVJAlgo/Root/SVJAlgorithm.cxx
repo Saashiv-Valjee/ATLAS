@@ -443,7 +443,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   // MET Selection
   if (m_inMetContainerName != "" && m_metCut >= 0) {
     const xAOD::MissingET* final_clus = *met->find("FinalClus");
-    if(final_clus->sumet() < m_metCut) {
+    if(final_clus->met() < m_metCut*1000) {
       wk()->skipEvent();  return EL::StatusCode::SUCCESS; 
     }
     if(doCutflow) passCut("METSelection");

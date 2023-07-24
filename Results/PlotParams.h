@@ -18,7 +18,7 @@ float getDphi(float phi1, float phi2){
 }
 
 
-PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 50, 0, 1000};
+PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 50, 0, 500};
 PlotParams P_met_phi			= {"met_phi", "Missing E_{T} #phi", "#phi [rad]", 50, -3.14, 3.14 };
 PlotParams P_TruthMET_TruthSumEt 	= {"MET_TruthMET_TruthSumEt", "TruthMET SumE_{T}", "E [GeV]", 50, 0, 700};  
 PlotParams P_TruthMET_TruthPhi	 	= {"MET_TruthMET_TruthPhi", "TruthMET #phi", "#phi [rad]", 50, -3.14, 3.14};  

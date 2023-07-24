@@ -12,34 +12,34 @@ dataconfigFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_data.py
 #	submitdir=grid_${data}
 #	inputFile=${data}.txt
 #	echo $inputFile
-#	echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[1]%.%in:name[2]%.v8a --optGridNGBPerJob=2"
-#	xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[1]%.%in:name[2]%.v8a --optGridNGBPerJob=2
+#	echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[1]%.%in:name[2]%.v9c --optGridNGBPerJob=2"
+#	xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[1]%.%in:name[2]%.v9c --optGridNGBPerJob=2
 #done
 
 
 #for BKG in wplusjets zplusjets #ttbar
-#for BKG in multijet
+#for BKG in multijet wplusjets
 #do
 #	submitdir=grid_${BKG}
 #	for MC in mc20a mc20d mc20e
 #	do
 #		inputFile=${BKG}_${MC}.txt
 #		echo $inputFile
-#		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v8a.${MC} --optGridNGBPerJob=2"
-#		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v8a.${MC} --optGridNGBPerJob=2
+#		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v9c.${MC} --optGridNGBPerJob=2"
+#		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v9c.${MC} --optGridNGBPerJob=2
 #	done
 #done
 
-for SIG in signal
-do
-	submitdir=grid_${SIG}
-	for MC in mc20a mc20d mc20e
-	do
-		inputFile=${SIG}_${MC}.txt
-		echo $inputFile
-		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun $PUfile --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v8a.${MC} --optGridNGBPerJob=2"
-		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v8a.${MC} --optGridNGBPerJob=2
-	done
-done
+#for SIG in signal
+#do
+#	submitdir=grid_${SIG}
+#	for MC in mc20a mc20d mc20e
+#	do
+#		inputFile=${SIG}_${MC}.txt
+#		echo $inputFile
+#		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun $PUfile --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v9c.${MC} --optGridNGBPerJob=2"
+#		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v9c.${MC} --optGridNGBPerJob=2
+#	done
+#done
 
 
