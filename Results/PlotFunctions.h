@@ -151,9 +151,11 @@ string GetLegendNames( string filetag  ){
   filetag_legend["515493"] = "1250 GeV, 0.6";
   filetag_legend["515494"] = "1250 GeV, 0.8";
   filetag_legend["515495"] = "1500 GeV, 0.2";
+  filetag_legend["515495.mc20e"] = "1500 GeV, 0.2";
   filetag_legend["515496"] = "1500 GeV, 0.4";
   filetag_legend["515497"] = "1500 GeV, 0.6";
   filetag_legend["515498"] = "1500 GeV, 0.8";
+  filetag_legend["515498.mc20e"] = "1500 GeV, 0.8";
   filetag_legend["515499"] = "2000 GeV, 0.2";
   filetag_legend["515500"] = "2000 GeV, 0.4";
   filetag_legend["515501"] = "2000 GeV, 0.6";
@@ -171,9 +173,11 @@ string GetLegendNames( string filetag  ){
   filetag_legend["515513"] = "3500 GeV, 0.6";
   filetag_legend["515514"] = "3500 GeV, 0.8";
   filetag_legend["515515"] = "4000 GeV, 0.2";
+  filetag_legend["515515.mc20e"] = "4000 GeV, 0.2";
   filetag_legend["515516"] = "4000 GeV, 0.4";
   filetag_legend["515517"] = "4000 GeV, 0.6";
   filetag_legend["515518"] = "4000 GeV, 0.8";
+  filetag_legend["515518.mc20e"] = "4000 GeV, 0.8";
   filetag_legend["515519"] = "5000 GeV, 0.2";
   filetag_legend["515520"] = "5000 GeV, 0.4";
   filetag_legend["515521"] = "5000 GeV, 0.6";
