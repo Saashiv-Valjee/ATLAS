@@ -18,14 +18,14 @@ float getDphi(float phi1, float phi2){
 }
 
 
-PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 50, 0, 1000};
+PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 50, 0, 1200};
 PlotParams P_met_phi			= {"met_phi", "Missing E_{T} #phi", "#phi [rad]", 50, -3.14, 3.14 };
 PlotParams P_TruthMET_TruthSumEt 	= {"MET_TruthMET_TruthSumEt", "TruthMET SumE_{T}", "E [GeV]", 50, 0, 700};  
 PlotParams P_TruthMET_TruthPhi	 	= {"MET_TruthMET_TruthPhi", "TruthMET #phi", "#phi [rad]", 50, -3.14, 3.14};  
 PlotParams P_n_jets			= {"n_jets", "Number of R=0.4 Jets", "N_{jets}", 20, 0, 20};
 PlotParams P_n_fatjets			= {"n_fatjets", "Number of R=1.0 Jets", "N_{fatjets}", 12, 0, 12};
 
-PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 70, 0, 3500};
+PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 70, 0, 5000};
 PlotParams P_jet1_eta			= {"jet1_eta", "Leading R=0.4 Jet Eta", "#eta", 50, -5.0, 5.0};
 PlotParams P_jet1_phi			= {"jet1_phi", "Leading R=0.4 Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet1_E			= {"jet1_E", "Leading R=0.4 Jet E", "Energy [GeV]", 50, 0, 3000};
@@ -93,11 +93,11 @@ PlotParams P_dphi_MET_j1j2		= {"dphi_MET_j1j2", "#Delta#phi (MET, -j1-j2)", "#De
 PlotParams P_deltaY_12			= {"deltaY_12", "#Delta Y (leading jet, subleading jet)", "#Delta Y", 50, 0, 5};
 PlotParams P_mjj_12			= {"mjj_12", "Invariant Mass R=0.4 Jets (Leading, Subleading)", "m_{jj} [GeV]", 80, 500, 6500};
 PlotParams P_mJJ_12			= {"mJJ_12", "Invariant Mass R=1.0 Jets (Leading, Subleading)", "m_{JJ} [GeV]", 100, 0, 3000};
-PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 80, 500, 6500};
+PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 1, 1500, 2500};
 PlotParams P_mT_jj_neg			= {"mT_jj_neg", "mT(j1,j2,-(j1+j2))", "mT Neg [GeV]", 80, 500, 6000};
 PlotParams P_met_jj_neg 		= {"met_jj_neg", "-j1-j2", "MET Approx [GeV]", 80, 400, 3000};
 PlotParams P_mT_JJ			= {"mT_JJ", "mT System (R=1.0)", "mT [GeV]", 150, 0, 10000};
-PlotParams P_deta_12			= {"deta_12", "#Delta#eta (leading, subleading jet)", "#Delta#eta", 50, 0, 10};
+PlotParams P_deta_12			= {"deta_12", "#Delta#eta (leading, subleading jet)", "#Delta#eta", 50, 0, 3};
 PlotParams P_dR_12			= {"dR_12", "#Delta R (leading, subleading jet)", "#Delta R", 50, 0, 10};
 PlotParams P_dphi_12			= {"getDphi(jet1_phi, jet2_phi)", "#Delta#phi (j1,j2)", "#Delta#phi", 50,0,3.2};
 PlotParams P_dphi_23			= {"getDphi(jet2_phi, all_jets_phi[2])", "#Delta#phi (j2,j3)", "#Delta#phi", 50,0,3.2};

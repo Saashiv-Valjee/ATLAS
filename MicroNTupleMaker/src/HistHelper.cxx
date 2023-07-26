@@ -8,8 +8,8 @@ void MicroNTupleMaker::DeclareHistograms(TH1F* m, TH1F* c, TH1F* cw){
   cutflow_weighted = (TH1F*) cw->Clone();
 
   // Cutflow histogram
-  //cutflow->GetXaxis()->SetBinLabel(15,"j2Width > 0.07");
-  //cutflow_weighted->GetXaxis()->SetBinLabel(15,"j2Width > 0.07");
+  cutflow->GetXaxis()->SetBinLabel(16,"met > 200");
+  cutflow_weighted->GetXaxis()->SetBinLabel(16,"met > 200");
 
   // SR temp additions
   //cutflow->GetXaxis()->SetBinLabel(6,"d#eta(j1,j2) < 1.5");

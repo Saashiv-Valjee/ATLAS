@@ -315,11 +315,11 @@ public :
                         h_temp = new TH1F( hist_name_full, "", NBins, xmin, xmax);
                 }
 
-		TCut cut_weight = Form( "weight/SumW" ); 
-
+		TCut cut_weight = Form( "weight" ); 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+                if( hist_name_full.Contains("data")) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if (debug) cout << "cut_total = " << cut_total << endl;
 
 		cout << "hist_name: " << hist_name << endl;
@@ -451,7 +451,7 @@ public :
 		
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
-				legend_name = Form("%s (Int=%4.2e)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
+				legend_name = Form("%s (Int=%.4e)", hist_tag.c_str(), h->Integral(1,myPlotParams.nbins) );
 			}
 			if (stamp_counts && !stamp_integral){
 				legend_name = Form("%s (NE=%i)", hist_tag.c_str(), int(h->GetEntries()));
