@@ -62,9 +62,7 @@ public :
    Double_t        jet2_phi;
    Double_t        jet2_E;
    Double_t        jet1_Width;
-   Double_t        jet1_NumTrkPt1000PV;
    Double_t        jet2_Width;
-   Double_t        jet2_NumTrkPt1000PV;
    Double_t        met_met;
    Double_t        met_phi;
    Double_t        mT_jj;
@@ -276,9 +274,7 @@ void fileSkimmer::Init(TTree *tree)
    fChain->SetBranchAddress("jet2_phi", &jet2_phi, &b_jet2_phi);
    fChain->SetBranchAddress("jet2_E", &jet2_E, &b_jet2_E);
    fChain->SetBranchAddress("jet1_Width", &jet1_Width, &b_jet1_Width);
-   fChain->SetBranchAddress("jet1_NumTrkPt1000PV", &jet1_NumTrkPt1000PV, &b_jet1_NumTrkPt1000PV);
    fChain->SetBranchAddress("jet2_Width", &jet2_Width, &b_jet2_Width);
-   fChain->SetBranchAddress("jet2_NumTrkPt1000PV", &jet2_NumTrkPt1000PV, &b_jet2_NumTrkPt1000PV);
    fChain->SetBranchAddress("met_met", &met_met, &b_met_met);
    fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
    fChain->SetBranchAddress("mT_jj", &mT_jj, &b_mT_jj);
@@ -312,7 +308,7 @@ void fileSkimmer::declareNewTree(TString fileName)
    // Init() will be called many times when running on PROOF
    // (once per file to be processed).
 
-   myFile = new TFile("skim2."+fileName, "RECREATE");
+   myFile = new TFile("skim0."+fileName, "RECREATE");
    myTree = new TTree("PostSel","PostSel");
    //all_jets_pt = 0;
    //all_jets_eta = 0;
@@ -349,9 +345,7 @@ void fileSkimmer::declareNewTree(TString fileName)
    myTree->Branch("jet2_phi", 			&jet2_phi);
    myTree->Branch("jet2_E",			&jet2_E);
    myTree->Branch("jet1_Width", 		&jet1_Width);
-   myTree->Branch("jet1_NumTrkPt1000PV", 	&jet1_NumTrkPt1000PV);
    myTree->Branch("jet2_Width", 		&jet2_Width);
-   myTree->Branch("jet2_NumTrkPt1000PV", 	&jet2_NumTrkPt1000PV);
    myTree->Branch("met_met", 			&met_met);
    myTree->Branch("met_phi", 			&met_phi);
    myTree->Branch("mT_jj", 			&mT_jj);

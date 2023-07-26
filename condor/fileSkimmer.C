@@ -42,7 +42,7 @@ void fileSkimmer::Loop()
    Long64_t nentries = fChain->GetEntriesFast();
    //Long64_t target_events = 1000000;
    //Long64_t increment = nentries/ target_events;
-   Long64_t increment = 50;
+   Long64_t increment = 5;
    //if (target_events > nentries) cout << "ERROR: requesting more events than available (" << nentries << ")" << endl;
 
    Long64_t nbytes = 0, nb = 0;
@@ -51,7 +51,7 @@ void fileSkimmer::Loop()
    if (my_year == 2016) lumi = 36.6467e6; //ref OflLumi-13TeV-011 https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/GoodRunListsForAnalysisRun2
    if (my_year == 2017) lumi = 44.6306e6;
    if (my_year == 2018) lumi = 58.7916e6;
-   for (Long64_t jentry=2; jentry<nentries;jentry+=increment) {
+   for (Long64_t jentry=0; jentry<nentries;jentry+=increment) {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;

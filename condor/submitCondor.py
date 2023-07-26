@@ -3,14 +3,14 @@ import os
 import glob
 import argparse
 
-eosPath = "root://eosatlas.cern.ch//eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v8/v8.1/input_files/condor_files/"
+eosPath = "root://eosatlas.cern.ch//eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v9/v9.1/input_files/"
 #files = [eosPath+"user.ebusch.364707.mc20e.v7p2_output.root/user.ebusch.33168179._000001.output.root", eosPath+"user.ebusch.364705.mc20a.v7p2_output.root/user.ebusch.33168149._000008.output.root"] 
 #files = ["user.ebusch.33168149._000001.output.root","user.ebusch.33168164._000001.output.root"]
 #-------------------------------------------------------------------------
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    for file_list in ["jz4jz5jz6_v8p1.txt"]:
+    for file_list in ["qcd_wjets_v9p1.txt"]:
         with open(file_list, "r") as f:
             files = []
             for line in f:
@@ -40,10 +40,10 @@ if __name__ == "__main__":
             os.system("echo '' >> submit.sub")
             os.system("echo 'should_transfer_files = YES' >> submit.sub")
             os.system("echo 'when_to_transfer_output = ON_EXIT' >> submit.sub")
-            os.system("echo 'initialdir = /afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/condor/v8.1' >> submit.sub")
+            os.system("echo 'initialdir = /afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/condor/v9.1' >> submit.sub")
             os.system("echo 'workdir = /afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/condor' >> submit.sub")
             os.system("echo 'transfer_input_files = $(workdir)/condor_run.sh, $(workdir)/fileSkimmer.C, $(workdir)/fileSkimmer.h, "+filePath+"' >> submit.sub")
-            os.system("echo 'transfer_output_files = skim2."+fileName+"' >> submit.sub")
+            os.system("echo 'transfer_output_files = skim0."+fileName+"' >> submit.sub")
             os.system("echo 'queue arguments from args.txt' >> submit.sub")
  
             os.system("condor_submit submit.sub")

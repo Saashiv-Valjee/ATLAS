@@ -316,10 +316,10 @@ public :
                 }
 
 		TCut cut_weight = Form( "weight" ); 
-
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+                if( hist_name_full.Contains("data")) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if (debug) cout << "cut_total = " << cut_total << endl;
 
 		cout << "hist_name: " << hist_name << endl;
