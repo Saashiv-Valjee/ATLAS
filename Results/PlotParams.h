@@ -25,7 +25,7 @@ PlotParams P_TruthMET_TruthPhi	 	= {"MET_TruthMET_TruthPhi", "TruthMET #phi", "#
 PlotParams P_n_jets			= {"n_jets", "Number of R=0.4 Jets", "N_{jets}", 20, 0, 20};
 PlotParams P_n_fatjets			= {"n_fatjets", "Number of R=1.0 Jets", "N_{fatjets}", 12, 0, 12};
 
-PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 70, 0, 5000};
+PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 50, 0, 3000};
 PlotParams P_jet1_eta			= {"jet1_eta", "Leading R=0.4 Jet Eta", "#eta", 50, -5.0, 5.0};
 PlotParams P_jet1_phi			= {"jet1_phi", "Leading R=0.4 Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet1_E			= {"jet1_E", "Leading R=0.4 Jet E", "Energy [GeV]", 50, 0, 3000};
@@ -93,7 +93,7 @@ PlotParams P_dphi_MET_j1j2		= {"dphi_MET_j1j2", "#Delta#phi (MET, -j1-j2)", "#De
 PlotParams P_deltaY_12			= {"deltaY_12", "#Delta Y (leading jet, subleading jet)", "#Delta Y", 50, 0, 5};
 PlotParams P_mjj_12			= {"mjj_12", "Invariant Mass R=0.4 Jets (Leading, Subleading)", "m_{jj} [GeV]", 80, 500, 6500};
 PlotParams P_mJJ_12			= {"mJJ_12", "Invariant Mass R=1.0 Jets (Leading, Subleading)", "m_{JJ} [GeV]", 100, 0, 3000};
-PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 1, 1500, 2500};
+PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 50, 1000, 6000};
 PlotParams P_mT_jj_neg			= {"mT_jj_neg", "mT(j1,j2,-(j1+j2))", "mT Neg [GeV]", 80, 500, 6000};
 PlotParams P_met_jj_neg 		= {"met_jj_neg", "-j1-j2", "MET Approx [GeV]", 80, 400, 3000};
 PlotParams P_mT_JJ			= {"mT_JJ", "mT System (R=1.0)", "mT [GeV]", 150, 0, 10000};

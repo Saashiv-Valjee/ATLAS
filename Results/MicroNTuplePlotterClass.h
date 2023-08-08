@@ -315,7 +315,7 @@ public :
                         h_temp = new TH1F( hist_name_full, "", NBins, xmin, xmax);
                 }
 
-		TCut cut_weight = Form( "weight" ); 
+		TCut cut_weight = Form( "1.19*weight" ); 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
@@ -363,11 +363,12 @@ public :
 		TString hist_name_full = Form("%s__%s__%s", hist_name_x.c_str(), hist_name_y.c_str(), filetag_treename.c_str());
 		h_temp = new TH2F( hist_name_full, "", NBins_x, xmin, xmax, NBins_y, ymin, ymax);	
 		
-		TCut cut_weight = Form( "weight/SumW" ); 
+		TCut cut_weight = Form( "1.19*weight" ); 
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+                if( hist_name_full.Contains("data")) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if(debug) cout << "cut_total = " << cut_total << endl;
 		
 		trees[filetag_treename]->Draw( Form( "%s:%s >> "+hist_name_full, hist_name_y.c_str(), hist_name_x.c_str() ), cut_total , "");
@@ -713,7 +714,7 @@ public :
 				}
 				t->Draw("same");
 			}else
-				gPad->BuildLegend(0.70,0.65,0.9,0.9,"");
+				gPad->BuildLegend(0.55,0.6,0.9,0.9,"");
 	
 			StampATLAS( "Internal", 140., 0.14, 0.84, 0.045 );
 			//if (stamp_cuts) StampCuts( 0.1, 0.91, 0.015 );			

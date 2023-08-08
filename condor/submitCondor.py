@@ -10,7 +10,7 @@ eosPath = "root://eosatlas.cern.ch//eos/atlas/atlascerngroupdisk/phys-exotics/jd
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    for file_list in ["qcd_wjets_v9p1.txt"]:
+    for file_list in ["ttbar_v9p1.txt"]:
         with open(file_list, "r") as f:
             files = []
             for line in f:
