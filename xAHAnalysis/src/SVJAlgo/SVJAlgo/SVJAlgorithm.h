@@ -23,6 +23,7 @@
 
 // ROOT include(s):
 #include "TH1D.h"
+#include <TLorentzVector.h>
 
 #include <sstream>
 
@@ -109,6 +110,7 @@ public:
       const xAOD::JetContainer* signalJets,
       const xAOD::JetContainer* fatJets,
       const xAOD::JetContainer* truthJets,
+      const xAOD::JetContainer* EMtopoJets,
       const xAOD::ElectronContainer* electrons,
       const xAOD::MuonContainer* muons,
       const xAOD::VertexContainer* vertices,

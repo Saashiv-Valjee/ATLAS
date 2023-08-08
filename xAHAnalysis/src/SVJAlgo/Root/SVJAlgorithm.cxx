@@ -251,6 +251,7 @@ EL::StatusCode SVJAlgorithm :: execute ()
   ANA_MSG_DEBUG("execute(): Applying selection");
   ++m_eventCounter;
 
+  std::cout << "Event number = " << m_eventCounter << std::endl;
   /////////////////////////////////////////////////////////////////////
   //                      Retrieve containers                        //
   /////////////////////////////////////////////////////////////////////
@@ -294,8 +295,12 @@ EL::StatusCode SVJAlgorithm :: execute ()
   const xAOD::JetContainer* signalJets = 0;
   const xAOD::MissingETContainer* met = 0;
   const xAOD::JetContainer* fatJets = 0;
+  const xAOD::JetContainer* EMtopoJets = 0;
   const xAOD::ElectronContainer* electrons = 0;
   const xAOD::MuonContainer* muons = 0;
+
+  ANA_CHECK (HelperFunctions::retrieve(EMtopoJets, "AntiKt4EMTopoJets", m_event, m_store));
+
   // If input comes from xAOD, or just running one collection,
   // then get the one collection and be done with it
   if( m_inputAlgo == "" || m_truthLevelOnly ) {
@@ -307,9 +312,9 @@ EL::StatusCode SVJAlgorithm :: execute ()
       ANA_CHECK (HelperFunctions::retrieve(electrons, m_inEleContainerName, m_event, m_store));
       ANA_CHECK (HelperFunctions::retrieve(muons, m_inMuContainerName, m_event, m_store));
     }
- 
+
     // executeAnalysis
-    pass = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, electrons, muons, vertices, met, truthParticles, doCutflow, "" );
+    pass = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, EMtopoJets, electrons, muons, vertices, met, truthParticles, doCutflow, "" );
 
   }
   else { 
@@ -349,7 +354,7 @@ EL::StatusCode SVJAlgorithm :: execute ()
       // allign with Dijet naming conventions
       if( systName.empty() ) { doCutflow = m_useCutFlow; } // only doCutflow for nominal
       else { doCutflow = false; }
-      passOne = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, electrons, muons, vertices, met, truthParticles, doCutflow, systName );
+      passOne = this->executeAnalysis( eventInfo, signalJets, fatJets, truthJets, EMtopoJets, electrons, muons, vertices, met, truthParticles, doCutflow, systName );
       // save the string if passing the selection
       if( saveContainerNames && passOne ) { vecOutContainerNames->push_back( systName ); }
       // the final decision - if at least one passes keep going!
@@ -366,6 +371,7 @@ EL::StatusCode SVJAlgorithm :: execute ()
   if(!pass) {
     wk()->skipEvent();
   }
+
   return EL::StatusCode::SUCCESS;
 
 }
@@ -380,6 +386,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     const xAOD::JetContainer* signalJets,
     const xAOD::JetContainer* fatJets,
     const xAOD::JetContainer* truthJets,
+    const xAOD::JetContainer* EMtopoJets,
     const xAOD::ElectronContainer* electrons,
     const xAOD::MuonContainer* muons,
     const xAOD::VertexContainer* vertices,
@@ -398,7 +405,40 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   //Trigger Efficiency
   // not needed  - trigger already saved
   //if(doCutflow) passCut();
- 
+
+  //Adding tight jet cleaning based on EMtopoJets
+  bool passAll = true;
+  TLorentzVector vPF, vEMtopo;
+  for(int ijet = 0; ijet < signalJets->size(); ijet++){
+    if(ijet > 1) continue;
+    const xAOD::Jet* sigjet = signalJets->at(ijet);
+    vPF.SetPtEtaPhiE(sigjet->pt(), sigjet->eta(), sigjet->phi(), sigjet->e());
+    float dR = 999.0;
+    int closestJet = -1;
+    for(int itopo = 0; itopo < EMtopoJets->size(); itopo++){
+      const xAOD::Jet* EMtopojet = EMtopoJets->at(itopo);
+      vEMtopo.SetPtEtaPhiE(EMtopojet->pt(), EMtopojet->eta(), EMtopojet->phi(), EMtopojet->e());
+      float temp_dR = vPF.DeltaR(vEMtopo);
+      if(dR > temp_dR){
+	dR = temp_dR;
+	closestJet = itopo;
+      }
+    }
+    const xAOD::Jet* closestEMtopojet = EMtopoJets->at(closestJet);
+
+    bool passTight = true;
+    if(closestEMtopojet->isAvailable<char>("DFCommonJets_jetClean_TightBad")){
+      if(closestEMtopojet->auxdataConst<char>("DFCommonJets_jetClean_TightBad")<1){
+	passTight = false;
+      }
+    }
+    passAll = passTight && passAll;
+  }
+
+  if(!passAll){
+    wk()->skipEvent();  return EL::StatusCode::SUCCESS;
+  }
+
   // Jet multiplicity
   if (signalJets->size() < m_jetMultiplicity) {
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
@@ -454,8 +494,35 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   }
   if(doCutflow) passCut("LeptonVeto");
 
+ 
+  /*
+  //Trying to add jet cleaning
+  for(int ijet = 0; ijet < signalJets->size(); ijet++){
+    const xAOD::Jet* sigjet = signalJets->at(ijet);
+ 
+    bool passTight=true;
+    float fracSamplingMax;
+    fracSamplingMax = -999;
+    std::vector<float> sumpttrk_vec;
+    sumpttrk_vec.clear();
+    sigjet->getAttribute(xAOD::JetAttribute::SumPtTrkPt500, sumpttrk_vec);
+    sigjet->getAttribute(xAOD::JetAttribute::FracSamplingMax, fracSamplingMax);
+    std::cout << "fracSamplingMax = " << fracSamplingMax << std::endl;
+    float sumpttrk;
+    if (sumpttrk_vec.size() > 0) {
+      sumpttrk = sumpttrk_vec[0]; //assuming you are using the default PV selection
+    } else {
+      sumpttrk = 0;
+    }
+    if (fabs(sigjet->eta())<2.4 && fracSamplingMax>0 && (sumpttrk/sigjet->pt())/fracSamplingMax<0.1) passTight=false;
+
+    std::cout << "For the " << ijet << "th jet, passTight is = " << passTight << std::endl;
+
+  }
+  */
   ANA_MSG_DEBUG("Event # "<< m_eventCounter);
 
+  std::cout << "Event number in executeAnalysis = " << m_eventCounter << std::endl;
   //////////////////////
   //  Fill the tree   //
   //////////////////////
