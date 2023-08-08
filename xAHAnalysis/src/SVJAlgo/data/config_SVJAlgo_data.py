@@ -33,8 +33,8 @@ c.algorithm("BasicEventSelection",    {
   # ---------------------------- Cuts ----------------------------------#
   "m_checkDuplicatesData"       : True,
   "m_applyGRLCut"               : True,
-  "m_applyEventCleaningCut"     : True,
-  "m_applyJetCleaningEventFlag" : True,
+  "m_applyEventCleaningCut"     : False,
+  "m_applyJetCleaningEventFlag" : False,
   "m_applyIsBadBatmanFlag" 	: True,
   "m_applyCoreFlagsCut"	        : True,
   "m_vertexContainerName"       : "PrimaryVertices",
