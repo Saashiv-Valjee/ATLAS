@@ -1,0 +1,9 @@
+mkdir FILE
+mkdir FILE/PFN
+mkdir FILE/PFN/SR
+mkdir results
+mkdir results/PFN
+mkdir results/PFN/check
+mkdir results/PFN/check/SR
+mkdir results/PFN/histfit
+mkdir results/PFN/table
