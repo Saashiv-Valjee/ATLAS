@@ -1,1 +1,3 @@
-[{"inDS":"user.ebusch.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.v9c.mc20a_tree.root", "outDS":"user.ebusch.410470.mc20a.v9p1"}]
+[{"inDS":"user.ebusch:user.ebusch.364704.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ4WithSW.v8a.mc20d_tree.root", "outDS":"user.ebusch.364704.mc20d.v8p1"},
+{"inDS":"user.ebusch:user.ebusch.364704.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ4WithSW.v8a.mc20a_tree.root", "outDS":"user.ebusch.364704.mc20a.v8p1"},
+{"inDS":"user.ebusch:user.ebusch.364705.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ5WithSW.v8a.mc20a_tree.root", "outDS":"user.ebusch.364705.mc20a.v8p1"}]
