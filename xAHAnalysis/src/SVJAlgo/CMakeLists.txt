@@ -25,7 +25,8 @@ atlas_add_library( SVJAlgoLib SVJAlgo/*.h Root/*.h Root/*.cxx ${SVJAlgoDictSourc
   xAODJet
   xAODMissingET
   xAODMuon
-  xAODRootAccess )
+  xAODRootAccess
+  JetTileCorrectionLib ) 
 
 # Install files from the package:
 atlas_install_scripts( scripts/*.py )

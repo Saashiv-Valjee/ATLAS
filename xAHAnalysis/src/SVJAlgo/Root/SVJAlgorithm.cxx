@@ -189,6 +189,15 @@ EL::StatusCode SVJAlgorithm :: initialize ()
       
   }
 
+  // Setting up tools ... let's set up the DeadTileCorrectionTool
+  // We'll use it to mark jets in dead modules
+  ANA_CHECK( ASG_MAKE_ANA_TOOL(m_JetTileCorrectionTool_handle, CP::JetTileCorrectionTool));
+  ANA_CHECK( m_JetTileCorrectionTool_handle.setProperty("OutputLevel", msg().level()));
+  //ANA_CHECK( m_JetTileCorrectionTool_handle.setProperty("isMC", !m_isData));
+  //ANA_CHECK( m_JetTileCorrectionTool_handle.setProperty("isMC", true));
+  ANA_CHECK( m_JetTileCorrectionTool_handle.retrieve());
+  ANA_MSG_DEBUG("Retrieved tool: " << m_JetTileCorrectionTool_handle);
+
   ANA_MSG_INFO("initialize() : Succesfully initialized! \n");
   return EL::StatusCode::SUCCESS;
 }
@@ -251,7 +260,7 @@ EL::StatusCode SVJAlgorithm :: execute ()
   ANA_MSG_DEBUG("execute(): Applying selection");
   ++m_eventCounter;
 
-  std::cout << "Event number = " << m_eventCounter << std::endl;
+  //std::cout << "Event number = " << m_eventCounter << std::endl;
   /////////////////////////////////////////////////////////////////////
   //                      Retrieve containers                        //
   /////////////////////////////////////////////////////////////////////
@@ -408,11 +417,24 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
 
   //Adding tight jet cleaning based on EMtopoJets
   bool passAll = true;
+  bool bothJetsGoodTile = true;
   TLorentzVector vPF, vEMtopo;
   for(int ijet = 0; ijet < signalJets->size(); ijet++){
     if(ijet > 1) continue;
     const xAOD::Jet* sigjet = signalJets->at(ijet);
     vPF.SetPtEtaPhiE(sigjet->pt(), sigjet->eta(), sigjet->phi(), sigjet->e());
+
+    bool goodTile = true;
+    int tile_status = -1;
+    JTC::TS j_status = m_JetTileCorrectionTool_handle->getTileStatus(*sigjet);
+    std::cout << sigjet->phi() << std::endl;
+    if(j_status==JTC::TS::GOOD) tile_status = 0; 
+    if(j_status==JTC::TS::EDGE) tile_status = 1; 
+    if(j_status==JTC::TS::CORE) tile_status = 2;
+    std::cout << tile_status << std::endl; 
+    //bothJetsGoodTile = bothJetsGoodTile && goodTile;
+    bothJetsGoodTile = tile_status == 0;
+
     float dR = 999.0;
     int closestJet = -1;
     for(int itopo = 0; itopo < EMtopoJets->size(); itopo++){
@@ -426,6 +448,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     }
     const xAOD::Jet* closestEMtopojet = EMtopoJets->at(closestJet);
 
+    // tight cleaning
     bool passTight = true;
     if(closestEMtopojet->isAvailable<char>("DFCommonJets_jetClean_TightBad")){
       if(closestEMtopojet->auxdataConst<char>("DFCommonJets_jetClean_TightBad")<1){
@@ -436,6 +459,10 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   }
 
   if(!passAll){
+    wk()->skipEvent();  return EL::StatusCode::SUCCESS;
+  }
+  if(!bothJetsGoodTile){
+    std::cout << "rejecting event for bad tile" << std::endl;
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
 

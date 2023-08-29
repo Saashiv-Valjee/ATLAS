@@ -15,6 +15,7 @@
 
 #ifndef __CINT__
   #include "xAODJet/JetContainer.h"
+  #include "JetTileCorrection/JetTileCorrectionTool.h"
   #include "xAODTruth/TruthParticleContainer.h"
   #include "xAODEventInfo/EventInfo.h"
   #include <xAODAnaHelpers/JetHists.h>
@@ -79,6 +80,8 @@ class SVJAlgorithm : public xAH::Algorithm
     std::string m_treeStream;
 
     void passCut(std::string label);
+
+    asg::AnaToolHandle<CP::IJetTileCorrectionTool> m_JetTileCorrectionTool_handle{"JetTileCorrectionTool", this};
 #ifndef __CINT__
     std::map< std::string, JetHists*> m_jetHists; //!
     std::map< std::string, MiniTree* > m_myTrees; //!
