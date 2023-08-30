@@ -17,8 +17,8 @@ import numpy as np
 significance = []
 begin = datetime.now()
 
-startNum = int(sys.argv[1])
-endNum = int(sys.argv[2])
+startNum = 515487
+endNum = 515527
 
 #open a root file and convert the inputs to np histograms
 inputFileBkg = ROOT.TFile("FILE/PFN/SR/v9p1_PFNv6_totalBkgALL_skim0_SR_histfit.root")
@@ -113,7 +113,7 @@ for num in range(startNum,endNum):
 	hunter.plot_stat(show_Pval=True, filename="results/PFN/SR/1D/BH_statistics_v9p1_PFNv6_SR_bs_{}_SI.png".format(num))
 	'''
 	del inputFileSig
-#print(significance)
+print(significance)
 plot_dir  = "results/PFN/table/"
 title = "BumpHunter Sensitivity"
 sic_vals ={}
@@ -142,7 +142,7 @@ def make_grid_plot(values,title,method):
 		elif (title == "sensitivity_Inclusive" or title == "sensitivity_mT"): img = ax.imshow(values, norm=colors.LogNorm(vmin=1e-5,vmax=1.5))
 		elif (title == "auc"): img = ax.imshow(values, vmin=0.7, vmax=1)
 		elif (title == "sicMax"): img = ax.imshow(values, vmin=-2, vmax=20)
-		else: img = ax.imshow(values, vmin = 0.01)
+		else: img = ax.imshow(values, vmin = 0.01,vmax = 3.)
 	for (j,i),label in np.ndenumerate(values):
 		if label == 0.0: continue
 		if title == "qcdEff" or title == "sensitivity_Inclusive" or title == "sensitivity_mT": ax.text(i,j,'{0:.1e}'.format(label),ha='center', va='center', fontsize = 'x-small')
