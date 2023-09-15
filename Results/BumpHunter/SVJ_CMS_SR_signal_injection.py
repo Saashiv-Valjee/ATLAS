@@ -21,7 +21,7 @@ startNum = 515487
 endNum = 515527
 
 #open a root file and convert the inputs to np histograms
-inputFileBkg = ROOT.TFile("FILE/PFN/SR/v9p1_PFNv6_totalBkgALL_skim0_SR_histfit.root")
+inputFileBkg = ROOT.TFile("FILE/CMS/SR/v9p1_CMS_totalBkgALL_skim0_SR_histfit.root")
 
 RootBkgHist = inputFileBkg.Get("bkgHist").Clone()
 
@@ -48,7 +48,7 @@ hist_bkg, bins_bkg = np.histogram(binCenter_bkg, bins=binEdge_bkg, weights=binWe
 bkg = np.histogram(binCenter_bkg, bins=binEdge_bkg, weights=binWeight_bkg)
 
 for num in range(startNum,endNum):
-	inputFileSig = ROOT.TFile("FILE/PFN/SR/v8p1_PFNv6_{}_SR.root".format(num))
+	inputFileSig = ROOT.TFile("FILE/CMS/SR/v8p1_CMSskim1_{}_SR.root".format(num))
 	RootSigHist = inputFileSig.Get("sigHist").Clone()
 	expSigNum = RootSigHist.Integral()
 	print(RootSigHist.Integral())
@@ -95,7 +95,7 @@ for num in range(startNum,endNum):
 	print("")
 	significance.append(hunter.significance)
 	# Get and save the injection plot
-	hunter.plot_inject(filename=("results/PFN/SR/1D/v8p1_PFNv6_{}_SR.png".format(num),"results/PFN/SR/1D/v8p1_PFNv6_{}_SR_log.png".format(num)))
+	hunter.plot_inject(filename=("results/CMS/SR/1D/v8p1_CMSskim1_{}_SR.png".format(num),"results/CMS/SR/1D/v8p1_CMSskim1_{}_SR_log.png".format(num)))
 	'''
 	print("BUMP POSITION")
 	print(bkg[1][hunter.min_loc_ar[0]])
@@ -107,14 +107,14 @@ for num in range(startNum,endNum):
 	hunter.print_bump_info()
 	hunter.print_bump_true(data = dataHist, bkg = bkg[0])
 	print("")
-	hunter.plot_tomography(bkg = bkg, is_hist = True, filename="results/PFN/SR/1D/tomography_v9p1_PFNv6_SR_bs_{}_SI.png".format(num))
+	hunter.plot_tomography(bkg = bkg, is_hist = True, filename="results/CMS/SR/1D/tomography_v9p1_CMSskim1_SR_bs_{}_SI.png".format(num))
 	datatmp = [dataHist,bkg[1]]
-	hunter.plot_bump(data = datatmp, bkg = bkg, is_hist = True, filename="results/PFN/SR/1D/bump_v9p1_PFNv6_SR_bs_{}_SI.png".format(num))
-	hunter.plot_stat(show_Pval=True, filename="results/PFN/SR/1D/BH_statistics_v9p1_PFNv6_SR_bs_{}_SI.png".format(num))
+	hunter.plot_bump(data = datatmp, bkg = bkg, is_hist = True, filename="results/CMS/SR/1D/bump_v9p1_CMSskim1_SR_bs_{}_SI.png".format(num))
+	hunter.plot_stat(show_Pval=True, filename="results/CMS/SR/1D/BH_statistics_v9p1_CMSskim1_SR_bs_{}_SI.png".format(num))
 	'''
 	del inputFileSig
 print(significance)
-plot_dir  = "results/PFN/table/"
+plot_dir  = "results/CMS/table/"
 title = "BumpHunter Sensitivity"
 sic_vals ={}
 for i in range(startNum, endNum):
