@@ -427,11 +427,11 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     bool goodTile = true;
     int tile_status = -1;
     JTC::TS j_status = m_JetTileCorrectionTool_handle->getTileStatus(*sigjet);
-    std::cout << sigjet->phi() << std::endl;
+    //std::cout << sigjet->phi() << std::endl;
     if(j_status==JTC::TS::GOOD) tile_status = 0; 
     if(j_status==JTC::TS::EDGE) tile_status = 1; 
     if(j_status==JTC::TS::CORE) tile_status = 2;
-    std::cout << tile_status << std::endl; 
+    //std::cout << tile_status << std::endl; 
     //bothJetsGoodTile = bothJetsGoodTile && goodTile;
     bothJetsGoodTile = tile_status == 0;
 

@@ -93,11 +93,11 @@ void myPlotter(){
 	//plotter.PlotOverlay("");
 
 	//plotter.SetPlots ( plot_all );
-	plotter.SetPlots ( {P_dphi_min, P_met_met, P_met_phi, P_jet1_pt, P_jet1_phi, P_jet2_phi});//, P_jet1_pt, P_jet1_phi, P_jet2_phi, P_met_phi} );
+	//plotter.SetPlots ( {P_dphi_min, P_met_met, P_met_phi, P_jet1_pt, P_jet1_phi, P_jet2_phi});//, P_jet1_pt, P_jet1_phi, P_jet2_phi, P_met_phi} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
 	//plotter.SetPlots( {P_dphi_min_MET, P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2});
-	//plotter.SetPlots ( {P_mT_jj, P_jet1_pt} );
+	plotter.SetPlots ( {P_mT_jj, P_jet1_pt, P_met_met} );
         plotter.Plot("ratio");
 
         //***************** 2D Plot *******************// 	
