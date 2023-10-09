@@ -30,10 +30,12 @@ dataconfigFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_data.py
 #	done
 #done
 
-for SIG in signal
+#for SIG in signal
+for SIG in resubmit
 do
 	submitdir=grid_${SIG}
-	for MC in mc20a mc20d mc20e
+	#for MC in mc20a mc20d mc20e
+	for MC in mc20d
 	do
 		inputFile=${SIG}_${MC}.txt
 		echo $inputFile
@@ -41,5 +43,4 @@ do
 		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v9e.${MC} --optGridNGBPerJob=2
 	done
 done
-
 

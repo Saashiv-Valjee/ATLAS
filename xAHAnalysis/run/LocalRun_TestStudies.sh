@@ -32,7 +32,7 @@ configFile=../src/SVJAlgo/data/config_SVJAlgo_data.py
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.364704.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ4WithSW.deriv.DAOD_JETM2.e7142_s3681_r13145_p5548/DAOD_JETM2.32404148._000230.pool.root.1"
 #configFile=../src/SVJAlgo/data/config_SVJAlgo_MC.py
 
-nevents=10000
+nevents=-1
 submitdir=DATA_to_TTREE_${nevents}
 
 echo "xAH_run.py --files ${infile} --nevents $nevents --config $configFile --extraOptions="" --submitDir ${parentsubmitdir}/$submitdir --log-level $loglevel $extra --force direct "
