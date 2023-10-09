@@ -3,7 +3,7 @@ import os
 import glob
 import argparse
 
-eosPath = "root://eosatlas.cern.ch//eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v8/v8.1/input_files/signals/"
+eosPath = "root://eosatlas.cern.ch//eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v9/v9.2/input_files/signals/"
 #files = [eosPath+"user.ebusch.364707.mc20e.v7p2_output.root/user.ebusch.33168179._000001.output.root", eosPath+"user.ebusch.364705.mc20a.v7p2_output.root/user.ebusch.33168149._000008.output.root"] 
 #files = ["user.ebusch.33168149._000001.output.root","user.ebusch.33168164._000001.output.root"]
 #-------------------------------------------------------------------------

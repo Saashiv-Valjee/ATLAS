@@ -24,6 +24,7 @@ PlotParams P_TruthMET_TruthSumEt 	= {"MET_TruthMET_TruthSumEt", "TruthMET SumE_{
 PlotParams P_TruthMET_TruthPhi	 	= {"MET_TruthMET_TruthPhi", "TruthMET #phi", "#phi [rad]", 50, -3.14, 3.14};  
 PlotParams P_n_jets			= {"n_jets", "Number of R=0.4 Jets", "N_{jets}", 20, 0, 20};
 PlotParams P_n_fatjets			= {"n_fatjets", "Number of R=1.0 Jets", "N_{fatjets}", 12, 0, 12};
+PlotParams P_runNumber			= {"runNumber", "Run Number", "run", 50,276262,364292};
 
 PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 50, 0, 3000};
 PlotParams P_jet1_eta			= {"jet1_eta", "Leading R=0.4 Jet Eta", "#eta", 50, -5.0, 5.0};

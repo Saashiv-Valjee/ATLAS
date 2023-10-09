@@ -308,7 +308,7 @@ void fileSkimmer::declareNewTree(TString fileName)
    // Init() will be called many times when running on PROOF
    // (once per file to be processed).
 
-   myFile = new TFile("skim3_0."+fileName, "RECREATE");
+   myFile = new TFile("skim0."+fileName, "RECREATE");
    myTree = new TTree("PostSel","PostSel");
    //all_jets_pt = 0;
    //all_jets_eta = 0;

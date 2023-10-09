@@ -424,7 +424,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     const xAOD::Jet* sigjet = signalJets->at(ijet);
     vPF.SetPtEtaPhiE(sigjet->pt(), sigjet->eta(), sigjet->phi(), sigjet->e());
 
-    bool goodTile = true;
+    //bool goodTile = true;
     int tile_status = -1;
     JTC::TS j_status = m_JetTileCorrectionTool_handle->getTileStatus(*sigjet);
     //std::cout << sigjet->phi() << std::endl;
@@ -432,8 +432,8 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     if(j_status==JTC::TS::EDGE) tile_status = 1; 
     if(j_status==JTC::TS::CORE) tile_status = 2;
     //std::cout << tile_status << std::endl; 
-    //bothJetsGoodTile = bothJetsGoodTile && goodTile;
-    bothJetsGoodTile = tile_status == 0;
+    bool goodTile = tile_status == 0;
+    bothJetsGoodTile = bothJetsGoodTile && goodTile;
 
     float dR = 999.0;
     int closestJet = -1;
@@ -457,7 +457,6 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     }
     passAll = passTight && passAll;
   }
-
   if(!passAll){
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }

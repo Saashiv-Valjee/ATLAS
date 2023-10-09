@@ -8,7 +8,7 @@ void myPlotter(){
 	
 	//vector<string> filetags = {"METbkg", "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
 	//vector<string> filetags = {"METbkg", "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
-	vector<string> filetags = { "totalBkgALL","dataALL" };//, "QCDskim", "Znunu", "Wjets", "topPhys", "diboson"};
+	vector<string> filetags = { "dataALL" };//, "QCDskim", "Znunu", "Wjets", "topPhys", "diboson"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
 	//vector<string> filetags = {"QCDskim.mc20e","364703.mc20e", "364704.mc20e", "364705.mc20e", "364706.mc20e", "364707.mc20e", "364708.mc20e", "364709.mc20e"};
 	//vector<string> filetags = {"QCDskim.mc20e","515495.mc20e", "515498.mc20e", "515515.mc20e", "515518.mc20e"};
@@ -21,15 +21,15 @@ void myPlotter(){
 	//cuts["fatjet"] = "fatjet1_pt>0 && fatjet2_pt>0";
 
 	vector<PlotParams> plot_all = {	P_jet1_pt, P_jet2_pt,
-  					P_jet1_Width, P_jet2_Width,
-					P_jet1_NumTrkPt1000PV, P_jet2_NumTrkPt1000PV,
-					//P_jet1_eta, P_jet2_eta,
-					//P_jet1_phi, P_jet2_phi,
+  					//P_jet1_Width, P_jet2_Width,
+					//P_jet1_NumTrkPt1000PV, P_jet2_NumTrkPt1000PV,
+					P_jet1_eta, P_jet2_eta,
+					P_jet1_phi, P_jet2_phi,
 					P_met_met, P_met_phi,
-					P_mT_jj,
-					P_mT_jj_neg, /*P_met_jj_neg, P_dphi_MET_j1j2,*/
-					P_pt_balance_12, P_maxphi_minphi, P_rT,
-					//P_n_jets, P_hT, P_deltaY_12,
+					//P_mT_jj,
+					//P_mT_jj_neg, /*P_met_jj_neg, P_dphi_MET_j1j2,*/
+					//P_pt_balance_12, P_maxphi_minphi, P_rT,
+					P_n_jets, P_hT, P_deltaY_12, P_runNumber,
 					P_dphi_12, P_dphi_min, P_dR_12, P_deta_12
 					};
 
@@ -46,11 +46,11 @@ void myPlotter(){
 	class MicroNTuplePlotter plotter( filetags, path );
 
         //***************** Plot General options *******************// 
-        plotter.plot_norm = true;
+        plotter.plot_norm = false;
         plotter.plot_log = true;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="bkg_composition";
+        plotter.output_file_tag ="year";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
@@ -62,7 +62,7 @@ void myPlotter(){
 	plotter.reverse_cdf_plots = {"fabs(jet1_eta)", "fabs(jet2_eta)", "dphi_min", "deltaY_12"};
 	plotter.use_normalized_cdf = true;
 	//plotter.SetLegendManual( 0.5, 0.5, 0.9, 0.9 );
-	plotter.colors = {kBlack, kRed, kGray+2, kBlue+1, kAzure+7,kGreen+3, kSpring, kRed+1, kOrange-3, kPink+10, kPink+1, kYellow, kYellow-3  }; //pairs
+	plotter.colors = {/*kBlack, kRed, kGray+2, kBlue+1, kAzure+7,kGreen+3, kSpring, kRed+1, kOrange-3,*/ kPink+10, kPink+1, kViolet-1, kViolet-4 }; //pairs
         //plotter.colors = { kBlack, kRed, kOrange-3, kYellow+1, kSpring-1, kAzure, kBlue+2, kViolet}; //rainbow
         //plotter.colors = { kRed, kRed+2, kOrange-3, kYellow+1, kSpring, kGreen+3, kCyan+1, kAzure, kBlue+2, kViolet, kMagenta-9, kBlack}; //10 gradient + black
 
@@ -71,8 +71,9 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_pt, P_jet2_pt, P_jet_svj_pt, P_jet_asvj_pt}, OP_jet_pt );
 
         //***************** Plot Cut options *******************// 
-        //plotter.SetCuts("dphi_min <= 3.0");
-       	//plotter.SetComparisonCuts({"", "dphi_min>0.1", "dphi_min>0.5"});	
+        //plotter.SetCuts("met_phi < -1.0 && met_phi > -1.5");
+       	//plotter.SetComparisonCuts({"met_phi < -1.5 && met_phi > -2.8", "met_phi < -1.0 && met_phi > -1.5", "met_phi > -0.5 && met_phi <0", "met_phi > 0.0 && met_phi < 0.7", "met_phi > 2.5"});	
+       	plotter.SetComparisonCuts({"runNumber < 290000", "runNumber > 290000 && runNumber < 320000", "runNumber > 320000 && runNumber < 345000", "runNumber > 345000"});	
         //plotter.ApplySelectiveCuts("508548", "dPhi_min < 2.0");
 
         //***************** Binning and Legend *******************//  
@@ -97,8 +98,8 @@ void myPlotter(){
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
 	//plotter.SetPlots( {P_dphi_min_MET, P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2});
-	plotter.SetPlots ( {P_mT_jj, P_jet1_pt, P_met_met} );
-        plotter.Plot("ratio");
+	plotter.SetPlots ( {P_met_phi, P_jet1_phi, P_jet2_phi} );
+        plotter.Plot("");
 
         //***************** 2D Plot *******************// 	
 	//plotter.Plot2D(P_jet1_pt, P_met_met);

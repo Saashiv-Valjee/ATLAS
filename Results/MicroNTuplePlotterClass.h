@@ -399,7 +399,7 @@ public :
 					hist_tag = Form( "%s", filetag_treename.c_str() );
 				}else{
 					string filetag_only = GetFiletag(filetag_treename);
- 					if (cuts_compare.size() > 1){hist_tag = Form("%s ; "+cut_compare, filetag_only.c_str());}
+ 					if (cuts_compare.size() > 1){hist_tag = Form("%s ; Year %i", filetag_only.c_str(), i+2015);}
 					else if (use_better_legend_names){hist_tag = GetLegendNames(filetag_only);}
 					else {hist_tag = Form( "%s", filetag_only.c_str());}
    				}

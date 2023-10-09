@@ -12,8 +12,8 @@ do
 	submitdir=grid_${data}
 	inputFile=${data}.txt
 	echo $inputFile
-	echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[1]%.%in:name[2]%.v9d --optGridNGBPerJob=2"
-	xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[1]%.%in:name[2]%.v9d --optGridNGBPerJob=2
+	echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[1]%.%in:name[2]%.v10a --optGridNGBPerJob=2"
+	xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[1]%.%in:name[2]%.v10a --optGridNGBPerJob=2
 done
 
 
