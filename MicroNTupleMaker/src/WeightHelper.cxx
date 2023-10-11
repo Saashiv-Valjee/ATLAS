@@ -18,7 +18,7 @@ void MicroNTupleMaker::SetWeight(){
 /* ====================================================================================================================== */
 double MicroNTupleMaker::GetGenFilterEff(string dsid){
 
-        double my_gfe = 0.0;
+        double my_gfe = 1.0;
 
 	// Gen Filter Eff
 	map<string, double> gfe;
@@ -160,7 +160,7 @@ double MicroNTupleMaker::GetGenFilterEff(string dsid){
 /* ====================================================================================================================== */
 double MicroNTupleMaker::GetXSection(string dsid){
 
-        double my_xs = 0.0;
+        double my_xs = 1.0;
 
 	// Cross section in nb
 	map<string, double> xs;
