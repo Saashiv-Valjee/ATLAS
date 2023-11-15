@@ -464,6 +464,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     std::cout << "rejecting event for bad tile" << std::endl;
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
+  if(doCutflow) passCut("JetTileCorrection");
 
   // Jet multiplicity
   if (signalJets->size() < m_jetMultiplicity) {

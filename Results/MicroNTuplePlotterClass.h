@@ -701,7 +701,7 @@ public :
 			if( manual_legend )
 				gPad->BuildLegend(legx1,legx2,legy1,legy2,"");
 			else if ( plot_type == "sig" || plot_type == "ssqrtb"){
-				gPad->BuildLegend(0.55,0.65,0.78,0.9,"");
+				gPad->BuildLegend(0.55,0.65,0.75,0.9,"");
 				TPaveText *t = new TPaveText(.72,.65,.9,.9, "NDC");
 				bool use_reverse_cdf = find(reverse_cdf_plots.begin(),reverse_cdf_plots.end(), PlotParams_temp.hist_name) != reverse_cdf_plots.end();
 				if (use_reverse_cdf)

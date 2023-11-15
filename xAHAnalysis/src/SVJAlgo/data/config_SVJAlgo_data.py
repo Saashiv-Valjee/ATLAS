@@ -59,7 +59,7 @@ c.algorithm("JetCalibrator",     {
   #"m_redoJVT"                   : False,
   #----------------------- Systematics ----------------------------#
   "m_systName"                  : 'Nominal',
-  "m_systVal"                   : 0,
+  "m_systVal"                   : 1,
   #----------------------- Calibration ----------------------------#
   #"m_calibConfigAFII"           : "JES_MC16Recommendation_AFII_PFlow_Apr2019_Rel21.config",        # recommendation as of May 11 2020
   "m_calibConfigFullSim"        : "PreRec_R22_PFlow_ResPU_EtaJES_GSC_February23_230215.config",   # recommendation as of Feb 15 2023
@@ -124,7 +124,7 @@ c.algorithm("MuonCalibrator",	 {
   "m_outContainerName"          : "Muons_Calibrate",
   #----------------------- Systematics ----------------------------#
   "m_systName"                  : "Nominal",
-  "m_systVal"                   : 0,
+  "m_systVal"                   : 1,
   "m_outputAlgoSystNames"       : "MuonCalibrator_Syst",
   #----------------------- Other ----------------------------#
   "m_sort"                      : True,
@@ -150,7 +150,7 @@ c.algorithm("MuonSelector", {
     "m_inputAlgoSystNames"      : "MuonCalibrator_Syst",
     "m_outputAlgoSystNames"     : "MuonSelector_Syst",
     "m_systName"                : "Nominal",
-    "m_systVal"                 : 0,
+    "m_systVal"                 : 1,
     "m_removeEventBadMuon"      : False
 })
 
@@ -163,7 +163,7 @@ c.algorithm("ElectronCalibrator",	 {
   "m_outContainerName"          : "Electrons_Calibrate",
   #----------------------- Systematics ----------------------------#
   "m_systName"                  : "Nominal",
-  "m_systVal"                   : 0,
+  "m_systVal"                   : 1,
   "m_esModel"			: "es2022_R22_PRE",
   "m_decorrelationModel"	: "1NP_v1",
   "m_outputAlgoSystNames"       : "ElectronCalibrator_Syst",
@@ -193,7 +193,7 @@ c.algorithm("ElectronSelector", {
     "m_inputAlgoSystNames"        : "ElectronCalibrator_Syst",
     "m_outputAlgoSystNames"       : "ElectronSelector_Syst",
     "m_systName"                  : "Nominal",
-    "m_systVal"                   : 0,
+    "m_systVal"                   : 1,
 })
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%% Overlap Removal %%%%%%%%%%%%%%%%%%%%%%%%%%#
@@ -274,7 +274,7 @@ c.algorithm("SVJAlgorithm",    		 {
     "m_inFatJetContainerName"   	: inFatJetContainerName,
     "m_inputFatAlgo"            	: inputFatAlgo,
     #----------------------- Selections ----------------------------#
-    "m_leadingJetPtCut"         	: 450e3,
+    "m_leadingJetPtCut"         	: 50e3,
     "m_subleadingJetPtCut"      	: 50e3,
     "m_leadingJetEtaCut"         	: 2.1,
     "m_subleadingJetEtaCut"      	: 2.1,

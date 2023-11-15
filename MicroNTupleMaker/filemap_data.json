@@ -1,4 +1,4 @@
-[{"inDS":"user.ebusch:user.ebusch.data15_13TeV.periodAllYear.v10a_tree.root", "outDS":"user.ebusch.data15.v10p2"},
-{"inDS":"user.ebusch:user.ebusch.data16_13TeV.periodAllYear.v10a_tree.root", "outDS":"user.ebusch.data16.v10p2"},
-{"inDS":"user.ebusch:user.ebusch.data17_13TeV.periodAllYear.v10a_tree.root", "outDS":"user.ebusch.data17.v10p2"},
-{"inDS":"user.ebusch:user.ebusch.data18_13TeV.periodAllYear.v10a_tree.root", "outDS":"user.ebusch.data18.v10p2"}]
+[{"inDS":"user.ebusch:user.ebusch.data15_13TeV.periodAllYear.v10d_tree.root", "outDS":"user.ebusch.data15.v10p4"},
+{"inDS":"user.ebusch:user.ebusch.data16_13TeV.periodAllYear.v10d_tree.root", "outDS":"user.ebusch.data16.v10p4"},
+{"inDS":"user.ebusch:user.ebusch.data17_13TeV.periodAllYear.v10d_tree.root", "outDS":"user.ebusch.data17.v10p4"},
+{"inDS":"user.ebusch:user.ebusch.data18_13TeV.periodAllYear.v10d_tree.root", "outDS":"user.ebusch.data18.v10p4"}]
