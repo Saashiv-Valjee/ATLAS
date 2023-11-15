@@ -33,6 +33,13 @@ xAH_run.py --config ../src/SVJAlgo/data/config_SVJAlgo_QCD.py --files  /eos/atla
 3. cd run
 4. source grid\_run.sh
 
+**Note**: Jobs can be monitored via the `pbook` feature of panda, or the BigPandaMon website `https://bigpanda.cern.ch/user/`. `Finished` jobs can be retried to get to 100% `done` via the folliwng:
+1. lsetup panda
+2. pbook
+3. show()
+4. retry([JediTaskID1,JediTaskID2,JediTaskID3,...])
+
+
 ## Making MicroNTuples
 
 The MicroNTupleMaker code provides a framework for applying essential analysis cuts and calculating analysis variables of interest, which can then be saved in a tree/nTuple format for easy access without the need to recalculate every time. 
@@ -69,6 +76,12 @@ lsetup panda
 
 ```
 Note that `grid_run.sh` executes a prun command, which depends on the maps `filemap_multijet.json` or `filemap_signal.json`. These files should be editted before running to give the correct input nTuple version, and the desired output name.
+
+## Weight calculation
+TODO
+
+## ML Tool Analysis
+TODO
 
 ## Plotting
 
