@@ -7,6 +7,7 @@ WorkDir_DIR="/afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/xAHAnalysis"
 configFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_MC.py
 dataconfigFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_data.py
 #dataconfigFile=$WorkDir_DIR/localRelease/athena/Projects/WorkDir/SVJAlgo/data/config_SVJAlgo_data.py
+
 #for data in data_all
 #do
 #	submitdir=grid_${data}
