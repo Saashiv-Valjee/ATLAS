@@ -3,14 +3,14 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v9/v9.2/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v7/v7.4/user.ebusch.";
 	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
 	//vector<string> filetags = {"METbkg", "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
 	//vector<string> filetags = {"METBkg", "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
 	//vector<string> filetags = { "dataAll", "data15", "data16", "data17", "data18" };//, "QCDskim", "Znunu", "Wjets", "topPhys", "diboson"};
-	vector<string> filetags = { "data16", "QCDskim", "Znunu", "Wjets", "topPhys"};
-	//vector<string> filetags = {"dataAll", "515503", "515504", "515505", "515506"}; // rinv
+	//vector<string> filetags = { "data16", "QCDskim", "Znunu", "Wjets", "topPhys"};
+	vector<string> filetags = {"dataAll", "515495", "515496", "515498","515499"}; // rinv
 
 	// - cuts
 	//map<string, TCut> cuts;	
@@ -49,7 +49,7 @@ void myPlotter(){
         plotter.plot_log = true;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="v9p2_data16";
+        plotter.output_file_tag ="rT_met_count";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = false;
 	plotter.stamp_counts = false;
@@ -61,8 +61,8 @@ void myPlotter(){
 	plotter.reverse_cdf_plots = {"fabs(jet1_eta)", "fabs(jet2_eta)", "dphi_min", "deltaY_12"};
 	plotter.use_normalized_cdf = true;
 	//plotter.SetLegendManual( 0.5, 0.5, 0.9, 0.9 );
-	plotter.colors = {kBlack, kRed, /*kGray+2,*/ kBlue+1, kAzure+7,kGreen+3, kSpring, kRed+1, kOrange-3, kPink+10, kPink+1, kViolet-1, kViolet-4 }; //pairs
-        //plotter.colors = { kBlack, kRed, kOrange-3, kYellow+1, kSpring-1, kAzure, kBlue+2, kViolet}; //rainbow
+	//plotter.colors = {kBlack, kRed, /*kGray+2,*/ kBlue+1, kAzure+7,kGreen+3, kSpring, kRed+1, kOrange-3, kPink+10, kPink+1, kViolet-1, kViolet-4 }; //pairs
+        plotter.colors = { kBlack, kRed, kOrange-3, kYellow+1, kSpring-1, kAzure, kBlue+2, kViolet}; //rainbow
         //plotter.colors = { kRed, kRed+2, kOrange-3, kYellow+1, kSpring, kGreen+3, kCyan+1, kAzure, kBlue+2, kViolet, kMagenta-9, kBlack}; //10 gradient + black
 
         //***************** Plot Variable options *******************//
@@ -70,7 +70,7 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_pt, P_jet2_pt, P_jet_svj_pt, P_jet_asvj_pt}, OP_jet_pt );
 
         //***************** Plot Cut options *******************// 
-        //plotter.SetCuts("met_phi < -1.0 && met_phi > -1.5");
+        plotter.SetCuts("rT > 0.2 && met_met > 200");
        	//plotter.SetComparisonCuts({"met_phi < -1.5 && met_phi > -2.8", "met_phi < -1.0 && met_phi > -1.5", "met_phi > -0.5 && met_phi <0", "met_phi > 0.0 && met_phi < 0.7", "met_phi > 2.5"});	
        	//plotter.SetComparisonCuts({"runNumber < 290000", "runNumber > 290000 && runNumber < 320000", "runNumber > 320000 && runNumber < 345000", "runNumber > 345000"});	
         //plotter.ApplySelectiveCuts("508548", "dPhi_min < 2.0");
@@ -96,8 +96,8 @@ void myPlotter(){
 	//plotter.SetPlots ( {P_dphi_min, P_met_met, P_met_phi, P_jet1_pt, P_jet1_phi, P_jet2_phi});//, P_jet1_pt, P_jet1_phi, P_jet2_phi, P_met_phi} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
-	//plotter.SetPlots( {P_met_met});
-	plotter.SetPlots ( {P_met_phi, P_jet1_phi, P_jet2_phi} );
+	plotter.SetPlots( {P_rT});
+	//plotter.SetPlots ( {P_met_phi, P_jet1_phi, P_jet2_phi} );
         plotter.Plot("");
 
         //***************** 2D Plot *******************// 	

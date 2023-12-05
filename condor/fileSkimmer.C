@@ -42,7 +42,7 @@ void fileSkimmer::Loop()
    Long64_t nentries = fChain->GetEntriesFast();
    //Long64_t target_events = 1000000;
    //Long64_t increment = nentries/ target_events;
-   Long64_t increment = 20;
+   Long64_t increment = 1;
    //if (target_events > nentries) cout << "ERROR: requesting more events than available (" << nentries << ")" << endl;
 
    Long64_t nbytes = 0, nb = 0;
@@ -55,7 +55,7 @@ void fileSkimmer::Loop()
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
-      if (met_met < 200) continue;
+      //if (met_met < 200) continue;
       my_weight = lumi*weight/my_sumw;
       myTree->Fill();
       counter++;

@@ -61,8 +61,8 @@ public :
    //Weight histogram
    TH1F *MetaData_EventCount;
    // Cutflow histograms
-   TH1F *cutflow;
-   TH1F *cutflow_weighted;
+   TH1F *cutflow = new TH1F("cutflow", "cutflow", 25,1,26);
+   TH1F *cutflow_weighted = new TH1F("cutflow_weighted", "cutflow_weighted", 25,1,26);
    TH1F *metadata;
 
    // Declaration of leaf types

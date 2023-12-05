@@ -42,20 +42,30 @@ void MicroNTupleMaker::Loop()
 		
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
-
+		if (year_mc == "data") mcEventWeight = 1.0;
 		// create relevant 4 vectors
 		TLorentzVector v1, v2, met_v;
 
 		// MET preselection
 		if(metFinalClus < 200) continue;
-		cutflow->Fill(16);
-		cutflow_weighted->Fill(16,mcEventWeight);
+                int val;
+                if (year_mc == "data") val = 24;
+                else val = 17;
+		cutflow->Fill(val);
+		cutflow_weighted->Fill(val,mcEventWeight);
                 
 		v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
 		v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
 		//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));
 		//v_asvj.SetPtEtaPhiE(jet_pt->at(n_asvj), jet_eta->at(n_asvj), jet_phi->at(n_asvj), jet_E->at(n_asvj));
 		met_v.SetPtEtaPhiM(metFinalClus,0,metFinalClusPhi,0.0);
+
+		//mT
+                mT_jj = GetMt(v1,v2,met_v);
+		// mT preselection
+		if (mT_jj<1200) continue;
+		cutflow->Fill(val+1);
+		cutflow_weighted->Fill(val+1,mcEventWeight);
 
 		// y* preselection
 		deltaY_12 = GetDeltaY(v1,v2);
@@ -74,8 +84,6 @@ void MicroNTupleMaker::Loop()
 		// pt balance
 		pt_balance_12 = GetPtBalance(v1,v2);
 	
-		//mT
-                mT_jj = GetMt(v1,v2,met_v);
 
 		// -j1_pT -j2_pT
 		met_jj_neg = jet_pt->at(0) + jet_pt->at(1);
