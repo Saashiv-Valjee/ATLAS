@@ -78,7 +78,26 @@ lsetup panda
 Note that `grid_run.sh` executes a prun command, which depends on the maps `filemap_multijet.json` or `filemap_signal.json`. These files should be editted before running to give the correct input nTuple version, and the desired output name.
 
 ## Weight calculation
-TODO
+### Setup
+1. Use rucio to download samples to the eos space
+2. Hadd individual input files into mc groups using the script `hadd_input`. Edit the scrip to the correct version number first. This is important to have the correct totalWeight for each DSID+mcCampaign in the metaData histogram, which is used in the weight calculation.
+3. Navigate to the condor/ area. Open the script `make_file_lists.sh`. Edit the eosPath variable to point to the new files, and make sure the user handle, in both the eosPath and the find commands, is correct for your files. Edit the name of the text files that are created to reflect your version number.
+4. Source `make_file_lists`. This creates two lists; one containing files less than 900 MB, which will be processed on condor (max output file transfer size for condor is 1GB). The 2nd should contain just a few files which are larger than 900MB; for now the best option is to process these files locally. Instructions for both are provided.
+
+### Condor processing
+1. In the condor/ area, make a new directory corresponding to the version number, ie "`mkdir v9.1`. This will be your working directory
+2. In submitCondor.py, edit line 6 to point to the eos area where you downloaded the files. Edit the for loop in line 13 to the name of the text file containing the small condor files for processing (eg `[vXX_files.txt]`. Edit line 43 `initialdir =` to the new initial directory you created in the previous step.
+3. Ensure all the filepaths in the submitCondor.py file make sense for your work area (hardcoded to ebusch)
+4. `python submitCondor.py` when you are ready to run
+TODO: file to check output quality
+
+### Local processing
+1. copy the following files to the eos location with your files:
+```
+cp fileSkimmer.C fileSkimmer.h local_run.s vXX_large_files.txt /my/eos/path/
+```
+2. Navigate to the eos area where you just copied these files. The fileSkimmer codes parses the input file path, so it works better when executed in the same directory as the target files.
+3. run `source local_run.sh vXX_large_files.txt` in the eos area. In general this will take 5-10 minutes. Your files with the weight calculation will appear in the eos area.
 
 ## ML Tool Analysis
 TODO
