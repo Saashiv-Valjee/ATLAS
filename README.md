@@ -100,7 +100,8 @@ cp fileSkimmer.C fileSkimmer.h local_run.s vXX_large_files.txt /my/eos/path/
 3. run `source local_run.sh vXX_large_files.txt` in the eos area. In general this will take 5-10 minutes. Your files with the weight calculation will appear in the eos area.
 
 ## ML Tool Analysis
-TODO
+TODO - document
+TODO - # of events checker, loopers
 
 ## Plotting
 
