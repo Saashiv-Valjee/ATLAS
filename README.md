@@ -20,7 +20,7 @@ In order to implement the JetTileCorrectionTool fix, you will need to setup a lo
 1. Inside xAHAnalysis, do the follwing
   1. git clone https://:@gitlab.cern.ch:8443/atlas/athena.git
   2. cd athena
-  3. git checkout release/24.2.25
+  3. git checkout release/24.2.30
 2. Navigate back to the xAHAnalysis area, then to the src/xAODAnaHelpers area
   1. Check commit 0111e8c (for R24.2.30)
 3. Copy src/xAODAnaHelpers and src/SVJAlgo to localRelease/athena/Projects/WorkDir
@@ -30,7 +30,7 @@ In order to implement the JetTileCorrectionTool fix, you will need to setup a lo
   2. `cp tileFiles/JetTileCorrectionTool.cxx localRelease/athena/Reconstruction/Jet/JetAnalysisTools/JetTileCorrection/Root/`
   3. `cp tileFiles/JetTileCorrectionTool.h localRelease/athena/Reconstruction/Jet/JetAnalysisTools/JetTileCorrection/JetTileCorrection/`
   4. `cp tileFiles/IJetTileCorrectionTool.h localRelease/athena/Reconstruction/Jet/JetCPInterfaces/JetCPInterfaces/`
-5. In the xAHAnalysis area, run `source setup.sh`. Make sure the correct release (24.2.25) is set up
+5. In the xAHAnalysis area, run `source setup.sh`. Make sure the correct release (24.2.30) is set up
 6. Compile using `source compile.sh`. Note if you are replacing an existing build, you should delete and recreate the build direcotry to ensure the new release information is picked up properly.
 
 xAODAnaHelpers and the SVJAlgorithm are now ready to use. The key changes from the tileFiles version are adding the updated masked tile config file, and enabling checking of LB information.
