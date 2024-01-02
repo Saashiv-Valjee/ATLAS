@@ -15,7 +15,25 @@ Below is a step-by-step guide for install the SVJAlgo xAODAnaHelpers framework. 
 7. source install.sh
 8. mkdir run
 
-xAODAnaHelpers and the SVJAlgorithm are now ready to use
+### Local Athena Release Build - R24
+In order to implement the JetTileCorrectionTool fix, you will need to setup a local version of athena.
+1. Inside xAHAnalysis, do the follwing
+  1. git clone https://:@gitlab.cern.ch:8443/atlas/athena.git
+  2. cd athena
+  3. git checkout release/24.2.25
+2. Navigate back to the xAHAnalysis area, then to the src/xAODAnaHelpers area
+  1. Check commit 0111e8c (for R24.2.30)
+3. Copy src/xAODAnaHelpers and src/SVJAlgo to localRelease/athena/Projects/WorkDir
+  1. Note this means that if you modify something in SVJAlgo, you should first modify it in src/SVJAlgo so that the changes are stored to this git, and then copy the folder again to the localRelease area. TODO: symlink instead so we don't have this issue??
+4. Copy the files in tileFiles to the folliwng places:
+  1. `cp tileFiles/Tile_maskedDB_Run2_fromChristos.conf localRelease/athena/Reconstruction/Jet/JetAnalysisTools/JetTileCorrection/data/` 
+  2. `cp tileFiles/JetTileCorrectionTool.cxx localRelease/athena/Reconstruction/Jet/JetAnalysisTools/JetTileCorrection/Root/`
+  3. `cp tileFiles/JetTileCorrectionTool.h localRelease/athena/Reconstruction/Jet/JetAnalysisTools/JetTileCorrection/JetTileCorrection/`
+  4. `cp tileFiles/IJetTileCorrectionTool.h localRelease/athena/Reconstruction/Jet/JetCPInterfaces/JetCPInterfaces/`
+5. In the xAHAnalysis area, run `source setup.sh`. Make sure the correct release (24.2.25) is set up
+6. Compile using `source compile.sh`. Note if you are replacing an existing build, you should delete and recreate the build direcotry to ensure the new release information is picked up properly.
+
+xAODAnaHelpers and the SVJAlgorithm are now ready to use. The key changes from the tileFiles version are adding the updated masked tile config file, and enabling checking of LB information.
 
 ## Running xAODAnaHelpers Locally
 
