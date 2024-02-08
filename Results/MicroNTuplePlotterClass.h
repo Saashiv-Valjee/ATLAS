@@ -152,19 +152,22 @@ public :
 	void GetTrees(){
 		if( debug) cout<<"MicroNTuplePlotter::GetTrees()"<<endl;
 
+		bool trees_ok = false;
+
 		if (!path_tags.empty()){
 			for (const auto& entry : path_tags){
 				const string& currentPath = entry.first;
 				const vector<string>& tags = entry.second;
 				for (const string& tag : tags){
 					if (GetTree(tag,TreeName.Data(),currentPath)){
+						trees_ok = true;
 						filetags_treenames.push_back(GetFiletagTreename(tag,TreeName.Data()));
 					}
 				}
 			}
 		}
 		
-		bool trees_ok = false;
+		
 		for( int i=0; i<filetags.size(); i++ ){
 			if( GetTree(filetags[i], treenames[i]) ){
 				trees_ok = true;
@@ -419,6 +422,7 @@ public :
 					else if (use_better_legend_names){hist_tag = GetLegendNames(filetag_only);}
 					else {hist_tag = Form( "%s", filetag_only.c_str());}
    				}
+				hist_tag = Form("%d:%s",i,hist_tag.c_str())
 				hist_tags.push_back( hist_tag );
 				if(debug) cout <<"filetag_treename: " <<filetag_treename<<endl;
 				if(debug) cout <<"hist_tag: "<< hist_tag<<endl;
