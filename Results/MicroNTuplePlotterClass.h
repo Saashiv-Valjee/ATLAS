@@ -182,7 +182,7 @@ public :
 		//careless debug
 		for (const auto& fttn : filetags_treenames) {
 			cout << "Entry: " << fttn << endl;
-
+		}
 		if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		cout << "# of trees = " << filetags_treenames.size() << endl;
 		//if( !trees_ok ) cout<<"ERROR: Input files or trees do not exist. Check input file paths & parameters.."<<endl;
@@ -677,7 +677,7 @@ public :
        		cout << "Plotting histograms for PlotParams: " << PlotParams_temp.hist_name << endl;
         	for (const auto& hist : hists) {
             	cout << "Histogram tag: " << hist.first << " with entries: " << hist.second->GetEntries() << endl;
-
+			}
 			TCanvas *myCanvas;
 			TPad *p1;
 			TPad *p2;
