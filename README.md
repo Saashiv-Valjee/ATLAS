@@ -136,3 +136,19 @@ Scripts are available in the Results folder to facilitate plotting from the Micr
 
 Joel's event display code. See internal README.
 
+### Workflow for ME
+```
+//Fetching from the original repo
+git fetch upstream
+
+//Fetching changes from GitHub fork
+git fetch origin
+
+//Merging changes into your local branch
+git merge upstream/master
+
+//Merging changes from GitHub fork
+git merge origin/master
+
+//Pushing updates to your GitHub fork
+git push origin master
