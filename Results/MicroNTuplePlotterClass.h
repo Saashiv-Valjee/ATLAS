@@ -486,7 +486,7 @@ public :
 			i++;
 
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
-			cout << "Adding histogram to stack: " << hist_tag << " with entries: " << h->GetEntries() << endl;
+			cout << "Adding histogram '" << hist_tag << "' to stack, Entries: " << hists[hist_tag]->GetEntries() << endl;
 
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
@@ -673,18 +673,12 @@ public :
 			PlotOverlay(plot_type, filetag_treename_divisor);
 			return;
 		}
-		cout << "Final plotting for PlotParams: " << PlotParams_temp.hist_name << endl;
-		for (const auto& pair : hists) {
-			cout << "Final Hist Tag: " << pair.first << ", Entries: " << pair.second->GetEntries() << endl;
-		}
+
 		TString draw_option = GetDrawOption();
 
 		for( auto PlotParams_temp: PlotParamsList ){
 			map<string,TH1F*> hists = GetHists( PlotParams_temp );
 			cout << "Final plotting for PlotParams: " << PlotParams_temp.hist_name << endl;
-			for (const auto& pair : hists) {
-				cout << "Final Hist Tag: " << pair.first << ", Entries: " << pair.second->GetEntries() << endl;
-			}
 			// Debug: Confirm the histograms to be plotted
        		cout << "Plotting histograms for PlotParams: " << PlotParams_temp.hist_name << endl;
         	for (const auto& hist : hists) {
