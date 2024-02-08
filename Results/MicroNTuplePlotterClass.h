@@ -479,9 +479,10 @@ public :
 		int i = -1;
 		for( auto hist_tag: hist_tags ){
 			i++;
-			cout << "Adding histogram to stack: " << hist_tag << " with entries: " << h->GetEntries() << endl;
+
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
-		
+			cout << "Adding histogram to stack: " << hist_tag << " with entries: " << h->GetEntries() << endl;
+			
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
 				legend_name = Form("%s (Int=%.4e)", hist_tag.c_str(), h->Integral(1,myPlotParams.nbins) );
