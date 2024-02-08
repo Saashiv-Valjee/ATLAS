@@ -327,6 +327,9 @@ public :
 		TH1F *h_temp;
 
 		TString hist_name_full = Form("%s__%s", hist_name.c_str(), filetag_treename.c_str());
+
+		cout << "Creating histogram with: " << endl << "Hist Name: " << hist_name_full << endl << "NBins: " << NBins << ", xmin: " << xmin << ", xmax: " << xmax << endl << "Tree: " << filetag_treename << ", Entries: " << trees[filetag_treename]->GetEntries() << endl;
+
 		while (hist_name_full.Contains("(")){
 			hist_name_full.Replace(hist_name_full.First("("), 1, "");
 			hist_name_full.Replace(hist_name_full.First(")"), 1, "");
@@ -335,6 +338,7 @@ public :
 			cout << hist_name_full << " exists" << endl; 
 			hist_name_full.Append("x");
 			cout << "changed name to " << hist_name_full << endl;
+			cout << "Histogram name collision detected. Changing name from '" << hist_name_full << "' to '" << hist_name_full << "x" << "'" << endl;
   		}
 
 		if (false) {
@@ -364,7 +368,7 @@ public :
 
    		TH1F *h;
 		h = (TH1F*)h_temp->Clone();
-
+		cout << "Created histogram '" << hist_name_full << "' with initial entry count: " << h_temp->GetEntries() << endl;
 		return h;
 
 	}
@@ -436,7 +440,8 @@ public :
 				if(debug) cout <<"filetag_treename: " <<filetag_treename<<endl;
 				if(debug) cout <<"hist_tag: "<< hist_tag<<endl;
 				hists[hist_tag] = h;
-				cout << "Added histogram with tag: " << hist_tag << " to hists map. Current map size: " << hists.size() << endl;
+				cout << "Adding histogram to map with tag: " << hist_tag << ", Entries: " << h->GetEntries() << endl;
+				cout << "current map size: " << hists.size() << endl;
 
 				i++;
 			}
@@ -482,7 +487,7 @@ public :
 
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
 			cout << "Adding histogram to stack: " << hist_tag << " with entries: " << h->GetEntries() << endl;
-			
+
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
 				legend_name = Form("%s (Int=%.4e)", hist_tag.c_str(), h->Integral(1,myPlotParams.nbins) );
@@ -668,12 +673,18 @@ public :
 			PlotOverlay(plot_type, filetag_treename_divisor);
 			return;
 		}
-
+		cout << "Final plotting for PlotParams: " << PlotParams_temp.hist_name << endl;
+		for (const auto& pair : hists) {
+			cout << "Final Hist Tag: " << pair.first << ", Entries: " << pair.second->GetEntries() << endl;
+		}
 		TString draw_option = GetDrawOption();
 
 		for( auto PlotParams_temp: PlotParamsList ){
 			map<string,TH1F*> hists = GetHists( PlotParams_temp );
-
+			cout << "Final plotting for PlotParams: " << PlotParams_temp.hist_name << endl;
+			for (const auto& pair : hists) {
+				cout << "Final Hist Tag: " << pair.first << ", Entries: " << pair.second->GetEntries() << endl;
+			}
 			// Debug: Confirm the histograms to be plotted
        		cout << "Plotting histograms for PlotParams: " << PlotParams_temp.hist_name << endl;
         	for (const auto& hist : hists) {
