@@ -133,7 +133,7 @@ public :
 			return false;
 		}
 
-		cout<<"Reading in "<<filename<<endl;
+		cout << "Attempting to read file: " << filename << " with tree: " << treename << endl;
 		TFile* file = new TFile( filename, "READ");
 
 		if( !file->GetListOfKeys()->Contains( Form("%s", treename.c_str()) ) ){
@@ -143,6 +143,7 @@ public :
 
 		TTree* tree_temp = (TTree*)file->Get( Form("%s", treename.c_str()) );
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
+		cout << "Cloned tree: " << treename << " from file: " << filename << " with entries: " << tree_temp->GetEntries() << endl;
 
 		return true;
 
@@ -159,9 +160,11 @@ public :
 				const string& currentPath = entry.first;
 				const vector<string>& tags = entry.second;
 				for (const string& tag : tags){
+					cout << "Processing path: " << currentPath << " with tag: " << tag << endl;
 					if (GetTree(tag,TreeName.Data(),currentPath)){
 						trees_ok = true;
 						filetags_treenames.push_back(GetFiletagTreename(tag,TreeName.Data()));
+						
 					}
 				}
 			}
@@ -174,6 +177,12 @@ public :
 				filetags_treenames.push_back( GetFiletagTreename( filetags[i], treenames[i]) );
 			}
 		}
+		cout << "filetags_treenames contains: " << filetags_treenames.size() << " entries." << endl;
+
+		//careless debug
+		for (const auto& fttn : filetags_treenames) {
+			cout << "Entry: " << fttn << endl;
+
 		if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		cout << "# of trees = " << filetags_treenames.size() << endl;
 		//if( !trees_ok ) cout<<"ERROR: Input files or trees do not exist. Check input file paths & parameters.."<<endl;
@@ -422,11 +431,13 @@ public :
 					else if (use_better_legend_names){hist_tag = GetLegendNames(filetag_only);}
 					else {hist_tag = Form( "%s", filetag_only.c_str());}
    				}
-				hist_tag = Form("%d:%s",i,hist_tag.c_str())
+				hist_tag = Form("%d:%s",i,hist_tag.c_str());
 				hist_tags.push_back( hist_tag );
 				if(debug) cout <<"filetag_treename: " <<filetag_treename<<endl;
 				if(debug) cout <<"hist_tag: "<< hist_tag<<endl;
 				hists[hist_tag] = h;
+				cout << "Added histogram with tag: " << hist_tag << " to hists map. Current map size: " << hists.size() << endl;
+
 				i++;
 			}
 		}
@@ -468,6 +479,7 @@ public :
 		int i = -1;
 		for( auto hist_tag: hist_tags ){
 			i++;
+			cout << "Adding histogram to stack: " << hist_tag << " with entries: " << h->GetEntries() << endl;
 			TH1F *h = (TH1F*)hists[hist_tag]->Clone();
 		
 			string legend_name = hist_tag;
@@ -661,6 +673,11 @@ public :
 		for( auto PlotParams_temp: PlotParamsList ){
 			map<string,TH1F*> hists = GetHists( PlotParams_temp );
 
+			// Debug: Confirm the histograms to be plotted
+       		cout << "Plotting histograms for PlotParams: " << PlotParams_temp.hist_name << endl;
+        	for (const auto& hist : hists) {
+            	cout << "Histogram tag: " << hist.first << " with entries: " << hist.second->GetEntries() << endl;
+
 			TCanvas *myCanvas;
 			TPad *p1;
 			TPad *p2;
@@ -753,7 +770,7 @@ public :
 
 			//if( plot_log )		gPad->SetLogy(); 
 			//if( plot_log_x )		gPad->SetLogx(); 
-
+			
 			TString output_file_name = GetOutputFileName(PlotParams_temp, plot_type);
 			myCanvas->SaveAs( outfile_path+"/"+output_file_name+".png", "png" );
 			delete myCanvas;
