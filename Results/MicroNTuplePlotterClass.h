@@ -144,10 +144,6 @@ public :
 		TTree* tree_temp = (TTree*)file->Get( Form("%s", treename.c_str()) );
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
 
-		// closing the file after cloning the tree to avoid memory leaks
-		file->Close();
-		delete file;
-
 		return true;
 
 	}
