@@ -163,16 +163,15 @@ public :
 				}
 			}
 		}
-		else{
-			bool trees_ok = false;
-			for( int i=0; i<filetags.size(); i++ ){
-				if( GetTree(filetags[i], treenames[i]) ){
-					trees_ok = true;
-					filetags_treenames.push_back( GetFiletagTreename( filetags[i], treenames[i]) );
-				}
+		
+		bool trees_ok = false;
+		for( int i=0; i<filetags.size(); i++ ){
+			if( GetTree(filetags[i], treenames[i]) ){
+				trees_ok = true;
+				filetags_treenames.push_back( GetFiletagTreename( filetags[i], treenames[i]) );
 			}
-			if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		}
+		if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		cout << "# of trees = " << filetags_treenames.size() << endl;
 		//if( !trees_ok ) cout<<"ERROR: Input files or trees do not exist. Check input file paths & parameters.."<<endl;
 	}

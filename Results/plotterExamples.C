@@ -9,9 +9,12 @@ void plotterExamples(){
 	map<string, TCut> cuts;	
 
 	//%%%%%%%%%%%%%%%%%%% Example 1 - Basic Plot %%%%%%%%%%%%%%%%%%%//
+	vector<string> filetags_example1 = {"515502"};
+	string path_2 = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v9/v9.2/user.ebusch.";
+	vector<string> tags_2 = {"515502","515503","515504"};
+	map<string, vector<string>> path_tags = {{path_2, tags_2}};
 
-	vector<string> filetags_example1 = {"515502","515503","515504"};
-	class MicroNTuplePlotter plotter_example1( filetags_example1, path );
+	class MicroNTuplePlotter plotter_example1( filetags_example1, path path_tags);
 
 		//***************** Plot General options *******************// 
 		plotter_example1.plot_norm = true;
