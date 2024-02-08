@@ -17,8 +17,9 @@ public :
 
 	vector<string> hist_tags;	
 	string infile_path;
+	map<string, vector<string>> path_tags;
 	string infile_ext = ".root";
-        TString outfile_path = "/eos/user/e/ebusch/SVJ/Plots";
+	TString outfile_path = "/eos/user/e/ebusch/SVJ/Plots";
 	vector<PlotParams> PlotParamsList;
 	PlotParams OverlayedPlotParams;
 	TString MicroNtupleVersion = "";
@@ -43,16 +44,16 @@ public :
 	bool plot_log_ratio = false; // set to true if you want a log ratio or s/sqrtb panel
 	bool plot_norm = false;
 	bool plot_norm_full = false;
-        bool plot_error = true;
-        bool stamp_cuts = false;
-        bool stamp_integral = true;
-        bool stamp_counts = false;
-        bool violin = false;
+	bool plot_error = true;
+	bool stamp_cuts = false;
+	bool stamp_integral = true;
+	bool stamp_counts = false;
+	bool violin = false;
 	bool manual_legend = false;
 	bool use_better_legend_names = true;
 	bool use_weight = true;
 	bool plot_overlayed = false;
-        bool solid_bkg = false;
+	bool solid_bkg = false;
 	double legx1, legx2, legy1, legy2;
 	vector<string> legend_names;
 
@@ -62,11 +63,12 @@ public :
 	bool use_normalized_cdf = false;
 
 	// -------------------------------------------------------------------------------------
-	MicroNTuplePlotter( vector<string> IN_filetags, string IN_infile_path ){
+	MicroNTuplePlotter( vector<string> IN_filetags, string IN_infile_path, map<string, vector<string>> IN_path_tags = {}){
 		SetStyle();
 
 		filetags 	= IN_filetags;
 		infile_path	= IN_infile_path;
+		path_tags 	= IN_path_tags;
 
 	}
 
@@ -110,7 +112,7 @@ public :
 	}
 
 	// -------------------------------------------------------------------------------------
-	bool GetTree(string filetag, string treename ){
+	bool GetTree(string filetag, string treename, string SpecificPath=""){
 
 		if( debug) cout<<"MicroNTuplePlotter::GetTree()"<<endl;
 
@@ -123,8 +125,9 @@ public :
 		//	}
 		//}
 
-		TString filename = Form("%s%s%s", infile_path.c_str(), filetag.c_str(), infile_ext.c_str() );
-
+		// use SpecificPath if provided, otherwise use infile_path
+		TString filename = Form("%s%s%s", SpecificPath.empty() ? infile_path.c_str() : SpecificPath.c_str(), filetag.c_str(), infile_ext.c_str());
+		
 		if( gSystem->AccessPathName(filename) ){
 			cout<<"ERROR: File "<<filename<<" does not exist"<<endl;
 			return false;
@@ -141,6 +144,10 @@ public :
 		TTree* tree_temp = (TTree*)file->Get( Form("%s", treename.c_str()) );
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
 
+		// closing the file after cloning the tree to avoid memory leaks
+		file->Close();
+		delete file;
+
 		return true;
 
 	}
@@ -149,12 +156,26 @@ public :
 	void GetTrees(){
 		if( debug) cout<<"MicroNTuplePlotter::GetTrees()"<<endl;
 
-		bool trees_ok = false;
-		for( int i=0; i<filetags.size(); i++ ){
-			if( GetTree(filetags[i], treenames[i]) ){
-				trees_ok = true;
-				filetags_treenames.push_back( GetFiletagTreename( filetags[i], treenames[i]) );
+		if (!path_tags.empty()){
+			for (const auto& entry : path_tags){
+				const string& currentPath = entry.first;
+				const vector<string>& tags = entry.second;
+				for (const string& tag : tags){
+					if (GetTree(tag,TreeName.Data(),currentPath)){
+						filetags_treenames.push_back(GetFiletagTreename(tag,TreeName.Data()));
+					}
+				}
 			}
+		}
+		else{
+			bool trees_ok = false;
+			for( int i=0; i<filetags.size(); i++ ){
+				if( GetTree(filetags[i], treenames[i]) ){
+					trees_ok = true;
+					filetags_treenames.push_back( GetFiletagTreename( filetags[i], treenames[i]) );
+				}
+			}
+			if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		}
 		cout << "# of trees = " << filetags_treenames.size() << endl;
 		//if( !trees_ok ) cout<<"ERROR: Input files or trees do not exist. Check input file paths & parameters.."<<endl;
