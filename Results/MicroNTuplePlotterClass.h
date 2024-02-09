@@ -174,6 +174,7 @@ public :
 				for (const string& tag : tags){
 					filename_treetag_versions.push_back(path_versions[FTversion_count]);
 					cout << "Processing path: " << currentPath << " with tag: " << tag << endl;
+					cout << "version entered was: " << path_Versions[FTversion_count] << endl;
 					if (GetTree(tag,TreeName.Data(),currentPath)){
 						trees_ok = true;						
 					}
@@ -182,22 +183,23 @@ public :
 			}
 		}
 		
+
 		
 		for( int i=0; i<filetags.size(); i++ ){
 			if( GetTree(filetags[i], treenames[i]) ){
+				cout << "version entered was: " << path_Versions[FTversion_count] << endl;
 				filename_treetag_versions.push_back(path_versions[FTversion_count]);
 				trees_ok = true;
 			}
 		}
-
-		cout << "GetTrees: filetags_treenames contains: " << filetags_treenames.size() << " entries." << endl;
 
 		for (const auto& fttn : filetags_treenames) {
 			cout << "Tag: " << fttn << "with Entries: " << trees[fttn]->GetEntries() <<endl;
 		}
 		if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		cout << "# of trees = " << filetags_treenames.size() << endl;
-		cout << "FTVersion_array: " filename_treetag_versions << endl;
+		cout << "FTVersion_array: " << filename_treetag_versions.size() << endl;
+		cout << "GetTrees: filetags_treenames contains: " << filetags_treenames.size() << " entries." << endl;
 		//if( !trees_ok ) cout<<"ERROR: Input files or trees do not exist. Check input file paths & parameters.."<<endl;
 	}
 
