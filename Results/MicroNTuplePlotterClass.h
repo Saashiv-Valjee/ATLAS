@@ -117,7 +117,7 @@ public :
 		if( debug) cout<<"MicroNTuplePlotter::GetTree()"<<endl;
 
 		string filetag_treename = GetFiletagTreename( filetag, treename);
-		string original_filetag_treename = filetag_treename
+		string original_filetag_treename = filetag_treename;
 		//for(map<string,TTree*>::iterator it = trees.begin(); it != trees.end(); ++it){
 		//	if( it->first == filetag_treename ){
 		//		cout<<"NOTE: tree "<<treename<<" associated with "<<filetag<<" already exists."<<endl;
@@ -143,7 +143,8 @@ public :
 
 		TTree* tree_temp = (TTree*)file->Get( Form("%s", treename.c_str()) );
 
-		while (trees.find(original_filetag_treename) != trees.end()) {
+		if(trees.find(filetag_treename) != trees.end()) {
+			cout << "found duplicate filetag_treename, appending x" << endl;
 			filetag_treename = original_filetag_treename + "x";
 		}
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
