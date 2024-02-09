@@ -70,7 +70,7 @@ public :
 		filetags 	= IN_filetags;
 		infile_path	= IN_infile_path;
 		path_tags 	= IN_path_tags;
-		path_IDs 	= IN_path_IDs
+		path_IDs 	= IN_path_IDs;
 
 	}
 
@@ -186,7 +186,7 @@ public :
 		cout << "GetTrees: filetags_treenames contains: " << filetags_treenames.size() << " entries." << endl;
 
 		for (const auto& fttn : filetags_treenames) {
-			cout << "Tag: " << fttn << "with Entries: " << trees[fttn].GetEntries() <<endl;
+			cout << "Tag: " << fttn << "with Entries: " << trees[fttn]->GetEntries() <<endl;
 		}
 		if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		cout << "# of trees = " << filetags_treenames.size() << endl;
