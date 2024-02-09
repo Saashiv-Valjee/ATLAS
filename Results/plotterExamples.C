@@ -9,9 +9,9 @@ void plotterExamples(){
 	map<string, TCut> cuts;	
 
 	//%%%%%%%%%%%%%%%%%%% Example 1 - Basic Plot %%%%%%%%%%%%%%%%%%%//
-	vector<string> filetags_example1 = {"515502","515503","515504"};
+	vector<string> filetags_example1 = {"515502","515503","515504","bkgALL"};
 	string path_2 = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v9/v9.2/user.ebusch.";
-	vector<string> tags_2 = {"515502","515503","515504"};
+	vector<string> tags_2 = {"515502","515503","515504","bkgAllskim0"};
 	map<string, vector<string>> path_tags = {{path_2, tags_2}};
 
 	// path 2 should come first, because GetTrees reads path_2 first
