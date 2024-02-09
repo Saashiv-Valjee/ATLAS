@@ -15,6 +15,7 @@ public :
 	TString TreeName = "PostSel";
 	bool multiple_trees = true;
 	vector<string> path_versions;
+	vector<string> filetag_treename_versions;
 
 	vector<string> hist_tags;	
 	string infile_path;
@@ -146,10 +147,11 @@ public :
 
 		TTree* tree_temp = (TTree*)file->Get( Form("%s", treename.c_str()) );
 
-		//if(trees.find(filetag_treename) != trees.end()) {
-			//cout << "found duplicate filetag_treename, appending x" << endl;
-		//filetag_treename = original_filetag_treename + "x";
-		//}
+		if(trees.find(filetag_treename) != trees.end()) {
+			cout << "found duplicate filetag_treename, appending x" << endl;
+		filetag_treename = original_filetag_treename + "x";
+		}
+
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
 		filetags_treenames.push_back(filetag_treename);
 		cout << "Cloned tree: " << treename << " from file: " << filename << " with entries: " << tree_temp->GetEntries() << endl;
@@ -164,22 +166,26 @@ public :
 
 		bool trees_ok = false;
 
+		int FTversion_count = 0;
 		if (!path_tags.empty()){
 			for (const auto& entry : path_tags){
 				const string& currentPath = entry.first;
 				const vector<string>& tags = entry.second;
 				for (const string& tag : tags){
+					filename_treetag_verisons.push_back(path_versions[FTversion_count]);
 					cout << "Processing path: " << currentPath << " with tag: " << tag << endl;
 					if (GetTree(tag,TreeName.Data(),currentPath)){
 						trees_ok = true;						
 					}
 				}
+				FTversion_count++;
 			}
 		}
 		
 		
 		for( int i=0; i<filetags.size(); i++ ){
 			if( GetTree(filetags[i], treenames[i]) ){
+				filename_treetag_verisons.push_back(path_versions[FTversion_count]);
 				trees_ok = true;
 			}
 		}
@@ -191,6 +197,7 @@ public :
 		}
 		if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		cout << "# of trees = " << filetags_treenames.size() << endl;
+		cout << "FTVersion_array: " filename_treetag_versions << endl;
 		//if( !trees_ok ) cout<<"ERROR: Input files or trees do not exist. Check input file paths & parameters.."<<endl;
 	}
 
@@ -444,7 +451,7 @@ public :
 					else if (use_better_legend_names){hist_tag = GetLegendNames(filetag_only);}
 					else {hist_tag = Form( "%s", filetag_only.c_str());}
    				}
-				hist_tag = Form("%d:%s",i,hist_tag.c_str());
+				hist_tag = Form("%s:%s",filename_treetag_versions[i],hist_tag.c_str());
 				hist_tags.push_back( hist_tag );
 				if(debug) cout <<"filetag_treename: " <<filetag_treename<<endl;
 				if(debug) cout <<"hist_tag: "<< hist_tag<<endl;

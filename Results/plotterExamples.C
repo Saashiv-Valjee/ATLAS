@@ -14,6 +14,7 @@ void plotterExamples(){
 	vector<string> tags_2 = {"515502","515503","515504"};
 	map<string, vector<string>> path_tags = {{path_2, tags_2}};
 
+	// path 2 should come first, because GetTrees reads path_2 first
 	vector<string> path_versions = {"v12/v12.5", "v9/v9.2"};
 
 	class MicroNTuplePlotter plotter_example1( filetags_example1, path, path_versions, path_tags);
