@@ -143,10 +143,8 @@ public :
 
 		TTree* tree_temp = (TTree*)file->Get( Form("%s", treename.c_str()) );
 
-		!!PROBLEM!!
-
 		while (trees.find(original_filetag_treename) != trees.end()) {
-			filetag_treename = original_filetag_treename + "x"
+			filetag_treename = original_filetag_treename + "x";
 		}
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
 		cout << "Cloned tree: " << treename << " from file: " << filename << " with entries: " << tree_temp->GetEntries() << endl;
