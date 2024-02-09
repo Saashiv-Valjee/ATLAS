@@ -174,7 +174,7 @@ public :
 				for (const string& tag : tags){
 					filename_treetag_versions.push_back(path_versions[FTversion_count]);
 					cout << "Processing path: " << currentPath << " with tag: " << tag << endl;
-					cout << "version entered was: " << path_Versions[FTversion_count] << endl;
+					cout << "version entered was: " << path_versions[FTversion_count] << endl;
 					if (GetTree(tag,TreeName.Data(),currentPath)){
 						trees_ok = true;						
 					}
@@ -187,7 +187,7 @@ public :
 		
 		for( int i=0; i<filetags.size(); i++ ){
 			if( GetTree(filetags[i], treenames[i]) ){
-				cout << "version entered was: " << path_Versions[FTversion_count] << endl;
+				cout << "version entered was: " << path_versions[FTversion_count] << endl;
 				filename_treetag_versions.push_back(path_versions[FTversion_count]);
 				trees_ok = true;
 			}
