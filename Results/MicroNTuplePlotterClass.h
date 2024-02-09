@@ -117,7 +117,7 @@ public :
 		if( debug) cout<<"MicroNTuplePlotter::GetTree()"<<endl;
 
 		string filetag_treename = GetFiletagTreename( filetag, treename);
-
+		string original_filetag_treename = filetag_treename
 		//for(map<string,TTree*>::iterator it = trees.begin(); it != trees.end(); ++it){
 		//	if( it->first == filetag_treename ){
 		//		cout<<"NOTE: tree "<<treename<<" associated with "<<filetag<<" already exists."<<endl;
@@ -142,6 +142,12 @@ public :
 		}
 
 		TTree* tree_temp = (TTree*)file->Get( Form("%s", treename.c_str()) );
+
+		!!PROBLEM!!
+
+		while (trees.find(original_filetag_treename) != trees.end()) {
+			filetag_treename = original_filetag_treename + "x"
+		}
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
 		cout << "Cloned tree: " << treename << " from file: " << filename << " with entries: " << tree_temp->GetEntries() << endl;
 
@@ -164,6 +170,7 @@ public :
 					if (GetTree(tag,TreeName.Data(),currentPath)){
 						trees_ok = true;
 						filetags_treenames.push_back(GetFiletagTreename(tag,TreeName.Data()));
+
 						
 					}
 				}
