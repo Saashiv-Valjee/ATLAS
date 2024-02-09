@@ -9,13 +9,13 @@ void plotterExamples(){
 	map<string, TCut> cuts;	
 
 	//%%%%%%%%%%%%%%%%%%% Example 1 - Basic Plot %%%%%%%%%%%%%%%%%%%//
-	vector<string> filetags_example1 = {"515502"};
+	vector<string> filetags_example1 = {"515502","515503","515504"};
 	string path_2 = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v9/v9.2/user.ebusch.";
 	vector<string> tags_2 = {"515502","515503","515504"};
 	map<string, vector<string>> path_tags = {{path_2, tags_2}};
 
 	// path 2 should come first, because GetTrees reads path_2 first
-	vector<string> path_versions = {"v12/v12.5", "v9/v9.2"};
+	vector<string> path_versions = {"v12", "v9"};
 
 	class MicroNTuplePlotter plotter_example1( filetags_example1, path, path_versions, path_tags);
 
@@ -23,10 +23,11 @@ void plotterExamples(){
 		plotter_example1.plot_norm = true;
 		plotter_example1.plot_log = true;
 		plotter_example1.solid_bkg = true;
+		plotter_example1.stamp_integral = false;
 		plotter_example1.plot_error = false;
 		plotter_example1.manual_legend = false;
 		plotter_example1.outfile_path ="/afs/cern.ch/user/s/svaljee/private/test_plots";
-		plotter_example1.output_file_tag = "v12.5";
+		plotter_example1.output_file_tag = "v9_versus_v12";
 		plotter_example1.SetTreeName( "PostSel" );
 
 		//***************** Plot Variable options *******************//
