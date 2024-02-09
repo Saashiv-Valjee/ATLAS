@@ -14,7 +14,7 @@ public :
 	map<string, TTree*> trees;
 	TString TreeName = "PostSel";
 	bool multiple_trees = true;
-	vector<string> path_IDs;
+	vector<string> path_versions;
 
 	vector<string> hist_tags;	
 	string infile_path;
@@ -64,13 +64,14 @@ public :
 	bool use_normalized_cdf = false;
 
 	// -------------------------------------------------------------------------------------
-	MicroNTuplePlotter( vector<string> IN_filetags, string IN_infile_path, map<string, vector<string> IN_path_IDs, vector<string>> IN_path_tags = {}){
+	MicroNTuplePlotter( vector<string> IN_filetags, string IN_infile_path, vector<string> IN_path_versions, map<string,vector<string>> IN_path_tags = {}){
 		SetStyle();
 
 		filetags 	= IN_filetags;
 		infile_path	= IN_infile_path;
 		path_tags 	= IN_path_tags;
-		path_IDs 	= IN_path_IDs;
+		path_versions = IN_path_versions; 
+
 
 	}
 
