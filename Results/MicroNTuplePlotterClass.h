@@ -148,6 +148,7 @@ public :
 			filetag_treename = original_filetag_treename + "x";
 		}
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
+		filetags_treenames.push_back(filetag_treename);
 		cout << "Cloned tree: " << treename << " from file: " << filename << " with entries: " << tree_temp->GetEntries() << endl;
 
 		return true;
@@ -167,10 +168,7 @@ public :
 				for (const string& tag : tags){
 					cout << "Processing path: " << currentPath << " with tag: " << tag << endl;
 					if (GetTree(tag,TreeName.Data(),currentPath)){
-						trees_ok = true;
-						filetags_treenames.push_back(GetFiletagTreename(tag,TreeName.Data()));
-
-						
+						trees_ok = true;						
 					}
 				}
 			}
@@ -180,14 +178,13 @@ public :
 		for( int i=0; i<filetags.size(); i++ ){
 			if( GetTree(filetags[i], treenames[i]) ){
 				trees_ok = true;
-				filetags_treenames.push_back( GetFiletagTreename( filetags[i], treenames[i]) );
 			}
 		}
-		cout << "filetags_treenames contains: " << filetags_treenames.size() << " entries." << endl;
 
-		//careless debug
+		cout << "GetTrees: filetags_treenames contains: " << filetags_treenames.size() << " entries." << endl;
+
 		for (const auto& fttn : filetags_treenames) {
-			cout << "Entry: " << fttn << endl;
+			cout << "Tag: " << fttn << "with Entries: " << trees[fttn].GetEntries() <<endl;
 		}
 		if (!trees_ok) cout << "ERROR: input files or trees do not exist, see GetTrees" << endl;
 		cout << "# of trees = " << filetags_treenames.size() << endl;
@@ -334,7 +331,10 @@ public :
 
 		TString hist_name_full = Form("%s__%s", hist_name.c_str(), filetag_treename.c_str());
 
-		cout << "Creating histogram with: " << endl << "Hist Name: " << hist_name_full << endl << "NBins: " << NBins << ", xmin: " << xmin << ", xmax: " << xmax << endl << "Tree: " << filetag_treename << ", Entries: " << trees[filetag_treename]->GetEntries() << endl;
+		cout << "Creating histogram with: " << endl << "Hist Name: " << 
+		hist_name_full << endl << "NBins: " << NBins << ", xmin: " << 
+		xmin << ", xmax: " << xmax << endl << "Tree: " << 
+		filetag_treename << ", Entries: " << trees[filetag_treename]->GetEntries() << endl;
 
 		while (hist_name_full.Contains("(")){
 			hist_name_full.Replace(hist_name_full.First("("), 1, "");
