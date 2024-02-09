@@ -15,7 +15,7 @@ public :
 	TString TreeName = "PostSel";
 	bool multiple_trees = true;
 	vector<string> path_versions;
-	vector<string> filetag_treename_versions;
+	vector<string> filename_treetag_versions;
 
 	vector<string> hist_tags;	
 	string infile_path;
@@ -172,7 +172,7 @@ public :
 				const string& currentPath = entry.first;
 				const vector<string>& tags = entry.second;
 				for (const string& tag : tags){
-					filename_treetag_verisons.push_back(path_versions[FTversion_count]);
+					filename_treetag_versions.push_back(path_versions[FTversion_count]);
 					cout << "Processing path: " << currentPath << " with tag: " << tag << endl;
 					if (GetTree(tag,TreeName.Data(),currentPath)){
 						trees_ok = true;						
@@ -185,7 +185,7 @@ public :
 		
 		for( int i=0; i<filetags.size(); i++ ){
 			if( GetTree(filetags[i], treenames[i]) ){
-				filename_treetag_verisons.push_back(path_versions[FTversion_count]);
+				filename_treetag_versions.push_back(path_versions[FTversion_count]);
 				trees_ok = true;
 			}
 		}
