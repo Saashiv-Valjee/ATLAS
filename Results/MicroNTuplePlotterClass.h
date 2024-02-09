@@ -453,7 +453,7 @@ public :
 					else if (use_better_legend_names){hist_tag = GetLegendNames(filetag_only);}
 					else {hist_tag = Form( "%s", filetag_only.c_str());}
    				}
-				hist_tag = Form("%s:%s",filename_treetag_versions[i],hist_tag.c_str());
+				hist_tag = Form("%s:%s",filename_treetag_versions[i].c_str(),hist_tag.c_str());
 				hist_tags.push_back( hist_tag );
 				if(debug) cout <<"filetag_treename: " <<filetag_treename<<endl;
 				if(debug) cout <<"hist_tag: "<< hist_tag<<endl;
