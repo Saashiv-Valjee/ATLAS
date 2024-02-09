@@ -14,7 +14,9 @@ void plotterExamples(){
 	vector<string> tags_2 = {"515502","515503","515504"};
 	map<string, vector<string>> path_tags = {{path_2, tags_2}};
 
-	class MicroNTuplePlotter plotter_example1( filetags_example1, path, path_tags);
+	vecotr<string> path_IDs = {"v12/v12.5", "v9/v9.2"};
+
+	class MicroNTuplePlotter plotter_example1( filetags_example1, path, path_IDs, path_tags);
 
 		//***************** Plot General options *******************// 
 		plotter_example1.plot_norm = true;

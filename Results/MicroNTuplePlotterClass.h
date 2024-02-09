@@ -14,6 +14,7 @@ public :
 	map<string, TTree*> trees;
 	TString TreeName = "PostSel";
 	bool multiple_trees = true;
+	vector<string> path_IDs;
 
 	vector<string> hist_tags;	
 	string infile_path;
@@ -63,12 +64,13 @@ public :
 	bool use_normalized_cdf = false;
 
 	// -------------------------------------------------------------------------------------
-	MicroNTuplePlotter( vector<string> IN_filetags, string IN_infile_path, map<string, vector<string>> IN_path_tags = {}){
+	MicroNTuplePlotter( vector<string> IN_filetags, string IN_infile_path, map<string, vector<string> IN_path_IDs, vector<string>> IN_path_tags = {}){
 		SetStyle();
 
 		filetags 	= IN_filetags;
 		infile_path	= IN_infile_path;
 		path_tags 	= IN_path_tags;
+		path_IDs 	= IN_path_IDs
 
 	}
 
@@ -143,10 +145,10 @@ public :
 
 		TTree* tree_temp = (TTree*)file->Get( Form("%s", treename.c_str()) );
 
-		if(trees.find(filetag_treename) != trees.end()) {
-			cout << "found duplicate filetag_treename, appending x" << endl;
-			filetag_treename = original_filetag_treename + "x";
-		}
+		//if(trees.find(filetag_treename) != trees.end()) {
+			//cout << "found duplicate filetag_treename, appending x" << endl;
+		//filetag_treename = original_filetag_treename + "x";
+		//}
 		trees[filetag_treename] = (TTree*)tree_temp->Clone(); 
 		filetags_treenames.push_back(filetag_treename);
 		cout << "Cloned tree: " << treename << " from file: " << filename << " with entries: " << tree_temp->GetEntries() << endl;
